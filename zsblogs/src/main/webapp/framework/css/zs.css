@@ -1,0 +1,118 @@
+@CHARSET "UTF-8";
+body{
+	overflow: hidden;
+}
+/*
+这个是窗口的属性样式
+*/
+.ftitle{
+	font-size: 18px;
+}
+.fitem{
+	line-height:40px; 
+}
+.fitem label{
+	display: inline-block;
+	width: 153px;
+	font-size: 14px;
+}
+.fitem input{
+	width: 279px;
+}
+.fitem select{
+	width: 279px;
+}
+		/*窗口里的提示语句样式*/
+.fitem .hint{
+	color: red;
+	margin-top: -18px;
+	margin-left: 157px;
+}
+/* 张顺，2017-3-1，下面是双列DIV样式，clear要在最后用，用于清除浮动 */
+.two_column{
+	width:350px;
+	float: left;
+	border: 0px solid blue;
+}
+.clear{
+	clear:both;
+}
+/* 全局所有基本标签样式修改 */
+a{
+	text-decoration:none;
+	color: #333333;
+}
+input{
+	border:#999 1px solid;
+	height: 20px;
+	background: white;
+	width: 140px;
+}
+select{
+	height: 24px;
+	margin-top: 1px;
+	margin-bottom: 1px;
+	border: 1px #999 solid;
+}
+/*黄光辉   ，2017年3月1日，下面是查询栏位的样式
+张顺，2017-3-3，修改样式，删除了一些不需要了的样式*/
+.searchBar-input	{
+	float: left;
+	width: 230px; 
+	height: 50px;
+}
+.searchBar-input>div	{
+	line-height:220%;
+	float:right;
+}
+/*黄光辉   ，2017年3月1日，下面是查询栏位的样式*/
+.searchBar-input1	{
+	float: left;
+	width: 230px; 
+	height: 105px;
+}
+.searchBar-logistic	{
+	float: left;
+	width: 120px; 
+	height: 105px;
+}
+.searchBar-input1>div	{
+	line-height:220%;
+	float:right;
+}
+/*张顺，2017-3-3，这是查询栏位上部带分割线的样式，以及浅灰色分割线样式*/
+.btn-separator {  
+  float: left;  
+  height: 24px;  
+  border-left: 1px solid LightGrey;  
+  border-right: 0px solid LightGrey;  
+  margin-left: 2px;
+  margin-right: 2px;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  padding-left: 4px;
+}
+.btn-separator-none {  
+  float: left;  
+  height: 24px;  
+  border-left: 0px solid LightGrey;  
+  border-right: 0px solid LightGrey;  
+  margin-left: 2px;
+  margin-right: 2px;
+  margin-top: 1px;
+  margin-bottom: 1px; 
+  padding-left: 4px;
+}
+.hr-geay{
+	height: 1px;
+	border:none;
+	border-bottom: 1px solid rgb(214, 214, 216);
+	margin: 2px;
+}
+.pull-away{
+	height: 3px;
+}
+/*张顺，2017-3-15不可编辑的编辑框样式，用于既让用户看到有要让用户知道这是不可编辑时用到*/
+.no-edit{
+	border:0px;
+}    

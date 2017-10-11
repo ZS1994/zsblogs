@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zs.dao.LcStackMapper" >
+  <resultMap id="BaseResultMap" type="com.zs.entity.LcStack" >
+    <id column="KEY" property="key" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.zs.entity.LcStack" extends="BaseResultMap" >
+    <result column="VALUE" property="value" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    KEY
+  </sql>
+  <sql id="Blob_Column_List" >
+    VALUE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from LC_STACK
+    where KEY = #{key,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from LC_STACK
+    where KEY = #{key,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zs.entity.LcStack" >
+    insert into LC_STACK (KEY, VALUE)
+    values (#{key,jdbcType=VARCHAR}, #{value,jdbcType=CLOB})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zs.entity.LcStack" >
+    insert into LC_STACK
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="key != null" >
+        KEY,
+      </if>
+      <if test="value != null" >
+        VALUE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="key != null" >
+        #{key,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zs.entity.LcStack" >
+    update LC_STACK
+    <set >
+      <if test="value != null" >
+        VALUE = #{value,jdbcType=CLOB},
+      </if>
+    </set>
+    where KEY = #{key,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zs.entity.LcStack" >
+    update LC_STACK
+    set VALUE = #{value,jdbcType=CLOB}
+    where KEY = #{key,jdbcType=VARCHAR}
+  </update>
+</mapper>

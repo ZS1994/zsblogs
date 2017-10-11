@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zs.dao.TimelineMapper" >
+  <resultMap id="BaseResultMap" type="com.zs.entity.Timeline" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="P_ID" property="pId" jdbcType="DECIMAL" />
+    <result column="U_ID" property="uId" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="DETA_INFO" property="detaInfo" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, P_ID, U_ID, CREATE_TIME, DETA_INFO
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from TIMELINE
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from TIMELINE
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.zs.entity.Timeline" >
+    insert into TIMELINE (ID, P_ID, U_ID, 
+      CREATE_TIME, DETA_INFO)
+    values (#{id,jdbcType=DECIMAL}, #{pId,jdbcType=DECIMAL}, #{uId,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{detaInfo,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zs.entity.Timeline" >
+    insert into TIMELINE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="pId != null" >
+        P_ID,
+      </if>
+      <if test="uId != null" >
+        U_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="detaInfo != null" >
+        DETA_INFO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="pId != null" >
+        #{pId,jdbcType=DECIMAL},
+      </if>
+      <if test="uId != null" >
+        #{uId,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="detaInfo != null" >
+        #{detaInfo,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zs.entity.Timeline" >
+    update TIMELINE
+    <set >
+      <if test="pId != null" >
+        P_ID = #{pId,jdbcType=DECIMAL},
+      </if>
+      <if test="uId != null" >
+        U_ID = #{uId,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="detaInfo != null" >
+        DETA_INFO = #{detaInfo,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zs.entity.Timeline" >
+    update TIMELINE
+    set P_ID = #{pId,jdbcType=DECIMAL},
+      U_ID = #{uId,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      DETA_INFO = #{detaInfo,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+</mapper>

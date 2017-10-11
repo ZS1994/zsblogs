@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zs.dao.LcTokenMapper" >
+  <resultMap id="BaseResultMap" type="com.zs.entity.LcToken" >
+    <id column="TOKEN" property="token" jdbcType="VARCHAR" />
+    <result column="U_ID" property="uId" jdbcType="DECIMAL" />
+    <result column="INVALID_TIME" property="invalidTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    TOKEN, U_ID, INVALID_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from LC_TOKEN
+    where TOKEN = #{token,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from LC_TOKEN
+    where TOKEN = #{token,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zs.entity.LcToken" >
+    insert into LC_TOKEN (TOKEN, U_ID, INVALID_TIME
+      )
+    values (#{token,jdbcType=VARCHAR}, #{uId,jdbcType=DECIMAL}, #{invalidTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zs.entity.LcToken" >
+    insert into LC_TOKEN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="token != null" >
+        TOKEN,
+      </if>
+      <if test="uId != null" >
+        U_ID,
+      </if>
+      <if test="invalidTime != null" >
+        INVALID_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="token != null" >
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="uId != null" >
+        #{uId,jdbcType=DECIMAL},
+      </if>
+      <if test="invalidTime != null" >
+        #{invalidTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zs.entity.LcToken" >
+    update LC_TOKEN
+    <set >
+      <if test="uId != null" >
+        U_ID = #{uId,jdbcType=DECIMAL},
+      </if>
+      <if test="invalidTime != null" >
+        INVALID_TIME = #{invalidTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where TOKEN = #{token,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zs.entity.LcToken" >
+    update LC_TOKEN
+    set U_ID = #{uId,jdbcType=DECIMAL},
+      INVALID_TIME = #{invalidTime,jdbcType=TIMESTAMP}
+    where TOKEN = #{token,jdbcType=VARCHAR}
+  </update>
+  <delete id="deleteByUid">
+    delete from LC_TOKEN
+    where U_ID = #{param1}
+  </delete>
+</mapper>

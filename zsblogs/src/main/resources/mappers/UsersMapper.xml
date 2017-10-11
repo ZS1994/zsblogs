@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zs.dao.UsersMapper" >
+  <resultMap id="BaseResultMap" type="com.zs.entity.Users" >
+    <id column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="USERNUMBER" property="usernumber" jdbcType="VARCHAR" />
+    <result column="USERPASSWORD" property="userpassword" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="R_ID" property="rId" jdbcType="DECIMAL" />
+    <result column="IS_DELETE" property="isDelete" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, USERNUMBER, USERPASSWORD, NAME, R_ID, IS_DELETE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+    select 
+    <include refid="Base_Column_List" />
+    from USERS
+    where ID = #{id,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
+    delete from USERS
+    where ID = #{id,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="com.zs.entity.Users" >
+    insert into USERS (ID, USERNUMBER, USERPASSWORD, 
+      NAME, R_ID, IS_DELETE
+      )
+    values (#{id,jdbcType=DECIMAL}, #{usernumber,jdbcType=VARCHAR}, #{userpassword,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{rId,jdbcType=DECIMAL}, #{isDelete,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zs.entity.Users" >
+    insert into USERS
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="usernumber != null" >
+        USERNUMBER,
+      </if>
+      <if test="userpassword != null" >
+        USERPASSWORD,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="rId != null" >
+        R_ID,
+      </if>
+      <if test="isDelete != null" >
+        IS_DELETE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="usernumber != null" >
+        #{usernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userpassword != null" >
+        #{userpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="rId != null" >
+        #{rId,jdbcType=DECIMAL},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zs.entity.Users" >
+    update USERS
+    <set >
+      <if test="usernumber != null" >
+        USERNUMBER = #{usernumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userpassword != null" >
+        USERPASSWORD = #{userpassword,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="rId != null" >
+        R_ID = #{rId,jdbcType=DECIMAL},
+      </if>
+      <if test="isDelete != null" >
+        IS_DELETE = #{isDelete,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zs.entity.Users" >
+    update USERS
+    set USERNUMBER = #{usernumber,jdbcType=VARCHAR},
+      USERPASSWORD = #{userpassword,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      R_ID = #{rId,jdbcType=DECIMAL},
+      IS_DELETE = #{isDelete,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=DECIMAL}
+  </update>
+  <select id="selectByNumAndPass" resultMap="BaseResultMap">
+    select * from USERS
+    where USERNUMBER=#{num} and USERPASSWORD=#{pass}
+  </select>
+</mapper>
