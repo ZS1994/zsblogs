@@ -2,81 +2,81 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zs.dao.RoleMapper" >
   <resultMap id="BaseResultMap" type="com.zs.entity.Role" >
-    <id column="ID" property="id" jdbcType="DECIMAL" />
-    <result column="NAME" property="name" jdbcType="VARCHAR" />
-    <result column="DESCRIBTION" property="describtion" jdbcType="VARCHAR" />
-    <result column="PERS" property="pers" jdbcType="VARCHAR" />
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="des" property="des" jdbcType="VARCHAR" />
+    <result column="pids" property="pids" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ID, NAME, DESCRIBTION, PERS
+    id, name, des, pids
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from ROLE
-    where ID = #{id,jdbcType=DECIMAL}
+    from role
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
-    delete from ROLE
-    where ID = #{id,jdbcType=DECIMAL}
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from role
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zs.entity.Role" >
-    insert into ROLE (ID, NAME, DESCRIBTION, 
-      PERS)
-    values (#{id,jdbcType=DECIMAL}, #{name,jdbcType=VARCHAR}, #{describtion,jdbcType=VARCHAR}, 
-      #{pers,jdbcType=VARCHAR})
+    insert into role (id, name, des, 
+      pids)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR}, 
+      #{pids,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zs.entity.Role" >
-    insert into ROLE
+    insert into role
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        ID,
+        id,
       </if>
       <if test="name != null" >
-        NAME,
+        name,
       </if>
-      <if test="describtion != null" >
-        DESCRIBTION,
+      <if test="des != null" >
+        des,
       </if>
-      <if test="pers != null" >
-        PERS,
+      <if test="pids != null" >
+        pids,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=DECIMAL},
+        #{id,jdbcType=INTEGER},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="describtion != null" >
-        #{describtion,jdbcType=VARCHAR},
+      <if test="des != null" >
+        #{des,jdbcType=VARCHAR},
       </if>
-      <if test="pers != null" >
-        #{pers,jdbcType=VARCHAR},
+      <if test="pids != null" >
+        #{pids,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zs.entity.Role" >
-    update ROLE
+    update role
     <set >
       <if test="name != null" >
-        NAME = #{name,jdbcType=VARCHAR},
+        name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="describtion != null" >
-        DESCRIBTION = #{describtion,jdbcType=VARCHAR},
+      <if test="des != null" >
+        des = #{des,jdbcType=VARCHAR},
       </if>
-      <if test="pers != null" >
-        PERS = #{pers,jdbcType=VARCHAR},
+      <if test="pids != null" >
+        pids = #{pids,jdbcType=VARCHAR},
       </if>
     </set>
-    where ID = #{id,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zs.entity.Role" >
-    update ROLE
-    set NAME = #{name,jdbcType=VARCHAR},
-      DESCRIBTION = #{describtion,jdbcType=VARCHAR},
-      PERS = #{pers,jdbcType=VARCHAR}
-    where ID = #{id,jdbcType=DECIMAL}
+    update role
+    set name = #{name,jdbcType=VARCHAR},
+      des = #{des,jdbcType=VARCHAR},
+      pids = #{pids,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

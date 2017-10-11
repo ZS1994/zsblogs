@@ -1,21 +1,19 @@
 package com.zs.entity;
 
-import java.math.BigDecimal;
-
 public class Role {
-    private BigDecimal id;
+    private Integer id;
 
     private String name;
 
-    private String describtion;
+    private String des;
 
-    private String pers;
+    private String pids;
 
-    public BigDecimal getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(BigDecimal id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -27,19 +25,19 @@ public class Role {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getDescribtion() {
-        return describtion;
+    public String getDes() {
+        return des;
     }
 
-    public void setDescribtion(String describtion) {
-        this.describtion = describtion == null ? null : describtion.trim();
+    public void setDes(String des) {
+        this.des = des == null ? null : des.trim();
     }
 
-    public String getPers() {
-        return pers;
+    public String getPids() {
+        return pids;
     }
 
-    public void setPers(String pers) {
-        this.pers = pers == null ? null : pers.trim();
+    public void setPids(String pids) {
+        this.pids = pids == null ? null : pids.trim();
     }
 }

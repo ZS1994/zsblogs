@@ -1,16 +1,15 @@
 package com.zs.dao;
 
 import com.zs.entity.Role;
-import java.math.BigDecimal;
 
 public interface RoleMapper {
-    int deleteByPrimaryKey(BigDecimal id);
+    int deleteByPrimaryKey(Integer id);
 
     int insert(Role record);
 
     int insertSelective(Role record);
 
-    Role selectByPrimaryKey(BigDecimal id);
+    Role selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(Role record);
 

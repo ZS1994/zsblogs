@@ -1,53 +1,48 @@
 package com.zs.entity;
 
-import java.math.BigDecimal;
+import java.util.Date;
 
 public class Users {
-    private BigDecimal id;
+    private Integer id;
 
-    private String usernumber;
+    private String usernum;
 
-    private String userpassword;
+    private String userpass;
 
     private String name;
 
-    private BigDecimal rId;
+    private String mail;
 
-    private String isDelete;
+    private String phone;
 
-    private Role role;
-    
-    
-    public Role getRole() {
-		return role;
-	}
+    private Integer isdelete;
 
-	public void setRole(Role role) {
-		this.role = role;
-	}
+    private Date createTime;
 
-	public BigDecimal getId() {
+    private String rids;
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(BigDecimal id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public String getUsernumber() {
-        return usernumber;
+    public String getUsernum() {
+        return usernum;
     }
 
-    public void setUsernumber(String usernumber) {
-        this.usernumber = usernumber == null ? null : usernumber.trim();
+    public void setUsernum(String usernum) {
+        this.usernum = usernum == null ? null : usernum.trim();
     }
 
-    public String getUserpassword() {
-        return userpassword;
+    public String getUserpass() {
+        return userpass;
     }
 
-    public void setUserpassword(String userpassword) {
-        this.userpassword = userpassword == null ? null : userpassword.trim();
+    public void setUserpass(String userpass) {
+        this.userpass = userpass == null ? null : userpass.trim();
     }
 
     public String getName() {
@@ -58,19 +53,43 @@ public class Users {
         this.name = name == null ? null : name.trim();
     }
 
-    public BigDecimal getrId() {
-        return rId;
+    public String getMail() {
+        return mail;
     }
 
-    public void setrId(BigDecimal rId) {
-        this.rId = rId;
+    public void setMail(String mail) {
+        this.mail = mail == null ? null : mail.trim();
     }
 
-    public String getIsDelete() {
-        return isDelete;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setIsDelete(String isDelete) {
-        this.isDelete = isDelete == null ? null : isDelete.trim();
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
+    }
+
+    public Integer getIsdelete() {
+        return isdelete;
+    }
+
+    public void setIsdelete(Integer isdelete) {
+        this.isdelete = isdelete;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getRids() {
+        return rids;
+    }
+
+    public void setRids(String rids) {
+        this.rids = rids == null ? null : rids.trim();
     }
 }

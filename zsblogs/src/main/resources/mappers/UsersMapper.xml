@@ -2,109 +2,140 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zs.dao.UsersMapper" >
   <resultMap id="BaseResultMap" type="com.zs.entity.Users" >
-    <id column="ID" property="id" jdbcType="DECIMAL" />
-    <result column="USERNUMBER" property="usernumber" jdbcType="VARCHAR" />
-    <result column="USERPASSWORD" property="userpassword" jdbcType="VARCHAR" />
-    <result column="NAME" property="name" jdbcType="VARCHAR" />
-    <result column="R_ID" property="rId" jdbcType="DECIMAL" />
-    <result column="IS_DELETE" property="isDelete" jdbcType="VARCHAR" />
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="usernum" property="usernum" jdbcType="VARCHAR" />
+    <result column="userpass" property="userpass" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="mail" property="mail" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="isdelete" property="isdelete" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="rids" property="rids" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    ID, USERNUMBER, USERPASSWORD, NAME, R_ID, IS_DELETE
+    id, usernum, userpass, name, mail, phone, isdelete, create_time, rids
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.math.BigDecimal" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from USERS
-    where ID = #{id,jdbcType=DECIMAL}
+    from users
+    where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal" >
-    delete from USERS
-    where ID = #{id,jdbcType=DECIMAL}
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from users
+    where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zs.entity.Users" >
-    insert into USERS (ID, USERNUMBER, USERPASSWORD, 
-      NAME, R_ID, IS_DELETE
+    insert into users (id, usernum, userpass, 
+      name, mail, phone, 
+      isdelete, create_time, rids
       )
-    values (#{id,jdbcType=DECIMAL}, #{usernumber,jdbcType=VARCHAR}, #{userpassword,jdbcType=VARCHAR}, 
-      #{name,jdbcType=VARCHAR}, #{rId,jdbcType=DECIMAL}, #{isDelete,jdbcType=VARCHAR}
+    values (#{id,jdbcType=INTEGER}, #{usernum,jdbcType=VARCHAR}, #{userpass,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{isdelete,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{rids,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zs.entity.Users" >
-    insert into USERS
+    insert into users
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        ID,
+        id,
       </if>
-      <if test="usernumber != null" >
-        USERNUMBER,
+      <if test="usernum != null" >
+        usernum,
       </if>
-      <if test="userpassword != null" >
-        USERPASSWORD,
+      <if test="userpass != null" >
+        userpass,
       </if>
       <if test="name != null" >
-        NAME,
+        name,
       </if>
-      <if test="rId != null" >
-        R_ID,
+      <if test="mail != null" >
+        mail,
       </if>
-      <if test="isDelete != null" >
-        IS_DELETE,
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="isdelete != null" >
+        isdelete,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="rids != null" >
+        rids,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=DECIMAL},
+        #{id,jdbcType=INTEGER},
       </if>
-      <if test="usernumber != null" >
-        #{usernumber,jdbcType=VARCHAR},
+      <if test="usernum != null" >
+        #{usernum,jdbcType=VARCHAR},
       </if>
-      <if test="userpassword != null" >
-        #{userpassword,jdbcType=VARCHAR},
+      <if test="userpass != null" >
+        #{userpass,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="rId != null" >
-        #{rId,jdbcType=DECIMAL},
+      <if test="mail != null" >
+        #{mail,jdbcType=VARCHAR},
       </if>
-      <if test="isDelete != null" >
-        #{isDelete,jdbcType=VARCHAR},
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null" >
+        #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rids != null" >
+        #{rids,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zs.entity.Users" >
-    update USERS
+    update users
     <set >
-      <if test="usernumber != null" >
-        USERNUMBER = #{usernumber,jdbcType=VARCHAR},
+      <if test="usernum != null" >
+        usernum = #{usernum,jdbcType=VARCHAR},
       </if>
-      <if test="userpassword != null" >
-        USERPASSWORD = #{userpassword,jdbcType=VARCHAR},
+      <if test="userpass != null" >
+        userpass = #{userpass,jdbcType=VARCHAR},
       </if>
       <if test="name != null" >
-        NAME = #{name,jdbcType=VARCHAR},
+        name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="rId != null" >
-        R_ID = #{rId,jdbcType=DECIMAL},
+      <if test="mail != null" >
+        mail = #{mail,jdbcType=VARCHAR},
       </if>
-      <if test="isDelete != null" >
-        IS_DELETE = #{isDelete,jdbcType=VARCHAR},
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null" >
+        isdelete = #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rids != null" >
+        rids = #{rids,jdbcType=VARCHAR},
       </if>
     </set>
-    where ID = #{id,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zs.entity.Users" >
-    update USERS
-    set USERNUMBER = #{usernumber,jdbcType=VARCHAR},
-      USERPASSWORD = #{userpassword,jdbcType=VARCHAR},
-      NAME = #{name,jdbcType=VARCHAR},
-      R_ID = #{rId,jdbcType=DECIMAL},
-      IS_DELETE = #{isDelete,jdbcType=VARCHAR}
-    where ID = #{id,jdbcType=DECIMAL}
+    update users
+    set usernum = #{usernum,jdbcType=VARCHAR},
+      userpass = #{userpass,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      mail = #{mail,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      isdelete = #{isdelete,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      rids = #{rids,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByNumAndPass" resultMap="BaseResultMap">
-    select * from USERS
-    where USERNUMBER=#{num} and USERPASSWORD=#{pass}
-  </select>
 </mapper>

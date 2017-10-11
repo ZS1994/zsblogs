@@ -2,16 +2,14 @@ package com.zs.entity;
 
 import java.util.Date;
 
-public class Timeline {
+public class Read {
     private Integer id;
 
     private Integer uId;
 
-    private Integer pId;
+    private Integer bId;
 
     private Date createTime;
-
-    private String info;
 
     public Integer getId() {
         return id;
@@ -29,12 +27,12 @@ public class Timeline {
         this.uId = uId;
     }
 
-    public Integer getpId() {
-        return pId;
+    public Integer getbId() {
+        return bId;
     }
 
-    public void setpId(Integer pId) {
-        this.pId = pId;
+    public void setbId(Integer bId) {
+        this.bId = bId;
     }
 
     public Date getCreateTime() {
@@ -43,13 +41,5 @@ public class Timeline {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info == null ? null : info.trim();
     }
 }

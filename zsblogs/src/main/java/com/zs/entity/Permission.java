@@ -1,28 +1,38 @@
 package com.zs.entity;
 
-import java.math.BigDecimal;
-
 public class Permission {
-    private BigDecimal id;
+    private Integer id;
+
+    private String name;
 
     private String url;
 
     private String method;
 
-    private String name;
-
-    private String describtion;
+    private String type;
 
     private String flag;
 
-    private String type;
+    private String menuImg;
 
-    public BigDecimal getId() {
+    private Integer menuOrder;
+
+    private Integer menuParentId;
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(BigDecimal id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
     }
 
     public String getUrl() {
@@ -41,20 +51,12 @@ public class Permission {
         this.method = method == null ? null : method.trim();
     }
 
-    public String getName() {
-        return name;
+    public String getType() {
+        return type;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
-    }
-
-    public String getDescribtion() {
-        return describtion;
-    }
-
-    public void setDescribtion(String describtion) {
-        this.describtion = describtion == null ? null : describtion.trim();
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
     }
 
     public String getFlag() {
@@ -65,11 +67,27 @@ public class Permission {
         this.flag = flag == null ? null : flag.trim();
     }
 
-    public String getType() {
-        return type;
+    public String getMenuImg() {
+        return menuImg;
     }
 
-    public void setType(String type) {
-        this.type = type == null ? null : type.trim();
+    public void setMenuImg(String menuImg) {
+        this.menuImg = menuImg == null ? null : menuImg.trim();
+    }
+
+    public Integer getMenuOrder() {
+        return menuOrder;
+    }
+
+    public void setMenuOrder(Integer menuOrder) {
+        this.menuOrder = menuOrder;
+    }
+
+    public Integer getMenuParentId() {
+        return menuParentId;
+    }
+
+    public void setMenuParentId(Integer menuParentId) {
+        this.menuParentId = menuParentId;
     }
 }
