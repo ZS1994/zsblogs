@@ -54,23 +54,30 @@ public class RoleSerImpl implements RoleSer{
 	
 	
 	public EasyUIPage queryFenye(EasyUIAccept accept) {
-		// TODO Auto-generated method stub
+		if (accept!=null) {
+			Integer page=accept.getPage();
+			Integer size=accept.getRows();
+			if (page!=null && size!=null) {
+				accept.setStart((page-1)*size);
+				accept.setEnd(page*size);
+			}
+			List list=roleMapper.queryFenye(accept);
+			int rows=roleMapper.getCount(accept);
+			return new EasyUIPage(rows, list);
+		}
 		return null;
 	}
 
 	public String add(Role obj) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.valueOf(roleMapper.insertSelective(obj));
 	}
 
 	public String update(Role obj) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.valueOf(roleMapper.updateByPrimaryKeySelective(obj));
 	}
 
 	public String delete(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.valueOf(roleMapper.deleteByPrimaryKey(id));
 	}
 
 	public Role get(Integer id) {

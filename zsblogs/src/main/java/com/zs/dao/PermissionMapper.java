@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.zs.entity.BlogList;
 import com.zs.entity.Permission;
+import com.zs.entity.other.EasyUIAccept;
 
 public interface PermissionMapper {
     int deleteByPrimaryKey(Integer id);
@@ -21,4 +23,7 @@ public interface PermissionMapper {
     
     Permission selectByUrlAndMethod(@Param("url")String url,@Param("method")String method);
     List<Permission> selectByPers(@Param("pers")String pers);
+    
+    List<Permission> queryFenye(EasyUIAccept accept);
+    int getCount(EasyUIAccept accept);
 }

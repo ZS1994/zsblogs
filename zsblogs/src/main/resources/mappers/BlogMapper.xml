@@ -104,4 +104,34 @@
       bl_id = #{blId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
+  	select * from
+  	(
+	  	select t1.*,rownum rn from
+	  	(
+		  	select * from blog
+		  	<where>
+		  	</where>
+		  	<if test="sort!=null and order!=null">
+		  		order by ${sort} ${order}
+		  	</if>
+	  	) t1
+	  	<where>
+	  		<if test="end!=null">
+	  			rownum &lt;= #{end}
+		  	</if>
+	  	</where>
+  	)
+  	<where>
+  		<if test="start!=null">
+  			rn > #{start}
+	  	</if>
+  	</where>
+  </select>
+  <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
+  	select count(*) from blog
+  	<where>
+  	</where>
+  </select>
 </mapper>

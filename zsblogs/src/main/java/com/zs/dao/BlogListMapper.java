@@ -1,6 +1,9 @@
 package com.zs.dao;
 
+import java.util.List;
+
 import com.zs.entity.BlogList;
+import com.zs.entity.other.EasyUIAccept;
 
 public interface BlogListMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,8 @@ public interface BlogListMapper {
     int updateByPrimaryKeySelective(BlogList record);
 
     int updateByPrimaryKey(BlogList record);
+    
+    List<BlogList> queryFenye(EasyUIAccept accept);
+    int getCount(EasyUIAccept accept);
+    
 }

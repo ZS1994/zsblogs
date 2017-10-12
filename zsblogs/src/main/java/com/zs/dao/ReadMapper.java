@@ -1,6 +1,10 @@
 package com.zs.dao;
 
+import java.util.List;
+
+import com.zs.entity.BlogList;
 import com.zs.entity.Read;
+import com.zs.entity.other.EasyUIAccept;
 
 public interface ReadMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +18,7 @@ public interface ReadMapper {
     int updateByPrimaryKeySelective(Read record);
 
     int updateByPrimaryKey(Read record);
+    
+    List<Read> queryFenye(EasyUIAccept accept);
+    int getCount(EasyUIAccept accept);
 }

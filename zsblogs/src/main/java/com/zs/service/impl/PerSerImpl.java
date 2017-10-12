@@ -1,6 +1,7 @@
 package com.zs.service.impl;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -19,28 +20,34 @@ public class PerSerImpl implements PerSer{
 	private PermissionMapper permissionMapper;
 	
 	public EasyUIPage queryFenye(EasyUIAccept accept) {
-		// TODO Auto-generated method stub
+		if (accept!=null) {
+			Integer page=accept.getPage();
+			Integer size=accept.getRows();
+			if (page!=null && size!=null) {
+				accept.setStart((page-1)*size);
+				accept.setEnd(page*size);
+			}
+			List list=permissionMapper.queryFenye(accept);
+			int rows=permissionMapper.getCount(accept);
+			return new EasyUIPage(rows, list);
+		}
 		return null;
 	}
 
 	public String add(Permission obj) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.valueOf(permissionMapper.insertSelective(obj));
 	}
 
 	public String update(Permission obj) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.valueOf(permissionMapper.updateByPrimaryKeySelective(obj));
 	}
 
 	public String delete(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.valueOf(permissionMapper.deleteByPrimaryKey(id));
 	}
 
 	public Permission get(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return permissionMapper.selectByPrimaryKey(id);
 	}
 
 	public Permission get(String url, String method) {

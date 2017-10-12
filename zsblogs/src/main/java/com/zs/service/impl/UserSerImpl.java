@@ -1,6 +1,8 @@
 package com.zs.service.impl;
 
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
@@ -18,23 +20,30 @@ public class UserSerImpl implements UserSer{
 	private Logger log=Logger.getLogger(getClass());
 	
 	public EasyUIPage queryFenye(EasyUIAccept accept) {
-		// TODO Auto-generated method stub
+		if (accept!=null) {
+			Integer page=accept.getPage();
+			Integer size=accept.getRows();
+			if (page!=null && size!=null) {
+				accept.setStart((page-1)*size);
+				accept.setEnd(page*size);
+			}
+			List list=usersMapper.queryFenye(accept);
+			int rows=usersMapper.getCount(accept);
+			return new EasyUIPage(rows, list);
+		}
 		return null;
 	}
 
 	public String add(Users obj) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.valueOf(usersMapper.insertSelective(obj));
 	}
 
 	public String update(Users obj) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.valueOf(usersMapper.updateByPrimaryKeySelective(obj));
 	}
 
 	public String delete(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		return String.valueOf(usersMapper.deleteByPrimaryKey(id));
 	}
 
 	public Users get(Integer id) {
