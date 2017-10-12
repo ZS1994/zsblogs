@@ -1,5 +1,7 @@
 package com.zs.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.zs.entity.Users;
 
 public interface UsersMapper {
@@ -14,4 +16,9 @@ public interface UsersMapper {
     int updateByPrimaryKeySelective(Users record);
 
     int updateByPrimaryKey(Users record);
+    
+    Users selectByNumAndPass(@Param("num")String usernum,@Param("pass")String userpass);
+    Users selectByNum(@Param("num")String usernum);
+    
+    
 }

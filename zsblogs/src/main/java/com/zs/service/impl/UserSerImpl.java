@@ -1,12 +1,10 @@
 package com.zs.service.impl;
 
-import java.math.BigDecimal;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
-
-import com.zs.controller.rest.BaseRestController.Code;
 import com.zs.dao.UsersMapper;
 import com.zs.entity.Users;
 import com.zs.entity.other.EasyUIAccept;
@@ -17,6 +15,7 @@ import com.zs.service.UserSer;
 public class UserSerImpl implements UserSer{
 	@Resource
 	private UsersMapper usersMapper;
+	private Logger log=Logger.getLogger(getClass());
 	
 	public EasyUIPage queryFenye(EasyUIAccept accept) {
 		// TODO Auto-generated method stub
@@ -33,22 +32,35 @@ public class UserSerImpl implements UserSer{
 		return null;
 	}
 
-	public String delete(BigDecimal id) {
+	public String delete(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Users get(BigDecimal id) {
+	public Users get(Integer id) {
 		return usersMapper.selectByPrimaryKey(id);
 	}
 
 	public boolean validateUserInfo(String usernumber, String userpassword) {
-		System.out.println(usernumber+"  "+userpassword);
+		log.warn(usernumber+"  "+userpassword);
 		Users user=usersMapper.selectByNumAndPass(usernumber, userpassword);
 		if (user==null) {
 			return false;
 		}else{
 			return true;
+		}
+	}
+
+	public String validateUserInfo2(String usernumber, String userpassword) {
+		Users user=usersMapper.selectByNum(usernumber);
+		if(user==null){
+			return "该用户不存在";
+		}else{
+			if(user.getUserpass().equals(userpassword)){
+				return "[success]";
+			}else{
+				return "密码错误";
+			}
 		}
 	}
 

@@ -1,5 +1,9 @@
 package com.zs.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.zs.entity.Role;
 
 public interface RoleMapper {
@@ -14,4 +18,6 @@ public interface RoleMapper {
     int updateByPrimaryKeySelective(Role record);
 
     int updateByPrimaryKey(Role record);
+    
+    List<Role> selectByIds(@Param("rids")String rids);
 }

@@ -33,12 +33,12 @@ public class PerSerImpl implements PerSer{
 		return null;
 	}
 
-	public String delete(BigDecimal id) {
+	public String delete(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Permission get(BigDecimal id) {
+	public Permission get(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

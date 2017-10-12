@@ -138,4 +138,16 @@
       rids = #{rids,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByNumAndPass" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where usernum = #{num,jdbcType=VARCHAR} and userpass=#{pass,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByNum" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where usernum = #{num,jdbcType=VARCHAR}
+  </select>
 </mapper>

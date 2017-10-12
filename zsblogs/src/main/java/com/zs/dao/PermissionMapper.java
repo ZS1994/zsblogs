@@ -1,5 +1,9 @@
 package com.zs.dao;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.zs.entity.Permission;
 
 public interface PermissionMapper {
@@ -14,4 +18,7 @@ public interface PermissionMapper {
     int updateByPrimaryKeySelective(Permission record);
 
     int updateByPrimaryKey(Permission record);
+    
+    Permission selectByUrlAndMethod(@Param("url")String url,@Param("method")String method);
+    List<Permission> selectByPers(@Param("pers")String pers);
 }

@@ -1,11 +1,8 @@
 package com.zs.service.impl;
 
-import java.math.BigDecimal;
 
 import javax.annotation.Resource;
-
 import org.springframework.stereotype.Service;
-
 import com.zs.dao.TimelineMapper;
 import com.zs.entity.Timeline;
 import com.zs.entity.other.EasyUIAccept;
@@ -32,12 +29,12 @@ public class TimeLineSerImpl implements TimeLineSer{
 		return null;
 	}
 
-	public String delete(BigDecimal id) {
+	public String delete(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Timeline get(BigDecimal id) {
+	public Timeline get(Integer id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

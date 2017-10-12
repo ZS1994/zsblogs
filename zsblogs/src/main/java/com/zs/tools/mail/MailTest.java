@@ -34,9 +34,9 @@ public class MailTest {
 	
 	public static final String IT_ROBOT="itrobot@szexpress.com.cn";
 	public static final String ZS="1217360619@qq.com";
-	public static final String HGH="453668907@qq.com";
-	public static final String CW="yy520014@126.com";
-	public static final String TXY="553051437@qq.com";
+//	public static final String HGH="453668907@qq.com";
+//	public static final String CW="yy520014@126.com";
+//	public static final String TXY="553051437@qq.com";
 	
 	
 	
@@ -77,10 +77,10 @@ public class MailTest {
         // 设置抄送
         InternetAddress cc1 = new InternetAddress(IT_ROBOT);
         InternetAddress cc2 = new InternetAddress(ZS);
-        InternetAddress cc3 = new InternetAddress(HGH);
-        InternetAddress cc4 = new InternetAddress(CW);
-        InternetAddress cc5 = new InternetAddress(TXY);
-        InternetAddress ccs[]=new InternetAddress[]{cc1,cc2,cc3,cc4,cc5};
+//        InternetAddress cc3 = new InternetAddress(HGH);
+//        InternetAddress cc4 = new InternetAddress(CW);
+//        InternetAddress cc5 = new InternetAddress(TXY);
+        InternetAddress ccs[]=new InternetAddress[]{cc1,cc2};
         
         message.setRecipients(RecipientType.CC, ccs);
 

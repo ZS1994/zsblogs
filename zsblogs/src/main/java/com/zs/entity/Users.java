@@ -1,6 +1,7 @@
 package com.zs.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Users {
     private Integer id;
@@ -21,7 +22,18 @@ public class Users {
 
     private String rids;
 
-    public Integer getId() {
+    private List<Role> roles;
+    
+
+	public List<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<Role> roles) {
+		this.roles = roles;
+	}
+
+	public Integer getId() {
         return id;
     }
 

@@ -17,8 +17,7 @@ import org.apache.log4j.Logger;
 public class MailManager {
 
 	public static String MAIL_ZS="1217360619@qq.com";
-	public static String MAIL_HGH="453668907@qq.com";
-	public static String TITLE="（example）项目原型错误通知";
+	public static String TITLE="（zsblogs）个人博客错误通知";
 	
 	private boolean isIng=false;//是否在发送的一个标志
 	private Vector<MailModel> mails;//模拟邮件体集合

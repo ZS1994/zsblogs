@@ -23,11 +23,10 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.google.gson.Gson;
 import com.zs.controller.rest.BaseRestController;
 import com.zs.controller.rest.BaseRestController.Code;
-import com.zs.dao.LcTokenMapper;
-import com.zs.entity.LcToken;
 import com.zs.entity.Permission;
 import com.zs.entity.Role;
 import com.zs.entity.Timeline;
+import com.zs.entity.Token;
 import com.zs.entity.Users;
 import com.zs.entity.other.EasyUIAccept;
 import com.zs.entity.other.Result;
@@ -68,9 +67,9 @@ public class RoleInter extends HandlerInterceptorAdapter{
 	private String method;
 	HttpSession session;
 	Users user;
-	Role role;
+	List<Role> roles;
 	String token;
-	LcToken lcToken;
+	Token lcToken;
 	boolean isTimeout=false;//是否过期
 	
 	private void init(HttpServletRequest request, HttpServletResponse response){
@@ -94,7 +93,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 			throws Exception {
 		init(request, response);
 		//例外列表
-		System.out.println(url+"  "+method);
+		log.warn(url+"  "+method);
 		if (url.contains("/api/login")
 				) {
 			return true;
@@ -111,7 +110,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 		}else if (user==null) {
 			gotoHadle(Code.LICENCE_NO);
 			return false;
-		}else if(role==null){
+		}else if(roles==null){
 			gotoHadle(Code.ROLE_USER_NO_ROLE);
 			return false;
 		}else{
@@ -120,13 +119,13 @@ public class RoleInter extends HandlerInterceptorAdapter{
 				gotoHadle(Code.PERMISSION_NO_EXIST);
 				return false;
 			}else{
-				if (role.getPers()!=null && (","+role.getPers()+",").contains(","+per.getId()+",")) {
+				if (roleSer.isPerInRoles(per, roles)) {
 					timeLineSer.add(new Timeline(per.getId(), user.getId(), gson.toJson(req.getParameterMap())));
 					Calendar calendar=Calendar.getInstance();
 					calendar.add(Calendar.DAY_OF_MONTH, 1);//加一天
 					lcToken.setInvalidTime(calendar.getTime());
 					licenceSer.updateToken(lcToken);
-					user.setRole(role);
+					user.setRoles(roles);
 					req.setAttribute("[user]", user);
 					return true;
 				}else{
@@ -145,6 +144,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 			case Code.LICENCE_NO:
 				if (url.contains("/api/")) {
 					resp.setCharacterEncoding("utf-8");
+					resp.setContentType("application/json; charset=utf-8"); 
 					PrintWriter pw=resp.getWriter();
 					result=new Result<String>(BaseRestController.ERROR, code, "身份验证失败，请重新获取token。");
 					pw.write(gson.toJson(result));
@@ -157,6 +157,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 			case Code.ROLE_USER_NO_ROLE:
 				if (url.contains("/api/")) {
 					resp.setCharacterEncoding("utf-8");
+					resp.setContentType("application/json; charset=utf-8"); 
 					PrintWriter pw=resp.getWriter();
 					result=new Result<String>(BaseRestController.ERROR, code, "您没有被分配角色，请联系管理员。");
 					pw.write(gson.toJson(result));
@@ -169,6 +170,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 			case Code.ROLE_USER_NO_PERMISSION:
 				if (url.contains("/api/")) {
 					resp.setCharacterEncoding("utf-8");
+					resp.setContentType("application/json; charset=utf-8");  
 					PrintWriter pw=resp.getWriter();
 					result=new Result<String>(BaseRestController.ERROR, code, "您没有该权限，请联系管理员。");
 					pw.write(gson.toJson(result));
@@ -181,6 +183,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 			case Code.PERMISSION_NO_EXIST:
 				if (url.contains("/api/")) {
 					resp.setCharacterEncoding("utf-8");
+					resp.setContentType("application/json; charset=utf-8"); 
 					PrintWriter pw=resp.getWriter();
 					result=new Result<String>(BaseRestController.ERROR, code, "该模块还没有设计权限，请联系管理员。");
 					pw.write(gson.toJson(result));
@@ -193,6 +196,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 			case Code.LICENCE_TIMEOUT:
 				if (url.contains("/api/")) {
 					resp.setCharacterEncoding("utf-8");
+					resp.setContentType("application/json; charset=utf-8"); 
 					PrintWriter pw=resp.getWriter();
 					result=new Result<String>(BaseRestController.ERROR, code, "身份信息过期。");
 					pw.write(gson.toJson(result));
@@ -220,8 +224,8 @@ public class RoleInter extends HandlerInterceptorAdapter{
 					return;
 				}
 				user=userSer.get(lcToken.getuId());
-				if(user!=null && user.getrId()!=null){
-					role=roleSer.get(user.getrId());
+				if(user!=null && user.getRids()!=null){
+					roles=roleSer.getRolesFromRids(user.getRids());
 				}
 			}
 		}

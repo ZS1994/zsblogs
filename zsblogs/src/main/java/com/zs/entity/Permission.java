@@ -1,5 +1,7 @@
 package com.zs.entity;
 
+import java.util.List;
+
 public class Permission {
     private Integer id;
 
@@ -19,7 +21,18 @@ public class Permission {
 
     private Integer menuParentId;
 
-    public Integer getId() {
+    private List<Permission> childMenu;
+    
+    
+    public List<Permission> getChildMenu() {
+		return childMenu;
+	}
+
+	public void setChildMenu(List<Permission> childMenu) {
+		this.childMenu = childMenu;
+	}
+
+	public Integer getId() {
         return id;
     }
 

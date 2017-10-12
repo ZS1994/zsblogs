@@ -1,13 +1,16 @@
 package com.zs.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
-import com.zs.entity.Menu;
+import com.zs.entity.Permission;
 import com.zs.entity.Role;
 
-public interface RoleSer extends BaseService<Role, BigDecimal>{
+public interface RoleSer extends BaseService<Role, Integer>{
 
-	public List<Menu> getMenus(BigDecimal rId);
+	public List<Permission> getMenus(String token);
+	
+	public boolean isPerInRoles(Permission per,List<Role> roles);
+	
+	public List<Role> getRolesFromRids(String rids);
 	
 }

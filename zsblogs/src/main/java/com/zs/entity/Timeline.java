@@ -13,7 +13,22 @@ public class Timeline {
 
     private String info;
 
-    public Integer getId() {
+    
+    
+
+	public Timeline(Integer uId, Integer pId, String info) {
+		super();
+		this.uId = uId;
+		this.pId = pId;
+		this.info = info;
+		this.createTime=new Date();
+	}
+
+	public Timeline() {
+		super();
+	}
+
+	public Integer getId() {
         return id;
     }
 
