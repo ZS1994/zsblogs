@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -7,22 +7,48 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
+  	<jsp:include page="/WEB-INF/jsp/part/include_bootstrap.jsp"/>
     <base href="<%=basePath%>">
-    
-    <title>My JSP 'left_center.jsp' starting page</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
-
+    <title>中间部分（测试组件是否正常）</title>
   </head>
   
-  <body style="padding: 0px;background-color: black;">
-    This is my JSP page. <br>
+  <body>
+  	<jsp:include page="/WEB-INF/jsp/part/left_part.jsp"/>
+  	<div class="p_body">
+  		<jsp:include page="/WEB-INF/jsp/part/right_part.jsp"/>
+  		
+  		
+  		
+  		<div class="p_body_body">
+  			<div class="container">
+			    <h2>
+				    Spring Data REST 远程代码执行漏洞（CVE-2017-8046）分析与复现
+			    </h2>
+					其河 ·2017-09-29 14:21
+			    <pre>
+public static class Code{
+	public static final int ERROR=-1;
+	public static final int SUCCESS=0;
+	public static final int LICENCE_NO=1;
+	public static final int LICENCE_TIMEOUT=2;
+	public static final int LOGIN_PASS_ERROR=11;
+	public static final int LOGIN_USER_NO=12;
+	public static final int LOGIN_INFO_NO=13;
+	public static final int ROLE_USER_NO_PERMISSION=101;
+	public static final int ROLE_USER_NO_ROLE=102;
+	public static final int ROLE_NO_PERMISSION=103;
+	public static final int PERMISSION_NO_EXIST=104;
+}
+			    </pre>
+			    asdasdas
+			    
+			    
+		    </div>
+  			
+  		</div>
+  		
+  		
+  	</div>
+  	
   </body>
 </html>

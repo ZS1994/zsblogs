@@ -151,7 +151,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 					pw.flush();
 					pw.close();
 				}else if(url.contains("/menu/")){
-					resp.sendRedirect("/example/staticView/error_noToken.jsp");
+					resp.sendRedirect("/zsblogs/staticView/error_noToken.jsp");
 				}
 				break;
 			case Code.ROLE_USER_NO_ROLE:
@@ -164,7 +164,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 					pw.flush();
 					pw.close();
 				}else if(url.contains("/menu/")){
-					resp.sendRedirect("/example/staticView/error_noRole.jsp");
+					resp.sendRedirect("/zsblogs/staticView/error_noRole.jsp");
 				}		
 				break;
 			case Code.ROLE_USER_NO_PERMISSION:
@@ -177,7 +177,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 					pw.flush();
 					pw.close();
 				}else if(url.contains("/menu/")){
-					resp.sendRedirect("/example/staticView/error_noPer.jsp");
+					resp.sendRedirect("/zsblogs/staticView/error_noPer.jsp");
 				}
 				break;
 			case Code.PERMISSION_NO_EXIST:

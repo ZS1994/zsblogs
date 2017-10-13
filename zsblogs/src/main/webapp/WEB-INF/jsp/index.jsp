@@ -45,6 +45,6 @@ function getToken(){
 	
 	<a class="easyui-linkbutton" iconCls="icon-search" href="<%=path%>/staticView/test.jsp">本地接口测试工具</a>
 	
-	
+	<a class="easyui-linkbutton" iconCls="icon-search" href="<%=path%>/menu/part">页面布局样板</a>
 </body>
 </html>

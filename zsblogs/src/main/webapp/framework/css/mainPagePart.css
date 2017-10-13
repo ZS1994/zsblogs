@@ -1,0 +1,35 @@
+@CHARSET "UTF-8";
+body{
+	height: 100%;
+    /*用于隐藏滚动条*/
+    overflow-y: hidden;
+}
+.p_left{
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 285px;
+	height: 100%;
+	background-color: #E7E7E7;
+}
+.p_body{
+	position: absolute;
+	top: 0;
+	left: 285px;
+	right: 0px;
+	bottom: 0;
+	overflow-y: scroll;
+}
+.p_body_body{
+	top: 0;
+	bottom: 0;
+	margin-right: 285px;
+}
+.p_body_right{
+	float: right;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 285px;
+}

@@ -13,7 +13,9 @@ import com.zs.controller.rest.BaseRestController.Code;
 import com.zs.entity.Permission;
 import com.zs.entity.Users;
 import com.zs.entity.other.Result;
+import com.zs.service.PerSer;
 import com.zs.service.RoleSer;
+import com.zs.service.UserSer;
 import com.zs.tools.Trans;
 import com.zs.tools.mail.MailManager;
 import com.zs.tools.mail.MailModel;
@@ -24,7 +26,13 @@ public class SystemConR {
 	private MailManager mail=MailManager.getInstance();
 	@Resource
 	private RoleSer roleSer;
+	@Resource
+	private PerSer perSer;
+	@Resource
+	private UserSer userSer;
 
+	
+	
 	@RequestMapping(value="/user/menu",method=RequestMethod.GET)
 	public Result<List<Permission>> getUserMenus(HttpServletRequest req, HttpServletResponse resp){
 		Users user=(Users) req.getAttribute("[user]");
