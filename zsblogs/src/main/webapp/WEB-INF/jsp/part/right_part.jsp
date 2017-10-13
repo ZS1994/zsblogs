@@ -5,9 +5,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
   
 <div class="p_body_right">
-	p_body_right
-	<div style="height: 2000px;border: 1px solid red;">
-	测试
+	<div style="height: 2000px;border: 0px solid red;">
 	</div>
 	
 </div>

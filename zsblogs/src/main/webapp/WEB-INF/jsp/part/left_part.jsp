@@ -5,5 +5,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
   
 <div class="p_left">
-  	11111111
+
+	<ul style="margin-top: 20px;margin-left: 20px;">
+		<li>
+			<a href="<%=path%>/menu/blogList">博客栏目</a>
+		</li>
+	</ul>
+  	
 </div>
