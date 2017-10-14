@@ -10,6 +10,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<li>
 			<a href="<%=path%>/menu/blogList">博客栏目</a>
 		</li>
+		<li>
+			<a href="<%=path%>/menu/blogList/blog">博客</a>
+		</li>
 	</ul>
   	
 </div>

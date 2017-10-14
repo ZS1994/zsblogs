@@ -10,6 +10,101 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<jsp:include page="/WEB-INF/jsp/part/include_bootstrap.jsp"/>
     <base href="<%=basePath%>">
     <title>中间部分（测试组件是否正常）</title>
+    <script type="text/javascript">
+    var url="<%=path%>/api/blog/list";
+    var page=1,total,rows=10,pageSize;
+    
+    $(function(){
+    	$.ajax({
+    		url:url,
+    		type:"get",
+    		data:{page:page,rows:rows},
+    		success:function(data){
+    			total=data.total;
+    			if(total%rows==0){
+    				pageSize=total/rows;
+    			}else{
+    				pageSize=total/rows+1;
+    			}
+    			if(page>=pageSize){
+    				$("#page_next").parent().addClass("disabled");
+    			}else{
+    				$("#page_next").parent().removeClass("disabled");
+    			}
+    			if(page>=1){
+    				$("#page_last").parent().addClass("disabled");
+    			}else{
+    				$("#page_last").parent().removeClass("disabled");
+    			}
+    			appendBlog(data.rows);
+    		}
+    		
+    	});
+    });
+    function appendBlog(rows){
+    	var str;
+		for(var i=0;i<rows.length;i++){
+			str="<div class='blog_block'><h4>"+rows[i].title+"</h4>"+
+			"<p>"+rows[i].context+"</p></div>";
+			console.log(str);
+			$("#blogs").append(str);
+		}
+    }
+    function lastPage(){
+    	if($("#page_last").parent().attr('class')!="disabled"){
+    		page--;
+    		$("#page_next").parent().removeClass("disabled");//去除下一页禁止
+    		$("#blogs").html("");//清空博客
+    		if(page>=1){
+				$("#page_last").parent().addClass("disabled");
+			}else{
+				$("#page_last").parent().removeClass("disabled");
+			}
+        	$.ajax({
+        		url:url,
+        		type:"get",
+        		data:{page:page,rows:rows},
+        		success:function(data){
+        			total=data.total;
+        			appendBlog(data.rows);
+        		}
+        	});
+    	}
+    }
+    function nextPage(){
+    	if($("#page_next").parent().attr('class')!="disabled"){
+    		page++;
+    		$("#page_last").parent().removeClass("disabled");//去除上一页禁止
+    		$("#blogs").html("");//清空博客
+        	$.ajax({
+        		url:url,
+        		type:"get",
+        		data:{page:page,rows:rows},
+        		success:function(data){
+        			total=data.total;
+        			if(total%rows==0){
+        				pageSize=total/rows;
+        			}else{
+        				pageSize=total/rows+1;
+        			}
+        			if(page>=pageSize){
+        				$("#page_next").parent().addClass("disabled");
+        			}else{
+        				$("#page_next").parent().removeClass("disabled");
+        			}
+        			appendBlog(data.rows);
+        		}
+        	});
+    	}
+    }
+    </script>
+    <style type="text/css">
+    .blog_block{
+    	border: 1px solid #e4e4e4;
+    	padding: 20px;
+    	margin-bottom: 10px;
+    }
+    </style>
   </head>
   
   <body>
@@ -20,27 +115,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		
   		
   		<div class="p_body_body">
+  			
   			<div class="container" style="padding-top: 50px;">
-			    <h2>
-				    Spring Data REST 远程代码执行漏洞（CVE-2017-8046）分析与复现
-			    </h2>
-					其河 ·2017-09-29 14:21
-			    <pre>
-public static class Code{
-	public static final int ERROR=-1;
-	public static final int SUCCESS=0;
-	public static final int LICENCE_NO=1;
-	public static final int LICENCE_TIMEOUT=2;
-	public static final int LOGIN_PASS_ERROR=11;
-	public static final int LOGIN_USER_NO=12;
-	public static final int LOGIN_INFO_NO=13;
-	public static final int ROLE_USER_NO_PERMISSION=101;
-	public static final int ROLE_USER_NO_ROLE=102;
-	public static final int ROLE_NO_PERMISSION=103;
-	public static final int PERMISSION_NO_EXIST=104;
-}
-			    </pre>
-			    asdasdas
+			    
+			    
+			    <div id="blogs">
+			    	
+			    	
+			    </div>
+			    
+			    <div class="pagination pagination-centered">
+				  <ul>
+				    <li><a id="page_last" onclick="lastPage()">上一页</a></li>
+				    <li><a id="page_next" onclick="nextPage()">下一页</a></li>
+				  </ul>
+				</div>
 			    
 			    
 		    </div>

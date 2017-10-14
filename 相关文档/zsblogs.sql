@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2017-10-12 15:02:36
+Date: 2017-10-14 18:08:11
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,11 +28,13 @@ CREATE TABLE `blog` (
   PRIMARY KEY (`id`),
   KEY `bl_id` (`bl_id`),
   CONSTRAINT `blog_ibfk_1` FOREIGN KEY (`bl_id`) REFERENCES `blog_list` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of blog
 -- ----------------------------
+INSERT INTO `blog` VALUES ('1', 'asa', '湿哒哒所', '2017-10-14 17:43:35', '1');
+INSERT INTO `blog` VALUES ('2', '第二篇', '社会实践', '2017-10-14 18:03:17', '1');
 
 -- ----------------------------
 -- Table structure for `blog_comment`
@@ -68,11 +70,12 @@ CREATE TABLE `blog_list` (
   PRIMARY KEY (`id`),
   KEY `u_id` (`u_id`),
   CONSTRAINT `blog_list_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of blog_list
 -- ----------------------------
+INSERT INTO `blog_list` VALUES ('1', '测试', '2017-10-14 17:43:16', '1', '1');
 
 -- ----------------------------
 -- Table structure for `permission`
