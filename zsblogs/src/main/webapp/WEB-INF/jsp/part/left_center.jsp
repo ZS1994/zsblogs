@@ -15,12 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   	<jsp:include page="/WEB-INF/jsp/part/left_part.jsp"/>
   	<div class="p_body">
-  		<jsp:include page="/WEB-INF/jsp/part/right_part.jsp"/>
-  		
-  		
-  		
-  		<div class="p_body_body">
-  			<div class="container" style="padding-top: 50px;">
+  			<div class="container" style="padding-top: 50px;width: 90%;">
 			    <h2>
 				    Spring Data REST 远程代码执行漏洞（CVE-2017-8046）分析与复现
 			    </h2>
@@ -45,7 +40,6 @@ public static class Code{
 			    
 		    </div>
   			
-  		</div>
   		
   		
   	</div>

@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,7 +47,7 @@ public class BlogConR extends BaseRestController<Blog, Integer>{
 
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	@Override
-	public Result<Blog> doGet(Integer id, HttpServletRequest req, HttpServletResponse resp) {
+	public Result<Blog> doGet(@PathVariable Integer id, HttpServletRequest req, HttpServletResponse resp) {
 		if(id!=null){
 			try {
 				return new Result<Blog>(SUCCESS, Code.SUCCESS, blogSer.get(id));
@@ -88,7 +89,7 @@ public class BlogConR extends BaseRestController<Blog, Integer>{
 
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
 	@Override
-	public Result<String> doDeleteFalse(Integer id, HttpServletRequest req, HttpServletResponse resp) {
+	public Result<String> doDeleteFalse(@PathVariable Integer id, HttpServletRequest req, HttpServletResponse resp) {
 		if(id!=null){
 			try {
 				return new Result<String>(SUCCESS, Code.SUCCESS, blogSer.delete(id));

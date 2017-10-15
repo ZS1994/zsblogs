@@ -5,7 +5,7 @@ import java.util.Date;
 public class BlogComment {
     private Integer id;
 
-    private String context;
+    private String content;
 
     private Date createTime;
 
@@ -21,12 +21,12 @@ public class BlogComment {
         this.id = id;
     }
 
-    public String getContext() {
-        return context;
+    public String getContent() {
+        return content;
     }
 
-    public void setContext(String context) {
-        this.context = context == null ? null : context.trim();
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
     }
 
     public Date getCreateTime() {

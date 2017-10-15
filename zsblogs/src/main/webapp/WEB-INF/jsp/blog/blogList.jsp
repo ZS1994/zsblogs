@@ -108,11 +108,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
   	<jsp:include page="/WEB-INF/jsp/part/left_part.jsp"/>
-  	<div class="p_body">
-  		<div class="p_body_right">
-			
-		</div>
-  		<div class="p_body_body" style="overflow: hidden;height: 100%;">
+  	<div class="p_body" style="overflow-y:hidden;">
   			
   			<table id="dg" border="true"
 				url="<%=path %>/api/blogList/list"
@@ -121,8 +117,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				striped="true" pagination="true"
 				rownumbers="true" fitColumns="false" 
 				singleSelect="true" fit="true"
-				pageSize="25" pageList="[25,40,50,100]"
-				style="height: 600px;">
+				pageSize="25" pageList="[25,40,50,100]">
 				<thead>
 					<tr>
 						<th field="id" width="100" sortable="true">ID</th>
@@ -183,7 +178,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			
   			
   		</div>
-  	</div>
   	
   </body>
 </html>

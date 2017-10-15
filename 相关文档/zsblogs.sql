@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本地服务器
+Source Server         : zs
 Source Server Version : 50617
 Source Host           : localhost:3306
 Source Database       : zsblogs
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2017-10-14 18:08:11
+Date: 2017-10-15 22:35:41
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,19 +22,22 @@ DROP TABLE IF EXISTS `blog`;
 CREATE TABLE `blog` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
-  `context` text NOT NULL,
+  `content` text NOT NULL,
   `create_time` datetime NOT NULL,
   `bl_id` int(11) NOT NULL,
+  `summary` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `bl_id` (`bl_id`),
   CONSTRAINT `blog_ibfk_1` FOREIGN KEY (`bl_id`) REFERENCES `blog_list` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of blog
 -- ----------------------------
-INSERT INTO `blog` VALUES ('1', 'asa', '湿哒哒所', '2017-10-14 17:43:35', '1');
-INSERT INTO `blog` VALUES ('2', '第二篇', '社会实践', '2017-10-14 18:03:17', '1');
+INSERT INTO `blog` VALUES ('1', 'asa', '湿哒哒所', '2017-10-14 17:43:35', '1', 'ads');
+INSERT INTO `blog` VALUES ('2', '第二篇', '社会实践', '2017-10-14 18:03:17', '1', 'ddd');
+INSERT INTO `blog` VALUES ('3', '俩sad', '啊啊啊啊', '2017-10-15 20:22:28', '1', 'sss');
+INSERT INTO `blog` VALUES ('4', 'sssssss', 'ada大', '2017-10-15 20:22:37', '1', 'aa');
 
 -- ----------------------------
 -- Table structure for `blog_comment`
@@ -42,7 +45,7 @@ INSERT INTO `blog` VALUES ('2', '第二篇', '社会实践', '2017-10-14 18:03:1
 DROP TABLE IF EXISTS `blog_comment`;
 CREATE TABLE `blog_comment` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `context` varchar(255) NOT NULL,
+  `content` varchar(255) NOT NULL,
   `create_time` datetime NOT NULL,
   `u_id` int(11) DEFAULT NULL,
   `b_id` int(11) NOT NULL,

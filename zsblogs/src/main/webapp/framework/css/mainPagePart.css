@@ -9,14 +9,14 @@ body{
 	top: 0;
 	left: 0;
 	bottom: 0;
-	width: 285px;
+	width: 17%;
 	height: 100%;
 	background-color: #E7E7E7;
 }
 .p_body{
 	position: absolute;
 	top: 0;
-	left: 285px;
+	left: 17%;
 	right: 0px;
 	bottom: 0;
 	overflow-y: scroll;
@@ -24,12 +24,12 @@ body{
 .p_body_body{
 	top: 0;
 	bottom: 0;
-	margin-right: 285px;
+	margin-right: 17%;
 }
 .p_body_right{
 	float: right;
 	top: 0;
 	right: 0;
 	bottom: 0;
-	width: 285px;
+	width: 17%;
 }

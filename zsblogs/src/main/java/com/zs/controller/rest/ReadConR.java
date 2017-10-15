@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,7 +48,7 @@ public class ReadConR extends BaseRestController<Read, Integer>{
 
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
 	@Override
-	public Result<Read> doGet(Integer id, HttpServletRequest req, HttpServletResponse resp) {
+	public Result<Read> doGet(@PathVariable Integer id, HttpServletRequest req, HttpServletResponse resp) {
 		if(id!=null){
 			try {
 				return new Result<Read>(SUCCESS, Code.SUCCESS, readSer.get(id));
@@ -102,7 +103,7 @@ public class ReadConR extends BaseRestController<Read, Integer>{
 	}
 
 	@Override
-	public Result<String> doDeleteTrue(Integer id, HttpServletRequest req, HttpServletResponse resp) {
+	public Result<String> doDeleteTrue(@PathVariable Integer id, HttpServletRequest req, HttpServletResponse resp) {
 		// TODO Auto-generated method stub
 		return null;
 	}

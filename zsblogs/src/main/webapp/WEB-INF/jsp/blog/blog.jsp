@@ -9,10 +9,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
   	<jsp:include page="/WEB-INF/jsp/part/include_bootstrap.jsp"/>
     <base href="<%=basePath%>">
-    <title>中间部分（测试组件是否正常）</title>
+    <title>所有博客</title>
     <script type="text/javascript">
     var url="<%=path%>/api/blog/list";
-    var page=1,total,rows=10,pageSize;
+    var page=1,total,rows=3,pageSize;
     
     $(function(){
     	$.ajax({
@@ -22,21 +22,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		success:function(data){
     			total=data.total;
     			if(total%rows==0){
-    				pageSize=total/rows;
+    				pageSize=Math.floor(total/rows);
     			}else{
-    				pageSize=total/rows+1;
+    				pageSize=Math.floor(total/rows)+1;
     			}
-    			if(page>=pageSize){
+    			console.log(pageSize);
+    			if(page==pageSize){
     				$("#page_next").parent().addClass("disabled");
     			}else{
     				$("#page_next").parent().removeClass("disabled");
     			}
-    			if(page>=1){
+    			if(page==1){
     				$("#page_last").parent().addClass("disabled");
     			}else{
     				$("#page_last").parent().removeClass("disabled");
     			}
     			appendBlog(data.rows);
+    			$("#page_position").html("第"+page+"页，共"+pageSize+"页");//设置当前第几页了
     		}
     		
     	});
@@ -44,29 +46,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     function appendBlog(rows){
     	var str;
 		for(var i=0;i<rows.length;i++){
-			str="<div class='blog_block'><h4>"+rows[i].title+"</h4>"+
-			"<p>"+rows[i].context+"</p></div>";
+			str="<div class='blog_block' onclick='gotoBlogMain("+rows[i].id+")'><h4>"+rows[i].title+"</h4>"+
+			"<p>"+rows[i].summary+"</p></div>";
 			console.log(str);
 			$("#blogs").append(str);
 		}
     }
+    function gotoBlogMain(id){
+    	window.location.href="<%=path%>/menu/blogList/blog/"+id;
+    }
     function lastPage(){
     	if($("#page_last").parent().attr('class')!="disabled"){
     		page--;
-    		$("#page_next").parent().removeClass("disabled");//去除下一页禁止
-    		$("#blogs").html("");//清空博客
-    		if(page>=1){
-				$("#page_last").parent().addClass("disabled");
-			}else{
-				$("#page_last").parent().removeClass("disabled");
-			}
         	$.ajax({
         		url:url,
         		type:"get",
         		data:{page:page,rows:rows},
         		success:function(data){
-        			total=data.total;
+        			$("#page_next").parent().removeClass("disabled");//去除下一页禁止
+            		$("#blogs").html("");//清空博客
         			appendBlog(data.rows);
+        			if(page>=1){
+        				$("#page_last").parent().addClass("disabled");
+        			}else{
+        				$("#page_last").parent().removeClass("disabled");
+        			}
+        			$("#page_position").html("第"+page+"页，共"+pageSize+"页");//设置当前第几页了
         		}
         	});
     	}
@@ -74,25 +79,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     function nextPage(){
     	if($("#page_next").parent().attr('class')!="disabled"){
     		page++;
-    		$("#page_last").parent().removeClass("disabled");//去除上一页禁止
-    		$("#blogs").html("");//清空博客
         	$.ajax({
         		url:url,
         		type:"get",
         		data:{page:page,rows:rows},
         		success:function(data){
-        			total=data.total;
-        			if(total%rows==0){
-        				pageSize=total/rows;
-        			}else{
-        				pageSize=total/rows+1;
-        			}
+        			$("#page_last").parent().removeClass("disabled");//去除上一页禁止
+            		$("#blogs").html("");//清空博客
+        			appendBlog(data.rows);
         			if(page>=pageSize){
         				$("#page_next").parent().addClass("disabled");
         			}else{
         				$("#page_next").parent().removeClass("disabled");
         			}
-        			appendBlog(data.rows);
+        			$("#page_position").html("第"+page+"页，共"+pageSize+"页");//设置当前第几页了
         		}
         	});
     	}
@@ -103,6 +103,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	border: 1px solid #e4e4e4;
     	padding: 20px;
     	margin-bottom: 10px;
+    	cursor: pointer;
     }
     </style>
   </head>
@@ -110,31 +111,44 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   	<jsp:include page="/WEB-INF/jsp/part/left_part.jsp"/>
   	<div class="p_body">
-  		<jsp:include page="/WEB-INF/jsp/part/right_part.jsp"/>
-  		
-  		
-  		
-  		<div class="p_body_body">
+			
   			
-  			<div class="container" style="padding-top: 50px;">
+  			<div class="container" style="width:90%;margin-top: 10px; ">
 			    
-			    
+				
+				<div class="input-append">
+				  <input class="span3" id="appendedInputButton" type="text" style="height: inherit;">
+				  <button class="btn" type="button">搜索</button>
+				</div>
+							    
 			    <div id="blogs">
 			    	
 			    	
 			    </div>
 			    
-			    <div class="pagination pagination-centered">
-				  <ul>
-				    <li><a id="page_last" onclick="lastPage()">上一页</a></li>
-				    <li><a id="page_next" onclick="nextPage()">下一页</a></li>
-				  </ul>
-				</div>
+			    <div class="row-fluid">
+			    	<div class="span4 offset4">
+			    		<div class="pagination pagination-centered">
+						  <ul>
+						    <li><a id="page_last" onclick="lastPage()">上一页</a></li>
+						    <li><a id="page_next" onclick="nextPage()">下一页</a></li>
+						  </ul>
+						</div>
+			    	</div>
+			    	<div class="span4">
+			    		<div class="pagination pagination-right">
+						  <ul>
+						    <li><span id="page_position">第1页，共2页</span></li>
+						  </ul>
+						</div>
+			    		
+			    	</div>
+			    </div>
+			    
 			    
 			    
 		    </div>
   			
-  		</div>
   		
   		
   	</div>

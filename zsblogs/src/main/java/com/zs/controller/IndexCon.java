@@ -1,6 +1,7 @@
 package com.zs.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -29,7 +30,10 @@ public class IndexCon{
 	public String gotoBlog(){
 		return "/blog/blog";
 	}
-	
+	@RequestMapping("/blogList/blog/{id}")
+	public String gotoBlogMain(@PathVariable String id){
+		return "/blog/blogMainInfo";
+	}
 	@RequestMapping("/blogList/blog/blogComment")
 	public String gotoBlogComment(){
 		return "/blog/blogComment";

@@ -11,9 +11,19 @@ public class Blog {
 
     private Integer blId;
 
-    private String context;
+    private String content;
 
-    public Integer getId() {
+    private String summary;
+    
+    public String getSummary() {
+		return summary;
+	}
+
+	public void setSummary(String summary) {
+		this.summary = summary;
+	}
+
+	public Integer getId() {
         return id;
     }
 
@@ -45,11 +55,11 @@ public class Blog {
         this.blId = blId;
     }
 
-    public String getContext() {
-        return context;
+    public String getContent() {
+        return content;
     }
 
-    public void setContext(String context) {
-        this.context = context == null ? null : context.trim();
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
     }
 }
