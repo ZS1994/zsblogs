@@ -1,4 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -12,8 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>所有博客</title>
     <script type="text/javascript">
     var url="<%=path%>/api/blog/list";
-    var page=1,total,rows=3,pageSize;
-    
+    var page="${page}",total,rows="${rows}",pageSize;
     $(function(){
     	$.ajax({
     		url:url,
@@ -47,8 +47,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	var str;
 		for(var i=0;i<rows.length;i++){
 			str="<div class='blog_block'><h4><a class='blog_title' onclick='gotoBlogMain("+rows[i].id+")'>"+rows[i].title+"</a></h4>"+
-			"<legend class='blog_introduction'>"+new Date(rows[i].createTime).Format("yyyy年MM月dd日 hh:mm:ss")+"</legend>"+
 			"<p>"+rows[i].summary+"</p>"+
+			"<div class='blog_introduction'>"+new Date(rows[i].createTime).Format("yyyy年MM月dd日 hh:mm:ss")+"</div>"+
 			"</div>";
 			$("#blogs").append(str);
 		}
@@ -59,43 +59,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     function lastPage(){
     	if($("#page_last").parent().attr('class')!="disabled"){
     		page--;
-        	$.ajax({
-        		url:url,
-        		type:"get",
-        		data:{page:page,rows:rows},
-        		success:function(data){
-        			$("#page_next").parent().removeClass("disabled");//去除下一页禁止
-            		$("#blogs").html("");//清空博客
-        			appendBlog(data.rows);
-        			if(page>=1){
-        				$("#page_last").parent().addClass("disabled");
-        			}else{
-        				$("#page_last").parent().removeClass("disabled");
-        			}
-        			$("#page_position").html("第"+page+"页，共"+pageSize+"页");//设置当前第几页了
-        		}
-        	});
+    		window.location.href="<%=path%>/menu/blogList/blog?page="+page+"&rows="+rows;
     	}
     }
     function nextPage(){
     	if($("#page_next").parent().attr('class')!="disabled"){
     		page++;
-        	$.ajax({
-        		url:url,
-        		type:"get",
-        		data:{page:page,rows:rows},
-        		success:function(data){
-        			$("#page_last").parent().removeClass("disabled");//去除上一页禁止
-            		$("#blogs").html("");//清空博客
-        			appendBlog(data.rows);
-        			if(page>=pageSize){
-        				$("#page_next").parent().addClass("disabled");
-        			}else{
-        				$("#page_next").parent().removeClass("disabled");
-        			}
-        			$("#page_position").html("第"+page+"页，共"+pageSize+"页");//设置当前第几页了
-        		}
-        	});
+    		window.location.href="<%=path%>/menu/blogList/blog?page="+page+"&rows="+rows;
     	}
     }
     </script>
@@ -125,7 +95,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				
 				<div class="input-append">
 				  <input class="span3" id="appendedInputButton" type="text" style="height: inherit;">
-				  <button class="btn" type="button">搜索</button>
+				  <button class="btn" type="button">搜索${page}</button>
 				</div>
 							    
 			    <div id="blogs">

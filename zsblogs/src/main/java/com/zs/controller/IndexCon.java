@@ -1,5 +1,7 @@
 package com.zs.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +29,9 @@ public class IndexCon{
 	}
 	
 	@RequestMapping("/blogList/blog")
-	public String gotoBlog(){
+	public String gotoBlog(HttpServletRequest req,String page,String rows){
+		req.setAttribute("page", page);
+		req.setAttribute("rows", rows);
 		return "/blog/blog";
 	}
 	@RequestMapping("/blogList/blog/{id}")

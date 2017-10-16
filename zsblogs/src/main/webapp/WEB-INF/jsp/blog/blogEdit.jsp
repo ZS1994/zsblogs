@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     }
     function save(){
     	var str="<div class='alert alert-success fade in'>"+
-    	"<a class='close' data-dismiss='alert'>&times;</a>"+
+    	"<a class='close' href='#' data-dismiss='alert'>&times;</a>"+
     	"<strong>成功！</strong>保存成功。</div>";
     	$("#result_hint").append(str);
     	//$(".alert").alert();
@@ -66,7 +66,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    </div>
 				
 			</div>
-			<div class="span6" style="border-left: 1px solid #999;min-height:600px;">
+			<div class="span6" style="border-left: 1px solid #e5e5e5;min-height:600px;">
 			
 				<div class="container" style="width: 90%;padding-top: 20px;">
 				    <legend>预览博客</legend>
