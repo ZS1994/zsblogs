@@ -7,12 +7,13 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="bl_id" property="blId" jdbcType="INTEGER" />
     <result column="summary" property="summary" jdbcType="VARCHAR" />
+    <result column="ishide" property="ishide" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.zs.entity.Blog" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, title, create_time, bl_id ,summary
+    id, title, create_time, bl_id ,summary, ishide
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -31,9 +32,10 @@
   </delete>
   <insert id="insert" parameterType="com.zs.entity.Blog" >
     insert into blog (id, title, create_time, 
-      bl_id, content ,summary)
+      bl_id, content ,summary,ishide)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{blId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}) ,#{summary,jdbcType=VARCHAR}
+      #{blId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}) ,#{summary,jdbcType=VARCHAR},
+      #{ishide,jdbcType=VARCHAR}
   </insert>
   <insert id="insertSelective" parameterType="com.zs.entity.Blog" >
     insert into blog
@@ -56,6 +58,9 @@
       <if test="summary != null" >
         summary,
       </if>
+      <if test="ishide != null" >
+        ishide,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -76,6 +81,9 @@
       <if test="summary != null" >
         #{summary,jdbcType=VARCHAR},
       </if>
+      <if test="ishide != null" >
+        #{ishide,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zs.entity.Blog" >
@@ -94,7 +102,10 @@
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
       <if test="summary != null" >
-        content = #{summary,jdbcType=VARCHAR},
+        summary = #{summary,jdbcType=VARCHAR},
+      </if>
+      <if test="ishide != null" >
+        ishide = #{ishide,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -105,6 +116,7 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       bl_id = #{blId,jdbcType=INTEGER},
       summary = #{summary,jdbcType=VARCHAR},
+      ishide = #{ishide,jdbcType=VARCHAR},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -113,6 +125,7 @@
     set title = #{title,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       summary = #{summary,jdbcType=VARCHAR},
+      ishide = #{ishide,jdbcType=VARCHAR},
       bl_id = #{blId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -120,6 +133,7 @@
   <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
   	select * from blog
   	<where>
+  		and ishide=0
   	</where>
   	<if test="sort!=null and order!=null">
   		order by ${sort} ${order}
@@ -129,6 +143,7 @@
   <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
   	select count(*) from blog
   	<where>
+  		and ishide=0
   	</where>
   </select>
 </mapper>

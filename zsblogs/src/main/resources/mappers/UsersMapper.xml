@@ -11,9 +11,10 @@
     <result column="isdelete" property="isdelete" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="rids" property="rids" jdbcType="VARCHAR" />
+    <result column="img" property="img" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, usernum, userpass, name, mail, phone, isdelete, create_time, rids
+    id, usernum, userpass, name, mail, phone, isdelete, create_time, rids ,img
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -28,11 +29,12 @@
   <insert id="insert" parameterType="com.zs.entity.Users" >
     insert into users (id, usernum, userpass, 
       name, mail, phone, 
-      isdelete, create_time, rids
+      isdelete, create_time, rids ,img
       )
     values (#{id,jdbcType=INTEGER}, #{usernum,jdbcType=VARCHAR}, #{userpass,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
-      #{isdelete,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{rids,jdbcType=VARCHAR}
+      #{isdelete,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{rids,jdbcType=VARCHAR}, 
+      #{img,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.zs.entity.Users" >
@@ -65,6 +67,9 @@
       <if test="rids != null" >
         rids,
       </if>
+      <if test="img != null" >
+        img,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -93,6 +98,9 @@
       </if>
       <if test="rids != null" >
         #{rids,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null" >
+        #{img,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -123,6 +131,9 @@
       <if test="rids != null" >
         rids = #{rids,jdbcType=VARCHAR},
       </if>
+      <if test="img != null" >
+        rids = #{img,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -135,7 +146,8 @@
       phone = #{phone,jdbcType=VARCHAR},
       isdelete = #{isdelete,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      rids = #{rids,jdbcType=VARCHAR}
+      rids = #{rids,jdbcType=VARCHAR},
+      img = #{img,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByNumAndPass" resultMap="BaseResultMap" parameterType="java.lang.String" >

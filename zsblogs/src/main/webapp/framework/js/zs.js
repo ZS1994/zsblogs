@@ -1,5 +1,5 @@
 /**
- * 2017-2-21，张顺，这里写一些公共的方法，每个页面都会引用这个js
+* 2017-2-21，张顺，这里写一些公共的方法，每个页面都会引用这个js，但某些函数依赖easyUI
  */
 function getNowTime(fgf){
 	var date=new Date();
@@ -71,11 +71,6 @@ $.extend($.fn.validatebox.defaults.rules, {
 });
 /*判断是否是json对象或者json数组*/
 function isJson(obj){
-	/*
-	console.log(typeof(obj));
-	console.log(Object.prototype.toString.call(obj).toLowerCase());
-	console.log((Object.prototype.toString.call(obj).toLowerCase() == "[object object]" || Object.prototype.toString.call(obj).toLowerCase() == "[object array]"));
-	*/
 	var isj = typeof(obj) == "object" && (Object.prototype.toString.call(obj).toLowerCase() == "[object object]" || Object.prototype.toString.call(obj).toLowerCase() == "[object array]"); 
 	return isj;
 }
@@ -166,4 +161,20 @@ function jsonObjTransToUrlparam(param){
 		}
 	}
 	return str.substr(1);
+}
+/*张顺，2017-10-16，日期格式化函数，使用方法：date.Format("yyyy年MM月dd hh:mm:ss")*/
+Date.prototype.Format = function (fmt) { //author: meizz
+  var o = {
+    "M+": this.getMonth() + 1, //月份
+    "d+": this.getDate(), //日
+    "h+": this.getHours(), //小时
+    "m+": this.getMinutes(), //分
+    "s+": this.getSeconds(), //秒
+    "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+    "S": this.getMilliseconds() //毫秒
+  };
+  if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+  for (var k in o)
+  if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+  return fmt;
 }

@@ -34,6 +34,11 @@ public class IndexCon{
 	public String gotoBlogMain(@PathVariable String id){
 		return "/blog/blogMainInfo";
 	}
+	@RequestMapping("/blogList/blog/edit")
+	public String gotoBlogEdit(){
+		return "/blog/blogEdit";
+	}
+	
 	@RequestMapping("/blogList/blog/blogComment")
 	public String gotoBlogComment(){
 		return "/blog/blogComment";

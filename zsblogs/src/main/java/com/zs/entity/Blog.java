@@ -15,7 +15,18 @@ public class Blog {
 
     private String summary;
     
-    public String getSummary() {
+    private String ishide;
+    
+    
+    public String getIshide() {
+		return ishide;
+	}
+
+	public void setIshide(String ishide) {
+		this.ishide = ishide;
+	}
+
+	public String getSummary() {
 		return summary;
 	}
 

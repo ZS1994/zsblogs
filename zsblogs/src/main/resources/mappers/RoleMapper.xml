@@ -4,11 +4,11 @@
   <resultMap id="BaseResultMap" type="com.zs.entity.Role" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="des" property="des" jdbcType="VARCHAR" />
+    <result column="introduction" property="introduction" jdbcType="VARCHAR" />
     <result column="pids" property="pids" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, des, pids
+    id, name, introduction, pids
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -21,9 +21,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zs.entity.Role" >
-    insert into role (id, name, des, 
+    insert into role (id, name, introduction, 
       pids)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{introduction,jdbcType=VARCHAR}, 
       #{pids,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.zs.entity.Role" >
@@ -35,8 +35,8 @@
       <if test="name != null" >
         name,
       </if>
-      <if test="des != null" >
-        des,
+      <if test="introduction != null" >
+        introduction,
       </if>
       <if test="pids != null" >
         pids,
@@ -49,8 +49,8 @@
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="des != null" >
-        #{des,jdbcType=VARCHAR},
+      <if test="introduction != null" >
+        #{introduction,jdbcType=VARCHAR},
       </if>
       <if test="pids != null" >
         #{pids,jdbcType=VARCHAR},
@@ -63,8 +63,8 @@
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="des != null" >
-        des = #{des,jdbcType=VARCHAR},
+      <if test="introduction != null" >
+        introduction = #{introduction,jdbcType=VARCHAR},
       </if>
       <if test="pids != null" >
         pids = #{pids,jdbcType=VARCHAR},
@@ -75,7 +75,7 @@
   <update id="updateByPrimaryKey" parameterType="com.zs.entity.Role" >
     update role
     set name = #{name,jdbcType=VARCHAR},
-      des = #{des,jdbcType=VARCHAR},
+      introduction = #{introduction,jdbcType=VARCHAR},
       pids = #{pids,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

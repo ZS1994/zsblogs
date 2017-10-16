@@ -46,9 +46,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     function appendBlog(rows){
     	var str;
 		for(var i=0;i<rows.length;i++){
-			str="<div class='blog_block' onclick='gotoBlogMain("+rows[i].id+")'><h4>"+rows[i].title+"</h4>"+
-			"<p>"+rows[i].summary+"</p></div>";
-			console.log(str);
+			str="<div class='blog_block'><h4><a class='blog_title' onclick='gotoBlogMain("+rows[i].id+")'>"+rows[i].title+"</a></h4>"+
+			"<legend class='blog_introduction'>"+new Date(rows[i].createTime).Format("yyyy年MM月dd日 hh:mm:ss")+"</legend>"+
+			"<p>"+rows[i].summary+"</p>"+
+			"</div>";
 			$("#blogs").append(str);
 		}
     }
@@ -103,6 +104,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	border: 1px solid #e4e4e4;
     	padding: 20px;
     	margin-bottom: 10px;
+    }
+    .blog_title{
+    	font-size: 18px;
+    	cursor: pointer;
+    }
+    a{
     	cursor: pointer;
     }
     </style>

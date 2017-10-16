@@ -22,7 +22,18 @@ public class Users {
 
     private String rids;
 
-    private List<Role> roles;
+    private String img;
+    
+    
+    public String getImg() {
+		return img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
+	private List<Role> roles;
     
 
 	public List<Role> getRoles() {

@@ -5,7 +5,7 @@ public class Role {
 
     private String name;
 
-    private String des;
+    private String introduction;
 
     private String pids;
 
@@ -25,12 +25,12 @@ public class Role {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getDes() {
-        return des;
+    public String getIntroduction() {
+        return introduction;
     }
 
-    public void setDes(String des) {
-        this.des = des == null ? null : des.trim();
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction == null ? null : introduction.trim();
     }
 
     public String getPids() {

@@ -20,7 +20,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		type:"get",
     		success:function(data){
     			$("#blog_title").html(data.data.title);
-    			$("#blog_author").html(data.data.id);
+    			$("#blog_author").html(new Date(data.data.createTime).Format("yyyy年MM月dd日 hh:mm:ss"));
     			$("#blog_content").html(data.data.content);
     			console.log(data);
     		}
@@ -29,11 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     });
     </script>
     <style type="text/css">
-    .blog_block{
-    	border: 1px solid #e4e4e4;
-    	padding: 20px;
-    	margin-bottom: 10px;
-    }
+    
     </style>
   </head>
   
@@ -43,11 +39,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
   		<div class="container" style="width: 90%;">
 		    
-		    <h2 id="blog_title"></h2>
+		    <h2 id="blog_title" style="margin-top: 30px;text-align: center;"></h2>
 		    
-		    <div id="blog_author"></div>
+		    <legend id="blog_author" class="blog_introduction" style="text-align: center;"></legend>
 			
-			<div id="blog_content"></div>	
+			<div id="blog_content" style="margin-bottom: 100px;"></div>	
 		    
 	    </div>
   		
