@@ -49,4 +49,8 @@ public class BlogListSerImpl implements BlogListSer{
 		return blogListMapper.selectByPrimaryKey(id);
 	}
 
+	public List<BlogList> queryAll(Integer uid) {
+		return blogListMapper.queryAll(uid);
+	}
+
 }

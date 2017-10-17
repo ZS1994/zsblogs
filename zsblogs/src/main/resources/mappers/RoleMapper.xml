@@ -83,7 +83,7 @@
     select 
     <include refid="Base_Column_List" />
     from role
-    where id in #{rids}
+    where id in (${rids})
   </select>
   
   <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">

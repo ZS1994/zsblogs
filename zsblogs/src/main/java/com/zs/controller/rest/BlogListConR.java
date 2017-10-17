@@ -1,5 +1,7 @@
 package com.zs.controller.rest;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.zs.entity.BlogList;
+import com.zs.entity.Users;
 import com.zs.entity.other.EasyUIAccept;
 import com.zs.entity.other.EasyUIPage;
 import com.zs.entity.other.Result;
@@ -118,5 +121,18 @@ public class BlogListConR extends BaseRestController<BlogList, Integer>{
 		return null;
 	}
 	
+	@RequestMapping(value="/user/all",method=RequestMethod.GET)
+	public Result<List<BlogList>> getUserBlogList(HttpServletRequest req){
+		Users user=(Users)req.getAttribute("[user]");
+		if(user!=null){
+			try {
+				return new Result<List<BlogList>>(SUCCESS, Code.SUCCESS, blogListSer.queryAll(user.getId()));
+			} catch (Exception e) {
+				e.printStackTrace();
+				mail.addMail(new MailModel(Trans.strToHtml(e.getMessage()), MailManager.TITLE));
+			}
+		}
+		return new Result<List<BlogList>>(ERROR, Code.ERROR, null);
+	}
 
 }

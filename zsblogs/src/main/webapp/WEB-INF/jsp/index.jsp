@@ -27,7 +27,7 @@ function testCors(){
 		}
 	});
 }
-function getToken(){
+function getToken2(){
 	$.ajax({
 		url:"${path}/api/login/token",
 		type:"post",
@@ -37,14 +37,24 @@ function getToken(){
 		}
 	});
 }
+$(function(){
+	$("#showToken").html(getToken());
+});
 </script>
 
 	<a class="easyui-linkbutton" iconCls="icon-search" href="<%=path%>/menu/index">测试easyui样式和controller是否起作用</a>
 	<a class="easyui-linkbutton" iconCls="icon-search" onclick="testCors()">测试 跨域、权限、时间轴是否生效</a>
-	<a class="easyui-linkbutton" iconCls="icon-search" onclick="getToken()">获取token</a>
+	<a class="easyui-linkbutton" iconCls="icon-search" onclick="getToken2()">获取token</a>
 	
 	<a class="easyui-linkbutton" iconCls="icon-search" href="<%=path%>/staticView/test.jsp">本地接口测试工具</a>
 	
 	<a class="easyui-linkbutton" iconCls="icon-search" href="<%=path%>/menu/part">页面布局样板</a>
+	
+	<div id="showToken">
+	token为：
+	</div>
+	<div>
+	session中的token为：${token }
+	</div>
 </body>
 </html>

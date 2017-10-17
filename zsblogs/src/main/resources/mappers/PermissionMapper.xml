@@ -142,13 +142,13 @@
     select 
     <include refid="Base_Column_List" />
     from permission
-    where url = #{url,jdbcType=VARCHAR} and method = #{method,jdbcType=VARCHAR}
+    where url like #{url} and method = #{method,jdbcType=VARCHAR}
   </select>
   <select id="selectByPers" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from permission
-    where id in ${pers}
+    where id in (${pers})
   </select>
   
   <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">

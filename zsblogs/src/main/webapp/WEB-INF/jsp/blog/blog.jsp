@@ -12,35 +12,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <base href="<%=basePath%>">
     <title>所有博客</title>
     <script type="text/javascript">
-    var url="<%=path%>/api/blog/list";
     var page="${page}",total,rows="${rows}",pageSize;
     $(function(){
-    	$.ajax({
-    		url:url,
+    	pullRequest({
+    		urlb:"/api/blog/list",
     		type:"get",
     		data:{page:page,rows:rows},
-    		success:function(data){
-    			total=data.total;
-    			if(total%rows==0){
-    				pageSize=Math.floor(total/rows);
-    			}else{
-    				pageSize=Math.floor(total/rows)+1;
+    		isNeedToken:false,
+    		superSuccess:function(data){
+    			//先预防是权限问题
+    			if(isJson(data)){
+    				if(data.result){
+    					alert("result："+data.result+"\ncode："+data.code+"\ndata："+data.data);
+    				}else{
+    					total=data.total;
+    	    			if(total%rows==0){
+    	    				pageSize=Math.floor(total/rows);
+    	    			}else{
+    	    				pageSize=Math.floor(total/rows)+1;
+    	    			}
+    	    			console.log(pageSize);
+    	    			if(page==pageSize){
+    	    				$("#page_next").parent().addClass("disabled");
+    	    			}else{
+    	    				$("#page_next").parent().removeClass("disabled");
+    	    			}
+    	    			if(page==1){
+    	    				$("#page_last").parent().addClass("disabled");
+    	    			}else{
+    	    				$("#page_last").parent().removeClass("disabled");
+    	    			}
+    	    			appendBlog(data.rows);
+    	    			$("#page_position").html("第"+page+"页，共"+pageSize+"页");//设置当前第几页了
+    				}
     			}
-    			console.log(pageSize);
-    			if(page==pageSize){
-    				$("#page_next").parent().addClass("disabled");
-    			}else{
-    				$("#page_next").parent().removeClass("disabled");
-    			}
-    			if(page==1){
-    				$("#page_last").parent().addClass("disabled");
-    			}else{
-    				$("#page_last").parent().removeClass("disabled");
-    			}
-    			appendBlog(data.rows);
-    			$("#page_position").html("第"+page+"页，共"+pageSize+"页");//设置当前第几页了
     		}
-    		
     	});
     });
     function appendBlog(rows){

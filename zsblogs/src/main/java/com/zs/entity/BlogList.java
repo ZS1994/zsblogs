@@ -9,7 +9,7 @@ public class BlogList {
 
     private Date createTime;
 
-    private Integer order;
+    private Integer blOrder;
 
     private Integer uId;
 
@@ -37,12 +37,12 @@ public class BlogList {
         this.createTime = createTime;
     }
 
-    public Integer getOrder() {
-        return order;
+    public Integer getBlOrder() {
+        return blOrder;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
+    public void setBlOrder(Integer blOrder) {
+        this.blOrder = blOrder;
     }
 
     public Integer getuId() {

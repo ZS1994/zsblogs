@@ -12,19 +12,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <base href="<%=basePath%>">
     <title>博客正文</title>
     <script type="text/javascript">
-    var url="<%=path%>/api/blog/${id}";
-    
     $(function(){
-    	$.ajax({
-    		url:url,
+    	pullRequest({
+    		urlb:"/api/blog/${id}",
     		type:"get",
+    		isNeedToken:false,
     		success:function(data){
-    			$("#blog_title").html(data.data.title);
-    			$("#blog_author").html(new Date(data.data.createTime).Format("yyyy年MM月dd日 hh:mm:ss"));
-    			$("#blog_content").html(data.data.content);
     			console.log(data);
+    			$("#blog_title").html(data.title);
+    			$("#blog_author").html(new Date(data.createTime).Format("yyyy年MM月dd日 hh:mm:ss"));
+    			$("#blog_content").html(data.content);
     		}
-    		
     	});
     });
     </script>

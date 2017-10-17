@@ -5,7 +5,6 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="title" property="title" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="bl_id" property="blId" jdbcType="INTEGER" />
     <result column="summary" property="summary" jdbcType="VARCHAR" />
     <result column="ishide" property="ishide" jdbcType="VARCHAR" />
   </resultMap>
@@ -13,7 +12,7 @@
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, title, create_time, bl_id ,summary, ishide
+    id, title, create_time ,summary, ishide
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -31,8 +30,7 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zs.entity.Blog" >
-    insert into blog (id, title, create_time, 
-      bl_id, content ,summary,ishide)
+    insert into blog (id, title, create_time, content ,summary,ishide)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{blId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}) ,#{summary,jdbcType=VARCHAR},
       #{ishide,jdbcType=VARCHAR}
@@ -48,9 +46,6 @@
       </if>
       <if test="createTime != null" >
         create_time,
-      </if>
-      <if test="blId != null" >
-        bl_id,
       </if>
       <if test="content != null" >
         content,
@@ -95,9 +90,6 @@
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="blId != null" >
-        bl_id = #{blId,jdbcType=INTEGER},
-      </if>
       <if test="content != null" >
         content = #{content,jdbcType=LONGVARCHAR},
       </if>
@@ -114,7 +106,6 @@
     update blog
     set title = #{title,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      bl_id = #{blId,jdbcType=INTEGER},
       summary = #{summary,jdbcType=VARCHAR},
       ishide = #{ishide,jdbcType=VARCHAR},
       content = #{content,jdbcType=LONGVARCHAR}
@@ -125,8 +116,7 @@
     set title = #{title,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       summary = #{summary,jdbcType=VARCHAR},
-      ishide = #{ishide,jdbcType=VARCHAR},
-      bl_id = #{blId,jdbcType=INTEGER}
+      ishide = #{ishide,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   

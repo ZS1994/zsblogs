@@ -35,6 +35,7 @@ import com.zs.service.PerSer;
 import com.zs.service.RoleSer;
 import com.zs.service.TimeLineSer;
 import com.zs.service.UserSer;
+import com.zs.tools.StringHelper;
 
 
 /**2017-2-27，张顺
@@ -69,6 +70,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 	Users user;
 	List<Role> roles;
 	String token;
+	String tokenS;
 	Token lcToken;
 	boolean isTimeout=false;//是否过期
 	
@@ -85,6 +87,22 @@ public class RoleInter extends HandlerInterceptorAdapter{
 	    url=req.getRequestURI();
 	    reqPamrs = req.getQueryString();//后面的参数
 	    token=req.getHeader("token");
+	    tokenS=(String)req.getSession().getAttribute("token");
+	    if(token==null && tokenS!=null){
+	    	token=tokenS;
+	    }
+	    
+	}
+	
+	private final String GET="GET",POST="POST",PUT="PUT",DELETE="DELETE";
+	
+	//给例外列表用的
+	private boolean allowThrough(String turl,String tmethod){
+		String urla="/zsblogs";
+		if(StringHelper.checkStar(url, (urla+turl)) && tmethod.equals(method)){
+			return true;
+		}
+		return false;
 	}
 	
 	/*权限判断+时间轴记录*/
@@ -93,8 +111,17 @@ public class RoleInter extends HandlerInterceptorAdapter{
 			throws Exception {
 		init(request, response);
 		//例外列表
-		log.warn(url+"  "+method);
-		if (url.contains("/api/login")
+		log.info(url+"  "+method+"  "+token);
+		if (
+				allowThrough("/api/login/token", POST) ||
+				allowThrough("/api/login/token/clear", DELETE) ||
+				allowThrough("/menu/index", GET) ||
+				allowThrough("/menu/part", GET) ||
+				allowThrough("/menu/blogList/blog", GET) ||
+				allowThrough("/api/blog/list", GET) ||
+				allowThrough("/menu/blogList/blog/*", GET) ||
+				allowThrough("/api/blog/*", GET) ||
+				allowThrough("/menu/system/login", GET)
 				) {
 			return true;
 		}
@@ -120,7 +147,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 				return false;
 			}else{
 				if (roleSer.isPerInRoles(per, roles)) {
-					timeLineSer.add(new Timeline(per.getId(), user.getId(), gson.toJson(req.getParameterMap())));
+					timeLineSer.add(new Timeline(user.getId(),per.getId(), gson.toJson(req.getParameterMap())));
 					Calendar calendar=Calendar.getInstance();
 					calendar.add(Calendar.DAY_OF_MONTH, 1);//加一天
 					lcToken.setInvalidTime(calendar.getTime());

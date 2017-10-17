@@ -36,6 +36,7 @@ public class LoginConR{
 					String str=userSer.validateUserInfo2(user.getUsernum(),user.getUserpass());
 					if(str.equals("[success]")){
 						Token lcToken=licenceSer.createToken(user);
+						req.getSession().setAttribute("token", lcToken.getToken());
 						return new Result<String>(BaseRestController.SUCCESS, Code.SUCCESS, lcToken.getToken());
 					}else{
 						return new Result<String>(BaseRestController.ERROR, Code.ERROR, str);
@@ -50,4 +51,15 @@ public class LoginConR{
 		return new Result<String>(BaseRestController.ERROR, Code.ERROR, "用户信息不全");
 	}
 	
+	@RequestMapping(value="/token/clear",method=RequestMethod.DELETE)
+	public Result<String> logout(HttpServletRequest req, HttpServletResponse resp){
+		try {
+			req.getSession().removeAttribute("token");
+			return new Result<String>(BaseRestController.SUCCESS, Code.SUCCESS, "登出成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			mail.addMail(new MailModel(MailManager.MAIL_ZS, MailManager.MAIL_ZS, Trans.strToHtml(e.getMessage()), MailManager.TITLE));
+			return new Result<String>(BaseRestController.ERROR, Code.ERROR, e.getMessage());
+		}
+	}
 }

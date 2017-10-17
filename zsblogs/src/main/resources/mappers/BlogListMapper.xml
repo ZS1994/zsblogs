@@ -5,11 +5,11 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="order" property="order" jdbcType="INTEGER" />
+    <result column="bl_order" property="blOrder" jdbcType="INTEGER" />
     <result column="u_id" property="uId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, name, create_time, order, u_id
+    id, name, create_time, bl_order, u_id
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -23,9 +23,9 @@
   </delete>
   <insert id="insert" parameterType="com.zs.entity.BlogList" >
     insert into blog_list (id, name, create_time, 
-      order, u_id)
+      bl_order, u_id)
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{order,jdbcType=INTEGER}, #{uId,jdbcType=INTEGER})
+      #{blOrder,jdbcType=INTEGER}, #{uId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.zs.entity.BlogList" >
     insert into blog_list
@@ -39,8 +39,8 @@
       <if test="createTime != null" >
         create_time,
       </if>
-      <if test="order != null" >
-        order,
+      <if test="blOrder != null" >
+        bl_order,
       </if>
       <if test="uId != null" >
         u_id,
@@ -56,8 +56,8 @@
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="order != null" >
-        #{order,jdbcType=INTEGER},
+      <if test="blOrder != null" >
+        #{blOrder,jdbcType=INTEGER},
       </if>
       <if test="uId != null" >
         #{uId,jdbcType=INTEGER},
@@ -73,8 +73,8 @@
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="order != null" >
-        order = #{order,jdbcType=INTEGER},
+      <if test="blOrder != null" >
+        bl_order = #{blOrder,jdbcType=INTEGER},
       </if>
       <if test="uId != null" >
         u_id = #{uId,jdbcType=INTEGER},
@@ -86,7 +86,7 @@
     update blog_list
     set name = #{name,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      order = #{order,jdbcType=INTEGER},
+      bl_order = #{blOrder,jdbcType=INTEGER},
       u_id = #{uId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -104,6 +104,12 @@
   	select count(*) from blog_list
   	<where>
   	</where>
+  </select>
+  <select id="queryAll" resultMap="BaseResultMap" >
+  	select 
+    <include refid="Base_Column_List" />
+    from blog_list
+  	where u_id=#{uid}
   </select>
   
 </mapper>

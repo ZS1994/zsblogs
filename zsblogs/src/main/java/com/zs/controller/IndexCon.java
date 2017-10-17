@@ -54,6 +54,11 @@ public class IndexCon{
 	}
 	
 	//----系统功能类-------------
+	@RequestMapping("/system/login")
+	public String gotoLogin(){
+		return "/system/login";
+	}
+	
 	@RequestMapping("/system/permission")
 	public String gotoPermission(){
 		return "/system/permission";

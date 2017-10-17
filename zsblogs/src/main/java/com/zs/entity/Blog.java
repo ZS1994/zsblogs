@@ -9,8 +9,6 @@ public class Blog {
 
     private Date createTime;
 
-    private Integer blId;
-
     private String content;
 
     private String summary;
@@ -56,14 +54,6 @@ public class Blog {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
-    }
-
-    public Integer getBlId() {
-        return blId;
-    }
-
-    public void setBlId(Integer blId) {
-        this.blId = blId;
     }
 
     public String getContent() {
