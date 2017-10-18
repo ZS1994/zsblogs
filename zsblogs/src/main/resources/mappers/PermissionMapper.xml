@@ -138,11 +138,11 @@
       menu_parent_id = #{menuParentId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByUrlAndMethod" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByUrlAndMethodEqual" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from permission
-    where url like #{url} and method = #{method,jdbcType=VARCHAR}
+    where url = #{url} and method = #{method,jdbcType=VARCHAR}
   </select>
   <select id="selectByPers" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 

@@ -29,13 +29,13 @@
     delete from blog
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zs.entity.Blog" >
+  <insert id="insert" parameterType="com.zs.entity.Blog" useGeneratedKeys="true" keyProperty="id">
     insert into blog (id, title, create_time, content ,summary,ishide)
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{blId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR}) ,#{summary,jdbcType=VARCHAR},
+      #{content,jdbcType=LONGVARCHAR}) ,#{summary,jdbcType=VARCHAR},
       #{ishide,jdbcType=VARCHAR}
   </insert>
-  <insert id="insertSelective" parameterType="com.zs.entity.Blog" >
+  <insert id="insertSelective" parameterType="com.zs.entity.Blog" useGeneratedKeys="true" keyProperty="id">
     insert into blog
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -66,9 +66,6 @@
       </if>
       <if test="createTime != null" >
         #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="blId != null" >
-        #{blId,jdbcType=INTEGER},
       </if>
       <if test="content != null" >
         #{content,jdbcType=LONGVARCHAR},
@@ -136,4 +133,5 @@
   		and ishide=0
   	</where>
   </select>
+  
 </mapper>

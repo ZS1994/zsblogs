@@ -14,7 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript">
     $(function(){
     	pullRequest({
-    		urlb:"/api/blog/${id}",
+    		urlb:"/api/blog/one?id=${id}",
     		type:"get",
     		isNeedToken:false,
     		success:function(data){

@@ -45,7 +45,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	result_hint_num++;
     	
     	var d=formToJson($("#ff"));
-    	console.log(d);
+    	if(d!=null && d.title!=null && d.content!=null && d.summary!=null &&d.blIds!=null){
+    		d.blIds=JSON.stringify(d.blIds);
+    		console.log(d.blIds);
+    		pullRequest({
+    			urlb:"/api/blog",
+    			type:"post",
+    			data:d,
+    			success:function(data){
+    				window.location.href="${path}/menu/blogList/blog/one?id="+data;
+    			},
+    			error:function(code,data){
+    				$("#hintDialog_body").html("<strong>错误！</strong>["+code+"]"+data+"。");
+    				$("#hintDialog").modal("show");
+    			}
+    		});
+    	}else{
+    		$("#hintDialog_body").html("<strong>错误！</strong>标题、正文、摘要、文章分类都不能为空。");
+    		$("#hintDialog").modal("show");
+    	}
     }
     </script>
     <style type="text/css">
@@ -70,14 +88,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					    <legend>请使用第三方编辑器编写，写完将其拷贝至文本域中</legend>
 					    
 					    <lable>标题</lable>
-					    <input id="blog_title" name="title" type="text" placeholder="请输入标题..." style="width: 100%;height: inherit;">
+					    <input id="blog_title" name="title" type="text" placeholder="请输入标题..." style="width: 100%;height: inherit;" required>
 					    
 					    <lable>正文</lable>
-					    <textarea id="blog_content" name="content" rows="15" style="width: 100%;"></textarea>
+					    <textarea id="blog_content" name="content" rows="15" style="width: 100%;" required></textarea>
 					    <span class="help-block">样式使用的是bootstrap</span>
 					    
 					    <lable>摘要</lable>
-					    <textarea id="blog_summary" name="summary" rows="4" style="width: 100%;"></textarea>
+					    <textarea id="blog_summary" name="summary" rows="4" style="width: 100%;" required></textarea>
 					    
 					    <lable>选择文章分类</lable>
 					    <div id="blog_list">
@@ -91,6 +109,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					    <div id="result_hint" style="margin-top: 10px;">
 					    </div>
 				    </form>
+				    
+				    <div id="hintDialog" class="modal hide fade" aria-hidden="true">
+						<div class="modal-header">
+						    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						    <h3>结果</h3>
+						</div>
+						<div class="modal-body">
+						  <p id="hintDialog_body"></p>
+						</div>
+						<div class="modal-footer">
+						  <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+						</div>
+					</div>
+				    
 				    
 			    </div>
 				

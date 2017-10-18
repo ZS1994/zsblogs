@@ -45,9 +45,9 @@ public class BlogCommentConR extends BaseRestController<BlogComment, Integer>{
 		return null;
 	}
 
-	@RequestMapping(value="/{id}",method=RequestMethod.GET)
+	@RequestMapping(value="/one",method=RequestMethod.GET)
 	@Override
-	public Result<BlogComment> doGet(@PathVariable Integer id, HttpServletRequest req, HttpServletResponse resp) {
+	public Result<BlogComment> doGet(Integer id, HttpServletRequest req, HttpServletResponse resp) {
 		if(id!=null){
 			try {
 				return new Result<BlogComment>(SUCCESS, Code.SUCCESS, blogCommentSer.get(id));
@@ -87,9 +87,9 @@ public class BlogCommentConR extends BaseRestController<BlogComment, Integer>{
 		return new Result<String>(ERROR, Code.ERROR, null);
 	}
 
-	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
+	@RequestMapping(value="/one",method=RequestMethod.DELETE)
 	@Override
-	public Result<String> doDeleteFalse(@PathVariable Integer id, HttpServletRequest req, HttpServletResponse resp) {
+	public Result<String> doDeleteFalse(Integer id, HttpServletRequest req, HttpServletResponse resp) {
 		if(id!=null){
 			try {
 				return new Result<String>(SUCCESS, Code.SUCCESS, blogCommentSer.delete(id));

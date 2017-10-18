@@ -34,14 +34,17 @@ public class IndexCon{
 		req.setAttribute("rows", rows);
 		return "/blog/blog";
 	}
-	@RequestMapping("/blogList/blog/{id}")
-	public String gotoBlogMain(@PathVariable String id){
-		return "/blog/blogMainInfo";
-	}
-	@RequestMapping("/blogList/blog/edit")
+	@RequestMapping("/blogList/blog/user/edit")
 	public String gotoBlogEdit(){
 		return "/blog/blogEdit";
 	}
+	
+	@RequestMapping("/blogList/blog/one")
+	public String gotoBlogMain(String id,HttpServletRequest req){
+		req.setAttribute("id", id);
+		return "/blog/blogMainInfo";
+	}
+	
 	
 	@RequestMapping("/blogList/blog/blogComment")
 	public String gotoBlogComment(){

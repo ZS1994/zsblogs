@@ -50,6 +50,19 @@ public class StringHelper {
 				return false;
 			}
 		}
+		//当*在末尾的时候，在匹配时必须排除"/"
+		if(pat.charAt(pat.length()-1)=='*'){
+			String patmowei=sub_p[sub_p.length-1];
+			String srcs[]=src.split(patmowei);
+			String srcmowei=srcs.length>0?srcs[srcs.length-1]:null;
+			if(srcmowei==null){
+				return false;
+			}else{
+				if(srcmowei.indexOf("/")!=-1){
+					return false;
+				}
+			}
+		}
 		return true;
 	}	
 	
@@ -58,5 +71,6 @@ public class StringHelper {
 		System.out.println(StringHelper.checkStar("asdad11sda23232aaa", "asdad11sda23232aaa"));
 		System.out.println(StringHelper.checkStar("asdad11sda23232aaa", "asda22d11sda23232aaa"));
 		System.out.println(StringHelper.checkStar("/zsblogs/menu/blogList/blog/5", "/zsblogs/menu/blogList/blog/*"));
+		System.out.println(StringHelper.checkStar("/zsblogs/menu/blogList/blog/edit/1", "/zsblogs/menu/blogList/blog/*"));
 	}
 }

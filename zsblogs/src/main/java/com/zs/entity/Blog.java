@@ -1,6 +1,7 @@
 package com.zs.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Blog {
     private Integer id;
@@ -16,7 +17,28 @@ public class Blog {
     private String ishide;
     
     
-    public String getIshide() {
+    //-------------
+    private String blIds;
+    private Users user;
+    
+
+	public Users getUser() {
+		return user;
+	}
+
+	public void setUser(Users user) {
+		this.user = user;
+	}
+
+	public String getBlIds() {
+		return blIds;
+	}
+
+	public void setBlIds(String blIds) {
+		this.blIds = blIds;
+	}
+
+	public String getIshide() {
 		return ishide;
 	}
 

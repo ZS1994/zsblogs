@@ -1,13 +1,17 @@
 package com.zs.controller.rest;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.zs.entity.Blog;
@@ -45,9 +49,9 @@ public class BlogConR extends BaseRestController<Blog, Integer>{
 		return null;
 	}
 
-	@RequestMapping(value="/{id}",method=RequestMethod.GET)
+	@RequestMapping(value="/one",method=RequestMethod.GET)
 	@Override
-	public Result<Blog> doGet(@PathVariable Integer id, HttpServletRequest req, HttpServletResponse resp) {
+	public Result<Blog> doGet(Integer id, HttpServletRequest req, HttpServletResponse resp) {
 		if(id!=null){
 			try {
 				return new Result<Blog>(SUCCESS, Code.SUCCESS, blogSer.get(id));
@@ -60,8 +64,7 @@ public class BlogConR extends BaseRestController<Blog, Integer>{
 	}
 
 	@RequestMapping(value="",method=RequestMethod.POST)
-	@Override
-	public Result<String> doAdd(Blog obj, HttpServletRequest req, HttpServletResponse resp) {
+	public Result<String> doAdd(Blog obj,HttpServletRequest req, HttpServletResponse resp) {
 		if(obj!=null){
 			try {
 				return new Result<String>(SUCCESS, Code.SUCCESS, blogSer.add(obj));
@@ -73,6 +76,7 @@ public class BlogConR extends BaseRestController<Blog, Integer>{
 		return new Result<String>(ERROR, Code.ERROR, null);
 	}
 
+	
 	@RequestMapping(value="",method=RequestMethod.PUT)
 	@Override
 	public Result<String> doUpdate(Blog obj, HttpServletRequest req, HttpServletResponse resp) {
@@ -87,9 +91,9 @@ public class BlogConR extends BaseRestController<Blog, Integer>{
 		return new Result<String>(ERROR, Code.ERROR, null);
 	}
 
-	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
+	@RequestMapping(value="/one",method=RequestMethod.DELETE)
 	@Override
-	public Result<String> doDeleteFalse(@PathVariable Integer id, HttpServletRequest req, HttpServletResponse resp) {
+	public Result<String> doDeleteFalse(Integer id, HttpServletRequest req, HttpServletResponse resp) {
 		if(id!=null){
 			try {
 				return new Result<String>(SUCCESS, Code.SUCCESS, blogSer.delete(id));
@@ -118,5 +122,7 @@ public class BlogConR extends BaseRestController<Blog, Integer>{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 }

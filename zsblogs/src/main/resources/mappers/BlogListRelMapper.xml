@@ -20,10 +20,8 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zs.entity.BlogListRel" >
-    insert into blog_list_rel (id, bl_id, b_id
-      )
-    values (#{id,jdbcType=INTEGER}, #{blId,jdbcType=INTEGER}, #{bId,jdbcType=INTEGER}
-      )
+    insert into blog_list_rel (id, bl_id, b_id)
+    values (#{id,jdbcType=INTEGER}, #{blId,jdbcType=INTEGER}, #{bId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.zs.entity.BlogListRel" >
     insert into blog_list_rel
@@ -68,4 +66,22 @@
       b_id = #{bId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="getCountFromBlid" resultType="int" parameterType="java.lang.Integer">
+  	select count(*) from blog_list_rel
+  	where bl_id=#{blId}
+  </select>
+  <select id="selectByBlidOrBid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  	select 
+    <include refid="Base_Column_List" />
+    from blog_list_rel
+    <where>
+    	<if test="blId!=null">
+    	and bl_id=#{blId}
+    	</if>
+    	<if test="bId!=null">
+    	and b_id=#{bId}
+    	</if>
+    </where>
+  </select>
 </mapper>

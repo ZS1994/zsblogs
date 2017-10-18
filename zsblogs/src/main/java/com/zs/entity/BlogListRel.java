@@ -7,7 +7,19 @@ public class BlogListRel {
 
     private Integer bId;
 
-    public Integer getId() {
+    
+    
+    public BlogListRel() {
+		super();
+	}
+
+	public BlogListRel(Integer blId, Integer bId) {
+		super();
+		this.blId = blId;
+		this.bId = bId;
+	}
+
+	public Integer getId() {
         return id;
     }
 

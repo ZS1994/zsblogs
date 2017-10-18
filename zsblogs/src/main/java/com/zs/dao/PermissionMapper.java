@@ -21,7 +21,7 @@ public interface PermissionMapper {
 
     int updateByPrimaryKey(Permission record);
     
-    Permission selectByUrlAndMethod(@Param("url")String url,@Param("method")String method);
+    Permission selectByUrlAndMethodEqual(@Param("url")String url,@Param("method")String method);
     List<Permission> selectByPers(@Param("pers")String pers);
     
     List<Permission> queryFenye(EasyUIAccept accept);

@@ -51,7 +51,9 @@ public class PerSerImpl implements PerSer{
 	}
 
 	public Permission get(String url, String method) {
-		return permissionMapper.selectByUrlAndMethod(url, method);
+		Permission permission=null;
+		permission=permissionMapper.selectByUrlAndMethodEqual(url, method);
+		return permission;
 	}
 
 }

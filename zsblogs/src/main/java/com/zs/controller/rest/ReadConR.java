@@ -46,9 +46,9 @@ public class ReadConR extends BaseRestController<Read, Integer>{
 		return null;
 	}
 
-	@RequestMapping(value="/{id}",method=RequestMethod.GET)
+	@RequestMapping(value="/one",method=RequestMethod.GET)
 	@Override
-	public Result<Read> doGet(@PathVariable Integer id, HttpServletRequest req, HttpServletResponse resp) {
+	public Result<Read> doGet(Integer id, HttpServletRequest req, HttpServletResponse resp) {
 		if(id!=null){
 			try {
 				return new Result<Read>(SUCCESS, Code.SUCCESS, readSer.get(id));
@@ -88,7 +88,7 @@ public class ReadConR extends BaseRestController<Read, Integer>{
 		return new Result<String>(ERROR, Code.ERROR, null);
 	}
 
-	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
+	@RequestMapping(value="/one",method=RequestMethod.DELETE)
 	@Override
 	public Result<String> doDeleteFalse(Integer id, HttpServletRequest req, HttpServletResponse resp) {
 		if(id!=null){

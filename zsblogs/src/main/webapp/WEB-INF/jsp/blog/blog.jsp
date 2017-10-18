@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     var page="${page}",total,rows="${rows}",pageSize;
     $(function(){
     	pullRequest({
-    		urlb:"/api/blog/list",
+    		urlb:"/api/blog/list?sort=createTime&order=desc",
     		type:"get",
     		data:{page:page,rows:rows},
     		isNeedToken:false,
@@ -54,24 +54,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		for(var i=0;i<rows.length;i++){
 			str="<div class='blog_block'><h4><a class='blog_title' onclick='gotoBlogMain("+rows[i].id+")'>"+rows[i].title+"</a></h4>"+
 			"<p>"+rows[i].summary+"</p>"+
-			"<div class='blog_introduction'>"+new Date(rows[i].createTime).Format("yyyy年MM月dd日 hh:mm:ss")+"</div>"+
+			"<div class='blog_introduction'>"+new Date(rows[i].createTime).Format("yyyy年MM月dd日 hh:mm:ss")+"|"+rows[i].user.name+"</div>"+
 			"</div>";
 			$("#blogs").append(str);
 		}
     }
     function gotoBlogMain(id){
-    	window.location.href="<%=path%>/menu/blogList/blog/"+id;
+    	window.location.href="${path}/menu/blogList/blog/one?id="+id;
     }
     function lastPage(){
     	if($("#page_last").parent().attr('class')!="disabled"){
     		page--;
-    		window.location.href="<%=path%>/menu/blogList/blog?page="+page+"&rows="+rows;
+    		window.location.href="${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc";
     	}
     }
     function nextPage(){
     	if($("#page_next").parent().attr('class')!="disabled"){
     		page++;
-    		window.location.href="<%=path%>/menu/blogList/blog?page="+page+"&rows="+rows;
+    		window.location.href="${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc";
     	}
     }
     </script>
@@ -101,7 +101,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				
 				<div class="input-append">
 				  <input class="span3" id="appendedInputButton" type="text" style="height: inherit;">
-				  <button class="btn" type="button">搜索${page}</button>
+				  <button class="btn" type="button">搜索</button>
 				</div>
 							    
 			    <div id="blogs">

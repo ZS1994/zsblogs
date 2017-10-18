@@ -46,6 +46,7 @@ function pullRequest(options){
 	        	type:type,
 	        	async:async,
 	        	data:data,
+	        	dataType: "json",  
 	        	beforeSend: function (request) {
 	    	        request.setRequestHeader("token", token);
 	    	    },
@@ -139,14 +140,15 @@ a {
 
 	<div class="my_logo">
 		
-		<%-- <div class="my_logo_child1" style="width: 35px;margin-left: 10px;">
+		
+		<div class="my_logo_child1" style="width: 35px;margin-left: 10px;">
 			<img class="img-circle" src="<%=path %>/framework/image/zhangshun.png" width="32" height="32" style="">
 		</div>
 		
 	
 		<div class="my_logo_child2">
 			张顺的博客
-		</div> --%>
+		</div>
 		
 		
 		
@@ -154,19 +156,19 @@ a {
 
 	<div style="height: 50px;"></div>
 
-	<%-- <div class="entry">
+	<div class="entry">
 		<a href="<%=path%>/menu/blogList/blog/edit">我的简历</a>
-	</div> --%>
+	</div>
 	
 	
 	<div class="entry">
-		<a href="<%=path%>/menu/blogList/blog?page=1&rows=3">最新博客</a>
+		<a href="<%=path%>/menu/blogList/blog?page=1&rows=10&sort=createTime&order=desc">最新博客</a>
 	</div>
 	<div class="entry">
 		<a href="<%=path%>/menu/blogList">博客栏目</a>
 	</div>
 	<div class="entry">
-		<a href="<%=path%>/menu/blogList/blog/edit">写博客</a>
+		<a href="<%=path%>/menu/blogList/blog/user/edit">写博客</a>
 	</div>
 	<div class="entry">
 		<a href="<%=path%>/menu/system/login">登录</a>

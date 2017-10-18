@@ -2,6 +2,8 @@ package com.zs.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class BlogList {
     private Integer id;
 
@@ -13,7 +15,28 @@ public class BlogList {
 
     private Integer uId;
 
-    public Integer getId() {
+    //-----------
+    private Users user;//用户
+    private Integer blogsNum;//博客数量
+    
+    
+    public Users getUser() {
+		return user;
+	}
+
+	public void setUser(Users user) {
+		this.user = user;
+	}
+
+	public Integer getBlogsNum() {
+		return blogsNum;
+	}
+
+	public void setBlogsNum(Integer blogsNum) {
+		this.blogsNum = blogsNum;
+	}
+
+	public Integer getId() {
         return id;
     }
 
@@ -28,7 +51,7 @@ public class BlogList {
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
     }
-
+    @JsonFormat(pattern="yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
     public Date getCreateTime() {
         return createTime;
     }

@@ -1,5 +1,6 @@
 package com.zs.controller.rest;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -36,6 +37,8 @@ public class BlogListConR extends BaseRestController<BlogList, Integer>{
 	public EasyUIPage doQuery(EasyUIAccept accept, HttpServletRequest req, HttpServletResponse resp) {
 		if (accept!=null) {
 			try {
+				Users user=(Users)req.getAttribute("[user]");
+				accept.setInt1(user.getId());
 				accept.setSort(ColumnName.transToUnderline(accept.getSort()));
 				return blogListSer.queryFenye(accept);
 			} catch (Exception e) {
@@ -47,9 +50,9 @@ public class BlogListConR extends BaseRestController<BlogList, Integer>{
 		return null;
 	}
 
-	@RequestMapping(value="/{id}",method=RequestMethod.GET)
+	@RequestMapping(value="/one",method=RequestMethod.GET)
 	@Override
-	public Result<BlogList> doGet(@PathVariable Integer id, HttpServletRequest req, HttpServletResponse resp) {
+	public Result<BlogList> doGet(Integer id, HttpServletRequest req, HttpServletResponse resp) {
 		if(id!=null){
 			try {
 				return new Result<BlogList>(SUCCESS, Code.SUCCESS, blogListSer.get(id));
@@ -64,8 +67,11 @@ public class BlogListConR extends BaseRestController<BlogList, Integer>{
 	@RequestMapping(value="",method=RequestMethod.POST)
 	@Override
 	public Result<String> doAdd(BlogList obj, HttpServletRequest req, HttpServletResponse resp) {
+		Users user=(Users)req.getAttribute("[user]");
 		if(obj!=null){
 			try {
+				obj.setCreateTime(new Date());
+				obj.setuId(user.getId());
 				return new Result<String>(SUCCESS, Code.SUCCESS, blogListSer.add(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -89,9 +95,9 @@ public class BlogListConR extends BaseRestController<BlogList, Integer>{
 		return new Result<String>(ERROR, Code.ERROR, null);
 	}
 	
-	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
+	@RequestMapping(value="/one",method=RequestMethod.DELETE)
 	@Override
-	public Result<String> doDeleteFalse(@PathVariable Integer id, HttpServletRequest req, HttpServletResponse resp) {
+	public Result<String> doDeleteFalse(Integer id, HttpServletRequest req, HttpServletResponse resp) {
 		if(id!=null){
 			try {
 				return new Result<String>(SUCCESS, Code.SUCCESS, blogListSer.delete(id));

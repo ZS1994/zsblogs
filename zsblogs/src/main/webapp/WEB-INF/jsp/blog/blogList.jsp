@@ -17,8 +17,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		$("#dlg").dialog("open").dialog("setTitle","新建");	
 		$("#fm").form("clear");
 		$("#fm input[name='_method']").val("post");
-		$("#fm input[name='_header']").val("${user.licence }");
-		url="<%=path %>/api/provinceCode";
+		$("#fm input[name='_token']").val("${token}");
+		url="${path}/api/blogList";
 	}
 	function updateObj(){
 		var row=$("#dg").datagrid("getSelected");
@@ -26,8 +26,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$("#dlg").dialog("open").dialog("setTitle","修改");
 			$("#fm").form("load",row);
 			$("#fm input[name='_method']").val("put");
-			$("#fm input[name='_header']").val("${licence }");
-			url="<%=path%>/api/provinceCode/"+row.provinceCode;
+			$("#fm input[name='_token']").val("${token}");
+			url="${path}/api/blogList";
 		}
 	}
 	function save(){
@@ -42,16 +42,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					if(isJson(data)){
 						json=data;
 					}else{
-						json = eval('('+data+')');
+						json=JSON.parse(data);
 					}
 					if(json.result=='success'){
 						$('#dg').datagrid('reload');
 						$("#dlg").dialog("close");
 					}else{
-						alert("错误:"+json.code);
+						alert("错误:["+json.code+"]"+json.data);
 					}
 				}else{
-					alert("错误:网络错误");
+					alert("错误:返回值为空。");
 				}
 			}
 		});
@@ -66,19 +66,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				function(data){
 					if(data){
 						$.ajax({
-							url:"<%=path%>/api/provinceCode/"+id,
+							url:"${path}/api/blogList/one?id="+id,
 							type:"delete",
 							success:function(data){
 								var json;
 								if(isJson(data)){
 									json=data;
 								}else{
-									json = eval('('+data+')');
+									json=JSON.parse(data);
 								}
 								if(json.result=='success'){
 									$('#dg').datagrid('reload');
 								}else{
-									alert("错误:"+json.code);
+									alert("错误:["+json.code+"]"+json.data);
 								}
 							}
 						});
@@ -137,6 +137,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<tr>
 						<th field="id" width="100" sortable="true">ID</th>
 						<th field="name" width="200" sortable="true">名称</th>
+						<th field="createTime" width="200" sortable="true">创建时间</th>
+						<th field="blOrder" width="100" sortable="true">序号</th>
+						<th field="uId" width="200" sortable="true" data-options="
+						formatter:function(value,row,index){
+		                    if(row.user){
+								return row.user.name;
+		                    }
+		             	}">用户</th>
+		             	<th field="blogsNum" width="100" sortable="false" data-options="
+						formatter:function(value,row,index){
+		                    if(row.blogsNum){
+								return row.blogsNum;
+		                    }else{
+		                    	return 0;
+		                    }
+		             	}">博客数量</th>
 					</tr>
 				</thead>
 			</table>
@@ -147,7 +163,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteObj()">删除数据</a>
 				</div>
 				<div class="btn-separator">
-					<a class="easyui-linkbutton" iconCls="icon-help" plain="true" onclick="$('#dlg_help').dialog('open')">帮助</a>
+					<a class="easyui-linkbutton" iconCls="icon-help" plain="true" disabled="true">帮助</a>
 				</div>
 				<br class="clear"/>
 				<hr class="hr-geay">
@@ -169,20 +185,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="pull-away"></div>
 			</div>
 			
-			<div id="dlg" class="easyui-dialog" style="width:600px;height:500px;padding:10px 20px"
+			<div id="dlg" class="easyui-dialog" style="width:600px;height:50%;padding:10px 20px"
 					closed="true" buttons="#dlg-buttons" modal="true">
-				<div class="ftitle">省份码</div>
+				<div class="ftitle">博客栏目</div>
 				<hr>
 				<form id="fm" method="post" >
 					<input type="hidden" name="_method" value="post"/>
-					<input type="hidden" name="_header" value="${licence }"/>
+					<input type="hidden" name="_token" value="${token}"/>
+					<input type="hidden" name="id"/>
 					<div class="fitem">
-						<label>一段码:</label>
-						<input name="provinceCode" class="easyui-validatebox" required="true">
+						<label>名称:</label>
+						<input name="name" class="easyui-validatebox" required="true">
 					</div>
 					<div class="fitem">
-						<label>省份:</label>
-						<input name="province" class="easyui-validatebox" required="true">
+						<label>序号:</label>
+						<input name="blOrder" class="easyui-validatebox" required="true">
 					</div>
 				</form>
 			</div>

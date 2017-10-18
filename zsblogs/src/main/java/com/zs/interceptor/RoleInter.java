@@ -99,7 +99,10 @@ public class RoleInter extends HandlerInterceptorAdapter{
 	//给例外列表用的
 	private boolean allowThrough(String turl,String tmethod){
 		String urla="/zsblogs";
-		if(StringHelper.checkStar(url, (urla+turl)) && tmethod.equals(method)){
+		/*if(StringHelper.checkStar(url, (urla+turl)) && tmethod.equals(method)){
+			return true;
+		}*/
+		if((urla+turl).equals(url) && tmethod.equals(method)){
 			return true;
 		}
 		return false;
@@ -111,7 +114,6 @@ public class RoleInter extends HandlerInterceptorAdapter{
 			throws Exception {
 		init(request, response);
 		//例外列表
-		log.info(url+"  "+method+"  "+token);
 		if (
 				allowThrough("/api/login/token", POST) ||
 				allowThrough("/api/login/token/clear", DELETE) ||
@@ -119,8 +121,8 @@ public class RoleInter extends HandlerInterceptorAdapter{
 				allowThrough("/menu/part", GET) ||
 				allowThrough("/menu/blogList/blog", GET) ||
 				allowThrough("/api/blog/list", GET) ||
-				allowThrough("/menu/blogList/blog/*", GET) ||
-				allowThrough("/api/blog/*", GET) ||
+				allowThrough("/menu/blogList/blog/one", GET) ||
+				allowThrough("/api/blog/one", GET) ||
 				allowThrough("/menu/system/login", GET)
 				) {
 			return true;
@@ -131,6 +133,8 @@ public class RoleInter extends HandlerInterceptorAdapter{
 		}
 		
 		initUserAndRoleFromToken();
+//		log.info("url:"+url+"  method:"+method+"  token:"+token+"  isTimeout:"+isTimeout+"  user:"+user);
+		
 		if (isTimeout) {
 			gotoHadle(Code.LICENCE_TIMEOUT);
 			return false;
