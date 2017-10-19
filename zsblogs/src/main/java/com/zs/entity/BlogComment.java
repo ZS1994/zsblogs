@@ -2,6 +2,8 @@ package com.zs.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class BlogComment {
     private Integer id;
 
@@ -13,7 +15,28 @@ public class BlogComment {
 
     private Integer bId;
 
-    public Integer getId() {
+    //------------
+    private Integer isAutor;//是否是作者
+    private Users user;//评论者
+    
+    
+    public Users getUser() {
+		return user;
+	}
+
+	public void setUser(Users user) {
+		this.user = user;
+	}
+
+	public Integer getIsAutor() {
+		return isAutor;
+	}
+
+	public void setIsAutor(Integer isAutor) {
+		this.isAutor = isAutor;
+	}
+
+	public Integer getId() {
         return id;
     }
 
@@ -28,7 +51,7 @@ public class BlogComment {
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
     }
-
+    @JsonFormat(pattern="yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
     public Date getCreateTime() {
         return createTime;
     }

@@ -31,7 +31,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	    			}else{
     	    				pageSize=Math.floor(total/rows)+1;
     	    			}
-    	    			console.log(pageSize);
     	    			if(page==pageSize){
     	    				$("#page_next").parent().addClass("disabled");
     	    			}else{
@@ -54,7 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		for(var i=0;i<rows.length;i++){
 			str="<div class='blog_block'><h4><a class='blog_title' onclick='gotoBlogMain("+rows[i].id+")'>"+rows[i].title+"</a></h4>"+
 			"<p>"+rows[i].summary+"</p>"+
-			"<div class='blog_introduction'>"+new Date(rows[i].createTime).Format("yyyy年MM月dd日 hh:mm:ss")+"|"+rows[i].user.name+"</div>"+
+			"<div class='blog_introduction'>"+rows[i].user.name+"|"+rows[i].createTime+"</div>"+
 			"</div>";
 			$("#blogs").append(str);
 		}

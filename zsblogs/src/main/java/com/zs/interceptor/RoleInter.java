@@ -35,6 +35,7 @@ import com.zs.service.PerSer;
 import com.zs.service.RoleSer;
 import com.zs.service.TimeLineSer;
 import com.zs.service.UserSer;
+import com.zs.tools.Constans;
 import com.zs.tools.StringHelper;
 
 
@@ -119,10 +120,14 @@ public class RoleInter extends HandlerInterceptorAdapter{
 				allowThrough("/api/login/token/clear", DELETE) ||
 				allowThrough("/menu/index", GET) ||
 				allowThrough("/menu/part", GET) ||
+				
 				allowThrough("/menu/blogList/blog", GET) ||
 				allowThrough("/api/blog/list", GET) ||
 				allowThrough("/menu/blogList/blog/one", GET) ||
-				allowThrough("/api/blog/one", GET) ||
+				allowThrough("/api/blog/one", GET) || //看博客正文
+				allowThrough("/api/blogComment/list", GET) || //看博客的评论
+				allowThrough("/api/blogComment", POST) || //发表评论
+				
 				allowThrough("/menu/system/login", GET)
 				) {
 			return true;
@@ -157,7 +162,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 					lcToken.setInvalidTime(calendar.getTime());
 					licenceSer.updateToken(lcToken);
 					user.setRoles(roles);
-					req.setAttribute("[user]", user);
+					req.setAttribute(Constans.USER, user);
 					return true;
 				}else{
 					gotoHadle(Code.ROLE_USER_NO_PERMISSION);

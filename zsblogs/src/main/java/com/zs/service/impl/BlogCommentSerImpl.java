@@ -7,16 +7,30 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.zs.dao.BlogCommentMapper;
+import com.zs.dao.BlogMapper;
+import com.zs.dao.UsersMapper;
+import com.zs.entity.Blog;
 import com.zs.entity.BlogComment;
+import com.zs.entity.Users;
 import com.zs.entity.other.EasyUIAccept;
 import com.zs.entity.other.EasyUIPage;
 import com.zs.service.BlogCommentSer;
+import com.zs.service.BlogSer;
+import com.zs.tools.Constans;
 
 @Service("blogComment")
 public class BlogCommentSerImpl implements BlogCommentSer{
 
 	@Resource
 	private BlogCommentMapper blogCommentMapper;
+	@Resource
+	private UsersMapper usersMapper;
+	@Resource
+	private BlogMapper blogMapper;
+	@Resource
+	private BlogSer blogSer;
+	
+	
 	
 	public EasyUIPage queryFenye(EasyUIAccept accept) {
 		if (accept!=null) {
@@ -28,6 +42,22 @@ public class BlogCommentSerImpl implements BlogCommentSer{
 			}
 			List list=blogCommentMapper.queryFenye(accept);
 			int rows=blogCommentMapper.getCount(accept);
+			Integer bid=accept.getInt1();
+			if(bid!=null){
+				Blog b=blogMapper.selectByPrimaryKey(bid);
+				Users user=blogSer.getAutorOfBlog(b.getId());
+				if(user!=null){
+					for (Object obj : list) {
+						BlogComment bc=(BlogComment)obj;
+						if(bc.getuId()!=null && bc.getuId().equals(user.getId())){
+							bc.setIsAutor(1);
+						}else{
+							bc.setIsAutor(0);
+						}
+						bc.setUser(usersMapper.selectByPrimaryKey(bc.getuId()));
+					}
+				}
+			}
 			return new EasyUIPage(rows, list);
 		}
 		return null;

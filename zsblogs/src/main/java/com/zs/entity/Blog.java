@@ -3,6 +3,8 @@ package com.zs.entity;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Blog {
     private Integer id;
 
@@ -69,7 +71,7 @@ public class Blog {
     public void setTitle(String title) {
         this.title = title == null ? null : title.trim();
     }
-
+    @JsonFormat(pattern="yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
     public Date getCreateTime() {
         return createTime;
     }

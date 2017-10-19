@@ -140,7 +140,7 @@ a {
 
 	<div class="my_logo">
 		
-		
+		<%-- 
 		<div class="my_logo_child1" style="width: 35px;margin-left: 10px;">
 			<img class="img-circle" src="<%=path %>/framework/image/zhangshun.png" width="32" height="32" style="">
 		</div>
@@ -149,18 +149,18 @@ a {
 		<div class="my_logo_child2">
 			张顺的博客
 		</div>
-		
+		 --%>
 		
 		
 	</div>
 
 	<div style="height: 50px;"></div>
-
+<%-- 
 	<div class="entry">
 		<a href="<%=path%>/menu/blogList/blog/edit">我的简历</a>
 	</div>
 	
-	
+	 --%>
 	<div class="entry">
 		<a href="<%=path%>/menu/blogList/blog?page=1&rows=10&sort=createTime&order=desc">最新博客</a>
 	</div>

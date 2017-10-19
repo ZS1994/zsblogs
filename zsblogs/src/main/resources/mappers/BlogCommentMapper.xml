@@ -94,6 +94,9 @@
   <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
   	select * from blog_comment
   	<where>
+  		<if test="int1!=null">
+  			and b_id=#{int1}
+  		</if>
   	</where>
   	<if test="sort!=null and order!=null">
   		order by ${sort} ${order}
@@ -103,6 +106,9 @@
   <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
   	select count(*) from blog_comment
   	<where>
+  		<if test="int1!=null">
+  			and b_id=#{int1}
+  		</if>
   	</where>
   </select>
 </mapper>

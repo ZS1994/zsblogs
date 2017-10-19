@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2017-10-18 18:02:27
+Date: 2017-10-19 18:04:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -55,11 +55,22 @@ CREATE TABLE `blog_comment` (
   KEY `b_id` (`b_id`),
   CONSTRAINT `blog_comment_ibfk_2` FOREIGN KEY (`b_id`) REFERENCES `blog` (`id`),
   CONSTRAINT `blog_comment_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of blog_comment
 -- ----------------------------
+INSERT INTO `blog_comment` VALUES ('1', '最近由于为了业务独立和风险规避，需要将比较重要和比较独立的模块从原项目中拆分出来搭建到其他服务器上，然后就需要搭建项目框架，但每次搭建框架都是特别麻烦，于是就想做一个这样的东西：一个将基本的东西全都创建好的项目原型，这样每次启动项目时直接拷贝过来稍微修改就能直接使用，这样就非常效率，好了，废话不多说。', '2017-10-19 15:39:31', '1', '9');
+INSERT INTO `blog_comment` VALUES ('2', '测试一下', '2017-10-19 17:20:17', '1', '9');
+INSERT INTO `blog_comment` VALUES ('3', '试一下', '2017-10-19 17:25:37', null, '9');
+INSERT INTO `blog_comment` VALUES ('4', '看看', '2017-10-19 17:29:38', null, '9');
+INSERT INTO `blog_comment` VALUES ('5', '111111', '2017-10-19 17:30:45', null, '9');
+INSERT INTO `blog_comment` VALUES ('6', '大时代', '2017-10-19 17:31:59', null, '9');
+INSERT INTO `blog_comment` VALUES ('7', '爱的达到多', '2017-10-19 17:32:56', null, '9');
+INSERT INTO `blog_comment` VALUES ('8', '1111111', '2017-10-19 17:33:05', null, '9');
+INSERT INTO `blog_comment` VALUES ('9', '检查', '2017-10-19 17:34:00', null, '9');
+INSERT INTO `blog_comment` VALUES ('10', '终于', '2017-10-19 17:34:18', null, '9');
+INSERT INTO `blog_comment` VALUES ('11', '22222', '2017-10-19 17:35:09', null, '9');
 
 -- ----------------------------
 -- Table structure for `blog_list`
@@ -131,7 +142,7 @@ CREATE TABLE `permission` (
   UNIQUE KEY `url` (`url`,`method`),
   KEY `menu_parent_id` (`menu_parent_id`),
   CONSTRAINT `permission_ibfk_1` FOREIGN KEY (`menu_parent_id`) REFERENCES `permission` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of permission
@@ -151,6 +162,11 @@ INSERT INTO `permission` VALUES ('12', '博客单条查询', '/zsblogs/api/blog/
 INSERT INTO `permission` VALUES ('13', '博客单条添加', '/zsblogs/api/blog', 'POST', 'api', '博客', null, null, null);
 INSERT INTO `permission` VALUES ('14', '博客单条修改', '/zsblogs/api/blog', 'PUT', 'api', '博客', null, null, null);
 INSERT INTO `permission` VALUES ('15', '博客单条删除', '/zsblogs/api/blog/one', 'DELETE', 'api', '博客', null, null, null);
+INSERT INTO `permission` VALUES ('16', '博客评论分页查询', '/zsblogs/api/blogComment/list', 'GET', 'api', '博客', null, null, null);
+INSERT INTO `permission` VALUES ('17', '博客评论单条查询', '/zsblogs/api/blogComment/one', 'GET', 'api', '博客', null, null, null);
+INSERT INTO `permission` VALUES ('18', '博客评论添加', '/zsblogs/api/blogComment', 'POST', 'api', '博客', null, null, null);
+INSERT INTO `permission` VALUES ('19', '博客评论单条修改', '/zsblogs/api/blogComment', 'PUT', 'api', '博客', null, null, null);
+INSERT INTO `permission` VALUES ('20', '博客评论单条删除', '/zsblogs/api/blogComment/one', 'DELETE', 'api', '博客', null, null, null);
 
 -- ----------------------------
 -- Table structure for `read`
@@ -187,7 +203,7 @@ CREATE TABLE `role` (
 -- ----------------------------
 -- Records of role
 -- ----------------------------
-INSERT INTO `role` VALUES ('1', '开发者', '拥有所有权限', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15');
+INSERT INTO `role` VALUES ('1', '开发者', '拥有所有权限', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20');
 INSERT INTO `role` VALUES ('2', '博客作者', '拥有写博客的权限', '1,10,2,13');
 
 -- ----------------------------
@@ -205,7 +221,7 @@ CREATE TABLE `timeline` (
   KEY `p_id` (`p_id`),
   CONSTRAINT `timeline_ibfk_2` FOREIGN KEY (`p_id`) REFERENCES `permission` (`id`),
   CONSTRAINT `timeline_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=203 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=244 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of timeline
@@ -411,6 +427,47 @@ INSERT INTO `timeline` VALUES ('199', '2', '2', '2017-10-18 17:39:49', '{}');
 INSERT INTO `timeline` VALUES ('200', '2', '2', '2017-10-18 17:56:14', '{}');
 INSERT INTO `timeline` VALUES ('201', '2', '2', '2017-10-18 18:02:10', '{}');
 INSERT INTO `timeline` VALUES ('202', '2', '5', '2017-10-18 18:02:12', '{\"page\":[\"1\"],\"rows\":[\"25\"]}');
+INSERT INTO `timeline` VALUES ('203', '2', '2', '2017-10-19 11:30:22', '{}');
+INSERT INTO `timeline` VALUES ('204', '2', '5', '2017-10-19 11:30:23', '{\"page\":[\"1\"],\"rows\":[\"25\"]}');
+INSERT INTO `timeline` VALUES ('205', '2', '1', '2017-10-19 14:30:04', '{}');
+INSERT INTO `timeline` VALUES ('206', '2', '10', '2017-10-19 14:30:04', '{}');
+INSERT INTO `timeline` VALUES ('207', '2', '2', '2017-10-19 14:30:05', '{}');
+INSERT INTO `timeline` VALUES ('208', '2', '5', '2017-10-19 14:30:06', '{\"page\":[\"1\"],\"rows\":[\"25\"]}');
+INSERT INTO `timeline` VALUES ('209', '2', '1', '2017-10-19 14:30:11', '{}');
+INSERT INTO `timeline` VALUES ('210', '2', '10', '2017-10-19 14:30:12', '{}');
+INSERT INTO `timeline` VALUES ('211', '2', '16', '2017-10-19 15:38:59', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('212', '2', '16', '2017-10-19 15:39:55', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('213', '2', '16', '2017-10-19 16:13:29', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('214', '2', '16', '2017-10-19 16:15:24', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('215', '2', '12', '2017-10-19 16:26:42', '{}');
+INSERT INTO `timeline` VALUES ('216', '2', '16', '2017-10-19 16:28:47', '{}');
+INSERT INTO `timeline` VALUES ('217', '2', '16', '2017-10-19 16:31:06', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('218', '2', '16', '2017-10-19 16:35:42', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('219', '2', '2', '2017-10-19 16:36:04', '{}');
+INSERT INTO `timeline` VALUES ('220', '2', '5', '2017-10-19 16:36:06', '{\"page\":[\"1\"],\"rows\":[\"25\"]}');
+INSERT INTO `timeline` VALUES ('221', '1', '2', '2017-10-19 16:36:14', '{}');
+INSERT INTO `timeline` VALUES ('222', '1', '5', '2017-10-19 16:36:15', '{\"page\":[\"1\"],\"rows\":[\"25\"]}');
+INSERT INTO `timeline` VALUES ('223', '1', '12', '2017-10-19 16:36:52', '{}');
+INSERT INTO `timeline` VALUES ('224', '1', '16', '2017-10-19 16:39:02', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('225', '1', '16', '2017-10-19 16:39:09', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('226', '1', '16', '2017-10-19 16:39:10', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('227', '1', '16', '2017-10-19 16:39:12', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('228', '1', '16', '2017-10-19 16:39:13', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('229', '1', '2', '2017-10-19 16:39:17', '{}');
+INSERT INTO `timeline` VALUES ('230', '1', '5', '2017-10-19 16:39:18', '{\"page\":[\"1\"],\"rows\":[\"25\"]}');
+INSERT INTO `timeline` VALUES ('231', '1', '16', '2017-10-19 16:39:22', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('232', '1', '16', '2017-10-19 16:43:07', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('233', '1', '16', '2017-10-19 16:43:41', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('234', '1', '16', '2017-10-19 16:47:44', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('235', '1', '16', '2017-10-19 17:10:26', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('236', '1', '16', '2017-10-19 17:12:03', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('237', '1', '16', '2017-10-19 17:12:20', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('238', '1', '16', '2017-10-19 17:13:26', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('239', '1', '16', '2017-10-19 17:13:38', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('240', '1', '16', '2017-10-19 17:13:46', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('241', '1', '16', '2017-10-19 17:20:10', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('242', '1', '18', '2017-10-19 17:20:17', '{\"content\":[\"测试一下\"],\"bId\":[\"9\"]}');
+INSERT INTO `timeline` VALUES ('243', '1', '16', '2017-10-19 17:20:47', '{\"page\":[\"1\"],\"rows\":[\"20\"],\"int1\":[\"9\"]}');
 
 -- ----------------------------
 -- Table structure for `token`
@@ -429,8 +486,8 @@ CREATE TABLE `token` (
 -- ----------------------------
 -- Records of token
 -- ----------------------------
-INSERT INTO `token` VALUES ('18173694807829', '1', '2017-10-19 17:36:33');
-INSERT INTO `token` VALUES ('181756116648384', '2', '2017-10-19 18:02:12');
+INSERT INTO `token` VALUES ('191635376982104', '2', '2017-10-20 16:36:06');
+INSERT INTO `token` VALUES ('191646272347500', '1', '2017-10-20 17:20:47');
 
 -- ----------------------------
 -- Table structure for `users`

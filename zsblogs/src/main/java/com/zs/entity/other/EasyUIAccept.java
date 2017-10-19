@@ -52,7 +52,16 @@ public class EasyUIAccept {
 	private Double d4;
 	private Double d5;
 	
+	//--张顺，用于传输对象，2017-10-19-------------------
+	private Map<String, Object> map;
 	
+	
+	public Map<String, Object> getMap() {
+		return map;
+	}
+	public void setMap(Map<String, Object> map) {
+		this.map = map;
+	}
 	public String getId() {
 		return id;
 	}

@@ -14,7 +14,9 @@ import com.zs.dao.BlogListRelMapper;
 import com.zs.dao.BlogMapper;
 import com.zs.dao.UsersMapper;
 import com.zs.entity.Blog;
+import com.zs.entity.BlogList;
 import com.zs.entity.BlogListRel;
+import com.zs.entity.Users;
 import com.zs.entity.other.EasyUIAccept;
 import com.zs.entity.other.EasyUIPage;
 import com.zs.service.BlogSer;
@@ -45,11 +47,7 @@ public class BlogSerImpl implements BlogSer{
 			List list=blogMapper.queryFenye(accept);
 			for (Object obj : list) {
 				Blog b=(Blog)obj;
-				List<BlogListRel> rels=blogListRelMapper.selectByBlidOrBid(null, b.getId());
-				BlogListRel rel=rels.size()>0?rels.get(0):null;
-				if(rel!=null){
-					b.setUser(usersMapper.selectByPrimaryKey(blogListMapper.selectByPrimaryKey(rel.getBlId()).getuId()));
-				}
+				b.setUser(getAutorOfBlog(b.getId()));
 			}
 			int rows=blogMapper.getCount(accept);
 			return new EasyUIPage(rows, list);
@@ -76,7 +74,27 @@ public class BlogSerImpl implements BlogSer{
 	}
 
 	public Blog get(Integer id) {
-		return blogMapper.selectByPrimaryKey(id);
+		Blog b=blogMapper.selectByPrimaryKey(id);
+		b.setUser(getAutorOfBlog(b.getId()));
+		return b;
+	}
+
+	/**
+	 * 通过博客id获取作者信息
+	 */
+	public Users getAutorOfBlog(Integer bid) {
+		if(bid!=null){
+			List<BlogListRel> rels=blogListRelMapper.selectByBlidOrBid(null, bid);
+			BlogListRel brel=rels.size()>0?rels.get(0):null;
+			if(brel!=null){
+				BlogList bl=blogListMapper.selectByPrimaryKey(brel.getBlId());
+				if(bl!=null){
+					Users user=usersMapper.selectByPrimaryKey(bl.getuId());
+					return user;
+				}
+			}
+		}
+		return null;
 	}
 
 }
