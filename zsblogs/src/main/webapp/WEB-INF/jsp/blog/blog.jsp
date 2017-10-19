@@ -53,7 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		for(var i=0;i<rows.length;i++){
 			str="<div class='blog_block'><h4><a class='blog_title' onclick='gotoBlogMain("+rows[i].id+")'>"+rows[i].title+"</a></h4>"+
 			"<p>"+rows[i].summary+"</p>"+
-			"<div class='blog_introduction'>"+rows[i].user.name+"|"+rows[i].createTime+"</div>"+
+			"<div class='blog_introduction'>"+rows[i].user.name+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].createTime+"</div>"+
 			"</div>";
 			$("#blogs").append(str);
 		}

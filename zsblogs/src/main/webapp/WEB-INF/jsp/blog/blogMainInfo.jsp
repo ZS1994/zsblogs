@@ -23,7 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		success:function(data){
     			console.log(data);
     			$("#blog_title").html(data.title);
-    			$("#blog_author").html(data.user.name+"|"+data.createTime);
+    			$("#blog_author").html(data.user.name+"&nbsp;&nbsp;&nbsp;&nbsp;"+data.createTime);
     			$("#blog_content").html(data.content);
     		}
     	});
@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		urlb:"/api/blogComment/list",
     		type:"get",
     		isNeedToken:false,
-    		data:{page:page,rows:rows,int1:${id}},
+    		data:{page:page,rows:rows,int1:${id},sort:"createTime",order:"asc"},
     		superSuccess:function(data){
     			//判断是否可以 “显示更多”
     			total=data.total;
@@ -62,7 +62,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     function appendBlogComment(r){
     	var str="";
 		for(var i=0;i<r.length;i++){
-			var userName=r[i].user!=null?r[i].user.name:"游客";
+			var userName=r[i].user!=null?r[i].user.name:"<span class=\"muted\">游客</span>";
 			var autor=r[i].isAutor==1?"（作者）":"";
 			var userImg=r[i].user!=null?r[i].user.img:"";
 			str=str+
@@ -72,7 +72,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				"</a>"+
 				"<div class=\"media-body\">"+
 					"<div class=\"blog_comment\">"+
-					"<h5 class=\"media-heading\">"+userName+autor+"|"+r[i].createTime+"|<span class=\"badge\">"+(parseInt(i)+1)+"楼</span></h5>"+
+					"<h5 class=\"media-heading\">"+userName+autor+"&nbsp;&nbsp;&nbsp;&nbsp;"+r[i].createTime+"&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"badge\">"+(parseInt(i)+1+(page-1)*rows)+"楼</span></h5>"+
 					r[i].content+
 				"</div>"+
 			"</div>";
@@ -103,7 +103,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		urlb:"/api/blogComment/list",
     		type:"get",
     		isNeedToken:false,
-    		data:{page:page,rows:rows,int1:${id}},
+    		data:{page:page,rows:rows,int1:${id},sort:"createTime",order:"asc"},
     		superSuccess:function(data){
     			//判断是否可以 “显示更多”
     			total=data.total;
@@ -124,7 +124,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             		urlb:"/api/blogComment/list",
             		type:"get",
             		isNeedToken:false,
-            		data:{page:page,rows:rows,int1:${id}},
+            		data:{page:page,rows:rows,int1:${id},sort:"createTime",order:"asc"},
             		superSuccess:function(data){
             			//判断是否可以 “显示更多”
             			total=data.total;
