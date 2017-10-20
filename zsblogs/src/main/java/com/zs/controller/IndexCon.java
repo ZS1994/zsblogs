@@ -6,6 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.zs.entity.Users;
+import com.zs.entity.other.EasyUIAccept;
+import com.zs.tools.Constans;
+
 @Controller
 @RequestMapping("/menu")
 public class IndexCon{
@@ -23,9 +27,23 @@ public class IndexCon{
 	
 	
 	//----博客类-------
-	@RequestMapping("/blogList")
-	public String gotoBlogList(){
+	@RequestMapping("/user/blogList")
+	public String gotoUserBlogList(){
 		return "/blog/blogList";
+	}
+	//我的博客
+	@RequestMapping("/user/blog")
+	public String gotoUserBlog(HttpServletRequest req,EasyUIAccept accept){
+		req.setAttribute("acc", accept);
+		if(accept!=null && accept.getInt2()==null){
+			try {
+				Users u=Constans.getUserFromReq(req);
+				if(u!=null) accept.setInt2(u.getId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return "/blog/blogOfUser";
 	}
 	
 	@RequestMapping("/blogList/blog")

@@ -118,9 +118,35 @@
   </update>
   
   <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
-  	select * from blog
+  	select
+  	id,title,create_time,summary,ishide  
+  	from blog
   	<where>
+  		<if test="int1!=null and int1==1"><!-- int1：是否只查未影藏的 -->
   		and ishide=0
+  		</if>
+  		<if test="int2!=null"><!-- int2：查看某个用户的 -->
+  		and id in ( 
+  			select b_id from blog_list_rel where bl_id in (select id from blog_list where u_id=#{int2}) 
+		)
+		</if>
+		<if test="int3!=null"><!-- int3：查看某个栏目的 -->
+  		and id in ( 
+  			select b_id from blog_list_rel where bl_id=#{int3}
+		)
+  		</if>
+  		<if test="str1!=null"><!-- str1：通过博客标题模糊查询 -->
+  		and title like '%${str1}%'
+  		</if>
+  		<if test="str2!=null"><!-- str2：通过博客摘要模糊查询 -->
+  		and summary like '%${str2}%'
+  		</if>
+  		<if test="date1!=null"><!-- date1：时间范围开始时间 -->
+  		and create_time >= #{date1}
+  		</if>
+  		<if test="date2!=null"><!-- date2：时间范围结束时间 -->
+  		and create_time &lt;= #{date2}
+  		</if>
   	</where>
   	<if test="sort!=null and order!=null">
   		order by ${sort} ${order}
@@ -130,7 +156,31 @@
   <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
   	select count(*) from blog
   	<where>
+  		<if test="int1!=null and int1==1"><!-- int1：是否只查未影藏的 -->
   		and ishide=0
+  		</if>
+  		<if test="int2!=null"><!-- int2：用户ID，查看某个用户的 -->
+  		and id in ( 
+  			select b_id from blog_list_rel where bl_id in (select id from blog_list where u_id=#{int2}) 
+		)
+		</if>
+		<if test="int3!=null"><!-- int3：博客栏目id，查看某个栏目的 -->
+  		and id in ( 
+  			select b_id from blog_list_rel where bl_id=#{int3}
+		)
+  		</if>
+  		<if test="str1!=null"><!-- str1：通过博客标题模糊查询 -->
+  		and title like '%${str1}%'
+  		</if>
+  		<if test="str2!=null"><!-- str2：通过博客摘要模糊查询 -->
+  		and summary like '%${str2}%'
+  		</if>
+  		<if test="date1!=null"><!-- date1：时间范围开始时间 -->
+  		and create_time >= #{date1}
+  		</if>
+  		<if test="date2!=null"><!-- date2：时间范围结束时间 -->
+  		and create_time &lt;= #{date2}
+  		</if>
   	</where>
   </select>
   

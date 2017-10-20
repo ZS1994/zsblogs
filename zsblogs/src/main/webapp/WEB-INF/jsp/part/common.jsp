@@ -24,12 +24,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 /*张顺，2017-2-25
  * ajax添加头信息
  * */
+/* 
 $.ajaxSetup({ 
-	//headers : {"token":"${user.licence}"},
+	headers : {"token":"${user.licence}"},
 	error:function(XMLHttpRequest, textStatus, errorThrown){
 		alert(textStatus+" : "+XMLHttpRequest.status+"  "+errorThrown);
 	}
-});
+}); 
+*/
 //------------张顺，2017-6-29，第一次进入页面不加载数据（开始）-------------------
 var dg_options={};//数据表格的属性
 var isDgInit=false;//数据表格是否初始化
@@ -53,7 +55,48 @@ function search_toolbar(){
 		$('#dg').datagrid('load', json);
 	}
 }
+/**
+ * 张顺，2017-10-20，重载查询方法，新增一个参数，使之可以自定义除了查询条件之外的额外参数
+ */
+function search_toolbar_2(opt){
+	if(opt){
+		var int1,int2,int3,int4,str1,str2,str3,str4,date1,date2,date3,date4;
+		int1=opt.int1?opt.int1:null;
+		int2=opt.int2?opt.int2:null;
+		int3=opt.int3?opt.int3:null;
+		int4=opt.int4?opt.int4:null;
+		str1=opt.str1?opt.str1:null;
+		str2=opt.str2?opt.str2:null;
+		str3=opt.str3?opt.str3:null;
+		str4=opt.str4?opt.str4:null;
+		date1=opt.date1?opt.date1:null;
+		date2=opt.date2?opt.date2:null;
+		date3=opt.date3?opt.date3:null;
+		date4=opt.date4?opt.date4:null;
+		var f=$('#search');
+		if(f.form('validate')){
+			isDgInit=true;
+			var json=formToJson(f);
+			if(int1)json.int1=int1;
+			if(int2)json.int2=int2;
+			if(int3)json.int3=int3;
+			if(int4)json.int4=int4;
+			if(str1)json.str1=str1;
+			if(str2)json.str2=str2;
+			if(str3)json.str3=str3;
+			if(str4)json.str4=str4;
+			if(date1)json.date1=date1;
+			if(date2)json.date2=date2;
+			if(date3)json.date3=date3;
+			if(date4)json.date4=date4;
+			$('#dg').datagrid('load', json);
+		}
+	}else{
+		search_toolbar();
+	}
+}
 $(function(){
+	//-----第一次进入不查---------------------------------------------
 	dg_options.onLoadSuccess=function (data) {
 		$(this).datagrid("fixRownumber");
 	};
@@ -87,7 +130,6 @@ $(function(){
 		dg_options.columns=sst;
 	}
 	$('#dg').datagrid(dg_options);
-	console.log(dg_options);
 	//-------------张顺，2017-6-29，第一次进入页面不加载数据（结束）-----------------------------
 });
 </script>

@@ -48,6 +48,7 @@ public class BlogSerImpl implements BlogSer{
 			for (Object obj : list) {
 				Blog b=(Blog)obj;
 				b.setUser(getAutorOfBlog(b.getId()));
+				b.setBlogListNames(getBlogListNamesOfBlog(b.getId()));
 			}
 			int rows=blogMapper.getCount(accept);
 			return new EasyUIPage(rows, list);
@@ -97,4 +98,19 @@ public class BlogSerImpl implements BlogSer{
 		return null;
 	}
 
+	public String getBlogListNamesOfBlog(Integer bid) {
+		if(bid!=null){
+			List<BlogListRel> rels=blogListRelMapper.selectByBlidOrBid(null, bid);
+			String blNames="";
+			for (BlogListRel rel : rels) {
+				BlogList bl=blogListMapper.selectByPrimaryKey(rel.getBlId());
+				blNames=blNames+bl.getName()+",";
+			}
+			blNames=blNames.substring(0, blNames.lastIndexOf(","));
+			return blNames;
+		}
+		return null;
+	}
+
+	
 }

@@ -15,9 +15,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     var page="${page}",total,rows="${rows}",pageSize;
     $(function(){
     	pullRequest({
-    		urlb:"/api/blog/list?sort=createTime&order=desc",
+    		urlb:"/api/blog/list",
     		type:"get",
-    		data:{page:page,rows:rows},
+    		data:{page:page,rows:rows,int1:1,sort:"createTime",order:"desc"},
     		isNeedToken:false,
     		superSuccess:function(data){
     			//先预防是权限问题
@@ -64,13 +64,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     function lastPage(){
     	if($("#page_last").parent().attr('class')!="disabled"){
     		page--;
-    		window.location.href="${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc";
+    		window.location.href="${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc&int1=1";
     	}
     }
     function nextPage(){
     	if($("#page_next").parent().attr('class')!="disabled"){
     		page++;
-    		window.location.href="${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc";
+    		window.location.href="${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc&int1=1";
     	}
     }
     </script>

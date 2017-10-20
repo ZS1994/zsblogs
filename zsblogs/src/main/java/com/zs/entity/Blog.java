@@ -22,7 +22,16 @@ public class Blog {
     //-------------
     private String blIds;
     private Users user;
+    private String blogListNames;//所属栏目（名字）
     
+
+	public String getBlogListNames() {
+		return blogListNames;
+	}
+
+	public void setBlogListNames(String blogListNames) {
+		this.blogListNames = blogListNames;
+	}
 
 	public Users getUser() {
 		return user;

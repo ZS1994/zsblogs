@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
   	
     <base href="<%=basePath%>">
-    <title>博客栏目</title>
+    <title>我的博客</title>
     <jsp:include page="/WEB-INF/jsp/part/common.jsp"/>
     <script type="text/javascript">
 	var url;
@@ -103,16 +103,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    } 
 		});
 	}
-	function gotoTheBlogs(){
-		var row=$("#dg").datagrid("getSelected");
-		var id=row.id;
-		if(row){
-			window.location.href="${path}/menu/user/blog?int2="+row.user.id+"&int3="+id;
-		}
+	function mySearchToolbar(){
+		search_toolbar_2({
+			int2:${not empty acc.int2 ? acc.int2 : "null"},
+			int3:${not empty acc.int3 ? acc.int3 : "null"}
+		});
 	}
 	$(function(){
 		//直接查一次，不查的话第一次进入默认是不查的
-		search_toolbar();
+		mySearchToolbar();
 	});
 	</script>
 	<style type="text/css">
@@ -137,9 +136,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<div class="p_body" style="overflow-y:hidden;">
   			
   			<table id="dg" border="true"
-				url="<%=path %>/api/blogList/list"
+				url="${path }/api/blog/list"
 				method="get" toolbar="#toolbar"
-				loadMsg="数据加载中请稍后……"
+				loadMsg="数据加载中请稍后……" nowrap="false"
 				striped="true" pagination="true"
 				rownumbers="true" fitColumns="false" 
 				singleSelect="true" fit="true"
@@ -147,34 +146,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<thead>
 					<tr>
 						<th field="id" width="100" sortable="true">ID</th>
-						<th field="name" width="200" sortable="true">名称</th>
+						<th field="title" width="300" sortable="true">标题</th>
+						<th field="summary" width="500" sortable="true">摘要</th>
 						<th field="createTime" width="200" sortable="true">创建时间</th>
-						<th field="blOrder" width="100" sortable="true">序号</th>
-						<th field="uId" width="200" sortable="true" data-options="
+						<th field="ishide" width="100" sortable="true">是否隐藏</th>
+		             	<th field="blogListNames" width="300" sortable="false" data-options="
 						formatter:function(value,row,index){
-		                    if(row.user){
-								return row.user.name;
-		                    }
-		             	}">用户</th>
-		             	<th field="blogsNum" width="100" sortable="false" data-options="
-						formatter:function(value,row,index){
-		                    if(row.blogsNum){
-								return row.blogsNum;
+		                    if(row.blogListNames){
+								return row.blogListNames;
 		                    }else{
-		                    	return 0;
+		                    	return '';
 		                    }
-		             	}">博客数量</th>
+		             	}">所属栏目</th>
 					</tr>
 				</thead>
 			</table>
 			<div id="toolbar">
 				<div class="btn-separator-none">
-					<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addObj()">添加博客栏目</a>
-					<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateObj()">编辑博客栏目</a>
-					<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteObj()">删除博客栏目</a>
+					<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addObj()">创建博客</a>
+					<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateObj()">编辑博客</a>
+					<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteObj()" disabled="true">删除博客</a>
 				</div>
 				<div class="btn-separator">
-					<a class="easyui-linkbutton" plain="true" onclick="gotoTheBlogs()">查看该栏目的博客</a>
 					<a class="easyui-linkbutton" iconCls="icon-help" plain="true" disabled="true">帮助</a>
 				</div>
 				<br class="clear"/>
@@ -182,16 +175,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<form id="search">
 			   		<div class="searchBar-input">
 			    		<div>
-				    		ID：<input name ="int2" />
+				    		创建时间开始：<input name ="date1" />
 			    		</div>
 			    		<div>
-			    			名称：<input name ="str1" />
+			    			创建时间结束：<input name ="date2" />
+			    		</div>
+			   		</div>
+			   		<div class="searchBar-input">
+			    		<div>
+				    		标题：<input name ="str1" />
+			    		</div>
+			    		<div>
+			    			摘要：<input name ="str2" />
+			    		</div>
+			   		</div>
+			   		<div class="searchBar-input">
+			    		<div>
+				    		博客栏目：<input name ="int3" />
 			    		</div>
 			   		</div>
 			   	</form>
 			   	<div class="clear"></div>
 			   	<hr class="hr-geay">
-				<a class="easyui-linkbutton" iconCls="icon-search" onclick="search_toolbar()">查询</a>
+				<a class="easyui-linkbutton" iconCls="icon-search" onclick="mySearchToolbar()">查询</a>
 				<a class="easyui-linkbutton" iconCls="icon-search" disabled="true">统计</a>
 				<a class="easyui-linkbutton" iconCls="icon-search" onclick="excel_export()" disabled="true">导出</a>
 				<div class="pull-away"></div>
@@ -206,13 +212,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<input type="hidden" name="_token" value="${token}"/>
 					<input type="hidden" name="id"/>
 					<div class="fitem">
-						<label>名称:</label>
+						<label>创建时间开始:</label>
+						<input name="date1" class="easyui-validatebox" required="true">
+					</div>
+					<div class="fitem">
+						<label>创建时间结束:</label>
+						<input name="date2" class="easyui-validatebox" required="true">
+					</div>
+					<div class="fitem">
+						<label>标题:</label>
 						<input name="name" class="easyui-validatebox" required="true">
 					</div>
 					<div class="fitem">
-						<label>序号:</label>
+						<label>摘要:</label>
 						<input name="blOrder" class="easyui-validatebox" required="true">
 					</div>
+					<div class="fitem">
+						<label>博客栏目:</label>
+						<input name="int3" class="easyui-validatebox" required="true">
+					</div>
+					
 				</form>
 			</div>
 			<div id="dlg-buttons">

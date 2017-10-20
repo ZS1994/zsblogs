@@ -163,10 +163,12 @@ public class RoleInter extends HandlerInterceptorAdapter{
 			}else{
 				if (roleSer.isPerInRoles(per, roles)) {
 					timeLineSer.add(new Timeline(user.getId(),per.getId(), gson.toJson(req.getParameterMap())));
-					Calendar calendar=Calendar.getInstance();
-					calendar.add(Calendar.DAY_OF_MONTH, 1);//加一天
-					lcToken.setInvalidTime(calendar.getTime());
-					licenceSer.updateToken(lcToken);
+					if(lcToken!=null){
+						Calendar calendar=Calendar.getInstance();
+						calendar.add(Calendar.DAY_OF_MONTH, 1);//加一天
+						lcToken.setInvalidTime(calendar.getTime());
+						licenceSer.updateToken(lcToken);
+					}
 					user.setRoles(roles);
 					req.setAttribute(Constans.USER, user);
 					return true;
