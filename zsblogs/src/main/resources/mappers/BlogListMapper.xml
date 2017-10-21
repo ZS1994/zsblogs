@@ -103,6 +103,12 @@
   		<if test="str1!=null">
   		and name like '%${str1}%'
   		</if>
+  		<if test="date1!=null"><!-- date1：时间范围开始时间 -->
+  		and create_time >= #{date1}
+  		</if>
+  		<if test="date2!=null"><!-- date2：时间范围结束时间 -->
+  		and create_time &lt;= #{date2}
+  		</if>
   	</where>
   	<if test="sort!=null and order!=null">
   		order by ${sort} ${order}
@@ -120,6 +126,12 @@
   		</if>
   		<if test="str1!=null">
   		and name like '%${str1}%'
+  		</if>
+  		<if test="date1!=null"><!-- date1：时间范围开始时间 -->
+  		and create_time >= #{date1}
+  		</if>
+  		<if test="date2!=null"><!-- date2：时间范围结束时间 -->
+  		and create_time &lt;= #{date2}
   		</if>
   	</where>
   </select>

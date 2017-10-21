@@ -52,8 +52,10 @@ public class IndexCon{
 		req.setAttribute("rows", rows);
 		return "/blog/blog";
 	}
+	//写博客
 	@RequestMapping("/blogList/blog/user/edit")
-	public String gotoBlogEdit(){
+	public String gotoBlogEdit(HttpServletRequest req,String id){
+		req.setAttribute("id", id);
 		return "/blog/blogEdit";
 	}
 	

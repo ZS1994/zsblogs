@@ -22,4 +22,5 @@ public interface BlogListRelMapper {
     int getCountFromBlid(@Param("blId") Integer blId);
     
     List<BlogListRel> selectByBlidOrBid(@Param("blId")Integer blId,@Param("bId")Integer bId);
+    int deleteByBlidOrBid(@Param("blId")Integer blId,@Param("bId")Integer bId);
 }

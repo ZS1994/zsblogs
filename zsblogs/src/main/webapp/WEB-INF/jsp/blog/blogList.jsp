@@ -174,12 +174,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteObj()">删除博客栏目</a>
 				</div>
 				<div class="btn-separator">
-					<a class="easyui-linkbutton" plain="true" onclick="gotoTheBlogs()">查看该栏目的博客</a>
+					<a class="easyui-linkbutton" iconCls="icon-zs-forward" plain="true" onclick="gotoTheBlogs()">查看该栏目的博客</a>
 					<a class="easyui-linkbutton" iconCls="icon-help" plain="true" disabled="true">帮助</a>
 				</div>
 				<br class="clear"/>
 				<hr class="hr-geay">
 				<form id="search">
+					<div class="searchBar-input">
+			    		<div>
+				    		创建时间开始：<input name="date1" id="d4311" class="Wdate" type="text" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'d4312\')}' ,dateFmt:'yyyy/MM/dd HH:mm:ss'})"/>
+			    		</div>
+			    		<div>
+			    			创建时间结束：<input name="date2" id="d4312" class="Wdate" type="text" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'d4311\')}' ,dateFmt:'yyyy/MM/dd HH:mm:ss'})"/>
+			    		</div>
+			   		</div>
 			   		<div class="searchBar-input">
 			    		<div>
 				    		ID：<input name ="int2" />
@@ -192,8 +200,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   	<div class="clear"></div>
 			   	<hr class="hr-geay">
 				<a class="easyui-linkbutton" iconCls="icon-search" onclick="search_toolbar()">查询</a>
-				<a class="easyui-linkbutton" iconCls="icon-search" disabled="true">统计</a>
-				<a class="easyui-linkbutton" iconCls="icon-search" onclick="excel_export()" disabled="true">导出</a>
+				<a class="easyui-linkbutton" iconCls="icon-sum" disabled="true">统计</a>
+				<a class="easyui-linkbutton" iconCls="icon-print" onclick="excel_export()" disabled="true">导出</a>
 				<div class="pull-away"></div>
 			</div>
 			

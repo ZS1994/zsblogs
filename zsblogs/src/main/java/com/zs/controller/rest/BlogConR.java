@@ -80,7 +80,7 @@ public class BlogConR extends BaseRestController<Blog, Integer>{
 	@RequestMapping(value="",method=RequestMethod.PUT)
 	@Override
 	public Result<String> doUpdate(Blog obj, HttpServletRequest req, HttpServletResponse resp) {
-		if(obj!=null){
+		if(obj!=null && obj.getId()!=null){
 			try {
 				return new Result<String>(SUCCESS, Code.SUCCESS, blogSer.update(obj));
 			} catch (Exception e) {

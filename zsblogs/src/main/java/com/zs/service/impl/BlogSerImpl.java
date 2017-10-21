@@ -48,7 +48,7 @@ public class BlogSerImpl implements BlogSer{
 			for (Object obj : list) {
 				Blog b=(Blog)obj;
 				b.setUser(getAutorOfBlog(b.getId()));
-				b.setBlogListNames(getBlogListNamesOfBlog(b.getId()));
+				b.setBlogListNames(getBlogListNamesOfBlog(b.getId())[0]);
 			}
 			int rows=blogMapper.getCount(accept);
 			return new EasyUIPage(rows, list);
@@ -67,6 +67,11 @@ public class BlogSerImpl implements BlogSer{
 	}
 
 	public String update(Blog obj) {
+		String blIds[]=gson.fromJson(obj.getBlIds(), String[].class);
+		blogListRelMapper.deleteByBlidOrBid(null, obj.getId());
+		for (String s : blIds) {
+			blogListRelMapper.insertSelective(new BlogListRel(Integer.valueOf(s), obj.getId()));
+		}
 		return String.valueOf(blogMapper.updateByPrimaryKeySelective(obj));
 	}
 
@@ -77,6 +82,7 @@ public class BlogSerImpl implements BlogSer{
 	public Blog get(Integer id) {
 		Blog b=blogMapper.selectByPrimaryKey(id);
 		b.setUser(getAutorOfBlog(b.getId()));
+		b.setBlIds(getBlogListNamesOfBlog(b.getId())[1]);
 		return b;
 	}
 
@@ -98,18 +104,24 @@ public class BlogSerImpl implements BlogSer{
 		return null;
 	}
 
-	public String getBlogListNamesOfBlog(Integer bid) {
+	public String[] getBlogListNamesOfBlog(Integer bid) {
+		String ss[]=new String[2];
 		if(bid!=null){
 			List<BlogListRel> rels=blogListRelMapper.selectByBlidOrBid(null, bid);
 			String blNames="";
+			String blIds="";
 			for (BlogListRel rel : rels) {
 				BlogList bl=blogListMapper.selectByPrimaryKey(rel.getBlId());
 				blNames=blNames+bl.getName()+",";
+				blIds=blIds+bl.getId()+",";
 			}
 			blNames=blNames.substring(0, blNames.lastIndexOf(","));
-			return blNames;
+			blIds=blIds.substring(0, blIds.lastIndexOf(","));
+			ss[0]=blNames;
+			ss[1]=blIds;;
+			return ss;
 		}
-		return null;
+		return ss;
 	}
 
 	

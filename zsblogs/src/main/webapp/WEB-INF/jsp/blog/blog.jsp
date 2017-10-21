@@ -48,12 +48,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		}
     	});
     });
+    //填充博客
     function appendBlog(rows){
     	var str;
 		for(var i=0;i<rows.length;i++){
 			str="<div class='blog_block'><h4><a class='blog_title' onclick='gotoBlogMain("+rows[i].id+")'>"+rows[i].title+"</a></h4>"+
 			"<p>"+rows[i].summary+"</p>"+
-			"<div class='blog_introduction'>"+rows[i].user.name+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].createTime+"</div>"+
+			"<div class='blog_introduction'>"+rows[i].user.name+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].createTime+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].blogListNames+"</div>"+
 			"</div>";
 			$("#blogs").append(str);
 		}

@@ -19,6 +19,7 @@ import com.zs.entity.other.EasyUIPage;
 import com.zs.entity.other.Result;
 import com.zs.service.BlogListSer;
 import com.zs.tools.ColumnName;
+import com.zs.tools.Constans;
 import com.zs.tools.Trans;
 import com.zs.tools.mail.MailManager;
 import com.zs.tools.mail.MailModel;
@@ -129,16 +130,14 @@ public class BlogListConR extends BaseRestController<BlogList, Integer>{
 	
 	@RequestMapping(value="/user/all",method=RequestMethod.GET)
 	public Result<List<BlogList>> getUserBlogList(HttpServletRequest req){
-		Users user=(Users)req.getAttribute("[user]");
-		if(user!=null){
-			try {
-				return new Result<List<BlogList>>(SUCCESS, Code.SUCCESS, blogListSer.queryAll(user.getId()));
-			} catch (Exception e) {
-				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e.getMessage()), MailManager.TITLE));
-			}
+		try {
+			Users user=Constans.getUserFromReq(req);
+			return new Result<List<BlogList>>(SUCCESS, Code.SUCCESS, blogListSer.queryAll(user.getId()));
+		} catch (Exception e) {
+			e.printStackTrace();
+			mail.addMail(new MailModel(Trans.strToHtml(e.getMessage()), MailManager.TITLE));
+			return new Result<List<BlogList>>(ERROR, Code.ERROR, null);
 		}
-		return new Result<List<BlogList>>(ERROR, Code.ERROR, null);
 	}
 
 }

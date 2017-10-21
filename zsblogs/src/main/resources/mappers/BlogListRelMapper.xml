@@ -84,4 +84,15 @@
     	</if>
     </where>
   </select>
+  <delete id="deleteByBlidOrBid" parameterType="java.lang.Integer" >
+    delete from blog_list_rel
+    <where>
+    	<if test="blId!=null">
+    	and bl_id=#{blId}
+    	</if>
+    	<if test="bId!=null">
+    	and b_id=#{bId}
+    	</if>
+    </where>
+  </delete>
 </mapper>

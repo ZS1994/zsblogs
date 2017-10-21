@@ -115,6 +115,9 @@ public class RoleInter extends HandlerInterceptorAdapter{
 			throws Exception {
 		init(request, response);
 		initUserAndRoleFromToken();
+		
+//		log.info("url:"+url+"  method:"+method+"  token:"+token+"  isTimeout:"+isTimeout+"  username:"+(user!=null?user.getName():"null"));
+		
 		//例外列表
 		if (
 				allowThrough("/api/login/token", POST) ||
@@ -134,7 +137,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 			//张顺，2017-10-19。即使访问的是例外列表，也得看看token，因为后续的user是从这里获取的，如果有token，不管它是不是例外，都去获取user，以便后续使用
 			if(user!=null){
 				user.setRoles(roles);
-				req.setAttribute(Constans.USER, user);
+				request.setAttribute(Constans.USER, user);
 			}
 			return true;
 		}
@@ -142,9 +145,6 @@ public class RoleInter extends HandlerInterceptorAdapter{
 				) {
 			return true;
 		}
-		
-		
-//		log.info("url:"+url+"  method:"+method+"  token:"+token+"  isTimeout:"+isTimeout+"  user:"+user);
 		
 		if (isTimeout) {
 			gotoHadle(Code.LICENCE_TIMEOUT);
@@ -170,7 +170,10 @@ public class RoleInter extends HandlerInterceptorAdapter{
 						licenceSer.updateToken(lcToken);
 					}
 					user.setRoles(roles);
-					req.setAttribute(Constans.USER, user);
+					if(req==null){
+						log.error("[req==null]"+(req==null));
+					}
+					request.setAttribute(Constans.USER, user);
 					return true;
 				}else{
 					gotoHadle(Code.ROLE_USER_NO_PERMISSION);
@@ -260,7 +263,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 	
 	/*2017-8-5，张顺，根据token初始化相关参数*/
 	private void initUserAndRoleFromToken(){
-		if(token!=null){
+		if(token!=null && !token.equals("null")){
 			lcToken=licenceSer.geLcToken(token);
 			if (lcToken!=null) {
 				if(lcToken.getInvalidTime().before(new Date())){

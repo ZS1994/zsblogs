@@ -96,4 +96,12 @@ public class Blog {
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
     }
+
+	@Override
+	public String toString() {
+		return "Blog [id=" + id + ", title=" + title + ", createTime=" + createTime + ", content=" + content
+				+ ", summary=" + summary + ", ishide=" + ishide + ", blIds=" + blIds + "]";
+	}
+    
+    
 }

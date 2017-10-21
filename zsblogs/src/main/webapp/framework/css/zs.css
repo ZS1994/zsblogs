@@ -43,10 +43,10 @@ a{
 	color: #333333;
 }
 input{
-	border:#999 1px solid;
+	border:#cbcbcb 1px solid;
 	height: 20px;
 	background: white;
-	width: 140px;
+	width: 150px;
 }
 select{
 	height: 24px;
@@ -58,12 +58,18 @@ select{
 张顺，2017-3-3，修改样式，删除了一些不需要了的样式*/
 .searchBar-input	{
 	float: left;
-	width: 230px; 
+	width: 250px; 
 	height: 50px;
 }
 .searchBar-input>div	{
 	line-height:220%;
 	float:right;
+}
+.searchBar-input>div>select	{
+	border:#cbcbcb 1px solid;
+	height: 20px;
+	background: white;
+	width: 150px;
 }
 /*黄光辉   ，2017年3月1日，下面是查询栏位的样式*/
 .searchBar-input1	{

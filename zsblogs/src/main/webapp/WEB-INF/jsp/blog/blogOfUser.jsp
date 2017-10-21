@@ -12,22 +12,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>我的博客</title>
     <jsp:include page="/WEB-INF/jsp/part/common.jsp"/>
     <script type="text/javascript">
-	var url;
 	function addObj(){
-		$("#dlg").dialog("open").dialog("setTitle","新建");	
-		$("#fm").form("clear");
-		$("#fm input[name='_method']").val("post");
-		$("#fm input[name='_token']").val("${token}");
-		url="${path}/api/blogList";
+		window.location.href="${path}/menu/blogList/blog/user/edit";
 	}
 	function updateObj(){
 		var row=$("#dg").datagrid("getSelected");
 		if(row){
-			$("#dlg").dialog("open").dialog("setTitle","修改");
-			$("#fm").form("load",row);
-			$("#fm input[name='_method']").val("put");
-			$("#fm input[name='_token']").val("${token}");
-			url="${path}/api/blogList";
+			window.location.href="${path}/menu/blogList/blog/user/edit?id="+row.id;
 		}
 	}
 	function save(){
@@ -105,13 +96,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}
 	function mySearchToolbar(){
 		search_toolbar_2({
-			int2:${not empty acc.int2 ? acc.int2 : "null"},
-			int3:${not empty acc.int3 ? acc.int3 : "null"}
+			int2:${not empty acc.int2 ? acc.int2 : "null"}
 		});
 	}
 	$(function(){
-		//直接查一次，不查的话第一次进入默认是不查的
-		mySearchToolbar();
+		//填充博客栏目内容
+		pullRequest({
+			urlb:"/api/blogList/user/all",
+    		type:"get",
+			success:function(data){
+				var str="";
+				for(var i=0;i<data.length;i++){
+					str=str+"<option value=\""+data[i].id+"\">"+data[i].name+"</option>";
+				}
+				$("#selBlogList").append(str);
+				//选择博客栏目，根据上个页面传过来的int3定
+				var int3="${acc.int3}";
+				var selitem=$("#selBlogList").find("option[value='"+int3+"']").attr("selected","true");
+				//直接查一次，不查的话第一次进入默认是不查的
+				mySearchToolbar();
+			}
+		});
 	});
 	</script>
 	<style type="text/css">
@@ -175,10 +180,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<form id="search">
 			   		<div class="searchBar-input">
 			    		<div>
-				    		创建时间开始：<input name ="date1" />
+				    		创建时间开始：<input name="date1" id="d4311" class="Wdate" type="text" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'d4312\')}' ,dateFmt:'yyyy/MM/dd HH:mm:ss'})"/>
 			    		</div>
 			    		<div>
-			    			创建时间结束：<input name ="date2" />
+			    			创建时间结束：<input name="date2" id="d4312" class="Wdate" type="text" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'d4311\')}' ,dateFmt:'yyyy/MM/dd HH:mm:ss'})"/>
 			    		</div>
 			   		</div>
 			   		<div class="searchBar-input">
@@ -191,15 +196,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   		</div>
 			   		<div class="searchBar-input">
 			    		<div>
-				    		博客栏目：<input name ="int3" />
+				    		博客栏目：
+				    		<select id="selBlogList" name="int3">
+				    			<option value="">所有</option>
+				    		</select>
 			    		</div>
 			   		</div>
 			   	</form>
 			   	<div class="clear"></div>
 			   	<hr class="hr-geay">
 				<a class="easyui-linkbutton" iconCls="icon-search" onclick="mySearchToolbar()">查询</a>
-				<a class="easyui-linkbutton" iconCls="icon-search" disabled="true">统计</a>
-				<a class="easyui-linkbutton" iconCls="icon-search" onclick="excel_export()" disabled="true">导出</a>
+				<a class="easyui-linkbutton" iconCls="icon-sum" disabled="true">统计</a>
+				<a class="easyui-linkbutton" iconCls="icon-print" onclick="excel_export()" disabled="true">导出</a>
 				<div class="pull-away"></div>
 			</div>
 			

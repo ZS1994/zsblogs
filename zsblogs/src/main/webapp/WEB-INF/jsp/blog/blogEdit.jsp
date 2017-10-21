@@ -13,8 +13,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>编辑博客</title>
     <script type="text/javascript">
     var result_hint_num=1;//提示框计数器
-    
+    var id="${id}";
     $(function(){
+    	//获取博客栏目
     	pullRequest({
     		urlb:"/api/blogList/user/all",
     		type:"get",
@@ -27,6 +28,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			$("#blog_list").html(str);
     		}
     	});
+    	//判断是添加还是修改，id为空：添加，否则为修改，修改的话就将其内容填充
+    	if(id && id!=null && id!=""){
+    		pullRequest({
+    			urlb:"/api/blog/one",
+    			type:"get",
+    			data:{id:id},
+    			success:function(data){
+    				console.log(data);
+    				$("#ff [name='title']").val(data.title);
+    				$("#ff [name='content']").val(data.content);
+    				$("#ff [name='summary']").val(data.summary);
+    				$("#ff [name='ishide'][value='"+data.ishide+"']").attr("checked","checked");
+    				var blidss=data.blIds.split(",");
+    				for(var i=0;i<blidss.length;i++){
+    					console.log(blidss[i]);
+    					$("input[name='blIds'][value='"+blidss[i]+"']").attr("checked", true);;
+    				}
+    			}
+    		});
+    	}
     });
     
     function preview(){
@@ -45,23 +66,53 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	result_hint_num++;
     	
     	var d=formToJson($("#ff"));
-    	if(d!=null && d.title!=null && d.content!=null && d.summary!=null &&d.blIds!=null){
-    		d.blIds=JSON.stringify(d.blIds);
-    		console.log(d.blIds);
-    		pullRequest({
-    			urlb:"/api/blog",
-    			type:"post",
-    			data:d,
-    			success:function(data){
-    				window.location.href="${path}/menu/blogList/blog/one?id="+data;
-    			},
-    			error:function(code,data){
-    				$("#hintDialog_body").html("<strong>错误！</strong>["+code+"]"+data+"。");
-    				$("#hintDialog").modal("show");
-    			}
-    		});
+    	//为空检查
+    	if(d!=null && d.title!=null && d.content!=null && d.summary!=null && d.blIds!=null && d.ishide){
+    		/*字数检查
+    		标题：100个字符
+    		正文：500000个字符
+    		摘要：200个字符
+    		*/
+    		if(d.title.length<=100 && d.content.length<=500000 && d.summary<=200){
+    			d.blIds=JSON.stringify(d.blIds);
+        		if(id && id!=""){//修改
+        			d.id=id;
+        			d._method="put";
+        			console.log(d);
+        			pullRequest({
+            			urlb:"/api/blog",
+            			type:"post",
+            			data:d,
+            			success:function(data){
+            				window.location.href="${path}/menu/blogList/blog/one?id="+id;
+            			},
+            			error:function(code,data){
+            				$("#hintDialog_body").html("<strong>错误！</strong>["+code+"]"+data+"。");
+            				$("#hintDialog").modal("show");
+            			}
+            		});
+        		}else{//添加
+        			console.log(d);
+        			pullRequest({
+            			urlb:"/api/blog",
+            			type:"post",
+            			data:d,
+            			success:function(data){
+            				window.location.href="${path}/menu/blogList/blog/one?id="+data;
+            			},
+            			error:function(code,data){
+            				$("#hintDialog_body").html("<strong>错误！</strong>["+code+"]"+data+"。");
+            				$("#hintDialog").modal("show");
+            			}
+            		});
+        		}
+    			
+    		}else{
+    			$("#hintDialog_body").html("<strong>错误！</strong>字数超过限制。<br><br>以下是字数最大限制：<ul><li>标题：100个字符</li><li>正文：500000个字符</li><li>摘要：200个字符。</li></ul><span class=\"muted\">注意：1个汉字=2个字符</span>");
+        		$("#hintDialog").modal("show");
+    		}
     	}else{
-    		$("#hintDialog_body").html("<strong>错误！</strong>标题、正文、摘要、文章分类都不能为空。");
+    		$("#hintDialog_body").html("<strong>错误！</strong>标题、正文、摘要、文章分类、是否公开都不能为空。");
     		$("#hintDialog").modal("show");
     	}
     }
@@ -87,18 +138,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					
 					    <legend>请使用第三方编辑器编写，写完将其拷贝至文本域中</legend>
 					    
-					    <lable>标题</lable>
+					    <lable>标题<span class="muted">（最大字数限制：100个字符）</span></lable>
 					    <input id="blog_title" name="title" type="text" placeholder="请输入标题..." style="width: 100%;height: inherit;" required>
 					    
-					    <lable>正文</lable>
+					    <lable>正文<span class="muted">（最大字数限制：500000个字符）</span></lable>
 					    <textarea id="blog_content" name="content" rows="15" style="width: 100%;" required></textarea>
 					    <span class="help-block">样式使用的是bootstrap</span>
 					    
-					    <lable>摘要</lable>
+					    <lable>摘要<span class="muted">（最大字数限制：200个字符）</span></lable>
 					    <textarea id="blog_summary" name="summary" rows="4" style="width: 100%;" required></textarea>
 					    
 					    <lable>选择文章分类</lable>
 					    <div id="blog_list">
+					    </div>
+					    
+					    <lable>是否公开</lable>
+					    <div id="blog_ishide">
+							<label class="radio inline">
+								<input type="radio" name="ishide" id="optionsRadios1" value="1"/>
+								私有
+							</label>
+							<label class="radio inline">
+								<input type="radio" name="ishide" id="optionsRadios2" value="0" checked="checked"/>
+								公开
+							</label>
 					    </div>
 					    
 					    <center>
