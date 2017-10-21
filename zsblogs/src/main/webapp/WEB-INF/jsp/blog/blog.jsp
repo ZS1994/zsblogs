@@ -12,12 +12,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <base href="<%=basePath%>">
     <title>所有博客</title>
     <script type="text/javascript">
-    var page="${page}",total,rows="${rows}",pageSize;
-    $(function(){
+    var page="${acc.page}",total,rows="${acc.rows}",pageSize,str1="${not empty acc.str1 ? acc.str1 : null}";
+    //获取博客，查询所有博客
+    function getBlogList(){
+    	var json={
+   			page:page,
+   			rows:rows,
+   			int1:1,
+   			sort:"createTime",
+   			order:"desc",
+   			str1:str1
+		};
     	pullRequest({
     		urlb:"/api/blog/list",
     		type:"get",
-    		data:{page:page,rows:rows,int1:1,sort:"createTime",order:"desc"},
+    		data:json,
     		isNeedToken:false,
     		superSuccess:function(data){
     			//先预防是权限问题
@@ -31,7 +40,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	    			}else{
     	    				pageSize=Math.floor(total/rows)+1;
     	    			}
-    	    			if(page==pageSize){
+    	    			if(page>=pageSize){
     	    				$("#page_next").parent().addClass("disabled");
     	    			}else{
     	    				$("#page_next").parent().removeClass("disabled");
@@ -47,6 +56,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			}
     		}
     	});
+    }
+    $(function(){
+    	getBlogList();
+    	//填充搜索框内容
+    	$("#ssTitle").val(str1);
     });
     //填充博客
     function appendBlog(rows){
@@ -54,7 +68,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		for(var i=0;i<rows.length;i++){
 			str="<div class='blog_block'><h4><a class='blog_title' onclick='gotoBlogMain("+rows[i].id+")'>"+rows[i].title+"</a></h4>"+
 			"<p>"+rows[i].summary+"</p>"+
-			"<div class='blog_introduction'>"+rows[i].user.name+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].createTime+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].blogListNames+"</div>"+
+			"<div class='blog_introduction'>"+rows[i].user.name+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].createTime+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].blogListNames+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].readCount+"次阅读</div>"+
 			"</div>";
 			$("#blogs").append(str);
 		}
@@ -65,14 +79,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     function lastPage(){
     	if($("#page_last").parent().attr('class')!="disabled"){
     		page--;
-    		window.location.href="${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc&int1=1";
+    		window.location.href="${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc&int1=1&str1="+str1;
     	}
     }
     function nextPage(){
     	if($("#page_next").parent().attr('class')!="disabled"){
     		page++;
-    		window.location.href="${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc&int1=1";
+    		window.location.href="${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc&int1=1&str1="+str1;
     	}
+    }
+    function sousuo(){
+    	str1=$("#ssTitle").val().trim();
+   		window.location.href="${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc&int1=1&str1="+str1;
     }
     </script>
     <style type="text/css">
@@ -100,8 +118,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    
 				
 				<div class="input-append">
-				  <input class="span3" id="appendedInputButton" type="text" style="height: inherit;">
-				  <button class="btn" type="button">搜索</button>
+				  <input class="span3" id="ssTitle" type="text" placeholder="请输入标题..." style="height: inherit;">
+				  <button class="btn" type="button" onclick="sousuo()">搜索</button>
 				</div>
 							    
 			    <div id="blogs">

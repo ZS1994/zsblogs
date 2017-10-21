@@ -9,5 +9,7 @@ public interface BlogSer extends BaseService<Blog, Integer>{
 	public Users getAutorOfBlog(Integer bid);
 	//获取某一篇博客的所属栏目(名字0,id1)
 	public String[] getBlogListNamesOfBlog(Integer bid);
+	//增加一次阅读次数
+	public String read(Integer uid,Integer bid);
 	
 }

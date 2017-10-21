@@ -12,10 +12,12 @@ import com.google.gson.Gson;
 import com.zs.dao.BlogListMapper;
 import com.zs.dao.BlogListRelMapper;
 import com.zs.dao.BlogMapper;
+import com.zs.dao.ReadMapper;
 import com.zs.dao.UsersMapper;
 import com.zs.entity.Blog;
 import com.zs.entity.BlogList;
 import com.zs.entity.BlogListRel;
+import com.zs.entity.Read;
 import com.zs.entity.Users;
 import com.zs.entity.other.EasyUIAccept;
 import com.zs.entity.other.EasyUIPage;
@@ -35,6 +37,8 @@ public class BlogSerImpl implements BlogSer{
 	private UsersMapper usersMapper;
 	@Resource
 	private BlogMapper blogMapper;
+	@Resource
+	private ReadMapper readMapper;
 	
 	public EasyUIPage queryFenye(EasyUIAccept accept) {
 		if (accept!=null) {
@@ -45,12 +49,18 @@ public class BlogSerImpl implements BlogSer{
 				accept.setEnd(page*size);
 			}
 			List list=blogMapper.queryFenye(accept);
+			int rows=blogMapper.getCount(accept);
+			
 			for (Object obj : list) {
+				//获取所属栏目
 				Blog b=(Blog)obj;
 				b.setUser(getAutorOfBlog(b.getId()));
 				b.setBlogListNames(getBlogListNamesOfBlog(b.getId())[0]);
+				//获取阅读次数
+				EasyUIAccept accept2=new EasyUIAccept();
+				accept2.setInt1(b.getId());
+				b.setReadCount(readMapper.getCount(accept2));
 			}
-			int rows=blogMapper.getCount(accept);
 			return new EasyUIPage(rows, list);
 		}
 		return null;
@@ -83,6 +93,10 @@ public class BlogSerImpl implements BlogSer{
 		Blog b=blogMapper.selectByPrimaryKey(id);
 		b.setUser(getAutorOfBlog(b.getId()));
 		b.setBlIds(getBlogListNamesOfBlog(b.getId())[1]);
+		//获取阅读次数
+		EasyUIAccept accept2=new EasyUIAccept();
+		accept2.setInt1(b.getId());
+		b.setReadCount(readMapper.getCount(accept2));
 		return b;
 	}
 
@@ -122,6 +136,10 @@ public class BlogSerImpl implements BlogSer{
 			return ss;
 		}
 		return ss;
+	}
+
+	public String read(Integer uid, Integer bid) {
+		return String.valueOf(readMapper.insertSelective(new Read(uid, bid)));
 	}
 
 	

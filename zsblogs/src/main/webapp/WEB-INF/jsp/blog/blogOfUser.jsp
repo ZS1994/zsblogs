@@ -163,6 +163,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		                    	return '';
 		                    }
 		             	}">所属栏目</th>
+		             	<th field="readCount" width="300" sortable="false" data-options="
+						formatter:function(value,row,index){
+							return row.readCount+'次阅读';
+		             	}">阅读次数</th>
 					</tr>
 				</thead>
 			</table>
@@ -211,41 +215,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="pull-away"></div>
 			</div>
 			
-			<div id="dlg" class="easyui-dialog" style="width:600px;height:50%;padding:10px 20px"
-					closed="true" buttons="#dlg-buttons" modal="true">
-				<div class="ftitle">博客栏目</div>
-				<hr>
-				<form id="fm" method="post" >
-					<input type="hidden" name="_method" value="post"/>
-					<input type="hidden" name="_token" value="${token}"/>
-					<input type="hidden" name="id"/>
-					<div class="fitem">
-						<label>创建时间开始:</label>
-						<input name="date1" class="easyui-validatebox" required="true">
-					</div>
-					<div class="fitem">
-						<label>创建时间结束:</label>
-						<input name="date2" class="easyui-validatebox" required="true">
-					</div>
-					<div class="fitem">
-						<label>标题:</label>
-						<input name="name" class="easyui-validatebox" required="true">
-					</div>
-					<div class="fitem">
-						<label>摘要:</label>
-						<input name="blOrder" class="easyui-validatebox" required="true">
-					</div>
-					<div class="fitem">
-						<label>博客栏目:</label>
-						<input name="int3" class="easyui-validatebox" required="true">
-					</div>
-					
-				</form>
-			</div>
-			<div id="dlg-buttons">
-				<a class="easyui-linkbutton" iconCls="icon-ok" onclick="save()">提交</a>
-				<a class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
-			</div>
   			
   			
   		</div>

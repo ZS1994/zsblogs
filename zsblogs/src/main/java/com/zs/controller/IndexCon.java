@@ -45,11 +45,10 @@ public class IndexCon{
 		}
 		return "/blog/blogOfUser";
 	}
-	
+	//最新博客，所有博客
 	@RequestMapping("/blogList/blog")
-	public String gotoBlog(HttpServletRequest req,String page,String rows){
-		req.setAttribute("page", page);
-		req.setAttribute("rows", rows);
+	public String gotoBlog(HttpServletRequest req,EasyUIAccept accept){
+		req.setAttribute("acc", accept);
 		return "/blog/blog";
 	}
 	//写博客

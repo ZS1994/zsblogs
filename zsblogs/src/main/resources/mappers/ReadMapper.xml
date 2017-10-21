@@ -13,21 +13,21 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from read
+    from `read`
     where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from read
+    delete from `read`
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.zs.entity.Read" >
-    insert into read (id, u_id, b_id, 
+    insert into `read` (id, u_id, b_id, 
       create_time)
     values (#{id,jdbcType=INTEGER}, #{uId,jdbcType=INTEGER}, #{bId,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.zs.entity.Read" >
-    insert into read
+    insert into `read`
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
@@ -58,7 +58,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.zs.entity.Read" >
-    update read
+    update `read`
     <set >
       <if test="uId != null" >
         u_id = #{uId,jdbcType=INTEGER},
@@ -73,7 +73,7 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.zs.entity.Read" >
-    update read
+    update `read`
     set u_id = #{uId,jdbcType=INTEGER},
       b_id = #{bId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP}
@@ -81,8 +81,11 @@
   </update>
   
   <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
-  	select * from read
+  	select * from `read`
   	<where>
+  		<if test="int1!=null"><!-- int1:博客id -->
+  		and b_id=#{int1}
+  		</if>
   	</where>
   	<if test="sort!=null and order!=null">
   		order by ${sort} ${order}
@@ -90,9 +93,11 @@
   	limit ${start},${rows}
   </select>
   <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
-  	select count(*) from read
+  	select count(*) from `read`
   	<where>
+  		<if test="int1!=null"><!-- int1:博客id -->
+  		and b_id=#{int1}
+  		</if>
   	</where>
   </select>
-  
 </mapper>

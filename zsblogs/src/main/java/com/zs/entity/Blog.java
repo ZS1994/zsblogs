@@ -23,7 +23,15 @@ public class Blog {
     private String blIds;
     private Users user;
     private String blogListNames;//所属栏目（名字）
-    
+    private Integer readCount;//阅读次数
+
+	public Integer getReadCount() {
+		return readCount;
+	}
+
+	public void setReadCount(Integer readCount) {
+		this.readCount = readCount;
+	}
 
 	public String getBlogListNames() {
 		return blogListNames;

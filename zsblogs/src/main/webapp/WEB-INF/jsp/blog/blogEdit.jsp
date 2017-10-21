@@ -35,14 +35,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			type:"get",
     			data:{id:id},
     			success:function(data){
-    				console.log(data);
     				$("#ff [name='title']").val(data.title);
     				$("#ff [name='content']").val(data.content);
     				$("#ff [name='summary']").val(data.summary);
     				$("#ff [name='ishide'][value='"+data.ishide+"']").attr("checked","checked");
     				var blidss=data.blIds.split(",");
     				for(var i=0;i<blidss.length;i++){
-    					console.log(blidss[i]);
     					$("input[name='blIds'][value='"+blidss[i]+"']").attr("checked", true);;
     				}
     			}
@@ -54,7 +52,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	$("#blog_preview").html($("#blog_content").val());
     }
     
-    function save(){
+    //保存成功的小特效，不足一提
+    function saveSuccHint(){
     	var str="<div id='alert_"+result_hint_num+"' class='alert alert-success fade in'>"+
     	"<a class='close' href='#' data-dismiss='alert'>&times;</a>"+
     	"<strong>成功！</strong>保存成功。</div>";
@@ -64,7 +63,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		$("#"+index).alert('close');
     	},5000);
     	result_hint_num++;
-    	
+    }
+    
+    function save(){
     	var d=formToJson($("#ff"));
     	//为空检查
     	if(d!=null && d.title!=null && d.content!=null && d.summary!=null && d.blIds!=null && d.ishide){
@@ -73,12 +74,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		正文：500000个字符
     		摘要：200个字符
     		*/
-    		if(d.title.length<=100 && d.content.length<=500000 && d.summary<=200){
+    		console.log(d.title.length);
+    		console.log(d.content.length);
+    		console.log(d.summary.length);
+    		if(d.title.length<=100 && d.content.length<=500000 && d.summary.length<=200){
+    			saveSuccHint();
     			d.blIds=JSON.stringify(d.blIds);
         		if(id && id!=""){//修改
         			d.id=id;
         			d._method="put";
-        			console.log(d);
         			pullRequest({
             			urlb:"/api/blog",
             			type:"post",
@@ -92,7 +96,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             			}
             		});
         		}else{//添加
-        			console.log(d);
         			pullRequest({
             			urlb:"/api/blog",
             			type:"post",

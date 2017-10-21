@@ -42,4 +42,16 @@ public class Read {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+	public Read() {
+		super();
+	}
+
+	public Read(Integer uId, Integer bId) {
+		super();
+		this.uId = uId;
+		this.bId = bId;
+		this.createTime=new Date();
+	}
+    
 }

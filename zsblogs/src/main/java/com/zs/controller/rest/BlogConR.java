@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.zs.entity.Blog;
+import com.zs.entity.Users;
 import com.zs.entity.other.EasyUIAccept;
 import com.zs.entity.other.EasyUIPage;
 import com.zs.entity.other.Result;
 import com.zs.service.BlogSer;
 import com.zs.tools.ColumnName;
+import com.zs.tools.Constans;
 import com.zs.tools.Trans;
 import com.zs.tools.mail.MailManager;
 import com.zs.tools.mail.MailModel;
@@ -54,6 +56,8 @@ public class BlogConR extends BaseRestController<Blog, Integer>{
 	public Result<Blog> doGet(Integer id, HttpServletRequest req, HttpServletResponse resp) {
 		if(id!=null){
 			try {
+				Users user=Constans.getUserFromReq(req);
+				blogSer.read(user!=null?user.getId():null,id);
 				return new Result<Blog>(SUCCESS, Code.SUCCESS, blogSer.get(id));
 			} catch (Exception e) {
 				e.printStackTrace();

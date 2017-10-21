@@ -23,7 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		success:function(data){
     			console.log(data);
     			$("#blog_title").html(data.title);
-    			$("#blog_author").html(data.user.name+"&nbsp;&nbsp;&nbsp;&nbsp;"+data.createTime);
+    			$("#blog_author").html(data.user.name+"&nbsp;&nbsp;&nbsp;&nbsp;"+data.createTime+"&nbsp;&nbsp;&nbsp;&nbsp;"+data.readCount+"次阅读");
     			$("#blog_content").html(data.content);
     		}
     	});
