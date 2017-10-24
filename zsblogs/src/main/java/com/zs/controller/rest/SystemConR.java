@@ -43,14 +43,12 @@ public class SystemConR {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e.getMessage()), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
 				return new Result<List<Permission>>(BaseRestController.ERROR, Code.ERROR, null);
 			}
 		}
 		return new Result<List<Permission>>(BaseRestController.ERROR, Code.ERROR, null);
 	}
-	
-	
 	
 	
 }

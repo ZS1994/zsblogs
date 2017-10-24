@@ -47,7 +47,8 @@ public class UserSerImpl implements UserSer{
 	}
 
 	public Users get(Integer id) {
-		return usersMapper.selectByPrimaryKey(id);
+		Users user=usersMapper.selectByPrimaryKey(id);
+		return user;
 	}
 
 	public boolean validateUserInfo(String usernumber, String userpassword) {

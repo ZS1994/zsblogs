@@ -3,6 +3,8 @@ package com.zs.entity;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Users {
     private Integer id;
 
@@ -24,17 +26,26 @@ public class Users {
 
     private String img;
     
+    //--------------------------
+    private List<Role> roles;
+    private String roleNames; 
     
-    public String getImg() {
+    
+    public String getRoleNames() {
+		return roleNames;
+	}
+
+	public void setRoleNames(String roleNames) {
+		this.roleNames = roleNames;
+	}
+
+	public String getImg() {
 		return img;
 	}
 
 	public void setImg(String img) {
 		this.img = img;
 	}
-
-	private List<Role> roles;
-    
 
 	public List<Role> getRoles() {
 		return roles;
@@ -99,7 +110,7 @@ public class Users {
     public void setIsdelete(Integer isdelete) {
         this.isdelete = isdelete;
     }
-
+    @JsonFormat(pattern="yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
     public Date getCreateTime() {
         return createTime;
     }

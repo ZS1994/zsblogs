@@ -58,7 +58,7 @@ public class LoginConR{
 			return new Result<String>(BaseRestController.SUCCESS, Code.SUCCESS, "登出成功");
 		} catch (Exception e) {
 			e.printStackTrace();
-			mail.addMail(new MailModel(MailManager.MAIL_ZS, MailManager.MAIL_ZS, Trans.strToHtml(e.getMessage()), MailManager.TITLE));
+			mail.addMail(new MailModel(MailManager.MAIL_ZS, MailManager.MAIL_ZS, Trans.strToHtml(e), MailManager.TITLE));
 			return new Result<String>(BaseRestController.ERROR, Code.ERROR, e.getMessage());
 		}
 	}

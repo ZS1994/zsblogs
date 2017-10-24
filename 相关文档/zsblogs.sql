@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本地服务器
+Source Server         : zs
 Source Server Version : 50617
 Source Host           : localhost:3306
 Source Database       : zsblogs
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2017-10-21 18:11:13
+Date: 2017-10-24 22:36:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -158,7 +158,7 @@ CREATE TABLE `permission` (
   UNIQUE KEY `url` (`url`,`method`),
   KEY `menu_parent_id` (`menu_parent_id`),
   CONSTRAINT `permission_ibfk_1` FOREIGN KEY (`menu_parent_id`) REFERENCES `permission` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of permission
@@ -184,6 +184,12 @@ INSERT INTO `permission` VALUES ('18', '博客评论添加', '/zsblogs/api/blogC
 INSERT INTO `permission` VALUES ('19', '博客评论单条修改', '/zsblogs/api/blogComment', 'PUT', 'api', '博客', null, null, null);
 INSERT INTO `permission` VALUES ('20', '博客评论单条删除', '/zsblogs/api/blogComment/one', 'DELETE', 'api', '博客', null, null, null);
 INSERT INTO `permission` VALUES ('21', '我的博客', '/zsblogs/menu/user/blog', 'GET', 'menu', '博客', null, '5', null);
+INSERT INTO `permission` VALUES ('22', '我的信息', '/zsblogs/menu/system/users/own', 'GET', 'menu', '系统', null, '6', null);
+INSERT INTO `permission` VALUES ('23', '用户信息分页查询', '/zsblogs/menu/system/users/list', 'GET', 'api', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('24', '用户信息单条查询', '/zsblogs/menu/system/users/one', 'GET', 'api', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('25', '用户信息单条添加', '/zsblogs/menu/system/users', 'POST', 'api', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('26', '用户信息单条修改', '/zsblogs/menu/system/users', 'PUT', 'api', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('27', '用户信息单条删除', '/zsblogs/menu/system/users/one', 'DELETE', 'api', '系统', null, null, null);
 
 -- ----------------------------
 -- Table structure for `read`
@@ -199,7 +205,7 @@ CREATE TABLE `read` (
   KEY `b_id` (`b_id`),
   CONSTRAINT `read_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `users` (`id`),
   CONSTRAINT `read_ibfk_2` FOREIGN KEY (`b_id`) REFERENCES `blog` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of read
@@ -257,6 +263,16 @@ INSERT INTO `read` VALUES ('50', '1', '10', '2017-10-21 17:52:16');
 INSERT INTO `read` VALUES ('51', '1', '10', '2017-10-21 17:52:35');
 INSERT INTO `read` VALUES ('52', '1', '10', '2017-10-21 17:53:07');
 INSERT INTO `read` VALUES ('53', '1', '10', '2017-10-21 17:53:24');
+INSERT INTO `read` VALUES ('54', '2', '10', '2017-10-24 21:33:53');
+INSERT INTO `read` VALUES ('55', '2', '5', '2017-10-24 21:33:59');
+INSERT INTO `read` VALUES ('56', '2', '9', '2017-10-24 21:34:06');
+INSERT INTO `read` VALUES ('57', '2', '9', '2017-10-24 21:34:20');
+INSERT INTO `read` VALUES ('58', '2', '9', '2017-10-24 21:43:48');
+INSERT INTO `read` VALUES ('59', '2', '10', '2017-10-24 21:43:51');
+INSERT INTO `read` VALUES ('60', '2', '9', '2017-10-24 21:43:54');
+INSERT INTO `read` VALUES ('61', '2', '5', '2017-10-24 21:44:00');
+INSERT INTO `read` VALUES ('62', '1', '10', '2017-10-24 22:03:37');
+INSERT INTO `read` VALUES ('63', '1', '9', '2017-10-24 22:03:41');
 
 -- ----------------------------
 -- Table structure for `role`
@@ -273,7 +289,7 @@ CREATE TABLE `role` (
 -- ----------------------------
 -- Records of role
 -- ----------------------------
-INSERT INTO `role` VALUES ('1', '开发者', '拥有所有权限', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21');
+INSERT INTO `role` VALUES ('1', '开发者', '拥有所有权限', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27');
 INSERT INTO `role` VALUES ('2', '博客作者', '拥有写博客的权限', '1,10,2,13');
 
 -- ----------------------------
@@ -291,7 +307,7 @@ CREATE TABLE `timeline` (
   KEY `p_id` (`p_id`),
   CONSTRAINT `timeline_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `users` (`id`),
   CONSTRAINT `timeline_ibfk_2` FOREIGN KEY (`p_id`) REFERENCES `permission` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=828 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=871 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of timeline
@@ -1122,6 +1138,49 @@ INSERT INTO `timeline` VALUES ('824', '1', '1', '2017-10-21 17:25:15', '{}');
 INSERT INTO `timeline` VALUES ('825', '1', '10', '2017-10-21 17:25:15', '{}');
 INSERT INTO `timeline` VALUES ('826', '1', '2', '2017-10-21 17:32:44', '{}');
 INSERT INTO `timeline` VALUES ('827', '1', '5', '2017-10-21 17:32:45', '{\"page\":[\"1\"],\"rows\":[\"25\"]}');
+INSERT INTO `timeline` VALUES ('828', '2', '1', '2017-10-24 21:34:13', '{}');
+INSERT INTO `timeline` VALUES ('829', '2', '10', '2017-10-24 21:34:13', '{}');
+INSERT INTO `timeline` VALUES ('830', '2', '1', '2017-10-24 21:52:17', '{}');
+INSERT INTO `timeline` VALUES ('831', '2', '10', '2017-10-24 21:52:17', '{}');
+INSERT INTO `timeline` VALUES ('832', '2', '1', '2017-10-24 21:52:32', '{}');
+INSERT INTO `timeline` VALUES ('833', '2', '10', '2017-10-24 21:52:32', '{}');
+INSERT INTO `timeline` VALUES ('834', '2', '1', '2017-10-24 21:53:14', '{}');
+INSERT INTO `timeline` VALUES ('835', '2', '10', '2017-10-24 21:53:14', '{}');
+INSERT INTO `timeline` VALUES ('836', '2', '22', '2017-10-24 21:53:15', '{}');
+INSERT INTO `timeline` VALUES ('837', '2', '22', '2017-10-24 21:53:19', '{}');
+INSERT INTO `timeline` VALUES ('838', '2', '22', '2017-10-24 21:56:31', '{}');
+INSERT INTO `timeline` VALUES ('839', '2', '22', '2017-10-24 21:56:37', '{}');
+INSERT INTO `timeline` VALUES ('840', '2', '22', '2017-10-24 21:56:38', '{}');
+INSERT INTO `timeline` VALUES ('841', '1', '22', '2017-10-24 21:56:46', '{}');
+INSERT INTO `timeline` VALUES ('842', '1', '22', '2017-10-24 21:56:56', '{}');
+INSERT INTO `timeline` VALUES ('843', '1', '22', '2017-10-24 21:57:11', '{}');
+INSERT INTO `timeline` VALUES ('844', '1', '22', '2017-10-24 21:57:12', '{}');
+INSERT INTO `timeline` VALUES ('845', '1', '22', '2017-10-24 21:57:52', '{}');
+INSERT INTO `timeline` VALUES ('846', '1', '22', '2017-10-24 21:57:57', '{}');
+INSERT INTO `timeline` VALUES ('847', '1', '22', '2017-10-24 21:58:46', '{}');
+INSERT INTO `timeline` VALUES ('848', '1', '22', '2017-10-24 22:00:21', '{}');
+INSERT INTO `timeline` VALUES ('849', '1', '22', '2017-10-24 22:01:00', '{}');
+INSERT INTO `timeline` VALUES ('850', '1', '22', '2017-10-24 22:03:30', '{}');
+INSERT INTO `timeline` VALUES ('851', '1', '22', '2017-10-24 22:03:49', '{}');
+INSERT INTO `timeline` VALUES ('852', '1', '22', '2017-10-24 22:04:11', '{}');
+INSERT INTO `timeline` VALUES ('853', '1', '22', '2017-10-24 22:04:29', '{}');
+INSERT INTO `timeline` VALUES ('854', '1', '22', '2017-10-24 22:05:41', '{}');
+INSERT INTO `timeline` VALUES ('855', '1', '22', '2017-10-24 22:08:48', '{}');
+INSERT INTO `timeline` VALUES ('856', '1', '22', '2017-10-24 22:09:50', '{}');
+INSERT INTO `timeline` VALUES ('857', '1', '22', '2017-10-24 22:09:56', '{}');
+INSERT INTO `timeline` VALUES ('858', '1', '22', '2017-10-24 22:09:57', '{}');
+INSERT INTO `timeline` VALUES ('859', '1', '22', '2017-10-24 22:10:09', '{}');
+INSERT INTO `timeline` VALUES ('860', '1', '22', '2017-10-24 22:29:29', '{}');
+INSERT INTO `timeline` VALUES ('861', '1', '22', '2017-10-24 22:33:24', '{}');
+INSERT INTO `timeline` VALUES ('862', '1', '22', '2017-10-24 22:33:43', '{}');
+INSERT INTO `timeline` VALUES ('863', '1', '22', '2017-10-24 22:33:45', '{}');
+INSERT INTO `timeline` VALUES ('864', '1', '22', '2017-10-24 22:33:53', '{}');
+INSERT INTO `timeline` VALUES ('865', '1', '22', '2017-10-24 22:33:53', '{}');
+INSERT INTO `timeline` VALUES ('866', '1', '22', '2017-10-24 22:33:54', '{}');
+INSERT INTO `timeline` VALUES ('867', '1', '22', '2017-10-24 22:34:01', '{}');
+INSERT INTO `timeline` VALUES ('868', '1', '22', '2017-10-24 22:34:08', '{}');
+INSERT INTO `timeline` VALUES ('869', '1', '22', '2017-10-24 22:34:08', '{}');
+INSERT INTO `timeline` VALUES ('870', '1', '22', '2017-10-24 22:34:31', '{}');
 
 -- ----------------------------
 -- Table structure for `token`
@@ -1140,8 +1199,8 @@ CREATE TABLE `token` (
 -- ----------------------------
 -- Records of token
 -- ----------------------------
-INSERT INTO `token` VALUES ('19211426167680', '2', '2017-10-20 21:01:43');
-INSERT INTO `token` VALUES ('211542105113599', '1', '2017-10-22 17:32:45');
+INSERT INTO `token` VALUES ('242144403063347', '2', '2017-10-25 21:56:38');
+INSERT INTO `token` VALUES ('242229271187093', '1', '2017-10-25 22:34:31');
 
 -- ----------------------------
 -- Table structure for `users`

@@ -153,11 +153,11 @@ a {
 	</div>
 
 	<div style="height: 50px;"></div>
-
+<%-- 
 	<div class="entry">
 		<a href="<%=path%>/menu/blogList/blog/edit">我的简历</a>
 	</div>
-	
+	 --%>
 	 
 	<div class="entry">
 		<a href="<%=path%>/menu/blogList/blog?page=1&rows=10&sort=createTime&order=desc">最新博客</a>
@@ -170,6 +170,9 @@ a {
 	</div>
 	<div class="entry">
 		<a href="<%=path%>/menu/blogList/blog/user/edit">写博客</a>
+	</div>
+	<div class="entry">
+		<a href="<%=path%>/menu/system/users/own">我的信息</a>
 	</div>
 	<div class="entry">
 		<a href="<%=path%>/menu/system/login">登录</a>

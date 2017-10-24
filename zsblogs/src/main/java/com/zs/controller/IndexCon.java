@@ -1,11 +1,14 @@
 package com.zs.controller;
 
+import java.text.SimpleDateFormat;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.zs.entity.Role;
 import com.zs.entity.Users;
 import com.zs.entity.other.EasyUIAccept;
 import com.zs.tools.Constans;
@@ -94,6 +97,33 @@ public class IndexCon{
 	@RequestMapping("/system/users")
 	public String gotoUsers(){
 		return "/system/users";
+	}
+	
+	//我的信息
+	@RequestMapping("/system/users/own")
+	public String gotOwnInfo(HttpServletRequest req,Users user){
+		try {
+			user=Constans.getUserFromReq(req);
+			if(user!=null){
+				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				if(user.getCreateTime()!=null){
+					String date=sdf.format(user.getCreateTime());
+					req.setAttribute("createTime", date);
+				}
+				if(user.getRoles()!=null){
+					String str="";
+					for (Role r : user.getRoles()) {
+						str=str+r.getName()+",";
+					}
+					str=str.substring(0, str.lastIndexOf(","));
+					user.setRoleNames(str);
+				}
+			}
+			req.setAttribute("user", user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "/system/own";
 	}
 	
 	@RequestMapping("/system/timeline")

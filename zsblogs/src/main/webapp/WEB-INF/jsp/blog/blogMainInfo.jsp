@@ -72,8 +72,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				"</a>"+
 				"<div class=\"media-body\">"+
 					"<div class=\"blog_comment\">"+
-					"<h5 class=\"media-heading\">"+userName+autor+"&nbsp;&nbsp;&nbsp;&nbsp;"+r[i].createTime+"&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"badge\">"+(parseInt(i)+1+(page-1)*rows)+"楼</span></h5>"+
-					r[i].content+
+						"<h5 class=\"media-heading\">"+userName+autor+"&nbsp;&nbsp;&nbsp;&nbsp;"+r[i].createTime+"&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"badge\">"+(parseInt(i)+1+(page-1)*rows)+"楼</span></h5>"+
+						r[i].content+
+					"</div>"+
 				"</div>"+
 			"</div>";
 		}

@@ -37,12 +37,12 @@
 		<!-- 获取连接最大等待时间 -->
 		<property name="maxWait" value="${maxWait}"></property>
 		<!-- 以下配置是为了防止mysql8小时自动断开的问题
+		 -->
 		<property name="testWhileIdle" value="true"/>
         <property name="validationQuery" value="select now()"/>
         <property name="timeBetweenEvictionRunsMillis" value="27000000"/>
         <property name="minEvictableIdleTimeMillis" value="25200000"/>
         <property name="testOnBorrow" value="true"/>
-		 -->
 	</bean>
 
 	<!-- spring和MyBatis完美整合，不需要mybatis的配置映射文件 -->

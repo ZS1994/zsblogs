@@ -44,7 +44,7 @@ public class BlogListConR extends BaseRestController<BlogList, Integer>{
 				return blogListSer.queryFenye(accept);
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e.getMessage()), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
 				return null;
 			}
 		}
@@ -59,7 +59,7 @@ public class BlogListConR extends BaseRestController<BlogList, Integer>{
 				return new Result<BlogList>(SUCCESS, Code.SUCCESS, blogListSer.get(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e.getMessage()), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
 			}
 		}
 		return new Result<BlogList>(ERROR, Code.ERROR, null);
@@ -76,7 +76,7 @@ public class BlogListConR extends BaseRestController<BlogList, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, blogListSer.add(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e.getMessage()), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);
@@ -90,7 +90,7 @@ public class BlogListConR extends BaseRestController<BlogList, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, blogListSer.update(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e.getMessage()), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);
@@ -104,7 +104,7 @@ public class BlogListConR extends BaseRestController<BlogList, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, blogListSer.delete(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e.getMessage()), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);
@@ -135,7 +135,7 @@ public class BlogListConR extends BaseRestController<BlogList, Integer>{
 			return new Result<List<BlogList>>(SUCCESS, Code.SUCCESS, blogListSer.queryAll(user.getId()));
 		} catch (Exception e) {
 			e.printStackTrace();
-			mail.addMail(new MailModel(Trans.strToHtml(e.getMessage()), MailManager.TITLE));
+			mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
 			return new Result<List<BlogList>>(ERROR, Code.ERROR, null);
 		}
 	}

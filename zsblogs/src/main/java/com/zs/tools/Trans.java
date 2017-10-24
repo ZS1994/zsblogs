@@ -255,4 +255,17 @@ public class Trans {
 	public static String strToHtml(String str){
 		return "<pre>"+str+"</pre>";
 	}
+	public static String strToHtml(Exception e){
+		return "<pre>"+getExceptionAllinformation(e)+"</pre>";
+	}
+	
+	public static String getExceptionAllinformation(Exception ex){
+        String sOut = "";
+        sOut=sOut+ex.getClass().getName()+"\r\n"; 
+        StackTraceElement[] trace = ex.getStackTrace();
+        for (StackTraceElement s : trace) {
+            sOut += "\tat " + s + "\r\n";
+        }
+        return sOut;
+ }
 }
