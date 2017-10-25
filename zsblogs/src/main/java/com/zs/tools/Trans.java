@@ -260,7 +260,7 @@ public class Trans {
 	}
 	
 	public static String getExceptionAllinformation(Exception ex){
-        String sOut = "";
+        String sOut = ex.getMessage()+"<br>";
         sOut=sOut+ex.getClass().getName()+"\r\n"; 
         StackTraceElement[] trace = ex.getStackTrace();
         for (StackTraceElement s : trace) {
