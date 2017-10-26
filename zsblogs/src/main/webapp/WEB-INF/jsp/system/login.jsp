@@ -95,7 +95,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 		
 			<div class="well" style="text-align: center;">
-				没有账号？<a href="${path }/menu/blogList/blog?page=1&rows=10&sort=createTime&order=desc">注册一个</a>
+				没有账号？<a href="${path }/menu/system/users/logup">注册一个</a>
 			</div>
 		
 		</div>

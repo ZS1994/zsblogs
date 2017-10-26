@@ -130,4 +130,10 @@ public class IndexCon{
 	public String gotoTimeline(){
 		return "/system/timeline";
 	}
+	
+	//注册一个
+	@RequestMapping("/system/users/logup")
+	public String gotoLogup(){
+		return "/system/logup";
+	}
 }

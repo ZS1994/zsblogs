@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : zs
+Source Server         : 本地服务器
 Source Server Version : 50617
 Source Host           : localhost:3306
 Source Database       : zsblogs
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2017-10-24 22:36:13
+Date: 2017-10-26 17:56:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -158,7 +158,7 @@ CREATE TABLE `permission` (
   UNIQUE KEY `url` (`url`,`method`),
   KEY `menu_parent_id` (`menu_parent_id`),
   CONSTRAINT `permission_ibfk_1` FOREIGN KEY (`menu_parent_id`) REFERENCES `permission` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of permission
@@ -190,6 +190,8 @@ INSERT INTO `permission` VALUES ('24', '用户信息单条查询', '/zsblogs/men
 INSERT INTO `permission` VALUES ('25', '用户信息单条添加', '/zsblogs/menu/system/users', 'POST', 'api', '系统', null, null, null);
 INSERT INTO `permission` VALUES ('26', '用户信息单条修改', '/zsblogs/menu/system/users', 'PUT', 'api', '系统', null, null, null);
 INSERT INTO `permission` VALUES ('27', '用户信息单条删除', '/zsblogs/menu/system/users/one', 'DELETE', 'api', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('28', '注册账号', '/zsblogs/menu/system/users/logup', 'GET', 'menu', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('29', '注册账号', '/zsblogs/api/login/logup', 'POST', 'api', '系统', null, null, null);
 
 -- ----------------------------
 -- Table structure for `read`
@@ -284,13 +286,14 @@ CREATE TABLE `role` (
   `introduction` varchar(255) DEFAULT NULL,
   `pids` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of role
 -- ----------------------------
-INSERT INTO `role` VALUES ('1', '开发者', '拥有所有权限', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27');
+INSERT INTO `role` VALUES ('1', '开发者', '拥有所有权限', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29');
 INSERT INTO `role` VALUES ('2', '博客作者', '拥有写博客的权限', '1,10,2,13');
+INSERT INTO `role` VALUES ('3', '普通用户', '注册时用，为新用户的默认角色', null);
 
 -- ----------------------------
 -- Table structure for `timeline`
@@ -307,7 +310,7 @@ CREATE TABLE `timeline` (
   KEY `p_id` (`p_id`),
   CONSTRAINT `timeline_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `users` (`id`),
   CONSTRAINT `timeline_ibfk_2` FOREIGN KEY (`p_id`) REFERENCES `permission` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=871 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=947 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of timeline
@@ -1181,6 +1184,82 @@ INSERT INTO `timeline` VALUES ('867', '1', '22', '2017-10-24 22:34:01', '{}');
 INSERT INTO `timeline` VALUES ('868', '1', '22', '2017-10-24 22:34:08', '{}');
 INSERT INTO `timeline` VALUES ('869', '1', '22', '2017-10-24 22:34:08', '{}');
 INSERT INTO `timeline` VALUES ('870', '1', '22', '2017-10-24 22:34:31', '{}');
+INSERT INTO `timeline` VALUES ('871', '1', '21', '2017-10-26 15:18:04', '{}');
+INSERT INTO `timeline` VALUES ('872', '1', '10', '2017-10-26 15:18:05', '{}');
+INSERT INTO `timeline` VALUES ('873', '1', '2', '2017-10-26 15:18:12', '{}');
+INSERT INTO `timeline` VALUES ('874', '1', '5', '2017-10-26 15:18:12', '{\"page\":[\"1\"],\"rows\":[\"25\"]}');
+INSERT INTO `timeline` VALUES ('875', '1', '9', '2017-10-26 15:18:16', '{\"id\":[\"4\"]}');
+INSERT INTO `timeline` VALUES ('876', '1', '2', '2017-10-26 15:30:16', '{}');
+INSERT INTO `timeline` VALUES ('877', '1', '5', '2017-10-26 15:30:17', '{\"page\":[\"1\"],\"rows\":[\"25\"]}');
+INSERT INTO `timeline` VALUES ('878', '1', '28', '2017-10-26 16:03:09', '{}');
+INSERT INTO `timeline` VALUES ('879', '1', '28', '2017-10-26 16:05:18', '{}');
+INSERT INTO `timeline` VALUES ('880', '1', '28', '2017-10-26 16:05:42', '{}');
+INSERT INTO `timeline` VALUES ('881', '1', '28', '2017-10-26 16:08:09', '{}');
+INSERT INTO `timeline` VALUES ('882', '1', '28', '2017-10-26 16:09:03', '{}');
+INSERT INTO `timeline` VALUES ('883', '1', '28', '2017-10-26 16:11:36', '{}');
+INSERT INTO `timeline` VALUES ('884', '1', '28', '2017-10-26 16:11:40', '{}');
+INSERT INTO `timeline` VALUES ('885', '1', '28', '2017-10-26 16:11:41', '{}');
+INSERT INTO `timeline` VALUES ('886', '1', '28', '2017-10-26 16:11:41', '{}');
+INSERT INTO `timeline` VALUES ('887', '1', '28', '2017-10-26 16:11:42', '{}');
+INSERT INTO `timeline` VALUES ('888', '1', '28', '2017-10-26 16:11:46', '{}');
+INSERT INTO `timeline` VALUES ('889', '1', '28', '2017-10-26 16:12:09', '{}');
+INSERT INTO `timeline` VALUES ('890', '1', '28', '2017-10-26 16:12:19', '{}');
+INSERT INTO `timeline` VALUES ('891', '1', '28', '2017-10-26 16:12:29', '{}');
+INSERT INTO `timeline` VALUES ('892', '1', '28', '2017-10-26 16:12:29', '{}');
+INSERT INTO `timeline` VALUES ('893', '1', '28', '2017-10-26 16:13:18', '{}');
+INSERT INTO `timeline` VALUES ('894', '1', '28', '2017-10-26 16:13:21', '{}');
+INSERT INTO `timeline` VALUES ('895', '1', '28', '2017-10-26 16:13:25', '{}');
+INSERT INTO `timeline` VALUES ('896', '1', '28', '2017-10-26 16:13:25', '{}');
+INSERT INTO `timeline` VALUES ('897', '1', '28', '2017-10-26 16:13:25', '{}');
+INSERT INTO `timeline` VALUES ('898', '1', '28', '2017-10-26 16:13:41', '{}');
+INSERT INTO `timeline` VALUES ('899', '1', '28', '2017-10-26 16:13:41', '{}');
+INSERT INTO `timeline` VALUES ('900', '1', '28', '2017-10-26 16:13:44', '{}');
+INSERT INTO `timeline` VALUES ('901', '1', '28', '2017-10-26 16:13:45', '{}');
+INSERT INTO `timeline` VALUES ('902', '1', '28', '2017-10-26 16:13:45', '{}');
+INSERT INTO `timeline` VALUES ('903', '1', '28', '2017-10-26 16:13:50', '{}');
+INSERT INTO `timeline` VALUES ('904', '1', '28', '2017-10-26 16:13:50', '{}');
+INSERT INTO `timeline` VALUES ('905', '1', '28', '2017-10-26 16:13:51', '{}');
+INSERT INTO `timeline` VALUES ('906', '1', '28', '2017-10-26 16:13:51', '{}');
+INSERT INTO `timeline` VALUES ('907', '1', '28', '2017-10-26 16:15:19', '{}');
+INSERT INTO `timeline` VALUES ('908', '1', '28', '2017-10-26 16:16:04', '{}');
+INSERT INTO `timeline` VALUES ('909', '1', '28', '2017-10-26 16:16:05', '{}');
+INSERT INTO `timeline` VALUES ('910', '1', '28', '2017-10-26 16:16:05', '{}');
+INSERT INTO `timeline` VALUES ('911', '1', '28', '2017-10-26 16:16:14', '{}');
+INSERT INTO `timeline` VALUES ('912', '1', '28', '2017-10-26 16:16:34', '{}');
+INSERT INTO `timeline` VALUES ('913', '1', '28', '2017-10-26 16:18:43', '{}');
+INSERT INTO `timeline` VALUES ('914', '1', '28', '2017-10-26 16:18:54', '{}');
+INSERT INTO `timeline` VALUES ('915', '1', '28', '2017-10-26 16:18:55', '{}');
+INSERT INTO `timeline` VALUES ('916', '1', '28', '2017-10-26 16:18:55', '{}');
+INSERT INTO `timeline` VALUES ('917', '1', '28', '2017-10-26 16:18:58', '{}');
+INSERT INTO `timeline` VALUES ('918', '1', '28', '2017-10-26 16:19:00', '{}');
+INSERT INTO `timeline` VALUES ('919', '1', '28', '2017-10-26 16:19:00', '{}');
+INSERT INTO `timeline` VALUES ('920', '1', '28', '2017-10-26 16:19:00', '{}');
+INSERT INTO `timeline` VALUES ('921', '1', '28', '2017-10-26 16:19:55', '{}');
+INSERT INTO `timeline` VALUES ('922', '1', '28', '2017-10-26 16:20:29', '{}');
+INSERT INTO `timeline` VALUES ('923', '1', '28', '2017-10-26 16:20:30', '{}');
+INSERT INTO `timeline` VALUES ('924', '1', '28', '2017-10-26 16:20:30', '{}');
+INSERT INTO `timeline` VALUES ('925', '1', '28', '2017-10-26 16:21:03', '{}');
+INSERT INTO `timeline` VALUES ('926', '1', '28', '2017-10-26 16:22:40', '{}');
+INSERT INTO `timeline` VALUES ('927', '1', '28', '2017-10-26 16:22:57', '{}');
+INSERT INTO `timeline` VALUES ('928', '1', '28', '2017-10-26 16:22:58', '{}');
+INSERT INTO `timeline` VALUES ('929', '1', '28', '2017-10-26 16:22:58', '{}');
+INSERT INTO `timeline` VALUES ('930', '1', '28', '2017-10-26 16:23:10', '{}');
+INSERT INTO `timeline` VALUES ('931', '1', '28', '2017-10-26 16:24:23', '{}');
+INSERT INTO `timeline` VALUES ('932', '1', '28', '2017-10-26 16:24:32', '{}');
+INSERT INTO `timeline` VALUES ('933', '1', '28', '2017-10-26 16:24:42', '{}');
+INSERT INTO `timeline` VALUES ('934', '1', '28', '2017-10-26 16:24:43', '{}');
+INSERT INTO `timeline` VALUES ('935', '1', '28', '2017-10-26 16:33:31', '{}');
+INSERT INTO `timeline` VALUES ('936', '1', '28', '2017-10-26 16:33:34', '{}');
+INSERT INTO `timeline` VALUES ('937', '1', '28', '2017-10-26 16:34:16', '{}');
+INSERT INTO `timeline` VALUES ('938', '1', '28', '2017-10-26 16:35:45', '{}');
+INSERT INTO `timeline` VALUES ('939', '1', '28', '2017-10-26 16:36:50', '{}');
+INSERT INTO `timeline` VALUES ('940', '1', '28', '2017-10-26 16:37:23', '{}');
+INSERT INTO `timeline` VALUES ('941', '1', '28', '2017-10-26 16:37:52', '{}');
+INSERT INTO `timeline` VALUES ('942', '1', '28', '2017-10-26 16:39:25', '{}');
+INSERT INTO `timeline` VALUES ('943', '1', '1', '2017-10-26 16:40:26', '{}');
+INSERT INTO `timeline` VALUES ('944', '1', '10', '2017-10-26 16:40:26', '{}');
+INSERT INTO `timeline` VALUES ('945', '1', '28', '2017-10-26 16:40:31', '{}');
+INSERT INTO `timeline` VALUES ('946', '1', '28', '2017-10-26 16:51:33', '{}');
 
 -- ----------------------------
 -- Table structure for `token`
@@ -1200,7 +1279,7 @@ CREATE TABLE `token` (
 -- Records of token
 -- ----------------------------
 INSERT INTO `token` VALUES ('242144403063347', '2', '2017-10-25 21:56:38');
-INSERT INTO `token` VALUES ('242229271187093', '1', '2017-10-25 22:34:31');
+INSERT INTO `token` VALUES ('261559193513150', '1', '2017-10-27 16:51:33');
 
 -- ----------------------------
 -- Table structure for `users`
@@ -1219,10 +1298,11 @@ CREATE TABLE `users` (
   `img` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `usernum` (`usernum`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
 INSERT INTO `users` VALUES ('1', 'yd7111', '123456', '张顺', null, null, '0', '2017-10-12 14:51:44', '1,2', null);
 INSERT INTO `users` VALUES ('2', 'viewer', '123456', '观光者', null, null, '0', '2017-10-18 17:34:52', '1', null);
+INSERT INTO `users` VALUES ('3', '15817383353', '123456', '张顺', null, '15817383353', '0', '2017-10-26 17:54:12', '3', null);

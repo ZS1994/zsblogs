@@ -142,4 +142,8 @@
   	where u_id=#{uid}
   </select>
   
+  <delete id="deleteBlogsOfDeleteBloglist" parameterType="java.lang.Integer" >
+    delete from blog_list_rel
+    where bl_id = #{blId}
+  </delete>
 </mapper>

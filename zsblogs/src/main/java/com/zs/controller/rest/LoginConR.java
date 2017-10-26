@@ -1,5 +1,7 @@
 package com.zs.controller.rest;
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,5 +63,21 @@ public class LoginConR{
 			mail.addMail(new MailModel(MailManager.MAIL_ZS, MailManager.MAIL_ZS, Trans.strToHtml(e), MailManager.TITLE));
 			return new Result<String>(BaseRestController.ERROR, Code.ERROR, e.getMessage());
 		}
+	}
+	
+	@RequestMapping(value="/logup",method=RequestMethod.POST)
+	public Result<String> logup(Users user){
+		if(user!=null){
+			try {
+				user.setCreateTime(new Date());
+				user.setRids("3");//这里，切记，如果数据库中的普通用户改了，一定要记得这个也要跟着新的普通用户角色的id变
+				return new Result<String>(BaseRestController.SUCCESS, Code.SUCCESS, userSer.add(user));
+			} catch (Exception e) {
+				e.printStackTrace();
+				mail.addMail(new MailModel(MailManager.MAIL_ZS, MailManager.MAIL_ZS, Trans.strToHtml(e), MailManager.TITLE));
+				return new Result<String>(BaseRestController.ERROR, Code.ERROR, e.getMessage());
+			}
+		}
+		return new Result<String>(BaseRestController.ERROR, Code.ERROR, "后台接收到的用户信息为空");
 	}
 }

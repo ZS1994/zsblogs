@@ -60,31 +60,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var row=$("#dg").datagrid("getSelected");
 		var id=row.id;
 		if(row){
-			$.messager.confirm(
-				"操作提示",
-				"您确定要删除吗？",
-				function(data){
-					if(data){
-						$.ajax({
-							url:"${path}/api/blogList/one?id="+id,
-							type:"delete",
-							success:function(data){
-								var json;
-								if(isJson(data)){
-									json=data;
-								}else{
-									json=JSON.parse(data);
+			if(row.blogsNum!=null || row.blogsNum!=0){
+				$.messager.alert("警告","仅当该栏目的博客数为0时才能删除，那不是0怎么办呢？你可以把它旗下的所有博客全部移到别的栏目下，你就能删除了。");  
+			}else{
+				$.messager.confirm(
+					"操作提示",
+					"您确定要删除吗？",
+					function(data){
+						if(data){
+							$.ajax({
+								url:"${path}/api/blogList/one?id="+id,
+								type:"delete",
+								success:function(data){
+									var json;
+									if(isJson(data)){
+										json=data;
+									}else{
+										json=JSON.parse(data);
+									}
+									if(json.result=='success'){
+										$('#dg').datagrid('reload');
+									}else{
+										alert("错误:["+json.code+"]"+json.data);
+									}
 								}
-								if(json.result=='success'){
-									$('#dg').datagrid('reload');
-								}else{
-									alert("错误:["+json.code+"]"+json.data);
-								}
-							}
-						});
+							});
+						}
 					}
-				}
-			);
+				);
+			}
 		}
 	}
 	function excel_export(){

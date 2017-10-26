@@ -25,4 +25,5 @@ public interface BlogListMapper {
     
     
     List<BlogList> queryAll(@Param("uid") Integer uid);
+    int deleteBlogsOfDeleteBloglist(@Param("blId")Integer blId);
 }

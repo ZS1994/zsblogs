@@ -120,8 +120,8 @@ public class RoleInter extends HandlerInterceptorAdapter{
 		
 		//例外列表
 		if (
-				allowThrough("/api/login/token", POST) ||
-				allowThrough("/api/login/token/clear", DELETE) ||
+				allowThrough("/api/login/token", POST) || //登录
+				allowThrough("/api/login/token/clear", DELETE) || //登出
 				allowThrough("/menu/index", GET) ||
 				allowThrough("/menu/part", GET) ||
 				
@@ -132,7 +132,10 @@ public class RoleInter extends HandlerInterceptorAdapter{
 				allowThrough("/api/blogComment/list", GET) || //看博客的评论
 				allowThrough("/api/blogComment", POST) || //发表评论
 				
-				allowThrough("/menu/system/login", GET)
+				allowThrough("/menu/system/login", GET) || //登录
+				allowThrough("/menu/system/users/logup", GET) || //注册
+				allowThrough("/api/login/logup", POST) //注册
+				
 				) {
 			//张顺，2017-10-19。即使访问的是例外列表，也得看看token，因为后续的user是从这里获取的，如果有token，不管它是不是例外，都去获取user，以便后续使用
 			if(user!=null){
@@ -237,7 +240,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 					pw.flush();
 					pw.close();
 				}else if(url.contains("/menu/")){
-					
+					resp.sendRedirect("/zsblogs/staticView/error_per_no_exist.jsp");
 				}
 				break;
 			case Code.LICENCE_TIMEOUT:
@@ -250,7 +253,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 					pw.flush();
 					pw.close();
 				}else if(url.contains("/menu/")){
-					
+					resp.sendRedirect("/zsblogs/staticView/error_timeout.jsp");
 				}
 				break;
 			default:

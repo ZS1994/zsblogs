@@ -7,5 +7,4 @@ public interface SystemSer {
 	public void addTimeline(Timeline timeline);//新增日志
 	
 	
-	
 }
