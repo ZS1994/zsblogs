@@ -115,7 +115,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         		$("#hintDialog").modal("show");
     		}
     	}else{
-    		$("#hintDialog_body").html("<strong>错误！</strong>标题、正文、摘要、文章分类、是否公开都不能为空。");
+    		$("#hintDialog_body").html("<strong>错误！</strong>标题、正文、摘要、文章分类、是否公开都不能为空。<br><span class='muted'>如果你是因为文章分类为空而无法选择导致，那么，请你先去创建一个文章分类再来写博客，提醒一下，文章分类也叫博客栏目。<span>");
     		$("#hintDialog").modal("show");
     	}
     }

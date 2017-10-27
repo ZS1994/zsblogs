@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2017-10-26 17:56:08
+Date: 2017-10-27 18:23:34
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -56,7 +56,7 @@ CREATE TABLE `blog_comment` (
   KEY `b_id` (`b_id`),
   CONSTRAINT `blog_comment_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `users` (`id`),
   CONSTRAINT `blog_comment_ibfk_2` FOREIGN KEY (`b_id`) REFERENCES `blog` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of blog_comment
@@ -82,6 +82,7 @@ INSERT INTO `blog_comment` VALUES ('18', '说一下', '2017-10-19 21:01:22', '1'
 INSERT INTO `blog_comment` VALUES ('19', '哈罗', '2017-10-19 21:01:52', '2', '3');
 INSERT INTO `blog_comment` VALUES ('20', '试一下', '2017-10-20 09:07:05', '1', '9');
 INSERT INTO `blog_comment` VALUES ('21', '使用登录用户测试评论', '2017-10-20 15:58:48', '1', '5');
+INSERT INTO `blog_comment` VALUES ('22', '测试一下', '2017-10-27 17:57:40', '5', '10');
 
 -- ----------------------------
 -- Table structure for `blog_list`
@@ -207,7 +208,7 @@ CREATE TABLE `read` (
   KEY `b_id` (`b_id`),
   CONSTRAINT `read_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `users` (`id`),
   CONSTRAINT `read_ibfk_2` FOREIGN KEY (`b_id`) REFERENCES `blog` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of read
@@ -275,6 +276,10 @@ INSERT INTO `read` VALUES ('60', '2', '9', '2017-10-24 21:43:54');
 INSERT INTO `read` VALUES ('61', '2', '5', '2017-10-24 21:44:00');
 INSERT INTO `read` VALUES ('62', '1', '10', '2017-10-24 22:03:37');
 INSERT INTO `read` VALUES ('63', '1', '9', '2017-10-24 22:03:41');
+INSERT INTO `read` VALUES ('64', '5', '10', '2017-10-27 17:57:36');
+INSERT INTO `read` VALUES ('65', '5', '10', '2017-10-27 17:57:40');
+INSERT INTO `read` VALUES ('66', '5', '5', '2017-10-27 17:57:48');
+INSERT INTO `read` VALUES ('67', '5', '10', '2017-10-27 17:57:59');
 
 -- ----------------------------
 -- Table structure for `role`
@@ -293,7 +298,7 @@ CREATE TABLE `role` (
 -- ----------------------------
 INSERT INTO `role` VALUES ('1', '开发者', '拥有所有权限', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29');
 INSERT INTO `role` VALUES ('2', '博客作者', '拥有写博客的权限', '1,10,2,13');
-INSERT INTO `role` VALUES ('3', '普通用户', '注册时用，为新用户的默认角色', null);
+INSERT INTO `role` VALUES ('3', '普通用户', '注册时用，为新用户的默认角色', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29');
 
 -- ----------------------------
 -- Table structure for `timeline`
@@ -310,7 +315,7 @@ CREATE TABLE `timeline` (
   KEY `p_id` (`p_id`),
   CONSTRAINT `timeline_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `users` (`id`),
   CONSTRAINT `timeline_ibfk_2` FOREIGN KEY (`p_id`) REFERENCES `permission` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=947 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=963 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of timeline
@@ -1260,6 +1265,22 @@ INSERT INTO `timeline` VALUES ('943', '1', '1', '2017-10-26 16:40:26', '{}');
 INSERT INTO `timeline` VALUES ('944', '1', '10', '2017-10-26 16:40:26', '{}');
 INSERT INTO `timeline` VALUES ('945', '1', '28', '2017-10-26 16:40:31', '{}');
 INSERT INTO `timeline` VALUES ('946', '1', '28', '2017-10-26 16:51:33', '{}');
+INSERT INTO `timeline` VALUES ('947', '1', '22', '2017-10-27 17:54:52', '{}');
+INSERT INTO `timeline` VALUES ('948', '4', '22', '2017-10-27 17:56:53', '{}');
+INSERT INTO `timeline` VALUES ('949', '5', '22', '2017-10-27 17:57:31', '{}');
+INSERT INTO `timeline` VALUES ('950', '5', '2', '2017-10-27 17:57:44', '{}');
+INSERT INTO `timeline` VALUES ('951', '5', '5', '2017-10-27 17:57:44', '{\"page\":[\"1\"],\"rows\":[\"25\"]}');
+INSERT INTO `timeline` VALUES ('952', '5', '1', '2017-10-27 17:58:17', '{}');
+INSERT INTO `timeline` VALUES ('953', '5', '10', '2017-10-27 17:58:17', '{}');
+INSERT INTO `timeline` VALUES ('954', '5', '1', '2017-10-27 18:00:17', '{}');
+INSERT INTO `timeline` VALUES ('955', '5', '10', '2017-10-27 18:00:17', '{}');
+INSERT INTO `timeline` VALUES ('956', '5', '1', '2017-10-27 18:00:47', '{}');
+INSERT INTO `timeline` VALUES ('957', '5', '10', '2017-10-27 18:00:47', '{}');
+INSERT INTO `timeline` VALUES ('958', '5', '1', '2017-10-27 18:01:30', '{}');
+INSERT INTO `timeline` VALUES ('959', '5', '10', '2017-10-27 18:01:30', '{}');
+INSERT INTO `timeline` VALUES ('960', '5', '1', '2017-10-27 18:02:22', '{}');
+INSERT INTO `timeline` VALUES ('961', '5', '10', '2017-10-27 18:02:22', '{}');
+INSERT INTO `timeline` VALUES ('962', '1', '22', '2017-10-27 18:11:37', '{}');
 
 -- ----------------------------
 -- Table structure for `token`
@@ -1279,7 +1300,9 @@ CREATE TABLE `token` (
 -- Records of token
 -- ----------------------------
 INSERT INTO `token` VALUES ('242144403063347', '2', '2017-10-25 21:56:38');
-INSERT INTO `token` VALUES ('261559193513150', '1', '2017-10-27 16:51:33');
+INSERT INTO `token` VALUES ('27175554787926', '4', '2017-10-28 17:56:53');
+INSERT INTO `token` VALUES ('271757288957789', '5', '2017-10-28 18:02:22');
+INSERT INTO `token` VALUES ('271810311678086', '1', '2017-10-28 18:11:37');
 
 -- ----------------------------
 -- Table structure for `users`
@@ -1298,7 +1321,7 @@ CREATE TABLE `users` (
   `img` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `usernum` (`usernum`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of users
@@ -1306,3 +1329,5 @@ CREATE TABLE `users` (
 INSERT INTO `users` VALUES ('1', 'yd7111', '123456', '张顺', null, null, '0', '2017-10-12 14:51:44', '1,2', null);
 INSERT INTO `users` VALUES ('2', 'viewer', '123456', '观光者', null, null, '0', '2017-10-18 17:34:52', '1', null);
 INSERT INTO `users` VALUES ('3', '15817383353', '123456', '张顺', null, '15817383353', '0', '2017-10-26 17:54:12', '3', null);
+INSERT INTO `users` VALUES ('4', '1217360619@qq.com', '123456', '张顺邮箱用户', '1217360619@qq.com', null, '0', '2017-10-27 17:50:04', '3', null);
+INSERT INTO `users` VALUES ('5', '15817383352', '123456', '测试手机用户2', null, '15817383352', '0', '2017-10-27 17:57:24', '3', null);

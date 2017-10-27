@@ -138,8 +138,8 @@ a {
 </style>  
 <div class="p_left">
 
+	<a href="${path }/menu/part">
 	<div class="my_logo">
-		
 		<div class="my_logo_child1" style="width: 35px;margin-left: 10px;">
 			<img class="img-circle" src="<%=path %>/framework/image/zhangshun.png" width="32" height="32" style="">
 		</div>
@@ -148,9 +148,8 @@ a {
 		<div class="my_logo_child2">
 			张顺的博客
 		</div>
-		
-		
 	</div>
+	</a>
 
 	<div style="height: 50px;"></div>
 <%-- 
