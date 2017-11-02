@@ -94,7 +94,7 @@ function logout(){
 		type:"delete",
 		isNeedToken:false,
 		success:function(data){
-			console.log(data);
+			alert(data);
 		}
 	});
 }

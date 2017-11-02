@@ -74,8 +74,9 @@ public class IndexCon{
 	}
 	
 	@RequestMapping("/blogList/blog/read")
-	public String gotoRead(){
-		return "/blog/read";
+	public String gotoRead(String bId,HttpServletRequest req){
+		req.setAttribute("bId", bId);
+		return "/blog/blogRead";
 	}
 	
 	//----系统功能类-------------

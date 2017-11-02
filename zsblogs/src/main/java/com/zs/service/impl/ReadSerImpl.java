@@ -7,7 +7,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import com.zs.dao.ReadMapper;
+import com.zs.dao.UsersMapper;
 import com.zs.entity.Read;
+import com.zs.entity.Users;
 import com.zs.entity.other.EasyUIAccept;
 import com.zs.entity.other.EasyUIPage;
 import com.zs.service.ReadSer;
@@ -17,7 +19,10 @@ public class ReadSerImpl implements ReadSer{
 	
 	@Resource
 	private ReadMapper readMapper;
-
+	@Resource
+	private UsersMapper usersMapper;
+	
+	
 	
 	public EasyUIPage queryFenye(EasyUIAccept accept) {
 		if (accept!=null) {
@@ -29,6 +34,14 @@ public class ReadSerImpl implements ReadSer{
 			}
 			List list=readMapper.queryFenye(accept);
 			int rows=readMapper.getCount(accept);
+			//带上用户的信息
+			for (Object obj : list) {
+				Read r=(Read)obj;
+				if(r.getuId()!=null){
+					Users u=usersMapper.selectByPrimaryKey(r.getuId());
+					r.setUser(u);
+				}
+			}
 			return new EasyUIPage(rows, list);
 		}
 		return null;

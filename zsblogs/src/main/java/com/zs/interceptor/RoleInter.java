@@ -102,7 +102,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 		String urla="/zsblogs";
 		/*if(StringHelper.checkStar(url, (urla+turl)) && tmethod.equals(method)){
 			return true;
-		}*/
+		}已抛弃不用，要问为何，那是因为我改变url命名思路了*/
 		if((urla+turl).equals(url) && tmethod.equals(method)){
 			return true;
 		}
@@ -116,7 +116,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 		init(request, response);
 		initUserAndRoleFromToken();
 		
-//		log.info("url:"+url+"  method:"+method+"  token:"+token+"  isTimeout:"+isTimeout+"  username:"+(user!=null?user.getName():"null"));
+		log.info("url:"+url+"  method:"+method+"  token:"+token+"  isTimeout:"+isTimeout+"  username:"+(user!=null?user.getName():"null"));
 		
 		//例外列表
 		if (
@@ -266,6 +266,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 	
 	/*2017-8-5，张顺，根据token初始化相关参数*/
 	private void initUserAndRoleFromToken(){
+		//一定要记得清空，否则当用户登出后，由于user和roles会保存之前的引用而导致用户还能正常的进行某些操作。
 		if(token!=null && !token.equals("null")){
 			lcToken=licenceSer.geLcToken(token);
 			if (lcToken!=null) {
@@ -277,7 +278,18 @@ public class RoleInter extends HandlerInterceptorAdapter{
 				if(user!=null && user.getRids()!=null){
 					roles=roleSer.getRolesFromRids(user.getRids());
 				}
+			}else{
+				clear();
 			}
+		}else{
+			clear();
 		}
+	}
+	
+	
+	private void clear(){
+		isTimeout=false;
+		user=null;
+		roles=null;
 	}
 }

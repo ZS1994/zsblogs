@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2017-10-27 18:23:34
+Date: 2017-11-02 18:04:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -159,7 +159,7 @@ CREATE TABLE `permission` (
   UNIQUE KEY `url` (`url`,`method`),
   KEY `menu_parent_id` (`menu_parent_id`),
   CONSTRAINT `permission_ibfk_1` FOREIGN KEY (`menu_parent_id`) REFERENCES `permission` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of permission
@@ -193,6 +193,12 @@ INSERT INTO `permission` VALUES ('26', '用户信息单条修改', '/zsblogs/men
 INSERT INTO `permission` VALUES ('27', '用户信息单条删除', '/zsblogs/menu/system/users/one', 'DELETE', 'api', '系统', null, null, null);
 INSERT INTO `permission` VALUES ('28', '注册账号', '/zsblogs/menu/system/users/logup', 'GET', 'menu', '系统', null, null, null);
 INSERT INTO `permission` VALUES ('29', '注册账号', '/zsblogs/api/login/logup', 'POST', 'api', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('30', '查看博客阅读信息', '/zsblogs/menu/blogList/blog/read', 'GET', 'menu', '博客', null, null, null);
+INSERT INTO `permission` VALUES ('31', '阅读信息分页查看', '/zsblogs/api/read/list', 'GET', 'api', '博客', null, null, null);
+INSERT INTO `permission` VALUES ('32', '阅读信息单条查看', '/zsblogs/api/read/one', 'GET', 'api', '博客', null, null, null);
+INSERT INTO `permission` VALUES ('33', '阅读信息单条添加', '/zsblogs/api/read', 'POST', 'api', '博客', null, null, null);
+INSERT INTO `permission` VALUES ('34', '阅读信息单条修改', '/zsblogs/api/read', 'PUT', 'api', '博客', null, null, null);
+INSERT INTO `permission` VALUES ('35', '阅读信息单条删除', '/zsblogs/api/read/one', 'DELETE', 'api', '博客', null, null, null);
 
 -- ----------------------------
 -- Table structure for `read`
@@ -208,7 +214,7 @@ CREATE TABLE `read` (
   KEY `b_id` (`b_id`),
   CONSTRAINT `read_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `users` (`id`),
   CONSTRAINT `read_ibfk_2` FOREIGN KEY (`b_id`) REFERENCES `blog` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of read
@@ -280,6 +286,11 @@ INSERT INTO `read` VALUES ('64', '5', '10', '2017-10-27 17:57:36');
 INSERT INTO `read` VALUES ('65', '5', '10', '2017-10-27 17:57:40');
 INSERT INTO `read` VALUES ('66', '5', '5', '2017-10-27 17:57:48');
 INSERT INTO `read` VALUES ('67', '5', '10', '2017-10-27 17:57:59');
+INSERT INTO `read` VALUES ('68', null, '10', '2017-11-02 16:15:28');
+INSERT INTO `read` VALUES ('69', null, '10', '2017-11-02 16:43:38');
+INSERT INTO `read` VALUES ('70', '1', '10', '2017-11-02 16:43:50');
+INSERT INTO `read` VALUES ('71', '1', '10', '2017-11-02 16:45:43');
+INSERT INTO `read` VALUES ('72', '1', '10', '2017-11-02 17:26:54');
 
 -- ----------------------------
 -- Table structure for `role`
@@ -296,9 +307,9 @@ CREATE TABLE `role` (
 -- ----------------------------
 -- Records of role
 -- ----------------------------
-INSERT INTO `role` VALUES ('1', '开发者', '拥有所有权限', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29');
+INSERT INTO `role` VALUES ('1', '开发者', '拥有所有权限', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35');
 INSERT INTO `role` VALUES ('2', '博客作者', '拥有写博客的权限', '1,10,2,13');
-INSERT INTO `role` VALUES ('3', '普通用户', '注册时用，为新用户的默认角色', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29');
+INSERT INTO `role` VALUES ('3', '普通用户', '这个角色一定不能被删除，这是注册时使用的，是程序给新用户的默认角色', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31');
 
 -- ----------------------------
 -- Table structure for `timeline`
@@ -315,7 +326,7 @@ CREATE TABLE `timeline` (
   KEY `p_id` (`p_id`),
   CONSTRAINT `timeline_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `users` (`id`),
   CONSTRAINT `timeline_ibfk_2` FOREIGN KEY (`p_id`) REFERENCES `permission` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=963 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1041 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of timeline
@@ -1281,6 +1292,84 @@ INSERT INTO `timeline` VALUES ('959', '5', '10', '2017-10-27 18:01:30', '{}');
 INSERT INTO `timeline` VALUES ('960', '5', '1', '2017-10-27 18:02:22', '{}');
 INSERT INTO `timeline` VALUES ('961', '5', '10', '2017-10-27 18:02:22', '{}');
 INSERT INTO `timeline` VALUES ('962', '1', '22', '2017-10-27 18:11:37', '{}');
+INSERT INTO `timeline` VALUES ('963', '1', '2', '2017-11-02 14:55:56', '{}');
+INSERT INTO `timeline` VALUES ('964', '1', '5', '2017-11-02 14:55:57', '{\"page\":[\"1\"],\"rows\":[\"25\"]}');
+INSERT INTO `timeline` VALUES ('965', '1', '21', '2017-11-02 14:56:01', '{}');
+INSERT INTO `timeline` VALUES ('966', '1', '21', '2017-11-02 14:57:54', '{}');
+INSERT INTO `timeline` VALUES ('967', '1', '10', '2017-11-02 14:57:54', '{}');
+INSERT INTO `timeline` VALUES ('968', '1', '22', '2017-11-02 14:58:12', '{}');
+INSERT INTO `timeline` VALUES ('969', '1', '21', '2017-11-02 15:02:04', '{}');
+INSERT INTO `timeline` VALUES ('970', '1', '10', '2017-11-02 15:02:05', '{}');
+INSERT INTO `timeline` VALUES ('971', '1', '21', '2017-11-02 15:02:11', '{}');
+INSERT INTO `timeline` VALUES ('972', '1', '2', '2017-11-02 15:02:16', '{}');
+INSERT INTO `timeline` VALUES ('973', '1', '5', '2017-11-02 15:02:16', '{\"page\":[\"1\"],\"rows\":[\"25\"]}');
+INSERT INTO `timeline` VALUES ('974', '1', '22', '2017-11-02 15:02:23', '{}');
+INSERT INTO `timeline` VALUES ('975', '1', '22', '2017-11-02 15:05:29', '{}');
+INSERT INTO `timeline` VALUES ('976', '1', '2', '2017-11-02 16:43:47', '{}');
+INSERT INTO `timeline` VALUES ('977', '1', '5', '2017-11-02 16:43:48', '{\"page\":[\"1\"],\"rows\":[\"25\"]}');
+INSERT INTO `timeline` VALUES ('978', '1', '30', '2017-11-02 16:47:33', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('979', '1', '30', '2017-11-02 16:53:21', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('980', '1', '30', '2017-11-02 16:53:30', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('981', '1', '30', '2017-11-02 16:59:41', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('982', '1', '31', '2017-11-02 16:59:41', '{\"int1\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('983', '1', '30', '2017-11-02 17:00:40', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('984', '1', '31', '2017-11-02 17:00:40', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('985', '1', '30', '2017-11-02 17:26:40', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('986', '1', '22', '2017-11-02 17:26:49', '{}');
+INSERT INTO `timeline` VALUES ('987', '1', '30', '2017-11-02 17:26:55', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('988', '1', '30', '2017-11-02 17:27:36', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('989', '1', '31', '2017-11-02 17:27:36', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('990', '1', '30', '2017-11-02 17:28:19', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('991', '1', '31', '2017-11-02 17:28:20', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('992', '1', '30', '2017-11-02 17:29:09', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('993', '1', '31', '2017-11-02 17:29:09', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('994', '1', '30', '2017-11-02 17:30:13', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('995', '1', '31', '2017-11-02 17:30:13', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('996', '1', '30', '2017-11-02 17:31:22', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('997', '1', '31', '2017-11-02 17:31:22', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('998', '1', '30', '2017-11-02 17:32:04', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('999', '1', '31', '2017-11-02 17:32:04', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1000', '1', '30', '2017-11-02 17:32:14', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('1001', '1', '31', '2017-11-02 17:32:14', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1002', '1', '30', '2017-11-02 17:32:59', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('1003', '1', '31', '2017-11-02 17:32:59', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1004', '1', '30', '2017-11-02 17:35:38', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('1005', '1', '31', '2017-11-02 17:35:38', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1006', '1', '31', '2017-11-02 17:35:50', '{\"page\":[\"2\"],\"rows\":[\"100\"],\"int1\":[\"10\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1007', '1', '30', '2017-11-02 17:36:18', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('1008', '1', '31', '2017-11-02 17:36:18', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1009', '1', '30', '2017-11-02 17:37:48', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('1010', '1', '31', '2017-11-02 17:37:48', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1011', '1', '30', '2017-11-02 17:38:18', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('1012', '1', '31', '2017-11-02 17:38:18', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1013', '1', '30', '2017-11-02 17:38:23', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('1014', '1', '31', '2017-11-02 17:38:24', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1015', '1', '30', '2017-11-02 17:38:24', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('1016', '1', '31', '2017-11-02 17:38:25', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1017', '1', '30', '2017-11-02 17:38:37', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('1018', '1', '31', '2017-11-02 17:38:38', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1019', '1', '30', '2017-11-02 17:38:54', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('1020', '1', '31', '2017-11-02 17:38:54', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1021', '1', '30', '2017-11-02 17:39:01', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('1022', '1', '31', '2017-11-02 17:39:01', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1023', '1', '30', '2017-11-02 17:39:04', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('1024', '1', '31', '2017-11-02 17:39:04', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1025', '1', '30', '2017-11-02 17:39:04', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('1026', '1', '31', '2017-11-02 17:39:04', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1027', '1', '31', '2017-11-02 17:39:07', '{\"page\":[\"2\"],\"rows\":[\"100\"],\"int1\":[\"10\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1028', '1', '30', '2017-11-02 17:39:20', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('1029', '1', '31', '2017-11-02 17:39:20', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"10\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1030', '1', '31', '2017-11-02 17:39:22', '{\"page\":[\"2\"],\"rows\":[\"10\"],\"int1\":[\"10\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1031', '1', '31', '2017-11-02 17:39:24', '{\"page\":[\"3\"],\"rows\":[\"10\"],\"int1\":[\"10\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1032', '1', '31', '2017-11-02 17:39:26', '{\"page\":[\"4\"],\"rows\":[\"10\"],\"int1\":[\"10\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1033', '1', '31', '2017-11-02 17:39:27', '{\"page\":[\"5\"],\"rows\":[\"10\"],\"int1\":[\"10\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1034', '1', '31', '2017-11-02 17:39:29', '{\"page\":[\"6\"],\"rows\":[\"10\"],\"int1\":[\"10\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1035', '1', '30', '2017-11-02 17:45:59', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('1036', '1', '31', '2017-11-02 17:45:59', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1037', '1', '30', '2017-11-02 17:46:02', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('1038', '1', '31', '2017-11-02 17:46:02', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1039', '1', '30', '2017-11-02 17:46:05', '{\"bId\":[\"10\"]}');
+INSERT INTO `timeline` VALUES ('1040', '1', '31', '2017-11-02 17:46:05', '{\"int1\":[\"10\"],\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"createTime\"],\"order\":[\"desc\"]}');
 
 -- ----------------------------
 -- Table structure for `token`
@@ -1299,10 +1388,10 @@ CREATE TABLE `token` (
 -- ----------------------------
 -- Records of token
 -- ----------------------------
+INSERT INTO `token` VALUES ('21643456659751', '1', '2017-11-03 17:46:06');
 INSERT INTO `token` VALUES ('242144403063347', '2', '2017-10-25 21:56:38');
 INSERT INTO `token` VALUES ('27175554787926', '4', '2017-10-28 17:56:53');
 INSERT INTO `token` VALUES ('271757288957789', '5', '2017-10-28 18:02:22');
-INSERT INTO `token` VALUES ('271810311678086', '1', '2017-10-28 18:11:37');
 
 -- ----------------------------
 -- Table structure for `users`

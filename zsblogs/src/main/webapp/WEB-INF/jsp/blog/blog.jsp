@@ -68,7 +68,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		for(var i=0;i<rows.length;i++){
 			str="<div class='blog_block'><h4><a class='blog_title' onclick='gotoBlogMain("+rows[i].id+")'>"+rows[i].title+"</a></h4>"+
 			"<p>"+rows[i].summary+"</p>"+
-			"<div class='blog_introduction'>"+rows[i].user.name+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].createTime+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].blogListNames+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].readCount+"次阅读</div>"+
+			"<div class='blog_introduction'>"+rows[i].user.name+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].createTime+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].blogListNames+"&nbsp;&nbsp;&nbsp;&nbsp;<a class='blog_read_a' href='${path}/menu/blogList/blog/read?bId="+rows[i].id+"'>"+rows[i].readCount+"次阅读</a></div>"+
 			"</div>";
 			$("#blogs").append(str);
 		}
@@ -105,6 +105,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     }
     a{
     	cursor: pointer;
+    }
+    .blog_read_a{
+    	font-size: 12px;
     }
     </style>
   </head>

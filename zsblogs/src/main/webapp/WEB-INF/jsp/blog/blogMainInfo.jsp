@@ -23,7 +23,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		success:function(data){
     			console.log(data);
     			$("#blog_title").html(data.title);
-    			$("#blog_author").html(data.user.name+"&nbsp;&nbsp;&nbsp;&nbsp;"+data.createTime+"&nbsp;&nbsp;&nbsp;&nbsp;"+data.readCount+"次阅读");
+    			$("#blog_author").html(data.user.name+"&nbsp;&nbsp;&nbsp;&nbsp;"+data.createTime+"&nbsp;&nbsp;&nbsp;&nbsp;<a class='blog_read_a' href='${path}/menu/blogList/blog/read?bId="+bid+"'>"+data.readCount+"次阅读</a>");
     			$("#blog_content").html(data.content);
     		}
     	});
@@ -97,7 +97,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		$('#myModal').modal('show');
     	}
     }
-    //显示更多，一次追加10条
+    //显示更多，一次追加一页
     function showMore(){
 		page++;    	
     	pullRequest({
@@ -143,6 +143,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     .blog_comment{
     	min-height: 70px;
     }
+    .blog_read_a{
+    	font-size: 12px;
+    }
     </style>
   </head>
   
@@ -184,6 +187,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    		<p><strong>错误！</strong>评论内容不能为空。</p>
 		    	</div>
 		    </div>
+		    
 	    </div>
   		
   		
