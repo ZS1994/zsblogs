@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
   	
     <base href="<%=basePath%>">
-    <title>博客栏目</title>
+    <title>用户管理</title>
     <jsp:include page="/WEB-INF/jsp/part/common.jsp"/>
     <script type="text/javascript">
 	var url;
@@ -118,6 +118,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		//直接查一次，不查的话第一次进入默认是不查的
 		search_toolbar();
 	});
+	/*将img拼接成html代码*/
+	function imgStrToHtml(img){
+		return "<img class=\"img-rounded\" src=\""+img+"\" onerror=\"this.src='${path }/framework/image/user/superman_1.png'\" style=\"width:20px;height:20px;\">";
+	}
 	</script>
 	<style type="text/css">
 	.img-circle {
@@ -141,7 +145,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<div class="p_body" style="overflow-y:hidden;">
   			
   			<table id="dg" border="true"
-				url="<%=path %>/api/blogList/list"
+				url="<%=path %>/api/users/list"
 				method="get" toolbar="#toolbar"
 				loadMsg="数据加载中请稍后……"
 				striped="true" pagination="true"
@@ -151,34 +155,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<thead>
 					<tr>
 						<th field="id" width="100" sortable="true">ID</th>
-						<th field="name" width="200" sortable="true">名称</th>
-						<th field="createTime" width="200" sortable="true">创建时间</th>
-						<th field="blOrder" width="100" sortable="true">序号</th>
-						<th field="uId" width="200" sortable="true" data-options="
+						<th field="usernum" width="200" sortable="true">账号</th>
+						<th field="userpass" width="200" sortable="true">密码</th>
+						<th field="name" width="100" sortable="true">名字</th>
+						<th field="mail" width="100" sortable="true">邮箱</th>
+						<th field="phone" width="200" sortable="true">手机号</th>
+						<th field="isdelete" width="80" sortable="true">是否被注销</th>
+						<th field="createTime" width="200" sortable="true">是否被注销</th>
+						<th field="rids" width="200" sortable="true">角色序列</th>
+						<th field="img" width="200" sortable="false" data-options="
 						formatter:function(value,row,index){
-		                    if(row.user){
-								return row.user.name;
-		                    }
-		             	}">用户</th>
-		             	<th field="blogsNum" width="100" sortable="false" data-options="
-						formatter:function(value,row,index){
-		                    if(row.blogsNum){
-								return row.blogsNum;
-		                    }else{
-		                    	return 0;
-		                    }
-		             	}">博客数量</th>
+							return imgStrToHtml(value);
+		             	}">头像</th>
 					</tr>
 				</thead>
 			</table>
 			<div id="toolbar">
 				<div class="btn-separator-none">
-					<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addObj()">添加博客栏目</a>
-					<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateObj()">编辑博客栏目</a>
-					<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteObj()">删除博客栏目</a>
+					<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addObj()">添加用户</a>
+					<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateObj()">编辑用户</a>
+					<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteObj()" disabled="true">删除用户</a>
 				</div>
 				<div class="btn-separator">
-					<a class="easyui-linkbutton" iconCls="icon-zs-forward" plain="true" onclick="gotoTheBlogs()">查看该栏目的博客</a>
 					<a class="easyui-linkbutton" iconCls="icon-help" plain="true" disabled="true">帮助</a>
 				</div>
 				<br class="clear"/>
@@ -194,10 +192,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   		</div>
 			   		<div class="searchBar-input">
 			    		<div>
-				    		ID：<input name ="int2" />
+				    		账号：<input name ="srt1" />
 			    		</div>
 			    		<div>
-			    			名称：<input name ="str1" />
+			    			名字：<input name ="str2" />
 			    		</div>
 			   		</div>
 			   	</form>

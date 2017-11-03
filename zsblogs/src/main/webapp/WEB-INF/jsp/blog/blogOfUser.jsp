@@ -147,7 +147,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				striped="true" pagination="true"
 				rownumbers="true" fitColumns="false" 
 				singleSelect="true" fit="true"
-				pageSize="25" pageList="[25,40,50,100]">
+				pageSize="100" pageList="[100,500,1000,5000]">
 				<thead>
 					<tr>
 						<th field="id" width="100" sortable="true">ID</th>

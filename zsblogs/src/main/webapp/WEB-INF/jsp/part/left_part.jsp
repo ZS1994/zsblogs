@@ -180,5 +180,9 @@ a {
 		<a onclick="logout()">登出</a>
 	</div>
 	
+	<div class="entry">
+		<a href="${path }/menu/system/users">用户管理</a>
+	</div>
+	
 	
 </div>
