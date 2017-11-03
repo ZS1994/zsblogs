@@ -116,7 +116,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 		init(request, response);
 		initUserAndRoleFromToken();
 		
-		log.info("url:"+url+"  method:"+method+"  token:"+token+"  isTimeout:"+isTimeout+"  username:"+(user!=null?user.getName():"null"));
+//		log.info("url:"+url+"  method:"+method+"  token:"+token+"  isTimeout:"+isTimeout+"  username:"+(user!=null?user.getName():"null"));
 		
 		//例外列表
 		if (

@@ -7,7 +7,10 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+
+import com.zs.dao.RoleMapper;
 import com.zs.dao.UsersMapper;
+import com.zs.entity.Role;
 import com.zs.entity.Users;
 import com.zs.entity.other.EasyUIAccept;
 import com.zs.entity.other.EasyUIPage;
@@ -17,6 +20,10 @@ import com.zs.service.UserSer;
 public class UserSerImpl implements UserSer{
 	@Resource
 	private UsersMapper usersMapper;
+	@Resource
+	private RoleMapper roleMapper;
+	
+	
 	private Logger log=Logger.getLogger(getClass());
 	
 	public EasyUIPage queryFenye(EasyUIAccept accept) {
@@ -29,6 +36,16 @@ public class UserSerImpl implements UserSer{
 			}
 			List list=usersMapper.queryFenye(accept);
 			int rows=usersMapper.getCount(accept);
+			for (Object obj : list) {
+				Users u=(Users) obj;
+				List<Role> rs=roleMapper.selectByIds(u.getRids());
+				String str="";
+				for (Role r : rs) {
+					str=str+r.getName()+",";
+				}
+				str=str.substring(0, str.lastIndexOf(","));
+				u.setRoleNames(str);
+			}
 			return new EasyUIPage(rows, list);
 		}
 		return null;

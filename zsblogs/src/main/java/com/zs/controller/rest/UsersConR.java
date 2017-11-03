@@ -1,6 +1,8 @@
 package com.zs.controller.rest;
 
 
+import java.util.Date;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -68,6 +70,9 @@ public class UsersConR extends BaseRestController<Users, Integer>{
 	public Result<String> doAdd(Users obj, HttpServletRequest req, HttpServletResponse resp) {
 		if(obj!=null){
 			try {
+				if (obj.getCreateTime()==null) {
+					obj.setCreateTime(new Date());
+				} 
 				return new Result<String>(SUCCESS, Code.SUCCESS, userSer.add(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
