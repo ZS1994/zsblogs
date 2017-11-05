@@ -26,4 +26,6 @@ public interface PermissionMapper {
     
     List<Permission> queryFenye(EasyUIAccept accept);
     int getCount(EasyUIAccept accept);
+    
+    List<Permission> selectAllPermission();
 }

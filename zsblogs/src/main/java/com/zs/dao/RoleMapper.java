@@ -25,4 +25,7 @@ public interface RoleMapper {
     
     List<Role> queryFenye(EasyUIAccept accept);
     int getCount(EasyUIAccept accept);
+    
+    List<Role> selectAll();
+    
 }

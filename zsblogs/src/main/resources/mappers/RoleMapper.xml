@@ -89,6 +89,12 @@
   <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
   	select * from role
   	<where>
+  		<if test="str1!=null"><!-- str1:名字 -->
+  		and name like '%${str1}%'
+  		</if>
+  		<if test="str2!=null"><!-- str2:介绍 -->
+  		and introduction like '%${str2}%'
+  		</if>
   	</where>
   	<if test="sort!=null and order!=null">
   		order by ${sort} ${order}
@@ -98,6 +104,15 @@
   <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
   	select count(*) from role
   	<where>
+  		<if test="str1!=null"><!-- str1:名字 -->
+  		and name like '%${str1}%'
+  		</if>
+  		<if test="str2!=null"><!-- str2:介绍 -->
+  		and introduction like '%${str2}%'
+  		</if>
   	</where>
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+  	select * from role
   </select>
 </mapper>

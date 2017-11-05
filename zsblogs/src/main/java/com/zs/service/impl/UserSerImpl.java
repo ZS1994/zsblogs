@@ -43,7 +43,7 @@ public class UserSerImpl implements UserSer{
 				for (Role r : rs) {
 					str=str+r.getName()+",";
 				}
-				str=str.substring(0, str.lastIndexOf(","));
+				str=!str.equals("")?str.substring(0, str.lastIndexOf(",")):"(角色名字无法获取)";
 				u.setRoleNames(str);
 			}
 			return new EasyUIPage(rows, list);

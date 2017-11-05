@@ -1,7 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 本地服务器
+Source Server         : zs
 Source Server Version : 50617
 Source Host           : localhost:3306
 Source Database       : zsblogs
@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2017-11-03 18:10:00
+Date: 2017-11-05 22:56:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -159,7 +159,7 @@ CREATE TABLE `permission` (
   UNIQUE KEY `url` (`url`,`method`),
   KEY `menu_parent_id` (`menu_parent_id`),
   CONSTRAINT `permission_ibfk_1` FOREIGN KEY (`menu_parent_id`) REFERENCES `permission` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of permission
@@ -200,6 +200,20 @@ INSERT INTO `permission` VALUES ('33', '阅读信息单条添加', '/zsblogs/api
 INSERT INTO `permission` VALUES ('34', '阅读信息单条修改', '/zsblogs/api/read', 'PUT', 'api', '博客', null, null, null);
 INSERT INTO `permission` VALUES ('35', '阅读信息单条删除', '/zsblogs/api/read/one', 'DELETE', 'api', '博客', null, null, null);
 INSERT INTO `permission` VALUES ('36', '用户管理', '/zsblogs/menu/system/users', 'GET', 'menu', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('37', '角色管理', '/zsblogs/menu/system/role', 'GET', 'menu', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('38', '角色信息分页查询', '/zsblogs/api/role/list', 'GET', 'api', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('39', '角色信息单条查询', '/zsblogs/api/role/one', 'GET', 'api', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('40', '角色信息查询所有', '/zsblogs/api/role/all', 'GET', 'api', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('41', '角色信息单条添加', '/zsblogs/api/role', 'POST', 'api', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('42', '角色信息单条修改', '/zsblogs/api/role', 'PUT', 'api', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('43', '角色信息单条删除', '/zsblogs/api/role/one', 'DELETE', 'api', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('44', '权限管理', '/zsblogs/menu/system/permission', 'GET', 'menu', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('45', '权限管理分页查询', '/zsblogs/api/permission/list', 'GET', 'api', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('46', '权限管理查看所有', '/zsblogs/api/permission/all', 'GET', 'api', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('47', '权限管理单条查看', '/zsblogs/api/permission/one', 'GET', 'api', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('48', '权限管理单条添加', '/zsblogs/api/permission', 'POST', 'api', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('49', '权限管理单条修改', '/zsblogs/api/permission', 'PUT', 'api', '系统', null, null, null);
+INSERT INTO `permission` VALUES ('50', '权限管理单条删除', '/zsblogs/api/permission/one', 'DELETE', 'api', '系统', null, null, null);
 
 -- ----------------------------
 -- Table structure for `read`
@@ -215,7 +229,7 @@ CREATE TABLE `read` (
   KEY `b_id` (`b_id`),
   CONSTRAINT `read_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `users` (`id`),
   CONSTRAINT `read_ibfk_2` FOREIGN KEY (`b_id`) REFERENCES `blog` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of read
@@ -292,6 +306,7 @@ INSERT INTO `read` VALUES ('69', null, '10', '2017-11-02 16:43:38');
 INSERT INTO `read` VALUES ('70', '1', '10', '2017-11-02 16:43:50');
 INSERT INTO `read` VALUES ('71', '1', '10', '2017-11-02 16:45:43');
 INSERT INTO `read` VALUES ('72', '1', '10', '2017-11-02 17:26:54');
+INSERT INTO `read` VALUES ('73', '1', '10', '2017-11-05 22:16:44');
 
 -- ----------------------------
 -- Table structure for `role`
@@ -303,14 +318,14 @@ CREATE TABLE `role` (
   `introduction` varchar(255) DEFAULT NULL,
   `pids` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of role
 -- ----------------------------
-INSERT INTO `role` VALUES ('1', '开发者', '拥有所有权限', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36');
+INSERT INTO `role` VALUES ('1', '开发者', '拥有所有权限', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50');
 INSERT INTO `role` VALUES ('2', '博客作者', '拥有写博客的权限', '1,10,2,13');
-INSERT INTO `role` VALUES ('3', '普通用户', '这个角色一定不能被删除，这是注册时使用的，是程序给新用户的默认角色', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31');
+INSERT INTO `role` VALUES ('3', '普通用户', '这个角色一定不能被删除，这是注册时使用的，是程序给新用户的默认角色（其实你想删也删不掉的，不信你试试）', '1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31');
 
 -- ----------------------------
 -- Table structure for `timeline`
@@ -327,7 +342,7 @@ CREATE TABLE `timeline` (
   KEY `p_id` (`p_id`),
   CONSTRAINT `timeline_ibfk_1` FOREIGN KEY (`u_id`) REFERENCES `users` (`id`),
   CONSTRAINT `timeline_ibfk_2` FOREIGN KEY (`p_id`) REFERENCES `permission` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1088 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1566 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of timeline
@@ -1418,6 +1433,484 @@ INSERT INTO `timeline` VALUES ('1084', '1', '23', '2017-11-03 18:00:53', '{\"dat
 INSERT INTO `timeline` VALUES ('1085', '1', '36', '2017-11-03 18:06:39', '{}');
 INSERT INTO `timeline` VALUES ('1086', '1', '23', '2017-11-03 18:06:39', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
 INSERT INTO `timeline` VALUES ('1087', '1', '23', '2017-11-03 18:06:43', '{\"date1\":[\"2017/11/03 18:06:41\"],\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1088', '1', '36', '2017-11-05 10:19:05', '{}');
+INSERT INTO `timeline` VALUES ('1089', '1', '23', '2017-11-05 10:19:07', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1090', '1', '23', '2017-11-05 10:19:08', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1091', '1', '36', '2017-11-05 10:19:33', '{}');
+INSERT INTO `timeline` VALUES ('1092', '1', '36', '2017-11-05 10:20:10', '{}');
+INSERT INTO `timeline` VALUES ('1093', '1', '40', '2017-11-05 10:20:10', '{}');
+INSERT INTO `timeline` VALUES ('1094', '1', '40', '2017-11-05 10:20:10', '{}');
+INSERT INTO `timeline` VALUES ('1095', '1', '36', '2017-11-05 10:20:35', '{}');
+INSERT INTO `timeline` VALUES ('1096', '1', '40', '2017-11-05 10:20:35', '{}');
+INSERT INTO `timeline` VALUES ('1097', '1', '40', '2017-11-05 10:20:35', '{}');
+INSERT INTO `timeline` VALUES ('1098', '1', '1', '2017-11-05 10:20:53', '{}');
+INSERT INTO `timeline` VALUES ('1099', '1', '10', '2017-11-05 10:20:53', '{}');
+INSERT INTO `timeline` VALUES ('1100', '1', '36', '2017-11-05 10:22:32', '{}');
+INSERT INTO `timeline` VALUES ('1101', '1', '40', '2017-11-05 10:22:32', '{}');
+INSERT INTO `timeline` VALUES ('1102', '1', '40', '2017-11-05 10:22:32', '{}');
+INSERT INTO `timeline` VALUES ('1103', '1', '36', '2017-11-05 10:29:26', '{}');
+INSERT INTO `timeline` VALUES ('1104', '1', '23', '2017-11-05 10:29:26', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1105', '1', '40', '2017-11-05 10:29:26', '{}');
+INSERT INTO `timeline` VALUES ('1106', '1', '36', '2017-11-05 10:30:11', '{}');
+INSERT INTO `timeline` VALUES ('1107', '1', '40', '2017-11-05 10:30:12', '{}');
+INSERT INTO `timeline` VALUES ('1108', '1', '40', '2017-11-05 10:30:12', '{}');
+INSERT INTO `timeline` VALUES ('1109', '1', '36', '2017-11-05 10:30:19', '{}');
+INSERT INTO `timeline` VALUES ('1110', '1', '40', '2017-11-05 10:30:19', '{}');
+INSERT INTO `timeline` VALUES ('1111', '1', '40', '2017-11-05 10:30:19', '{}');
+INSERT INTO `timeline` VALUES ('1112', '1', '36', '2017-11-05 10:31:32', '{}');
+INSERT INTO `timeline` VALUES ('1113', '1', '40', '2017-11-05 10:31:33', '{}');
+INSERT INTO `timeline` VALUES ('1114', '1', '40', '2017-11-05 10:31:33', '{}');
+INSERT INTO `timeline` VALUES ('1115', '1', '36', '2017-11-05 10:31:59', '{}');
+INSERT INTO `timeline` VALUES ('1116', '1', '40', '2017-11-05 10:31:59', '{}');
+INSERT INTO `timeline` VALUES ('1117', '1', '40', '2017-11-05 10:31:59', '{}');
+INSERT INTO `timeline` VALUES ('1118', '1', '36', '2017-11-05 10:32:17', '{}');
+INSERT INTO `timeline` VALUES ('1119', '1', '23', '2017-11-05 10:32:18', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1120', '1', '40', '2017-11-05 10:32:18', '{}');
+INSERT INTO `timeline` VALUES ('1121', '1', '36', '2017-11-05 10:34:37', '{}');
+INSERT INTO `timeline` VALUES ('1122', '1', '40', '2017-11-05 10:34:37', '{}');
+INSERT INTO `timeline` VALUES ('1123', '1', '40', '2017-11-05 10:34:37', '{}');
+INSERT INTO `timeline` VALUES ('1124', '1', '36', '2017-11-05 10:34:53', '{}');
+INSERT INTO `timeline` VALUES ('1125', '1', '40', '2017-11-05 10:34:53', '{}');
+INSERT INTO `timeline` VALUES ('1126', '1', '40', '2017-11-05 10:34:53', '{}');
+INSERT INTO `timeline` VALUES ('1127', '1', '36', '2017-11-05 10:35:21', '{}');
+INSERT INTO `timeline` VALUES ('1128', '1', '40', '2017-11-05 10:35:21', '{}');
+INSERT INTO `timeline` VALUES ('1129', '1', '40', '2017-11-05 10:35:21', '{}');
+INSERT INTO `timeline` VALUES ('1130', '1', '36', '2017-11-05 10:35:42', '{}');
+INSERT INTO `timeline` VALUES ('1131', '1', '40', '2017-11-05 10:35:43', '{}');
+INSERT INTO `timeline` VALUES ('1132', '1', '40', '2017-11-05 10:35:43', '{}');
+INSERT INTO `timeline` VALUES ('1133', '1', '36', '2017-11-05 10:44:59', '{}');
+INSERT INTO `timeline` VALUES ('1134', '1', '23', '2017-11-05 10:45:00', '{}');
+INSERT INTO `timeline` VALUES ('1135', '1', '40', '2017-11-05 10:45:00', '{}');
+INSERT INTO `timeline` VALUES ('1136', '1', '36', '2017-11-05 10:45:58', '{}');
+INSERT INTO `timeline` VALUES ('1137', '1', '40', '2017-11-05 10:45:59', '{}');
+INSERT INTO `timeline` VALUES ('1138', '1', '40', '2017-11-05 10:45:59', '{}');
+INSERT INTO `timeline` VALUES ('1139', '1', '36', '2017-11-05 10:46:09', '{}');
+INSERT INTO `timeline` VALUES ('1140', '1', '40', '2017-11-05 10:46:09', '{}');
+INSERT INTO `timeline` VALUES ('1141', '1', '40', '2017-11-05 10:46:09', '{}');
+INSERT INTO `timeline` VALUES ('1142', '1', '36', '2017-11-05 10:49:31', '{}');
+INSERT INTO `timeline` VALUES ('1143', '1', '40', '2017-11-05 10:49:31', '{}');
+INSERT INTO `timeline` VALUES ('1144', '1', '40', '2017-11-05 10:49:31', '{}');
+INSERT INTO `timeline` VALUES ('1145', '1', '36', '2017-11-05 10:50:40', '{}');
+INSERT INTO `timeline` VALUES ('1146', '1', '40', '2017-11-05 10:50:41', '{}');
+INSERT INTO `timeline` VALUES ('1147', '1', '40', '2017-11-05 10:50:41', '{}');
+INSERT INTO `timeline` VALUES ('1148', '1', '36', '2017-11-05 10:52:30', '{}');
+INSERT INTO `timeline` VALUES ('1149', '1', '40', '2017-11-05 10:52:31', '{}');
+INSERT INTO `timeline` VALUES ('1150', '1', '40', '2017-11-05 10:52:31', '{}');
+INSERT INTO `timeline` VALUES ('1151', '1', '36', '2017-11-05 10:53:52', '{}');
+INSERT INTO `timeline` VALUES ('1152', '1', '40', '2017-11-05 10:53:53', '{}');
+INSERT INTO `timeline` VALUES ('1153', '1', '40', '2017-11-05 10:53:53', '{}');
+INSERT INTO `timeline` VALUES ('1154', '1', '36', '2017-11-05 10:54:43', '{}');
+INSERT INTO `timeline` VALUES ('1155', '1', '40', '2017-11-05 10:54:43', '{}');
+INSERT INTO `timeline` VALUES ('1156', '1', '40', '2017-11-05 10:54:43', '{}');
+INSERT INTO `timeline` VALUES ('1157', '1', '36', '2017-11-05 10:55:26', '{}');
+INSERT INTO `timeline` VALUES ('1158', '1', '40', '2017-11-05 10:55:27', '{}');
+INSERT INTO `timeline` VALUES ('1159', '1', '40', '2017-11-05 10:55:27', '{}');
+INSERT INTO `timeline` VALUES ('1160', '1', '36', '2017-11-05 10:56:14', '{}');
+INSERT INTO `timeline` VALUES ('1161', '1', '40', '2017-11-05 10:56:15', '{}');
+INSERT INTO `timeline` VALUES ('1162', '1', '40', '2017-11-05 10:56:15', '{}');
+INSERT INTO `timeline` VALUES ('1163', '1', '36', '2017-11-05 10:56:24', '{}');
+INSERT INTO `timeline` VALUES ('1164', '1', '40', '2017-11-05 10:56:25', '{}');
+INSERT INTO `timeline` VALUES ('1165', '1', '40', '2017-11-05 10:56:25', '{}');
+INSERT INTO `timeline` VALUES ('1166', '1', '26', '2017-11-05 10:56:44', '{\"_method\":[\"put\"],\"_token\":[\"51054411612714\"],\"id\":[\"5\"],\"usernum\":[\"15817383352\"],\"userpass\":[\"123456\"],\"name\":[\"测试手机用户2\"],\"mail\":[\"\"],\"phone\":[\"15817383352\"],\"isdelete\":[\"0\"],\"rids\":[\"1\",\"2\",\"3\"]}');
+INSERT INTO `timeline` VALUES ('1167', '1', '23', '2017-11-05 10:56:44', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1168', '1', '36', '2017-11-05 11:02:08', '{}');
+INSERT INTO `timeline` VALUES ('1169', '1', '40', '2017-11-05 11:02:09', '{}');
+INSERT INTO `timeline` VALUES ('1170', '1', '40', '2017-11-05 11:02:09', '{}');
+INSERT INTO `timeline` VALUES ('1171', '1', '36', '2017-11-05 11:02:21', '{}');
+INSERT INTO `timeline` VALUES ('1172', '1', '40', '2017-11-05 11:02:21', '{}');
+INSERT INTO `timeline` VALUES ('1173', '1', '40', '2017-11-05 11:02:21', '{}');
+INSERT INTO `timeline` VALUES ('1174', '1', '36', '2017-11-05 11:03:47', '{}');
+INSERT INTO `timeline` VALUES ('1175', '1', '40', '2017-11-05 11:03:47', '{}');
+INSERT INTO `timeline` VALUES ('1176', '1', '40', '2017-11-05 11:03:47', '{}');
+INSERT INTO `timeline` VALUES ('1177', '1', '36', '2017-11-05 11:05:18', '{}');
+INSERT INTO `timeline` VALUES ('1178', '1', '23', '2017-11-05 11:05:19', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1179', '1', '40', '2017-11-05 11:05:19', '{}');
+INSERT INTO `timeline` VALUES ('1180', '1', '36', '2017-11-05 11:05:32', '{}');
+INSERT INTO `timeline` VALUES ('1181', '1', '23', '2017-11-05 11:05:33', '{}');
+INSERT INTO `timeline` VALUES ('1182', '1', '40', '2017-11-05 11:05:33', '{}');
+INSERT INTO `timeline` VALUES ('1183', '1', '36', '2017-11-05 11:06:57', '{}');
+INSERT INTO `timeline` VALUES ('1184', '1', '40', '2017-11-05 11:06:57', '{}');
+INSERT INTO `timeline` VALUES ('1185', '1', '40', '2017-11-05 11:06:57', '{}');
+INSERT INTO `timeline` VALUES ('1186', '1', '36', '2017-11-05 11:07:21', '{}');
+INSERT INTO `timeline` VALUES ('1187', '1', '40', '2017-11-05 11:07:22', '{}');
+INSERT INTO `timeline` VALUES ('1188', '1', '40', '2017-11-05 11:07:22', '{}');
+INSERT INTO `timeline` VALUES ('1189', '1', '36', '2017-11-05 11:10:04', '{}');
+INSERT INTO `timeline` VALUES ('1190', '1', '40', '2017-11-05 11:10:05', '{}');
+INSERT INTO `timeline` VALUES ('1191', '1', '40', '2017-11-05 11:10:05', '{}');
+INSERT INTO `timeline` VALUES ('1192', '1', '36', '2017-11-05 11:10:19', '{}');
+INSERT INTO `timeline` VALUES ('1193', '1', '40', '2017-11-05 11:10:20', '{}');
+INSERT INTO `timeline` VALUES ('1194', '1', '40', '2017-11-05 11:10:20', '{}');
+INSERT INTO `timeline` VALUES ('1195', '1', '36', '2017-11-05 11:10:36', '{}');
+INSERT INTO `timeline` VALUES ('1196', '1', '40', '2017-11-05 11:10:37', '{}');
+INSERT INTO `timeline` VALUES ('1197', '1', '40', '2017-11-05 11:10:37', '{}');
+INSERT INTO `timeline` VALUES ('1198', '1', '36', '2017-11-05 11:13:13', '{}');
+INSERT INTO `timeline` VALUES ('1199', '1', '40', '2017-11-05 11:13:13', '{}');
+INSERT INTO `timeline` VALUES ('1200', '1', '40', '2017-11-05 11:13:13', '{}');
+INSERT INTO `timeline` VALUES ('1201', '1', '36', '2017-11-05 11:14:37', '{}');
+INSERT INTO `timeline` VALUES ('1202', '1', '40', '2017-11-05 11:14:37', '{}');
+INSERT INTO `timeline` VALUES ('1203', '1', '40', '2017-11-05 11:14:37', '{}');
+INSERT INTO `timeline` VALUES ('1204', '1', '36', '2017-11-05 11:14:56', '{}');
+INSERT INTO `timeline` VALUES ('1205', '1', '40', '2017-11-05 11:14:56', '{}');
+INSERT INTO `timeline` VALUES ('1206', '1', '40', '2017-11-05 11:14:56', '{}');
+INSERT INTO `timeline` VALUES ('1207', '1', '36', '2017-11-05 11:15:59', '{}');
+INSERT INTO `timeline` VALUES ('1208', '1', '23', '2017-11-05 11:16:00', '{}');
+INSERT INTO `timeline` VALUES ('1209', '1', '40', '2017-11-05 11:16:00', '{}');
+INSERT INTO `timeline` VALUES ('1210', '1', '36', '2017-11-05 11:16:58', '{}');
+INSERT INTO `timeline` VALUES ('1211', '1', '40', '2017-11-05 11:16:58', '{}');
+INSERT INTO `timeline` VALUES ('1212', '1', '40', '2017-11-05 11:16:58', '{}');
+INSERT INTO `timeline` VALUES ('1213', '1', '36', '2017-11-05 11:17:17', '{}');
+INSERT INTO `timeline` VALUES ('1214', '1', '40', '2017-11-05 11:17:17', '{}');
+INSERT INTO `timeline` VALUES ('1215', '1', '40', '2017-11-05 11:17:17', '{}');
+INSERT INTO `timeline` VALUES ('1216', '1', '36', '2017-11-05 11:18:18', '{}');
+INSERT INTO `timeline` VALUES ('1217', '1', '40', '2017-11-05 11:18:19', '{}');
+INSERT INTO `timeline` VALUES ('1218', '1', '40', '2017-11-05 11:18:19', '{}');
+INSERT INTO `timeline` VALUES ('1219', '1', '26', '2017-11-05 11:18:32', '{\"_method\":[\"put\"],\"_token\":[\"51117154598679\"],\"id\":[\"5\"],\"usernum\":[\"15817383352\"],\"userpass\":[\"123456\"],\"name\":[\"测试手机用户2\"],\"mail\":[\"\"],\"phone\":[\"15817383352\"],\"isdelete\":[\"0\"]}');
+INSERT INTO `timeline` VALUES ('1220', '1', '23', '2017-11-05 11:18:33', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1221', '1', '36', '2017-11-05 11:19:42', '{}');
+INSERT INTO `timeline` VALUES ('1222', '1', '40', '2017-11-05 11:19:42', '{}');
+INSERT INTO `timeline` VALUES ('1223', '1', '40', '2017-11-05 11:19:42', '{}');
+INSERT INTO `timeline` VALUES ('1224', '1', '36', '2017-11-05 11:20:12', '{}');
+INSERT INTO `timeline` VALUES ('1225', '1', '40', '2017-11-05 11:20:13', '{}');
+INSERT INTO `timeline` VALUES ('1226', '1', '40', '2017-11-05 11:20:13', '{}');
+INSERT INTO `timeline` VALUES ('1227', '1', '26', '2017-11-05 11:20:31', '{\"_method\":[\"put\"],\"_token\":[\"51117154598679\"],\"id\":[\"5\"],\"usernum\":[\"15817383352\"],\"userpass\":[\"123456\"],\"name\":[\"测试手机用户2\"],\"mail\":[\"\"],\"phone\":[\"15817383352\"],\"isdelete\":[\"0\"],\"rids\":[\"3\"]}');
+INSERT INTO `timeline` VALUES ('1228', '1', '23', '2017-11-05 11:20:31', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1229', '1', '36', '2017-11-05 11:21:55', '{}');
+INSERT INTO `timeline` VALUES ('1230', '1', '40', '2017-11-05 11:21:55', '{}');
+INSERT INTO `timeline` VALUES ('1231', '1', '40', '2017-11-05 11:21:55', '{}');
+INSERT INTO `timeline` VALUES ('1232', '1', '36', '2017-11-05 11:22:02', '{}');
+INSERT INTO `timeline` VALUES ('1233', '1', '40', '2017-11-05 11:22:02', '{}');
+INSERT INTO `timeline` VALUES ('1234', '1', '40', '2017-11-05 11:22:02', '{}');
+INSERT INTO `timeline` VALUES ('1235', '1', '36', '2017-11-05 11:23:25', '{}');
+INSERT INTO `timeline` VALUES ('1236', '1', '40', '2017-11-05 11:23:26', '{}');
+INSERT INTO `timeline` VALUES ('1237', '1', '40', '2017-11-05 11:23:26', '{}');
+INSERT INTO `timeline` VALUES ('1238', '1', '36', '2017-11-05 11:23:28', '{}');
+INSERT INTO `timeline` VALUES ('1239', '1', '40', '2017-11-05 11:23:29', '{}');
+INSERT INTO `timeline` VALUES ('1240', '1', '40', '2017-11-05 11:23:29', '{}');
+INSERT INTO `timeline` VALUES ('1241', '1', '36', '2017-11-05 11:24:05', '{}');
+INSERT INTO `timeline` VALUES ('1242', '1', '23', '2017-11-05 11:24:05', '{}');
+INSERT INTO `timeline` VALUES ('1243', '1', '40', '2017-11-05 11:24:05', '{}');
+INSERT INTO `timeline` VALUES ('1244', '1', '36', '2017-11-05 11:24:14', '{}');
+INSERT INTO `timeline` VALUES ('1245', '1', '23', '2017-11-05 11:24:15', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1246', '1', '40', '2017-11-05 11:24:15', '{}');
+INSERT INTO `timeline` VALUES ('1247', '1', '36', '2017-11-05 11:25:05', '{}');
+INSERT INTO `timeline` VALUES ('1248', '1', '23', '2017-11-05 11:25:05', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1249', '1', '40', '2017-11-05 11:25:05', '{}');
+INSERT INTO `timeline` VALUES ('1250', '1', '36', '2017-11-05 11:25:23', '{}');
+INSERT INTO `timeline` VALUES ('1251', '1', '40', '2017-11-05 11:25:23', '{}');
+INSERT INTO `timeline` VALUES ('1252', '1', '40', '2017-11-05 11:25:23', '{}');
+INSERT INTO `timeline` VALUES ('1253', '1', '36', '2017-11-05 11:25:51', '{}');
+INSERT INTO `timeline` VALUES ('1254', '1', '40', '2017-11-05 11:25:51', '{}');
+INSERT INTO `timeline` VALUES ('1255', '1', '40', '2017-11-05 11:25:51', '{}');
+INSERT INTO `timeline` VALUES ('1256', '1', '26', '2017-11-05 11:26:42', '{\"_method\":[\"put\"],\"_token\":[\"51117154598679\"],\"id\":[\"4\"],\"usernum\":[\"1217360619@qq.com\"],\"userpass\":[\"123456\"],\"name\":[\"张顺邮箱用户\"],\"mail\":[\"1217360619@qq.com\"],\"phone\":[\"\"],\"isdelete\":[\"1\"],\"rids\":[\"3\"]}');
+INSERT INTO `timeline` VALUES ('1257', '1', '23', '2017-11-05 11:26:43', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1258', '1', '26', '2017-11-05 11:26:50', '{\"_method\":[\"put\"],\"_token\":[\"51117154598679\"],\"id\":[\"5\"],\"usernum\":[\"15817383352\"],\"userpass\":[\"123456\"],\"name\":[\"测试手机用户2\"],\"mail\":[\"\"],\"phone\":[\"15817383352\"],\"isdelete\":[\"1\"],\"rids\":[\"3\"]}');
+INSERT INTO `timeline` VALUES ('1259', '1', '23', '2017-11-05 11:26:50', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1260', '1', '26', '2017-11-05 11:26:54', '{\"_method\":[\"put\"],\"_token\":[\"51117154598679\"],\"id\":[\"4\"],\"usernum\":[\"1217360619@qq.com\"],\"userpass\":[\"123456\"],\"name\":[\"张顺邮箱用户\"],\"mail\":[\"1217360619@qq.com\"],\"phone\":[\"\"],\"isdelete\":[\"0\"],\"rids\":[\"3\"]}');
+INSERT INTO `timeline` VALUES ('1261', '1', '23', '2017-11-05 11:26:54', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1262', '1', '26', '2017-11-05 11:27:00', '{\"_method\":[\"put\"],\"_token\":[\"51117154598679\"],\"id\":[\"5\"],\"usernum\":[\"15817383352\"],\"userpass\":[\"123456\"],\"name\":[\"测试手机用户2\"],\"mail\":[\"\"],\"phone\":[\"15817383352\"],\"isdelete\":[\"0\"],\"rids\":[\"3\"]}');
+INSERT INTO `timeline` VALUES ('1263', '1', '23', '2017-11-05 11:27:00', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1264', '1', '26', '2017-11-05 11:27:04', '{\"_method\":[\"put\"],\"_token\":[\"51117154598679\"],\"id\":[\"4\"],\"usernum\":[\"1217360619@qq.com\"],\"userpass\":[\"123456\"],\"name\":[\"张顺邮箱用户\"],\"mail\":[\"1217360619@qq.com\"],\"phone\":[\"\"],\"isdelete\":[\"1\"],\"rids\":[\"3\"]}');
+INSERT INTO `timeline` VALUES ('1265', '1', '23', '2017-11-05 11:27:04', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1266', '1', '26', '2017-11-05 11:27:12', '{\"_method\":[\"put\"],\"_token\":[\"51117154598679\"],\"id\":[\"4\"],\"usernum\":[\"1217360619@qq.com\"],\"userpass\":[\"123456\"],\"name\":[\"张顺邮箱用户\"],\"mail\":[\"1217360619@qq.com\"],\"phone\":[\"\"],\"isdelete\":[\"0\"],\"rids\":[\"3\"]}');
+INSERT INTO `timeline` VALUES ('1267', '1', '23', '2017-11-05 11:27:12', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1268', '1', '36', '2017-11-05 19:13:54', '{}');
+INSERT INTO `timeline` VALUES ('1269', '1', '40', '2017-11-05 19:13:54', '{}');
+INSERT INTO `timeline` VALUES ('1270', '1', '40', '2017-11-05 19:13:54', '{}');
+INSERT INTO `timeline` VALUES ('1271', '1', '22', '2017-11-05 19:13:55', '{}');
+INSERT INTO `timeline` VALUES ('1272', '1', '36', '2017-11-05 19:13:57', '{}');
+INSERT INTO `timeline` VALUES ('1273', '1', '40', '2017-11-05 19:13:57', '{}');
+INSERT INTO `timeline` VALUES ('1274', '1', '40', '2017-11-05 19:13:57', '{}');
+INSERT INTO `timeline` VALUES ('1275', '1', '36', '2017-11-05 21:41:41', '{}');
+INSERT INTO `timeline` VALUES ('1276', '1', '23', '2017-11-05 21:41:42', '{}');
+INSERT INTO `timeline` VALUES ('1277', '1', '40', '2017-11-05 21:41:42', '{}');
+INSERT INTO `timeline` VALUES ('1278', '1', '37', '2017-11-05 21:41:44', '{}');
+INSERT INTO `timeline` VALUES ('1279', '1', '40', '2017-11-05 21:41:44', '{}');
+INSERT INTO `timeline` VALUES ('1280', '1', '40', '2017-11-05 21:41:44', '{}');
+INSERT INTO `timeline` VALUES ('1281', '1', '37', '2017-11-05 21:42:11', '{}');
+INSERT INTO `timeline` VALUES ('1282', '1', '40', '2017-11-05 21:42:11', '{}');
+INSERT INTO `timeline` VALUES ('1283', '1', '40', '2017-11-05 21:42:11', '{}');
+INSERT INTO `timeline` VALUES ('1284', '1', '37', '2017-11-05 21:42:21', '{}');
+INSERT INTO `timeline` VALUES ('1285', '1', '38', '2017-11-05 21:42:22', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1286', '1', '40', '2017-11-05 21:42:22', '{}');
+INSERT INTO `timeline` VALUES ('1287', '1', '37', '2017-11-05 21:42:48', '{}');
+INSERT INTO `timeline` VALUES ('1288', '1', '40', '2017-11-05 21:42:48', '{}');
+INSERT INTO `timeline` VALUES ('1289', '1', '40', '2017-11-05 21:42:48', '{}');
+INSERT INTO `timeline` VALUES ('1290', '1', '37', '2017-11-05 21:43:37', '{}');
+INSERT INTO `timeline` VALUES ('1291', '1', '40', '2017-11-05 21:43:37', '{}');
+INSERT INTO `timeline` VALUES ('1292', '1', '40', '2017-11-05 21:43:37', '{}');
+INSERT INTO `timeline` VALUES ('1293', '1', '37', '2017-11-05 21:44:32', '{}');
+INSERT INTO `timeline` VALUES ('1294', '1', '40', '2017-11-05 21:44:33', '{}');
+INSERT INTO `timeline` VALUES ('1295', '1', '40', '2017-11-05 21:44:33', '{}');
+INSERT INTO `timeline` VALUES ('1296', '1', '2', '2017-11-05 21:44:36', '{}');
+INSERT INTO `timeline` VALUES ('1297', '1', '5', '2017-11-05 21:44:36', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1298', '1', '21', '2017-11-05 21:44:38', '{}');
+INSERT INTO `timeline` VALUES ('1299', '1', '10', '2017-11-05 21:44:39', '{}');
+INSERT INTO `timeline` VALUES ('1300', '1', '36', '2017-11-05 21:44:40', '{}');
+INSERT INTO `timeline` VALUES ('1301', '1', '23', '2017-11-05 21:44:40', '{}');
+INSERT INTO `timeline` VALUES ('1302', '1', '40', '2017-11-05 21:44:40', '{}');
+INSERT INTO `timeline` VALUES ('1303', '1', '37', '2017-11-05 21:44:42', '{}');
+INSERT INTO `timeline` VALUES ('1304', '1', '40', '2017-11-05 21:44:42', '{}');
+INSERT INTO `timeline` VALUES ('1305', '1', '40', '2017-11-05 21:44:42', '{}');
+INSERT INTO `timeline` VALUES ('1306', '1', '36', '2017-11-05 21:44:44', '{}');
+INSERT INTO `timeline` VALUES ('1307', '1', '23', '2017-11-05 21:44:44', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1308', '1', '40', '2017-11-05 21:44:44', '{}');
+INSERT INTO `timeline` VALUES ('1309', '1', '37', '2017-11-05 21:44:45', '{}');
+INSERT INTO `timeline` VALUES ('1310', '1', '40', '2017-11-05 21:44:45', '{}');
+INSERT INTO `timeline` VALUES ('1311', '1', '40', '2017-11-05 21:44:45', '{}');
+INSERT INTO `timeline` VALUES ('1312', '1', '37', '2017-11-05 22:00:12', '{}');
+INSERT INTO `timeline` VALUES ('1313', '1', '40', '2017-11-05 22:00:12', '{}');
+INSERT INTO `timeline` VALUES ('1314', '1', '40', '2017-11-05 22:00:12', '{}');
+INSERT INTO `timeline` VALUES ('1315', '1', '37', '2017-11-05 22:01:13', '{}');
+INSERT INTO `timeline` VALUES ('1316', '1', '38', '2017-11-05 22:01:14', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1317', '1', '37', '2017-11-05 22:06:28', '{}');
+INSERT INTO `timeline` VALUES ('1318', '1', '46', '2017-11-05 22:06:28', '{}');
+INSERT INTO `timeline` VALUES ('1319', '1', '46', '2017-11-05 22:06:28', '{}');
+INSERT INTO `timeline` VALUES ('1320', '1', '37', '2017-11-05 22:07:32', '{}');
+INSERT INTO `timeline` VALUES ('1321', '1', '46', '2017-11-05 22:07:33', '{}');
+INSERT INTO `timeline` VALUES ('1322', '1', '46', '2017-11-05 22:07:33', '{}');
+INSERT INTO `timeline` VALUES ('1323', '1', '37', '2017-11-05 22:08:12', '{}');
+INSERT INTO `timeline` VALUES ('1324', '1', '46', '2017-11-05 22:08:12', '{}');
+INSERT INTO `timeline` VALUES ('1325', '1', '46', '2017-11-05 22:08:12', '{}');
+INSERT INTO `timeline` VALUES ('1326', '1', '37', '2017-11-05 22:08:42', '{}');
+INSERT INTO `timeline` VALUES ('1327', '1', '46', '2017-11-05 22:08:42', '{}');
+INSERT INTO `timeline` VALUES ('1328', '1', '46', '2017-11-05 22:08:42', '{}');
+INSERT INTO `timeline` VALUES ('1329', '1', '36', '2017-11-05 22:09:56', '{}');
+INSERT INTO `timeline` VALUES ('1330', '1', '23', '2017-11-05 22:09:56', '{}');
+INSERT INTO `timeline` VALUES ('1331', '1', '40', '2017-11-05 22:09:56', '{}');
+INSERT INTO `timeline` VALUES ('1332', '1', '37', '2017-11-05 22:10:06', '{}');
+INSERT INTO `timeline` VALUES ('1333', '1', '46', '2017-11-05 22:10:06', '{}');
+INSERT INTO `timeline` VALUES ('1334', '1', '46', '2017-11-05 22:10:06', '{}');
+INSERT INTO `timeline` VALUES ('1335', '1', '37', '2017-11-05 22:10:32', '{}');
+INSERT INTO `timeline` VALUES ('1336', '1', '38', '2017-11-05 22:10:32', '{}');
+INSERT INTO `timeline` VALUES ('1337', '1', '46', '2017-11-05 22:10:32', '{}');
+INSERT INTO `timeline` VALUES ('1338', '1', '41', '2017-11-05 22:10:48', '{\"_method\":[\"post\"],\"_token\":[\"5226247047060\"],\"id\":[\"\"],\"name\":[\"测试角色\"],\"introduction\":[\"测试用\"],\"pids\":[\"1\",\"3\"]}');
+INSERT INTO `timeline` VALUES ('1339', '1', '38', '2017-11-05 22:10:48', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1340', '1', '42', '2017-11-05 22:10:59', '{\"_method\":[\"put\"],\"_token\":[\"5226247047060\"],\"id\":[\"4\"],\"name\":[\"测试角色\"],\"introduction\":[\"测试用\"],\"pids\":[\"1\",\"3\",\"5\",\"6\",\"7\"]}');
+INSERT INTO `timeline` VALUES ('1341', '1', '38', '2017-11-05 22:10:59', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1342', '1', '37', '2017-11-05 22:14:15', '{}');
+INSERT INTO `timeline` VALUES ('1343', '1', '46', '2017-11-05 22:14:15', '{}');
+INSERT INTO `timeline` VALUES ('1344', '1', '46', '2017-11-05 22:14:15', '{}');
+INSERT INTO `timeline` VALUES ('1345', '1', '37', '2017-11-05 22:14:32', '{}');
+INSERT INTO `timeline` VALUES ('1346', '1', '46', '2017-11-05 22:14:32', '{}');
+INSERT INTO `timeline` VALUES ('1347', '1', '46', '2017-11-05 22:14:32', '{}');
+INSERT INTO `timeline` VALUES ('1348', '1', '37', '2017-11-05 22:15:08', '{}');
+INSERT INTO `timeline` VALUES ('1349', '1', '46', '2017-11-05 22:15:09', '{}');
+INSERT INTO `timeline` VALUES ('1350', '1', '46', '2017-11-05 22:15:09', '{}');
+INSERT INTO `timeline` VALUES ('1351', '1', '36', '2017-11-05 22:15:14', '{}');
+INSERT INTO `timeline` VALUES ('1352', '1', '40', '2017-11-05 22:15:14', '{}');
+INSERT INTO `timeline` VALUES ('1353', '1', '40', '2017-11-05 22:15:14', '{}');
+INSERT INTO `timeline` VALUES ('1354', '5', '22', '2017-11-05 22:15:30', '{}');
+INSERT INTO `timeline` VALUES ('1355', '1', '37', '2017-11-05 22:15:42', '{}');
+INSERT INTO `timeline` VALUES ('1356', '1', '46', '2017-11-05 22:15:42', '{}');
+INSERT INTO `timeline` VALUES ('1357', '1', '46', '2017-11-05 22:15:42', '{}');
+INSERT INTO `timeline` VALUES ('1358', '1', '36', '2017-11-05 22:15:54', '{}');
+INSERT INTO `timeline` VALUES ('1359', '1', '23', '2017-11-05 22:15:54', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1360', '1', '23', '2017-11-05 22:15:54', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1361', '1', '26', '2017-11-05 22:16:02', '{\"_method\":[\"put\"],\"_token\":[\"52215392252184\"],\"id\":[\"1\"],\"usernum\":[\"yd7111\"],\"userpass\":[\"123456\"],\"name\":[\"张顺\"],\"mail\":[\"\"],\"phone\":[\"\"],\"isdelete\":[\"0\"],\"rids\":[\"4\"]}');
+INSERT INTO `timeline` VALUES ('1362', '1', '1', '2017-11-05 22:16:29', '{}');
+INSERT INTO `timeline` VALUES ('1363', '1', '37', '2017-11-05 22:17:05', '{}');
+INSERT INTO `timeline` VALUES ('1364', '1', '38', '2017-11-05 22:17:06', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1365', '1', '46', '2017-11-05 22:17:06', '{}');
+INSERT INTO `timeline` VALUES ('1366', '1', '36', '2017-11-05 22:17:07', '{}');
+INSERT INTO `timeline` VALUES ('1367', '1', '23', '2017-11-05 22:17:07', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1368', '1', '40', '2017-11-05 22:17:07', '{}');
+INSERT INTO `timeline` VALUES ('1369', '1', '36', '2017-11-05 22:17:10', '{}');
+INSERT INTO `timeline` VALUES ('1370', '1', '23', '2017-11-05 22:17:10', '{}');
+INSERT INTO `timeline` VALUES ('1371', '1', '40', '2017-11-05 22:17:10', '{}');
+INSERT INTO `timeline` VALUES ('1372', '1', '37', '2017-11-05 22:17:19', '{}');
+INSERT INTO `timeline` VALUES ('1373', '1', '38', '2017-11-05 22:17:20', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1374', '1', '46', '2017-11-05 22:17:20', '{}');
+INSERT INTO `timeline` VALUES ('1375', '1', '36', '2017-11-05 22:17:28', '{}');
+INSERT INTO `timeline` VALUES ('1376', '1', '40', '2017-11-05 22:17:29', '{}');
+INSERT INTO `timeline` VALUES ('1377', '1', '40', '2017-11-05 22:17:29', '{}');
+INSERT INTO `timeline` VALUES ('1378', '1', '26', '2017-11-05 22:17:37', '{\"_method\":[\"put\"],\"_token\":[\"52215392252184\"],\"id\":[\"5\"],\"usernum\":[\"15817383352\"],\"userpass\":[\"123456\"],\"name\":[\"测试手机用户2\"],\"mail\":[\"\"],\"phone\":[\"15817383352\"],\"isdelete\":[\"0\"],\"rids\":[\"4\"]}');
+INSERT INTO `timeline` VALUES ('1379', '1', '23', '2017-11-05 22:17:37', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1380', '1', '37', '2017-11-05 22:17:42', '{}');
+INSERT INTO `timeline` VALUES ('1381', '1', '46', '2017-11-05 22:17:42', '{}');
+INSERT INTO `timeline` VALUES ('1382', '1', '46', '2017-11-05 22:17:42', '{}');
+INSERT INTO `timeline` VALUES ('1383', '1', '43', '2017-11-05 22:17:45', '{\"id\":[\"4\"]}');
+INSERT INTO `timeline` VALUES ('1384', '1', '38', '2017-11-05 22:17:45', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1385', '1', '36', '2017-11-05 22:17:47', '{}');
+INSERT INTO `timeline` VALUES ('1386', '1', '40', '2017-11-05 22:17:47', '{}');
+INSERT INTO `timeline` VALUES ('1387', '1', '40', '2017-11-05 22:17:47', '{}');
+INSERT INTO `timeline` VALUES ('1388', '1', '36', '2017-11-05 22:18:57', '{}');
+INSERT INTO `timeline` VALUES ('1389', '1', '40', '2017-11-05 22:18:58', '{}');
+INSERT INTO `timeline` VALUES ('1390', '1', '40', '2017-11-05 22:18:58', '{}');
+INSERT INTO `timeline` VALUES ('1391', '1', '36', '2017-11-05 22:19:26', '{}');
+INSERT INTO `timeline` VALUES ('1392', '1', '40', '2017-11-05 22:19:27', '{}');
+INSERT INTO `timeline` VALUES ('1393', '1', '40', '2017-11-05 22:19:27', '{}');
+INSERT INTO `timeline` VALUES ('1394', '1', '36', '2017-11-05 22:19:37', '{}');
+INSERT INTO `timeline` VALUES ('1395', '1', '40', '2017-11-05 22:19:37', '{}');
+INSERT INTO `timeline` VALUES ('1396', '1', '40', '2017-11-05 22:19:37', '{}');
+INSERT INTO `timeline` VALUES ('1397', '1', '36', '2017-11-05 22:19:38', '{}');
+INSERT INTO `timeline` VALUES ('1398', '1', '40', '2017-11-05 22:19:38', '{}');
+INSERT INTO `timeline` VALUES ('1399', '1', '40', '2017-11-05 22:19:38', '{}');
+INSERT INTO `timeline` VALUES ('1400', '1', '36', '2017-11-05 22:20:07', '{}');
+INSERT INTO `timeline` VALUES ('1401', '1', '40', '2017-11-05 22:20:07', '{}');
+INSERT INTO `timeline` VALUES ('1402', '1', '40', '2017-11-05 22:20:07', '{}');
+INSERT INTO `timeline` VALUES ('1403', '1', '36', '2017-11-05 22:20:16', '{}');
+INSERT INTO `timeline` VALUES ('1404', '1', '40', '2017-11-05 22:20:16', '{}');
+INSERT INTO `timeline` VALUES ('1405', '1', '40', '2017-11-05 22:20:16', '{}');
+INSERT INTO `timeline` VALUES ('1406', '1', '37', '2017-11-05 22:20:24', '{}');
+INSERT INTO `timeline` VALUES ('1407', '1', '46', '2017-11-05 22:20:24', '{}');
+INSERT INTO `timeline` VALUES ('1408', '1', '46', '2017-11-05 22:20:24', '{}');
+INSERT INTO `timeline` VALUES ('1409', '1', '36', '2017-11-05 22:20:26', '{}');
+INSERT INTO `timeline` VALUES ('1410', '1', '40', '2017-11-05 22:20:26', '{}');
+INSERT INTO `timeline` VALUES ('1411', '1', '40', '2017-11-05 22:20:26', '{}');
+INSERT INTO `timeline` VALUES ('1412', '1', '36', '2017-11-05 22:20:49', '{}');
+INSERT INTO `timeline` VALUES ('1413', '1', '40', '2017-11-05 22:20:50', '{}');
+INSERT INTO `timeline` VALUES ('1414', '1', '40', '2017-11-05 22:20:50', '{}');
+INSERT INTO `timeline` VALUES ('1415', '1', '37', '2017-11-05 22:20:51', '{}');
+INSERT INTO `timeline` VALUES ('1416', '1', '46', '2017-11-05 22:20:51', '{}');
+INSERT INTO `timeline` VALUES ('1417', '1', '46', '2017-11-05 22:20:51', '{}');
+INSERT INTO `timeline` VALUES ('1418', '1', '21', '2017-11-05 22:21:11', '{}');
+INSERT INTO `timeline` VALUES ('1419', '1', '10', '2017-11-05 22:21:11', '{}');
+INSERT INTO `timeline` VALUES ('1420', '1', '37', '2017-11-05 22:23:36', '{}');
+INSERT INTO `timeline` VALUES ('1421', '1', '46', '2017-11-05 22:23:36', '{}');
+INSERT INTO `timeline` VALUES ('1422', '1', '46', '2017-11-05 22:23:36', '{}');
+INSERT INTO `timeline` VALUES ('1423', '1', '37', '2017-11-05 22:23:41', '{}');
+INSERT INTO `timeline` VALUES ('1424', '1', '46', '2017-11-05 22:23:41', '{}');
+INSERT INTO `timeline` VALUES ('1425', '1', '46', '2017-11-05 22:23:41', '{}');
+INSERT INTO `timeline` VALUES ('1426', '1', '37', '2017-11-05 22:23:50', '{}');
+INSERT INTO `timeline` VALUES ('1427', '1', '46', '2017-11-05 22:23:50', '{}');
+INSERT INTO `timeline` VALUES ('1428', '1', '46', '2017-11-05 22:23:50', '{}');
+INSERT INTO `timeline` VALUES ('1429', '1', '37', '2017-11-05 22:23:50', '{}');
+INSERT INTO `timeline` VALUES ('1430', '1', '46', '2017-11-05 22:23:51', '{}');
+INSERT INTO `timeline` VALUES ('1431', '1', '46', '2017-11-05 22:23:51', '{}');
+INSERT INTO `timeline` VALUES ('1432', '1', '42', '2017-11-05 22:24:32', '{\"_method\":[\"put\"],\"_token\":[\"52220481559663\"],\"id\":[\"3\"],\"name\":[\"普通用户\"],\"introduction\":[\"这个角色一定不能被删除，这是注册时使用的，是程序给新用户的默认角色（其实你想删也删不掉的，不信你试试）\"],\"pids\":[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"11\",\"12\",\"13\",\"14\",\"15\",\"16\",\"17\",\"18\",\"19\",\"20\",\"21\",\"22\",\"23\",\"24\",\"25\",\"26\",\"27\",\"28\",\"29\",\"30\",\"31\"]}');
+INSERT INTO `timeline` VALUES ('1433', '1', '38', '2017-11-05 22:24:32', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1434', '1', '37', '2017-11-05 22:24:49', '{}');
+INSERT INTO `timeline` VALUES ('1435', '1', '46', '2017-11-05 22:24:49', '{}');
+INSERT INTO `timeline` VALUES ('1436', '1', '46', '2017-11-05 22:24:49', '{}');
+INSERT INTO `timeline` VALUES ('1437', '1', '42', '2017-11-05 22:25:35', '{\"_method\":[\"put\"],\"_token\":[\"52220481559663\"],\"id\":[\"1\"],\"name\":[\"开发者\"],\"introduction\":[\"拥有所有权限\"],\"pids\":[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"11\",\"12\",\"13\",\"14\",\"15\",\"16\",\"17\",\"18\",\"19\",\"20\",\"21\",\"22\",\"23\",\"24\",\"25\",\"26\",\"27\",\"28\",\"29\",\"30\",\"31\",\"32\",\"33\",\"34\",\"35\",\"36\",\"37\",\"38\",\"39\",\"40\",\"41\",\"42\",\"43\",\"44\",\"45\",\"46\",\"47\",\"48\",\"49\",\"50\"]}');
+INSERT INTO `timeline` VALUES ('1438', '1', '38', '2017-11-05 22:25:36', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1439', '1', '37', '2017-11-05 22:27:08', '{}');
+INSERT INTO `timeline` VALUES ('1440', '1', '46', '2017-11-05 22:27:08', '{}');
+INSERT INTO `timeline` VALUES ('1441', '1', '46', '2017-11-05 22:27:08', '{}');
+INSERT INTO `timeline` VALUES ('1442', '1', '37', '2017-11-05 22:27:20', '{}');
+INSERT INTO `timeline` VALUES ('1443', '1', '46', '2017-11-05 22:27:20', '{}');
+INSERT INTO `timeline` VALUES ('1444', '1', '46', '2017-11-05 22:27:20', '{}');
+INSERT INTO `timeline` VALUES ('1445', '1', '43', '2017-11-05 22:27:22', '{\"id\":[\"3\"]}');
+INSERT INTO `timeline` VALUES ('1446', '1', '37', '2017-11-05 22:29:34', '{}');
+INSERT INTO `timeline` VALUES ('1447', '1', '46', '2017-11-05 22:29:34', '{}');
+INSERT INTO `timeline` VALUES ('1448', '1', '46', '2017-11-05 22:29:34', '{}');
+INSERT INTO `timeline` VALUES ('1449', '1', '37', '2017-11-05 22:29:44', '{}');
+INSERT INTO `timeline` VALUES ('1450', '1', '46', '2017-11-05 22:29:44', '{}');
+INSERT INTO `timeline` VALUES ('1451', '1', '46', '2017-11-05 22:29:44', '{}');
+INSERT INTO `timeline` VALUES ('1452', '1', '43', '2017-11-05 22:29:47', '{\"id\":[\"3\"]}');
+INSERT INTO `timeline` VALUES ('1453', '1', '43', '2017-11-05 22:30:09', '{\"id\":[\"3\"]}');
+INSERT INTO `timeline` VALUES ('1454', '1', '37', '2017-11-05 22:30:23', '{}');
+INSERT INTO `timeline` VALUES ('1455', '1', '46', '2017-11-05 22:30:23', '{}');
+INSERT INTO `timeline` VALUES ('1456', '1', '46', '2017-11-05 22:30:23', '{}');
+INSERT INTO `timeline` VALUES ('1457', '1', '36', '2017-11-05 22:30:23', '{}');
+INSERT INTO `timeline` VALUES ('1458', '1', '40', '2017-11-05 22:30:24', '{}');
+INSERT INTO `timeline` VALUES ('1459', '1', '40', '2017-11-05 22:30:24', '{}');
+INSERT INTO `timeline` VALUES ('1460', '1', '37', '2017-11-05 22:30:25', '{}');
+INSERT INTO `timeline` VALUES ('1461', '1', '46', '2017-11-05 22:30:26', '{}');
+INSERT INTO `timeline` VALUES ('1462', '1', '46', '2017-11-05 22:30:26', '{}');
+INSERT INTO `timeline` VALUES ('1463', '1', '36', '2017-11-05 22:30:27', '{}');
+INSERT INTO `timeline` VALUES ('1464', '1', '40', '2017-11-05 22:30:27', '{}');
+INSERT INTO `timeline` VALUES ('1465', '1', '40', '2017-11-05 22:30:27', '{}');
+INSERT INTO `timeline` VALUES ('1466', '1', '37', '2017-11-05 22:30:27', '{}');
+INSERT INTO `timeline` VALUES ('1467', '1', '46', '2017-11-05 22:30:28', '{}');
+INSERT INTO `timeline` VALUES ('1468', '1', '46', '2017-11-05 22:30:28', '{}');
+INSERT INTO `timeline` VALUES ('1469', '1', '36', '2017-11-05 22:30:28', '{}');
+INSERT INTO `timeline` VALUES ('1470', '1', '23', '2017-11-05 22:30:28', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1471', '1', '40', '2017-11-05 22:30:28', '{}');
+INSERT INTO `timeline` VALUES ('1472', '1', '37', '2017-11-05 22:30:30', '{}');
+INSERT INTO `timeline` VALUES ('1473', '1', '46', '2017-11-05 22:30:30', '{}');
+INSERT INTO `timeline` VALUES ('1474', '1', '46', '2017-11-05 22:30:30', '{}');
+INSERT INTO `timeline` VALUES ('1475', '1', '37', '2017-11-05 22:30:35', '{}');
+INSERT INTO `timeline` VALUES ('1476', '1', '46', '2017-11-05 22:30:36', '{}');
+INSERT INTO `timeline` VALUES ('1477', '1', '46', '2017-11-05 22:30:36', '{}');
+INSERT INTO `timeline` VALUES ('1478', '1', '37', '2017-11-05 22:35:38', '{}');
+INSERT INTO `timeline` VALUES ('1479', '1', '46', '2017-11-05 22:35:38', '{}');
+INSERT INTO `timeline` VALUES ('1480', '1', '46', '2017-11-05 22:35:38', '{}');
+INSERT INTO `timeline` VALUES ('1481', '1', '44', '2017-11-05 22:35:39', '{}');
+INSERT INTO `timeline` VALUES ('1482', '1', '46', '2017-11-05 22:35:39', '{}');
+INSERT INTO `timeline` VALUES ('1483', '1', '46', '2017-11-05 22:35:39', '{}');
+INSERT INTO `timeline` VALUES ('1484', '1', '44', '2017-11-05 22:36:21', '{}');
+INSERT INTO `timeline` VALUES ('1485', '1', '46', '2017-11-05 22:36:21', '{}');
+INSERT INTO `timeline` VALUES ('1486', '1', '46', '2017-11-05 22:36:21', '{}');
+INSERT INTO `timeline` VALUES ('1487', '1', '37', '2017-11-05 22:37:01', '{}');
+INSERT INTO `timeline` VALUES ('1488', '1', '46', '2017-11-05 22:37:02', '{}');
+INSERT INTO `timeline` VALUES ('1489', '1', '46', '2017-11-05 22:37:02', '{}');
+INSERT INTO `timeline` VALUES ('1490', '1', '38', '2017-11-05 22:38:47', '{\"str1\":[\"1\"],\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1491', '1', '38', '2017-11-05 22:38:47', '{\"str1\":[\"1\"],\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1492', '1', '46', '2017-11-05 22:38:49', '{}');
+INSERT INTO `timeline` VALUES ('1493', '1', '46', '2017-11-05 22:38:49', '{}');
+INSERT INTO `timeline` VALUES ('1494', '1', '38', '2017-11-05 22:38:56', '{\"str1\":[\"1\"],\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1495', '1', '38', '2017-11-05 22:38:59', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1496', '1', '38', '2017-11-05 22:39:04', '{\"str1\":[\"开\"],\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1497', '1', '38', '2017-11-05 22:39:07', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1498', '1', '38', '2017-11-05 22:39:12', '{\"str2\":[\"又有\"],\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1499', '1', '38', '2017-11-05 22:39:15', '{\"str2\":[\"拥有\"],\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1500', '1', '38', '2017-11-05 22:39:18', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1501', '1', '44', '2017-11-05 22:39:20', '{}');
+INSERT INTO `timeline` VALUES ('1502', '1', '46', '2017-11-05 22:39:21', '{}');
+INSERT INTO `timeline` VALUES ('1503', '1', '46', '2017-11-05 22:39:21', '{}');
+INSERT INTO `timeline` VALUES ('1504', '1', '44', '2017-11-05 22:40:41', '{}');
+INSERT INTO `timeline` VALUES ('1505', '1', '46', '2017-11-05 22:40:41', '{}');
+INSERT INTO `timeline` VALUES ('1506', '1', '46', '2017-11-05 22:40:41', '{}');
+INSERT INTO `timeline` VALUES ('1507', '1', '44', '2017-11-05 22:40:57', '{}');
+INSERT INTO `timeline` VALUES ('1508', '1', '46', '2017-11-05 22:40:58', '{}');
+INSERT INTO `timeline` VALUES ('1509', '1', '46', '2017-11-05 22:40:58', '{}');
+INSERT INTO `timeline` VALUES ('1510', '1', '45', '2017-11-05 22:41:04', '{\"str2\":[\"role\"],\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1511', '1', '45', '2017-11-05 22:41:18', '{\"str1\":[\"用户\"],\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1512', '1', '45', '2017-11-05 22:41:23', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1513', '1', '44', '2017-11-05 22:45:42', '{}');
+INSERT INTO `timeline` VALUES ('1514', '1', '45', '2017-11-05 22:45:42', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1515', '1', '44', '2017-11-05 22:46:04', '{}');
+INSERT INTO `timeline` VALUES ('1516', '1', '45', '2017-11-05 22:46:04', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1517', '1', '45', '2017-11-05 22:46:07', '{\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"menuOrder\"],\"order\":[\"asc\"]}');
+INSERT INTO `timeline` VALUES ('1518', '1', '45', '2017-11-05 22:46:08', '{\"page\":[\"1\"],\"rows\":[\"100\"],\"sort\":[\"menuOrder\"],\"order\":[\"desc\"]}');
+INSERT INTO `timeline` VALUES ('1519', '1', '44', '2017-11-05 22:46:29', '{}');
+INSERT INTO `timeline` VALUES ('1520', '1', '45', '2017-11-05 22:46:29', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1521', '1', '44', '2017-11-05 22:48:56', '{}');
+INSERT INTO `timeline` VALUES ('1522', '1', '45', '2017-11-05 22:48:56', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1523', '1', '44', '2017-11-05 22:50:31', '{}');
+INSERT INTO `timeline` VALUES ('1524', '1', '44', '2017-11-05 22:50:46', '{}');
+INSERT INTO `timeline` VALUES ('1525', '1', '45', '2017-11-05 22:50:46', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1526', '1', '44', '2017-11-05 22:51:44', '{}');
+INSERT INTO `timeline` VALUES ('1527', '1', '45', '2017-11-05 22:51:45', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1528', '1', '44', '2017-11-05 22:52:09', '{}');
+INSERT INTO `timeline` VALUES ('1529', '1', '45', '2017-11-05 22:52:09', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1530', '1', '44', '2017-11-05 22:53:24', '{}');
+INSERT INTO `timeline` VALUES ('1531', '1', '45', '2017-11-05 22:53:25', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1532', '1', '44', '2017-11-05 22:54:51', '{}');
+INSERT INTO `timeline` VALUES ('1533', '1', '45', '2017-11-05 22:54:51', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1534', '1', '48', '2017-11-05 22:55:07', '{\"_method\":[\"post\"],\"_token\":[\"52220481559663\"],\"id\":[\"\"],\"name\":[\"测试111111\"],\"url\":[\"11111111111\"],\"method\":[\"GET\"],\"type\":[\"menu\"],\"flag\":[\"\"],\"menuImg\":[\"\"],\"menuOrder\":[\"\"],\"menuParentId\":[\"\"]}');
+INSERT INTO `timeline` VALUES ('1535', '1', '45', '2017-11-05 22:55:07', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1536', '1', '44', '2017-11-05 22:55:15', '{}');
+INSERT INTO `timeline` VALUES ('1537', '1', '45', '2017-11-05 22:55:15', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1538', '1', '49', '2017-11-05 22:55:21', '{\"_method\":[\"put\"],\"_token\":[\"52220481559663\"],\"id\":[\"51\"],\"name\":[\"测试111111\"],\"url\":[\"11111111111\"],\"method\":[\"GET\"],\"type\":[\"api\"],\"flag\":[\"\"],\"menuImg\":[\"\"],\"menuOrder\":[\"\"],\"menuParentId\":[\"\"]}');
+INSERT INTO `timeline` VALUES ('1539', '1', '45', '2017-11-05 22:55:21', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1540', '1', '37', '2017-11-05 22:55:28', '{}');
+INSERT INTO `timeline` VALUES ('1541', '1', '46', '2017-11-05 22:55:28', '{}');
+INSERT INTO `timeline` VALUES ('1542', '1', '46', '2017-11-05 22:55:28', '{}');
+INSERT INTO `timeline` VALUES ('1543', '1', '42', '2017-11-05 22:55:32', '{\"_method\":[\"put\"],\"_token\":[\"52220481559663\"],\"id\":[\"1\"],\"name\":[\"开发者\"],\"introduction\":[\"拥有所有权限\"],\"pids\":[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"11\",\"12\",\"13\",\"14\",\"15\",\"16\",\"17\",\"18\",\"19\",\"20\",\"21\",\"22\",\"23\",\"24\",\"25\",\"26\",\"27\",\"28\",\"29\",\"30\",\"31\",\"32\",\"33\",\"34\",\"35\",\"36\",\"37\",\"38\",\"39\",\"40\",\"41\",\"42\",\"43\",\"44\",\"45\",\"46\",\"47\",\"48\",\"49\",\"50\",\"51\"]}');
+INSERT INTO `timeline` VALUES ('1544', '1', '38', '2017-11-05 22:55:32', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1545', '1', '44', '2017-11-05 22:55:35', '{}');
+INSERT INTO `timeline` VALUES ('1546', '1', '45', '2017-11-05 22:55:35', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1547', '1', '50', '2017-11-05 22:55:39', '{\"id\":[\"51\"]}');
+INSERT INTO `timeline` VALUES ('1548', '1', '45', '2017-11-05 22:55:39', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1549', '1', '37', '2017-11-05 22:55:40', '{}');
+INSERT INTO `timeline` VALUES ('1550', '1', '46', '2017-11-05 22:55:40', '{}');
+INSERT INTO `timeline` VALUES ('1551', '1', '46', '2017-11-05 22:55:40', '{}');
+INSERT INTO `timeline` VALUES ('1552', '1', '36', '2017-11-05 22:55:42', '{}');
+INSERT INTO `timeline` VALUES ('1553', '1', '40', '2017-11-05 22:55:42', '{}');
+INSERT INTO `timeline` VALUES ('1554', '1', '40', '2017-11-05 22:55:42', '{}');
+INSERT INTO `timeline` VALUES ('1555', '1', '37', '2017-11-05 22:55:44', '{}');
+INSERT INTO `timeline` VALUES ('1556', '1', '46', '2017-11-05 22:55:44', '{}');
+INSERT INTO `timeline` VALUES ('1557', '1', '46', '2017-11-05 22:55:44', '{}');
+INSERT INTO `timeline` VALUES ('1558', '1', '42', '2017-11-05 22:55:49', '{\"_method\":[\"put\"],\"_token\":[\"52220481559663\"],\"id\":[\"1\"],\"name\":[\"开发者\"],\"introduction\":[\"拥有所有权限\"],\"pids\":[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"11\",\"12\",\"13\",\"14\",\"15\",\"16\",\"17\",\"18\",\"19\",\"20\",\"21\",\"22\",\"23\",\"24\",\"25\",\"26\",\"27\",\"28\",\"29\",\"30\",\"31\",\"32\",\"33\",\"34\",\"35\",\"36\",\"37\",\"38\",\"39\",\"40\",\"41\",\"42\",\"43\",\"44\",\"45\",\"46\",\"47\",\"48\",\"49\",\"50\"]}');
+INSERT INTO `timeline` VALUES ('1559', '1', '38', '2017-11-05 22:55:49', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
+INSERT INTO `timeline` VALUES ('1560', '1', '37', '2017-11-05 22:55:50', '{}');
+INSERT INTO `timeline` VALUES ('1561', '1', '46', '2017-11-05 22:55:50', '{}');
+INSERT INTO `timeline` VALUES ('1562', '1', '46', '2017-11-05 22:55:50', '{}');
+INSERT INTO `timeline` VALUES ('1563', '1', '43', '2017-11-05 22:56:02', '{\"id\":[\"3\"]}');
+INSERT INTO `timeline` VALUES ('1564', '1', '44', '2017-11-05 22:56:05', '{}');
+INSERT INTO `timeline` VALUES ('1565', '1', '45', '2017-11-05 22:56:05', '{\"page\":[\"1\"],\"rows\":[\"100\"]}');
 
 -- ----------------------------
 -- Table structure for `token`
@@ -1438,8 +1931,8 @@ CREATE TABLE `token` (
 -- ----------------------------
 INSERT INTO `token` VALUES ('242144403063347', '2', '2017-10-25 21:56:38');
 INSERT INTO `token` VALUES ('27175554787926', '4', '2017-10-28 17:56:53');
-INSERT INTO `token` VALUES ('271757288957789', '5', '2017-10-28 18:02:22');
-INSERT INTO `token` VALUES ('3186364562782', '1', '2017-11-04 18:06:43');
+INSERT INTO `token` VALUES ('52220382472672', '5', '2017-11-06 22:20:38');
+INSERT INTO `token` VALUES ('52220481559663', '1', '2017-11-06 22:56:05');
 
 -- ----------------------------
 -- Table structure for `users`
@@ -1463,8 +1956,8 @@ CREATE TABLE `users` (
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES ('1', 'yd7111', '123456', '张顺', null, null, '0', '2017-10-12 14:51:44', '1,2', null);
+INSERT INTO `users` VALUES ('1', 'yd7111', '123456', '张顺', '', '', '0', '2017-10-12 14:51:44', '1', null);
 INSERT INTO `users` VALUES ('2', 'viewer', '123456', '观光者', null, null, '0', '2017-10-18 17:34:52', '1', null);
 INSERT INTO `users` VALUES ('3', '15817383353', '123456', '张顺', null, '15817383353', '0', '2017-10-26 17:54:12', '3', null);
-INSERT INTO `users` VALUES ('4', '1217360619@qq.com', '123456', '张顺邮箱用户', '1217360619@qq.com', null, '0', '2017-10-27 17:50:04', '3', null);
-INSERT INTO `users` VALUES ('5', '15817383352', '123456', '测试手机用户2', null, '15817383352', '0', '2017-10-27 17:57:24', '3', null);
+INSERT INTO `users` VALUES ('4', '1217360619@qq.com', '123456', '张顺邮箱用户', '1217360619@qq.com', '', '0', '2017-10-27 17:50:04', '3', null);
+INSERT INTO `users` VALUES ('5', '15817383352', '123456', '测试手机用户2', '', '15817383352', '0', '2017-10-27 17:57:24', '4', null);

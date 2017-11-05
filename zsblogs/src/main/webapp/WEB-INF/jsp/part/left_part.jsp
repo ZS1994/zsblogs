@@ -173,16 +173,23 @@ a {
 	<div class="entry">
 		<a href="<%=path%>/menu/system/users/own">我的信息</a>
 	</div>
+	
+	
+	<div class="entry">
+		<a href="${path }/menu/system/users">用户管理</a>
+	</div>
+	<div class="entry">
+		<a href="${path }/menu/system/role">角色管理</a>
+	</div>
+	<div class="entry">
+		<a href="${path }/menu/system/permission">权限管理</a>
+	</div>
+	
 	<div class="entry">
 		<a href="<%=path%>/menu/system/login">登录</a>
 	</div>
   	<div class="entry">
 		<a onclick="logout()">登出</a>
 	</div>
-	
-	<div class="entry">
-		<a href="${path }/menu/system/users">用户管理</a>
-	</div>
-	
 	
 </div>

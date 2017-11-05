@@ -13,4 +13,6 @@ public interface RoleSer extends BaseService<Role, Integer>{
 	
 	public List<Role> getRolesFromRids(String rids);
 	
+	
+	public List<Role> getAllRole();
 }

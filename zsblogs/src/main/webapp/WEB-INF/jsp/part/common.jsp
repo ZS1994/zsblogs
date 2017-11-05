@@ -19,6 +19,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="<%=path %>/framework/json2/json2.js"></script>
 
 <link rel="stylesheet" type="text/css" href="<%=path%>/framework/css/mainPagePart.css">
+<link rel="stylesheet" type="text/css" href="<%=path%>/framework/css/public.css">
+
 
 <script type="text/javascript">
 /*张顺，2017-2-25

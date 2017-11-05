@@ -3,12 +3,15 @@ package com.zs.controller.rest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
 import com.zs.entity.other.EasyUIAccept;
 import com.zs.entity.other.EasyUIPage;
 import com.zs.entity.other.Result;
+import com.zs.tools.mail.MailManager;
 
 /**
  * restcontrooler的基类，其他的restcon必须继承它
@@ -19,6 +22,10 @@ public abstract class BaseRestController<T,ID_TYPE>{
 	
 	public static final String SUCCESS="success";
 	public static final String ERROR="error";
+	
+	public Gson gson=new Gson();
+	public Logger log=Logger.getLogger(getClass());
+	public MailManager mail=MailManager.getInstance();
 	
 	/**
 	 * 状态码

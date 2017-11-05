@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
   	
     <base href="<%=basePath%>">
-    <title>用户管理</title>
+    <title>角色管理</title>
     <jsp:include page="/WEB-INF/jsp/part/common.jsp"/>
     <script type="text/javascript">
 	var url;
@@ -18,18 +18,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		$("#fm").form("clear");
 		$("#fm input[name='_method']").val("post");
 		$("#fm input[name='_token']").val("${token}");
-		url="${path}/api/users";
+		url="${path}/api/role";
 	}
 	function updateObj(){
 		var row=$("#dg").datagrid("getSelected");
 		if(row){
 			$("#dlg").dialog("open").dialog("setTitle","修改");
-			var ss=row.rids.split(",");
-			row.rids=ss;
+			var ss=row.pids.split(",");
+			row.pids=ss;
 			$("#fm").form("load",row);
 			$("#fm input[name='_method']").val("put");
 			$("#fm input[name='_token']").val("${token}");
-			url="${path}/api/users";
+			url="${path}/api/role";
 		}
 	}
 	function save(){
@@ -58,43 +58,61 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 		});
 	}
+	function deleteObj(){
+		var row=$("#dg").datagrid("getSelected");
+		var id=row.id;
+		if(row){
+			$.messager.confirm(
+				"操作提示",
+				"您确定要删除吗？",
+				function(data){
+					if(data){
+						$.ajax({
+							url:"${path}/api/role/one?id="+id,
+							type:"delete",
+							success:function(data){
+								var json;
+								if(isJson(data)){
+									json=data;
+								}else{
+									json=JSON.parse(data);
+								}
+								if(json.result=='success'){
+									$('#dg').datagrid('reload');
+								}else{
+									alert("错误:["+json.code+"]"+json.data);
+								}
+							}
+						});
+					}
+				}
+			);
+		}
+	}
 	$(function(){
 		//直接查一次，不查的话第一次进入默认是不查的
 		search_toolbar();
 		//组装角色复选框
 		handleRoles();
 	});
-	/*将img拼接成html代码*/
-	function imgStrToHtml(img){
-		return "<img class=\"img-rounded\" src=\""+img+"\" onerror=\"this.src='${path }/framework/image/user/superman_1.png'\" style=\"width:20px;height:20px;\">";
-	}
-	function isdeleteToHtml(value){
-		if(value==0){
-			return "<span class='green'>否</span>";
-		}else if(value==1){
-			return "<span class='red'>是</span>";
-		}else{
-			return value;
-		}
-	}
 	//组装角色复选框
 	function handleRoles(){
-		var rs=$("#roles"); 
+		var rs=$("#pers"); 
 		pullRequest({
-			urlb:"/api/role/all",
+			urlb:"/api/permission/all",
 			type:"get",
 			success:function(data){
 				var str="";
 				for (var i = 0; i < data.length; i++) {
-					var r=data[i];					
-					str=str+"<input class=\"zs_checkbox\" type=\"checkbox\" name=\"rids\" value=\""+r.id+"\">["+r.id+"]"+r.name+"（"+r.introduction+"）"+"<br>";
+					var p=data[i];					
+					str=str+"<input class=\"zs_checkbox\" type=\"checkbox\" name=\"pids\" value=\""+p.id+"\">["+p.id+"]"+p.name+"（"+p.url+"┃"+p.method+"┃"+p.type+"）"+"<br>";
 				}
 				rs.append(str);
 			}
 		});
 	}
 	function selectAll(){
-		var a = $('#roles>input');
+		var a = $('#pers>input');
 		if(a[0].checked){
 			for(var i = 0;i<a.length;i++){
 				if(a[i].type == "checkbox") a[i].checked = false;
@@ -106,20 +124,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 	}
 	function negated(){
-		$("#roles input:checkbox").each(function () {  
+		$("#pers input:checkbox").each(function () {  
 	        this.checked = !this.checked;  
 	     }) 
 	}
 	</script>
 	<style type="text/css">
-	.green{
-		color:green;
-		font-weight: bold;
-	}
-	.red{
-		color: red;
-		font-weight: bold;
-	}
 	.img-circle {
 	    -webkit-border-radius: 500px;
 	    -moz-border-radius: 500px;
@@ -141,9 +151,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<div class="p_body" style="overflow-y:hidden;">
   			
   			<table id="dg" border="true"
-				url="<%=path %>/api/users/list"
+				url="<%=path %>/api/role/list"
 				method="get" toolbar="#toolbar"
-				loadMsg="数据加载中请稍后……"
+				loadMsg="数据加载中请稍后……" nowrap="false"
 				striped="true" pagination="true"
 				rownumbers="true" fitColumns="false" 
 				singleSelect="true" fit="true"
@@ -151,29 +161,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<thead>
 					<tr>
 						<th field="id" width="50" sortable="true">ID</th>
-						<th field="usernum" width="200" sortable="true">账号</th>
-						<th field="userpass" width="200" sortable="true">密码</th>
-						<th field="name" width="150" sortable="true">名字</th>
-						<th field="mail" width="150" sortable="true">邮箱</th>
-						<th field="phone" width="200" sortable="true">手机号</th>
-						<th field="isdelete" width="80" sortable="true" data-options="
-						formatter:function(value,row,index){
-							return isdeleteToHtml(value);
-		             	}">是否被注销</th>
-						<th field="createTime" width="200" sortable="true">创建时间</th>
-						<th field="rids" width="200" sortable="true">角色id序列</th>
-						<th field="roleNames" width="200" sortable="false">角色名字序列</th>
-						<th field="img" width="100" sortable="false" data-options="
-						formatter:function(value,row,index){
-							return imgStrToHtml(value);
-		             	}">头像</th>
+						<th field="name" width="200" sortable="true">名字</th>
+						<th field="introduction" width="500" sortable="true">介绍</th>
+						<th field="pids" width="500" sortable="true">权限id序列</th>
 					</tr>
 				</thead>
 			</table>
 			<div id="toolbar">
 				<div class="btn-separator-none">
-					<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addObj()">添加用户</a>
-					<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateObj()">编辑用户</a>
+					<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addObj()">添加角色</a>
+					<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateObj()">编辑角色</a>
+					<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteObj()">删除角色</a>
 				</div>
 				<div class="btn-separator">
 					<a class="easyui-linkbutton" iconCls="icon-help" plain="true" disabled="true">帮助</a>
@@ -181,20 +179,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<br class="clear"/>
 				<hr class="hr-geay">
 				<form id="search">
-					<div class="searchBar-input">
+			   		<div class="searchBar-input" style="margin-left: -50px;">
 			    		<div>
-				    		创建时间开始：<input name="date1" id="d4311" class="Wdate" type="text" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'d4312\')}' ,dateFmt:'yyyy/MM/dd HH:mm:ss'})"/>
+				    		名字：<input name ="str1" />
 			    		</div>
 			    		<div>
-			    			创建时间结束：<input name="date2" id="d4312" class="Wdate" type="text" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'d4311\')}' ,dateFmt:'yyyy/MM/dd HH:mm:ss'})"/>
-			    		</div>
-			   		</div>
-			   		<div class="searchBar-input">
-			    		<div>
-				    		账号：<input name ="str1" />
-			    		</div>
-			    		<div>
-			    			名字：<input name ="str2" />
+			    			介绍：<input name ="str2" />
 			    		</div>
 			   		</div>
 			   	</form>
@@ -208,42 +198,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
 			<div id="dlg" class="easyui-dialog" style="width:600px;height:65%;padding:10px 20px"
 					closed="true" buttons="#dlg-buttons" modal="true">
-				<div class="ftitle">用户</div>
+				<div class="ftitle">角色</div>
 				<hr>
 				<form id="fm" method="post" >
 					<input type="hidden" name="_method" value="post"/>
 					<input type="hidden" name="_token" value="${token}"/>
 					<input type="hidden" name="id"/>
 					<div class="fitem">
-						<label>账号:</label>
-						<input name="usernum" class="easyui-validatebox" required="true">
-					</div>
-					<div class="fitem">
-						<label>密码:</label>
-						<input name="userpass" class="easyui-validatebox" required="true">
-					</div>
-					<div class="fitem">
 						<label>名字:</label>
 						<input name="name" class="easyui-validatebox" required="true">
 					</div>
 					<div class="fitem">
-						<label>邮箱:</label>
-						<input name="mail" class="easyui-validatebox" >
+						<label>介绍:</label>
+						<input name="introduction" class="easyui-validatebox" required="true">
 					</div>
 					<div class="fitem">
-						<label>手机:</label>
-						<input name="phone" class="easyui-validatebox" >
-					</div>
-					<div class="fitem">
-						<label>是否被注销:</label>
-						<select name="isdelete">
-							<option value="1">是</option>
-							<option value="0">否</option>
-						</select>
-					</div>
-					<div class="fitem">
-						<label style="width: 100%;">角色:（角色至少要选择一个）</label>
-						<div id="roles" style="line-height: normal;font-size: 14px;">
+						<label style="width: 100%;">权限:（权限至少要选择一个）</label>
+						<div id="pers" style="line-height: normal;font-size: 14px;">
 						</div>
 					</div>
 				</form>

@@ -140,5 +140,10 @@ public class RoleSerImpl implements RoleSer{
 		return null;
 	}
 
+	@Override
+	public List<Role> getAllRole() {
+		return roleMapper.selectAll();
+	}
+
 
 }

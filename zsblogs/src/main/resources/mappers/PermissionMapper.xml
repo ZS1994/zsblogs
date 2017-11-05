@@ -154,6 +154,12 @@
   <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
   	select * from permission
   	<where>
+  		<if test="str1!=null"><!-- str1:名字 -->
+  		and name like '%${str1}%'
+  		</if>
+  		<if test="str2!=null"><!-- str2:url -->
+  		and url like '%${str2}%'
+  		</if>
   	</where>
   	<if test="sort!=null and order!=null">
   		order by ${sort} ${order}
@@ -163,8 +169,18 @@
   <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
   	select count(*) from permission
   	<where>
+  		<if test="str1!=null"><!-- str1:名字 -->
+  		and name like '%${str1}%'
+  		</if>
+  		<if test="str2!=null"><!-- str2:url -->
+  		and url like '%${str2}%'
+  		</if>
   	</where>
   </select>
-  
+  <select id="selectAllPermission" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from permission
+  </select>
   
 </mapper>

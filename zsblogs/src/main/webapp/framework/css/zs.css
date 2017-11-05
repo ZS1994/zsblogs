@@ -9,7 +9,7 @@ body{
 	font-size: 18px;
 }
 .fitem{
-	line-height:40px; 
+	line-height:40px;
 }
 .fitem label{
 	display: inline-block;
@@ -19,8 +19,14 @@ body{
 .fitem input{
 	width: 279px;
 }
+.fitem .zs_checkbox{
+	vertical-align: middle;
+	height: 16px;
+    width: 30px;
+}
 .fitem select{
 	width: 279px;
+    border: #cbcbcb 1px solid;
 }
 		/*窗口里的提示语句样式*/
 .fitem .hint{
@@ -49,7 +55,8 @@ input{
 	width: 150px;
 }
 select{
-	height: 24px;
+    border: #cbcbcb 1px solid;
+	height: 20px;
 	margin-top: 1px;
 	margin-bottom: 1px;
 	border: 1px #999 solid;
