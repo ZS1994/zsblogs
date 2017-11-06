@@ -9,6 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
   	<jsp:include page="/WEB-INF/jsp/part/include_bootstrap.jsp"/>
+	<link rel="stylesheet" type="text/css" href="${path }/framework/css/blog.css">
     <base href="<%=basePath%>">
     <title>编辑博客</title>
     <script type="text/javascript">
@@ -72,12 +73,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		/*字数检查
     		标题：100个字符
     		正文：500000个字符
-    		摘要：200个字符
+    		摘要：600个字符
     		*/
     		console.log(d.title.length);
     		console.log(d.content.length);
     		console.log(d.summary.length);
-    		if(d.title.length<=100 && d.content.length<=500000 && d.summary.length<=200){
+    		if(d.title.length<=100 && d.content.length<=500000 && d.summary.length<=600){
     			saveSuccHint();
     			d.blIds=JSON.stringify(d.blIds);
         		if(id && id!=""){//修改
@@ -111,7 +112,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         		}
     			
     		}else{
-    			$("#hintDialog_body").html("<strong>错误！</strong>字数超过限制。<br><br>以下是字数最大限制：<ul><li>标题：100个字符</li><li>正文：500000个字符</li><li>摘要：200个字符。</li></ul><span class=\"muted\">注意：1个汉字=2个字符</span>");
+    			$("#hintDialog_body").html("<strong>错误！</strong>字数超过限制。<br><br>以下是字数最大限制：<ul><li>标题：100个字符</li><li>正文：500000个字符</li><li>摘要：600个字符。</li></ul><span class=\"muted\">注意：1个汉字=2个字符</span>");
         		$("#hintDialog").modal("show");
     		}
     	}else{
@@ -148,7 +149,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					    <textarea id="blog_content" name="content" rows="15" style="width: 100%;" required></textarea>
 					    <span class="help-block">样式使用的是bootstrap</span>
 					    
-					    <lable>摘要<span class="muted">（最大字数限制：200个字符）</span></lable>
+					    <lable>摘要<span class="muted">（最大字数限制：600个字符）</span></lable>
 					    <textarea id="blog_summary" name="summary" rows="4" style="width: 100%;" required></textarea>
 					    
 					    <lable>选择文章分类</lable>

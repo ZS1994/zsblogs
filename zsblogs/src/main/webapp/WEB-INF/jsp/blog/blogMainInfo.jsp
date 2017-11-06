@@ -9,6 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <html>
   <head>
   	<jsp:include page="/WEB-INF/jsp/part/include_bootstrap.jsp"/>
+	<link rel="stylesheet" type="text/css" href="${path }/framework/css/blog.css">
     <base href="<%=basePath%>">
     <title>博客正文</title>
     <script type="text/javascript">
@@ -155,7 +156,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
   		<div class="container" style="width: 90%;">
 		    
-		    <h2 id="blog_title" style="margin-top: 30px;text-align: center;"></h2>
+		    <div id="blog_title" class="blog_title" style="margin-top: 70px;margin-bottom:30px; text-align: center;"></div>
 		    
 		    <legend id="blog_author" class="blog_introduction" style="text-align: center;"></legend>
 			

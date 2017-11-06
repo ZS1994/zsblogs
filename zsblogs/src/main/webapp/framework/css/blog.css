@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+/*
+博客展示专用css，修改了一些全局样式
+*/
+.blog_title{
+	font-size: 1.95em;
+	font-weight: bold;
+    line-height: 1.2;
+}
+h1{
+	font-size: 1.55em;
+}    
+h2{
+	font-size: 1.35em;
+}
+h3{
+	font-size: 1.15em;
+}
+h4{
+	font-size: 0.95em;
+}
