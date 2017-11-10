@@ -3,13 +3,12 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE html>
 <html>
   <head>
   	<jsp:include page="/WEB-INF/jsp/part/include_bootstrap.jsp"/>
     <base href="<%=basePath%>">
-    <title>中间部分（测试组件是否正常）</title>
+    <title>首页</title>
   </head>
   
   <body>
@@ -17,7 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<div class="p_body">
   			<div class="container" style="padding-top: 50px;width: 90%;margin-top: 50px;">
 			    <div class="hero-unit">
-				  <h1>你好！</h1>
+				  <h1 style="line-height: 1.5;">你好！</h1>
 				  <p>欢迎来到我的领域！这里暂时是一个博客网站，你可以在这里浏览文章、发表评论，当然，如果你想发表博客，那么，你就需要去注册一个账号了，另外，如果你仅仅只是对该网站的系统架构感兴趣，那么也没问题，我愿意分享该网站的源码，该项目托管在github，你可以在上面获取源码，还可以浏览我的开发历程。</p>
 				  <p>
 				    <a class="btn btn-primary btn-large" href="https://github.com/ZS1994/zsblogs">

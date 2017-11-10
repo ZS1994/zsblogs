@@ -4,27 +4,44 @@ body{
     /*用于隐藏滚动条*/
     overflow-y: hidden;
 }
-.p_left{
-	position: absolute;
-	top: 0;
-	left: 0;
-	bottom: 0;
-	width: 15%;
-	height: 100%;
-	background-color: #2A2935;
+@media screen and (min-width: 1200px){
+	.p_left{
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		width: 15%;
+		height: 100%;
+		background-color: #2A2935;
+	}
+	.p_body{
+		position: absolute;
+		top: 0;
+		left: 15%;
+		right: 0px;
+		bottom: 0;
+		overflow-y: scroll;
+	}
 }
-.p_body{
-	position: absolute;
-	top: 0;
-	left: 15%;
-	right: 0px;
-	bottom: 0;
-	overflow-y: scroll;
-}
-.p_body_body{
-	top: 0;
-	bottom: 0;
-	margin-right: 15%;
+@media screen and (max-width: 1200px){
+	.p_left{
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		width: 0;
+		height: 100%;
+		background-color: #2A2935;
+		display: none;
+	}
+	.p_body{
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0px;
+		bottom: 0;
+		overflow-y: scroll;
+	}
 }
 .p_body_right{
 	float: right;
@@ -32,4 +49,40 @@ body{
 	right: 0;
 	bottom: 0;
 	width: 15%;
+}
+.my_logo{
+	border: 0px solid red;
+	height: 50px;
+	background-color: #1E1D26;
+	color:#11e397;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size:  22px;
+	position: relative;
+	line-height: 20px;
+}
+.my_logo_child1{
+	position: absolute;
+    top: 50%;
+    right:0;
+    transform: translateY(-50%);
+}
+.my_logo_child2{
+	position: absolute;
+    top: 50%;
+    right:50px;
+    transform: translateY(-50%);
+}
+.entry{
+	text-align: right;
+	padding-right: 20px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	width: auto;
+}
+a {
+    color: #08c;
+    text-decoration: none;
+    font-size: 20px;
+    line-height: 20px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
