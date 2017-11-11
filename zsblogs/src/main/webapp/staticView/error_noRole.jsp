@@ -1,4 +1,5 @@
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -7,26 +8,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
   <head>
+  	<jsp:include page="/WEB-INF/jsp/part/include_bootstrap.jsp"/>
     <base href="<%=basePath%>">
-    
     <title>错误</title>
-    
-	<meta http-equiv="pragma" content="no-cache">
-	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
-	
-	<script type="text/javascript" src="<%=path %>/framework/js/myjs.js"></script>
-	<link rel="stylesheet" type="text/css" href="<%=path %>/framework/css/mycss.css">
-
+    <style type="text/css">
+    </style>
   </head>
   
   <body>
-  	<h1>错误代码：102</h1>
-	<p>您没有被分配角色，请联系管理员。</p>
+  	<jsp:include page="/WEB-INF/jsp/part/left_part.jsp"/>
+  	<div class="p_body">
+ 		<div class="body_top_jiange"></div>	
+		<div class="container" style="width:90%;">
+			<h1>错误代码：102</h1>
+			<p>您没有被分配角色，请联系管理员。</p>
+	    </div>
+  	</div>
   </body>
 </html>

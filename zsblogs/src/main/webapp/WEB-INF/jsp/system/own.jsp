@@ -22,11 +22,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   	<jsp:include page="/WEB-INF/jsp/part/left_part.jsp"/>
   	<div class="p_body">
-			
+		
+		<div class="body_top_jiange"></div>	
   		<div class="container" style="width: 90%;">
 		    
-		    
-			<div class='media' style="margin-top: 50px;">
+			<div class='media'>
 				<a class="pull-left">
 			    	<img class="img-polaroid" src="${user.img }" onerror="this.src='${path }/framework/image/user/superman_1.png'" style="width: 200px;height: 200px;">
 			    </a>

@@ -108,8 +108,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   	<jsp:include page="/WEB-INF/jsp/part/left_part.jsp"/>
   	<div class="p_body">
-			
-  		<div class="container" style="width: 90%;margin-top: 50px;">
+		
+		<div class="body_top_jiange"></div>	
+  		<div class="container" style="width: 90%;">
 		    
 		    <ul id="myTab" class="nav nav-tabs">
 				<li><a href="#phone" data-toggle="tab">通过手机号注册</a></li>

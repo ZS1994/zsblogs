@@ -4,7 +4,14 @@ body{
     /*用于隐藏滚动条*/
     overflow-y: hidden;
 }
-@media screen and (min-width: 1200px){
+a {
+    color: #08c;
+    text-decoration: none;
+    font-size: 20px;
+    line-height: 20px;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+@media screen and (min-width: 1120px){
 	.p_left{
 		position: absolute;
 		top: 0;
@@ -22,25 +29,54 @@ body{
 		bottom: 0;
 		overflow-y: scroll;
 	}
+	.entry{
+		text-align: right;
+		padding-right: 20px;
+		padding-top: 6px;
+		padding-bottom: 6px;
+		width: auto;
+	}
+	.menu_img{
+		display: none;
+	}
+	.menu_jiange{
+		height:50px; 
+	}
+	.body_top_jiange{
+		height: 50px;
+	}
 }
-@media screen and (max-width: 1200px){
+@media screen and (max-width: 1120px){
 	.p_left{
 		position: absolute;
 		top: 0;
 		left: 0;
 		bottom: 0;
-		width: 0;
+		width: 50px;
 		height: 100%;
 		background-color: #2A2935;
-		display: none;
 	}
 	.p_body{
 		position: absolute;
 		top: 0;
-		left: 0;
+		left: 50px;
 		right: 0px;
 		bottom: 0;
 		overflow-y: scroll;
+	}
+	.entry{
+		padding-top: 1px;
+		padding-bottom: 0px;
+		width: 50px;
+		height:45px;
+		font-size: 0px;
+	}
+	.menu_img{
+	}
+	.menu_jiange{
+	}
+	.body_top_jiange{
+		height: 10px;
 	}
 }
 .p_body_right{
@@ -71,18 +107,4 @@ body{
     top: 50%;
     right:50px;
     transform: translateY(-50%);
-}
-.entry{
-	text-align: right;
-	padding-right: 20px;
-	padding-top: 6px;
-	padding-bottom: 6px;
-	width: auto;
-}
-a {
-    color: #08c;
-    text-decoration: none;
-    font-size: 20px;
-    line-height: 20px;
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }

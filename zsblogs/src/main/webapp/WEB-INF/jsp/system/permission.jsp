@@ -149,11 +149,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addObj()">添加权限</a>
 					<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateObj()">编辑权限</a>
 					<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteObj()">删除权限</a>
-				</div>
-				<div class="btn-separator">
 					<a class="easyui-linkbutton" iconCls="icon-help" plain="true" disabled="true">帮助</a>
 				</div>
-				<br class="clear"/>
+				<div class="clear"></div>
 				<hr class="hr-geay">
 				<form id="search">
 			   		<div class="searchBar-input" style="margin-left: -50px;">
@@ -173,55 +171,57 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="pull-away"></div>
 			</div>
 			
-			<div id="dlg" class="easyui-dialog" style="width:600px;height:65%;padding:10px 20px"
+			<div id="dlg" class="easyui-dialog" style="padding: 20px;"
 					closed="true" buttons="#dlg-buttons" modal="true">
-				<div class="ftitle">权限</div>
-				<hr>
-				<form id="fm" method="post" >
-					<input type="hidden" name="_method" value="post"/>
-					<input type="hidden" name="_token" value="${token}"/>
-					<input type="hidden" name="id"/>
-					<div class="fitem">
-						<label>名字:</label>
-						<input name="name" class="easyui-validatebox" required="true">
-					</div>
-					<div class="fitem">
-						<label>url:</label>
-						<input name="url" class="easyui-validatebox" required="true">
-					</div>
-					<div class="fitem">
-						<label>method:</label>
-						<select name="method">
-							<option value="GET">GET</option>
-							<option value="POST">POST</option>
-							<option value="PUT">PUT</option>
-							<option value="DELETE">DELETE</option>
-						</select>
-					</div>
-					<div class="fitem">
-						<label>类型:</label>
-						<select name="type">
-							<option value="menu">菜单权限</option>
-							<option value="api">api接口权限</option>
-						</select>
-					</div>
-					<div class="fitem">
-						<label>标签:</label>
-						<input name="flag" class="easyui-validatebox">
-					</div>
-					<div class="fitem">
-						<label>菜单图标:</label>
-						<input name="menuImg" class="easyui-validatebox">
-					</div>
-					<div class="fitem">
-						<label>菜单序号:</label>
-						<input name="menuOrder" class="easyui-validatebox">
-					</div>
-					<div class="fitem">
-						<label>菜单上级菜单id:</label>
-						<input name="menuParentId" class="easyui-validatebox">
-					</div>
-				</form>
+				<div class="dlg_widthAndHeight">	
+					<div class="ftitle">权限</div>
+					<hr>
+					<form id="fm" method="post" >
+						<input type="hidden" name="_method" value="post"/>
+						<input type="hidden" name="_token" value="${token}"/>
+						<input type="hidden" name="id"/>
+						<div class="fitem">
+							<label>名字:</label>
+							<input name="name" class="easyui-validatebox" required="true">
+						</div>
+						<div class="fitem">
+							<label>url:</label>
+							<input name="url" class="easyui-validatebox" required="true">
+						</div>
+						<div class="fitem">
+							<label>method:</label>
+							<select name="method">
+								<option value="GET">GET</option>
+								<option value="POST">POST</option>
+								<option value="PUT">PUT</option>
+								<option value="DELETE">DELETE</option>
+							</select>
+						</div>
+						<div class="fitem">
+							<label>类型:</label>
+							<select name="type">
+								<option value="menu">菜单权限</option>
+								<option value="api">api接口权限</option>
+							</select>
+						</div>
+						<div class="fitem">
+							<label>标签:</label>
+							<input name="flag" class="easyui-validatebox">
+						</div>
+						<div class="fitem">
+							<label>菜单图标:</label>
+							<input name="menuImg" class="easyui-validatebox">
+						</div>
+						<div class="fitem">
+							<label>菜单序号:</label>
+							<input name="menuOrder" class="easyui-validatebox">
+						</div>
+						<div class="fitem">
+							<label>菜单上级菜单id:</label>
+							<input name="menuParentId" class="easyui-validatebox">
+						</div>
+					</form>
+				</div>
 			</div>
 			<div id="dlg-buttons">
 				<a class="easyui-linkbutton"  onclick="selectAll()">全选/全不选</a>

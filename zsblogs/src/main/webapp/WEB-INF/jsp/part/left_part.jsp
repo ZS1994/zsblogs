@@ -106,56 +106,85 @@ function logout(){
 
 	<a href="${path }/menu/part">
 	<div class="my_logo">
-		<div class="my_logo_child1" style="width: 40px;">
-			<img class="img-circle" src="<%=path %>/framework/image/zhangshun.png" width="32" height="32" />
+		<div class="my_logo_child1" style="width: 50px;">
+			<img class="img-circle" src="<%=path %>/framework/image/zhangshun.png" width="32" height="32" style="margin-left: 9px;" />
 		</div>
-		
-	
 		<div class="my_logo_child2">
 			张顺的博客
 		</div>
 	</div>
 	</a>
 
-	<div style="height: 50px;"></div>
-<%-- 
+	<div class="menu_jiange"></div>
+	
+	<%-- 
 	<div class="entry">
 		<a href="<%=path%>/menu/blogList/blog/edit">我的简历</a>
 	</div>
-	 --%>
+	--%>
 	 
-	<div class="entry">
-		<a href="<%=path%>/menu/blogList/blog?page=1&rows=10&sort=createTime&order=desc">最新博客</a>
-	</div>
-	<div class="entry">
-		<a href="<%=path%>/menu/user/blogList">博客栏目</a>
-	</div>
-	<div class="entry">
-		<a href="<%=path%>/menu/user/blog">我的博客</a>
-	</div>
-	<div class="entry">
-		<a href="<%=path%>/menu/blogList/blog/user/edit">写博客</a>
-	</div>
-	<div class="entry">
-		<a href="<%=path%>/menu/system/users/own">我的信息</a>
-	</div>
-	
-	
-	<div class="entry">
-		<a href="${path }/menu/system/users">用户管理</a>
-	</div>
-	<div class="entry">
-		<a href="${path }/menu/system/role">角色管理</a>
-	</div>
-	<div class="entry">
-		<a href="${path }/menu/system/permission">权限管理</a>
-	</div>
-	
-	<div class="entry">
-		<a href="<%=path%>/menu/system/login">登录</a>
-	</div>
-  	<div class="entry">
-		<a onclick="logout()">登出</a>
-	</div>
+	<a href="<%=path%>/menu/blogList/blog?page=1&rows=10&sort=createTime&order=desc"> 
+		<div class="entry">
+			最新博客
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/1新.png">
+		</div>
+	</a>
+	<a href="<%=path%>/menu/user/blogList">
+		<div class="entry">
+			博客栏目
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/2栏.png">
+		</div>
+	</a>
+	<a href="<%=path%>/menu/user/blog">
+		<div class="entry">
+			我的博客
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/3博.png">
+		</div>
+	</a>
+	<a href="<%=path%>/menu/blogList/blog/user/edit">
+		<div class="entry">
+			写博客
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/4写.png">
+		</div>
+	</a>
+	<a href="<%=path%>/menu/system/users/own">
+		<div class="entry">
+			我的信息
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/5我.png">
+		</div>
+	</a>
+
+
+	<a href="${path }/menu/system/users">
+		<div class="entry">
+			用户管理
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/6户.png">
+		</div>
+	</a>
+	<a href="${path }/menu/system/role">
+		<div class="entry">
+			角色管理
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/9角.png">
+		</div>
+	</a>
+	<a href="${path }/menu/system/permission">
+		<div class="entry">
+			权限管理
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/10权.png">
+		</div>
+	</a>
+
+	<a href="<%=path%>/menu/system/login">
+		<div class="entry">
+			登录
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/11入.png">
+		</div>
+	</a>
+	<a onclick="logout()">
+	  	<div class="entry">
+			登出
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/12出.png">
+		</div>
+	</a>
 	
 </div>

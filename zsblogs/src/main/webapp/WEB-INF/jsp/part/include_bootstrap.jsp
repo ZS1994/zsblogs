@@ -10,6 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <link href="<%=path %>/framework/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="<%=path %>/framework/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="<%=path%>/framework/css/mainPagePart.css">
 <script type="text/javascript" src="<%=path %>/framework/jquery-easyui/jquery.min.js"></script>
 <script type="text/javascript" src="<%=path %>/framework/bootstrap/js/bootstrap.min.js"></script>

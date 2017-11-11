@@ -153,10 +153,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   	<jsp:include page="/WEB-INF/jsp/part/left_part.jsp"/>
   	<div class="p_body">
-			
+		
+		<div class="body_top_jiange"></div>		
   		<div class="container" style="width: 90%;">
 		    
-		    <div id="blog_title" class="blog_title" style="margin-top: 70px;margin-bottom:30px; text-align: center;"></div>
+		    <div id="blog_title" class="blog_title" style="margin-bottom:30px; text-align: center;"></div>
 		    
 		    <legend id="blog_author" class="blog_introduction" style="text-align: center;"></legend>
 			

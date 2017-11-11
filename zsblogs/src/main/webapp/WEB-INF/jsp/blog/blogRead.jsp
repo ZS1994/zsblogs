@@ -91,8 +91,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   	<jsp:include page="/WEB-INF/jsp/part/left_part.jsp"/>
   	<div class="p_body">
-			
-  		<div class="container" style="width: 90%;margin-top: 50px;">
+		
+		<div class="body_top_jiange"></div>		
+  		<div class="container" style="width: 90%;">
 		    
 		    <table class="table table-striped">
 		    	<thead>

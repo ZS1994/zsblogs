@@ -176,12 +176,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addObj()">添加博客栏目</a>
 					<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateObj()">编辑博客栏目</a>
 					<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteObj()">删除博客栏目</a>
-				</div>
-				<div class="btn-separator">
 					<a class="easyui-linkbutton" iconCls="icon-zs-forward" plain="true" onclick="gotoTheBlogs()">查看该栏目的博客</a>
 					<a class="easyui-linkbutton" iconCls="icon-help" plain="true" disabled="true">帮助</a>
 				</div>
-				<br class="clear"/>
+				<div class="clear"></div>
 				<hr class="hr-geay">
 				<form id="search">
 					<div class="searchBar-input">
@@ -209,23 +207,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="pull-away"></div>
 			</div>
 			
-			<div id="dlg" class="easyui-dialog" style="width:600px;height:50%;padding:10px 20px"
+			<div id="dlg" class="easyui-dialog" style="padding: 20px;"
 					closed="true" buttons="#dlg-buttons" modal="true">
-				<div class="ftitle">博客栏目</div>
-				<hr>
-				<form id="fm" method="post" >
-					<input type="hidden" name="_method" value="post"/>
-					<input type="hidden" name="_token" value="${token}"/>
-					<input type="hidden" name="id"/>
-					<div class="fitem">
-						<label>名称:</label>
-						<input name="name" class="easyui-validatebox" required="true">
-					</div>
-					<div class="fitem">
-						<label>序号:</label>
-						<input name="blOrder" class="easyui-validatebox" required="true">
-					</div>
-				</form>
+				<div class="dlg_widthAndHeight">
+					<div class="ftitle">博客栏目</div>
+					<hr>
+					<form id="fm" method="post" >
+						<input type="hidden" name="_method" value="post"/>
+						<input type="hidden" name="_token" value="${token}"/>
+						<input type="hidden" name="id"/>
+						<div class="fitem">
+							<label>名称:</label>
+							<input name="name" class="easyui-validatebox" required="true">
+						</div>
+						<div class="fitem">
+							<label>序号:</label>
+							<input name="blOrder" class="easyui-validatebox" required="true">
+						</div>
+					</form>
+				</div>
 			</div>
 			<div id="dlg-buttons">
 				<a class="easyui-linkbutton" iconCls="icon-ok" onclick="save()">提交</a>

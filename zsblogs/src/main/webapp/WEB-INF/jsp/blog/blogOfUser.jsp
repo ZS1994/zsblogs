@@ -175,11 +175,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addObj()">创建博客</a>
 					<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateObj()">编辑博客</a>
 					<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteObj()" disabled="true">删除博客</a>
-				</div>
-				<div class="btn-separator">
 					<a class="easyui-linkbutton" iconCls="icon-help" plain="true" disabled="true">帮助</a>
 				</div>
-				<br class="clear"/>
+				<div class="clear"></div>
 				<hr class="hr-geay">
 				<form id="search">
 			   		<div class="searchBar-input">

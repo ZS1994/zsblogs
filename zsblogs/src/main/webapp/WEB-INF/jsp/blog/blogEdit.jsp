@@ -130,13 +130,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<jsp:include page="/WEB-INF/jsp/part/left_part.jsp"/>
   	<div class="p_body">
 		
-		
-		<div class="row-fluid" style="margin-top: 30px;margin-bottom: 100px;">
+		<div class="body_top_jiange"></div>	
+		<div class="row-fluid" style="margin-bottom: 100px;">
 			
 			
 			<div class="span6">
 				
-				<div class="container" style="width: 90%;padding-top: 20px;">
+				<div class="container" style="width: 90%;padding-top: 0px;">
 					
 					<form id="ff">
 					
@@ -196,7 +196,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 			<div class="span6" style="border-left: 1px solid #e5e5e5;min-height:1400px;">
 			
-				<div class="container" style="width: 90%;padding-top: 20px;">
+				<div class="container" style="width: 90%;padding-top: 0px;">
 				    <legend>预览博客</legend>
 				    
 				    <div id="blog_preview"></div>

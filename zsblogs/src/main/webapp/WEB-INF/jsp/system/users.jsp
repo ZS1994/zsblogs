@@ -174,11 +174,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="btn-separator-none">
 					<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addObj()">添加用户</a>
 					<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateObj()">编辑用户</a>
-				</div>
-				<div class="btn-separator">
 					<a class="easyui-linkbutton" iconCls="icon-help" plain="true" disabled="true">帮助</a>
 				</div>
-				<br class="clear"/>
+				<div class="clear"></div>
 				<hr class="hr-geay">
 				<form id="search">
 					<div class="searchBar-input">
@@ -206,47 +204,49 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="pull-away"></div>
 			</div>
 			
-			<div id="dlg" class="easyui-dialog" style="width:600px;height:65%;padding:10px 20px"
+			<div id="dlg" class="easyui-dialog" style="padding: 20px;"
 					closed="true" buttons="#dlg-buttons" modal="true">
-				<div class="ftitle">用户</div>
-				<hr>
-				<form id="fm" method="post" >
-					<input type="hidden" name="_method" value="post"/>
-					<input type="hidden" name="_token" value="${token}"/>
-					<input type="hidden" name="id"/>
-					<div class="fitem">
-						<label>账号:</label>
-						<input name="usernum" class="easyui-validatebox" required="true">
-					</div>
-					<div class="fitem">
-						<label>密码:</label>
-						<input name="userpass" class="easyui-validatebox" required="true">
-					</div>
-					<div class="fitem">
-						<label>名字:</label>
-						<input name="name" class="easyui-validatebox" required="true">
-					</div>
-					<div class="fitem">
-						<label>邮箱:</label>
-						<input name="mail" class="easyui-validatebox" >
-					</div>
-					<div class="fitem">
-						<label>手机:</label>
-						<input name="phone" class="easyui-validatebox" >
-					</div>
-					<div class="fitem">
-						<label>是否被注销:</label>
-						<select name="isdelete">
-							<option value="1">是</option>
-							<option value="0">否</option>
-						</select>
-					</div>
-					<div class="fitem">
-						<label style="width: 100%;">角色:（角色至少要选择一个）</label>
-						<div id="roles" style="line-height: normal;font-size: 14px;">
+				<div class="dlg_widthAndHeight">
+					<div class="ftitle">用户</div>
+					<hr>
+					<form id="fm" method="post" >
+						<input type="hidden" name="_method" value="post"/>
+						<input type="hidden" name="_token" value="${token}"/>
+						<input type="hidden" name="id"/>
+						<div class="fitem">
+							<label>账号:</label>
+							<input name="usernum" class="easyui-validatebox" required="true">
 						</div>
-					</div>
-				</form>
+						<div class="fitem">
+							<label>密码:</label>
+							<input name="userpass" class="easyui-validatebox" required="true">
+						</div>
+						<div class="fitem">
+							<label>名字:</label>
+							<input name="name" class="easyui-validatebox" required="true">
+						</div>
+						<div class="fitem">
+							<label>邮箱:</label>
+							<input name="mail" class="easyui-validatebox" >
+						</div>
+						<div class="fitem">
+							<label>手机:</label>
+							<input name="phone" class="easyui-validatebox" >
+						</div>
+						<div class="fitem">
+							<label>是否被注销:</label>
+							<select name="isdelete">
+								<option value="1">是</option>
+								<option value="0">否</option>
+							</select>
+						</div>
+						<div class="fitem">
+							<label style="width: 100%;">角色:（角色至少要选择一个）</label>
+							<div id="roles" style="line-height: normal;font-size: 14px;">
+							</div>
+						</div>
+					</form>
+				</div>
 			</div>
 			<div id="dlg-buttons">
 				<a class="easyui-linkbutton"  onclick="selectAll()">全选/全不选</a>

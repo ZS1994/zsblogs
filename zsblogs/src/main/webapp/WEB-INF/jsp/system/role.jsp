@@ -172,11 +172,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addObj()">添加角色</a>
 					<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateObj()">编辑角色</a>
 					<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteObj()">删除角色</a>
-				</div>
-				<div class="btn-separator">
 					<a class="easyui-linkbutton" iconCls="icon-help" plain="true" disabled="true">帮助</a>
 				</div>
-				<br class="clear"/>
+				<div class="clear"></div>
 				<hr class="hr-geay">
 				<form id="search">
 			   		<div class="searchBar-input" style="margin-left: -50px;">
@@ -196,28 +194,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="pull-away"></div>
 			</div>
 			
-			<div id="dlg" class="easyui-dialog" style="width:600px;height:65%;padding:10px 20px"
+			<div id="dlg" class="easyui-dialog" style="padding: 20px;"
 					closed="true" buttons="#dlg-buttons" modal="true">
-				<div class="ftitle">角色</div>
-				<hr>
-				<form id="fm" method="post" >
-					<input type="hidden" name="_method" value="post"/>
-					<input type="hidden" name="_token" value="${token}"/>
-					<input type="hidden" name="id"/>
-					<div class="fitem">
-						<label>名字:</label>
-						<input name="name" class="easyui-validatebox" required="true">
-					</div>
-					<div class="fitem">
-						<label>介绍:</label>
-						<input name="introduction" class="easyui-validatebox" required="true">
-					</div>
-					<div class="fitem">
-						<label style="width: 100%;">权限:（权限至少要选择一个）</label>
-						<div id="pers" style="line-height: normal;font-size: 14px;">
+				<div class="dlg_widthAndHeight">
+					<div class="ftitle">角色</div>
+					<hr>
+					<form id="fm" method="post" >
+						<input type="hidden" name="_method" value="post"/>
+						<input type="hidden" name="_token" value="${token}"/>
+						<input type="hidden" name="id"/>
+						<div class="fitem">
+							<label>名字:</label>
+							<input name="name" class="easyui-validatebox" required="true">
 						</div>
-					</div>
-				</form>
+						<div class="fitem">
+							<label>介绍:</label>
+							<input name="introduction" class="easyui-validatebox" required="true">
+						</div>
+						<div class="fitem">
+							<label style="width: 100%;">权限:（权限至少要选择一个）</label>
+							<div id="pers" style="line-height: normal;font-size: 14px;">
+							</div>
+						</div>
+					</form>
+				</div>
 			</div>
 			<div id="dlg-buttons">
 				<a class="easyui-linkbutton"  onclick="selectAll()">全选/全不选</a>
