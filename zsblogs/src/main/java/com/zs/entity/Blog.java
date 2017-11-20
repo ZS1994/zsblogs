@@ -110,6 +110,18 @@ public class Blog {
 		return "Blog [id=" + id + ", title=" + title + ", createTime=" + createTime + ", content=" + content
 				+ ", summary=" + summary + ", ishide=" + ishide + ", blIds=" + blIds + "]";
 	}
+
+	public Blog() {
+		super();
+	}
+
+	public Blog(String title, String content, String summary, String blIds) {
+		super();
+		this.title = title;
+		this.content = content;
+		this.summary = summary;
+		this.blIds = blIds;
+	}
     
     
 }

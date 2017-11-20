@@ -115,4 +115,6 @@
 	    <mvc:mapping path="/api/**"/>
 	</mvc:cors>
 	 -->
+	 
+	<bean class="com.zs.tools.SpringTool"/>
 </beans>

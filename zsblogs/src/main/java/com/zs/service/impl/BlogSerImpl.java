@@ -129,8 +129,8 @@ public class BlogSerImpl implements BlogSer{
 				blNames=blNames+bl.getName()+",";
 				blIds=blIds+bl.getId()+",";
 			}
-			blNames=blNames.substring(0, blNames.lastIndexOf(","));
-			blIds=blIds.substring(0, blIds.lastIndexOf(","));
+			blNames=blNames.lastIndexOf(",")>0?blNames.substring(0, blNames.lastIndexOf(",")):blNames;
+			blIds=blIds.lastIndexOf(",")>0?blIds.substring(0, blIds.lastIndexOf(",")):blIds;
 			ss[0]=blNames;
 			ss[1]=blIds;;
 			return ss;
