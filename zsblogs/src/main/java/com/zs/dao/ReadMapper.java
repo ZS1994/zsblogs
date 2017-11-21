@@ -24,4 +24,5 @@ public interface ReadMapper {
     List<Read> queryFenye(EasyUIAccept accept);
     int getCount(EasyUIAccept accept);
     
+    int deleteByBid(Integer bid);
 }

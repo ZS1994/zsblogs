@@ -53,24 +53,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		if(row){
 			$.messager.confirm(
 				"操作提示",
-				"您确定要删除吗？",
+				"您确定要删除吗？删除将会将旗下评论和阅读信息也删除。",
 				function(data){
 					if(data){
-						$.ajax({
-							url:"${path}/api/blogList/one?id="+id,
+						pullRequest({
+							urlb:"/api/blog/one?id="+id,
 							type:"delete",
 							success:function(data){
-								var json;
-								if(isJson(data)){
-									json=data;
-								}else{
-									json=JSON.parse(data);
-								}
-								if(json.result=='success'){
-									$('#dg').datagrid('reload');
-								}else{
-									alert("错误:["+json.code+"]"+json.data);
-								}
+								alert(data);
+								$('#dg').datagrid('reload');
 							}
 						});
 					}
@@ -174,7 +165,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="btn-separator-none">
 					<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addObj()">创建博客</a>
 					<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateObj()">编辑博客</a>
-					<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteObj()" disabled="true">删除博客</a>
+					<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteObj()">删除博客</a>
 					<a class="easyui-linkbutton" iconCls="icon-help" plain="true" disabled="true">帮助</a>
 				</div>
 				<div class="clear"></div>

@@ -186,5 +186,11 @@ function logout(){
 			<img class="menu_img" alt="" src="${path }/framework/image/menu/12出.png">
 		</div>
 	</a>
+	<a href="${path }/menu/crawler/manager">
+		<div class="entry">
+			爬虫管理
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/13爬.png">
+		</div>
+	</a>
 	
 </div>

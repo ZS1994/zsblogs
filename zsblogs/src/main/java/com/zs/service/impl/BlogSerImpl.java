@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
+import com.zs.dao.BlogCommentMapper;
 import com.zs.dao.BlogListMapper;
 import com.zs.dao.BlogListRelMapper;
 import com.zs.dao.BlogMapper;
@@ -39,6 +40,9 @@ public class BlogSerImpl implements BlogSer{
 	private BlogMapper blogMapper;
 	@Resource
 	private ReadMapper readMapper;
+	@Resource
+	private BlogCommentMapper blogCommentMapper;
+	
 	
 	public EasyUIPage queryFenye(EasyUIAccept accept) {
 		if (accept!=null) {
@@ -86,7 +90,15 @@ public class BlogSerImpl implements BlogSer{
 	}
 
 	public String delete(Integer id) {
-		return String.valueOf(blogMapper.deleteByPrimaryKey(id));
+		//删阅读信息
+		int i1=readMapper.deleteByBid(id);
+		//删评论信息
+		int i2=blogCommentMapper.deleteByBid(id);
+		//删除博客和博客栏目关系
+		int i3=blogListRelMapper.deleteByBlidOrBid(null, id);
+		//删除博客
+		int i4=blogMapper.deleteByPrimaryKey(id);
+		return "删除了["+i1+"]条阅读信息、["+i2+"]条评论信息、["+i3+"]条博客和博客栏目关系、["+i4+"]条博客。";
 	}
 
 	public Blog get(Integer id) {

@@ -137,4 +137,11 @@ public class IndexCon{
 	public String gotoLogup(){
 		return "/system/logup";
 	}
+	
+	//---爬虫---------------
+	@RequestMapping("/crawler/manager")
+	public String gotoCrawlerManager(){
+		return "/crawler/crawlerManager";
+	}
+	
 }

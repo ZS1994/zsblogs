@@ -61,7 +61,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		var id=row.id;
 		if(row){
 			if(row.blogsNum!=null || row.blogsNum!=0){
-				$.messager.alert("警告","仅当该栏目的博客数为0时才能删除，那不是0怎么办呢？你可以把它旗下的所有博客全部移到别的栏目下，你就能删除了。");  
+				$.messager.alert("警告","仅当该栏目的博客数为0时才能删除，那不是0怎么办呢？你可以把它旗下的所有博客全部移到别的栏目下或者删除，你就能删除了。");  
 			}else{
 				$.messager.confirm(
 					"操作提示",

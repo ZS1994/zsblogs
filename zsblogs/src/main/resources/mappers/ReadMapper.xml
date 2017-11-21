@@ -100,4 +100,10 @@
   		</if>
   	</where>
   </select>
+  
+  <delete id="deleteByBid" parameterType="java.lang.Integer" >
+    delete from `read`
+    where b_id = #{0}
+  </delete>
+  
 </mapper>

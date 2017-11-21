@@ -4,14 +4,11 @@ package com.zs.listener;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
-
 import com.zs.service.BlogSer;
-import com.zs.service.ReportSignSer;
-import com.zs.tools.CrawlerTest;
+import com.zs.tools.CrawlerNo1;
 
 /**
  * 2017-7-19
@@ -23,7 +20,7 @@ public class PathListener implements ServletContextListener {
 	
 	private Logger log=Logger.getLogger(getClass());
 
-	private CrawlerTest crawlerTest;
+	private CrawlerNo1 no1;
 	
 	/*张顺，2017-8-5，本来想使用application缓存token，从而避免每次都从数据库查，当关闭tomcat时将所有缓存存入数据库，当再次启动时，就把缓存取出
 	 * 但是，想了想，有点复杂，就留着以后再写吧，毕竟没有这个也不影响功能
@@ -44,9 +41,9 @@ public class PathListener implements ServletContextListener {
                 WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);   
         //建立对应的service当spring上下文初始化之后  ,使用spring框架中已经初始化的memberService  
         BlogSer blogSer=(BlogSer)context.getBean("blogSer");
-		crawlerTest=new CrawlerTest(blogSer);
-		crawlerTest.work();
+        no1=CrawlerNo1.init(blogSer).addUrl("https://tech.meituan.com/MySQL_flashback%E4%BB%8E%E5%8E%9F%E7%90%86%E5%88%B0%E5%AE%9E%E6%88%98.html").beginWorkThread();
 	}
-
-
+	
+	
+	
 }

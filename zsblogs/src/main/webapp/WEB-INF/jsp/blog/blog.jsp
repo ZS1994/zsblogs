@@ -51,7 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	    				$("#page_last").parent().removeClass("disabled");
     	    			}
     	    			appendBlog(data.rows);
-    	    			$("#page_position").html("第"+page+"页，共"+pageSize+"页");//设置当前第几页了
+    	    			$("#page_position").html("第"+page+"/"+pageSize+"页");//设置当前第几页了
     				}
     			}
     		}
@@ -68,7 +68,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		for(var i=0;i<rows.length;i++){
 			str="<div class='blog_block'><h4><a class='blog_title' onclick='gotoBlogMain("+rows[i].id+")'>"+rows[i].title+"</a></h4>"+
 			"<p>"+rows[i].summary+"</p>"+
-			"<div class='blog_introduction'>"+rows[i].user.name+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].createTime+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].blogListNames+"&nbsp;&nbsp;&nbsp;&nbsp;<a class='blog_read_a' href='${path}/menu/blogList/blog/read?bId="+rows[i].id+"'>"+rows[i].readCount+"次阅读</a></div>"+
+			"<div class='blog_introduction'>"+(rows[i].user?rows[i].user.name:"[无法找到该用户]")+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].createTime+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].blogListNames+"&nbsp;&nbsp;&nbsp;&nbsp;<a class='blog_read_a' href='${path}/menu/blogList/blog/read?bId="+rows[i].id+"'>"+rows[i].readCount+"次阅读</a></div>"+
 			"</div>";
 			$("#blogs").append(str);
 		}
@@ -135,17 +135,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    		<div class="pagination pagination-centered">
 						  <ul>
 						    <li><a id="page_last" onclick="lastPage()">上一页</a></li>
+						    <li><span id="page_position">第1页/2页</span></li>
 						    <li><a id="page_next" onclick="nextPage()">下一页</a></li>
 						  </ul>
 						</div>
-			    	</div>
-			    	<div class="span4">
-			    		<div class="pagination pagination-right">
-						  <ul>
-						    <li><span id="page_position">第1页，共2页</span></li>
-						  </ul>
-						</div>
-			    		
 			    	</div>
 			    </div>
 			    

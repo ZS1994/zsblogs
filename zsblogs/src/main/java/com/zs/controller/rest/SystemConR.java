@@ -16,6 +16,7 @@ import com.zs.entity.other.Result;
 import com.zs.service.PerSer;
 import com.zs.service.RoleSer;
 import com.zs.service.UserSer;
+import com.zs.tools.CrawlerNo1;
 import com.zs.tools.Trans;
 import com.zs.tools.mail.MailManager;
 import com.zs.tools.mail.MailModel;
@@ -49,6 +50,5 @@ public class SystemConR {
 		}
 		return new Result<List<Permission>>(BaseRestController.ERROR, Code.ERROR, null);
 	}
-	
 	
 }

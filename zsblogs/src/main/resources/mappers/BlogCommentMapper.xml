@@ -111,4 +111,12 @@
   		</if>
   	</where>
   </select>
+  
+  
+  <delete id="deleteByBid" parameterType="java.lang.Integer" >
+    delete from blog_comment
+    where b_id = #{0}
+  </delete>
+  
+  
 </mapper>

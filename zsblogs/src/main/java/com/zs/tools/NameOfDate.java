@@ -9,15 +9,12 @@ import java.util.Date;
  * <br>2016年9月2日11:30:45
  */
 public class NameOfDate {
-	
-	
-	public String getDir() {
-		return new SimpleDateFormat("yyyy-MM").format(new Date());
+	public static String getDir() {
+		return new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 	}
 	
-	
 	public static String getFileName() {
-		return new SimpleDateFormat("dHmsS").format(new Date());
+		return new SimpleDateFormat("ddHHmmssSSS").format(new Date());
 	}
 	
 	/**
@@ -27,13 +24,4 @@ public class NameOfDate {
 	public static String getNum() {
 		return getFileName()+(int)(Math.random()*9000+1000);
 	}
-	
-	/**
-	 * 得到一个比较短的不重复的数
-	 * @return
-	 */
-	public static int getShortNum() {
-		return (int)(Math.random()*9000+1000);
-	}
-	
 }

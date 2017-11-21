@@ -116,5 +116,4 @@
 	</mvc:cors>
 	 -->
 	 
-	<bean class="com.zs.tools.SpringTool"/>
 </beans>

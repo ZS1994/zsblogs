@@ -15,19 +15,20 @@ import java.net.URL;
  */  
 public class DownloadImg {  
   
-	private static final String PATH_ROOT="D:/tomcat_imgs/";
+	private static final String PATH_ROOT="E:/tomcat_imgs/";
 	
 	/** 
      * 测试 
      * @param args 
      */  
-    public static void download(String url,String fileName) {  
+    public static String download(String url,String fileName) {  
         byte[] btImg = getImageFromNetByUrl(url);  
         if(null != btImg && btImg.length > 0){  
             System.out.println("读取到：" + btImg.length + " 字节");  
-            writeImageToDisk(btImg, fileName);  
+            return writeImageToDisk(btImg, fileName);  
         }else{  
             System.out.println("没有从该连接获得内容");
+            return null;
         }
     }
     /** 
@@ -35,16 +36,32 @@ public class DownloadImg {
      * @param img 图片数据流 
      * @param fileName 文件保存时的名称 
      */  
-    public static void writeImageToDisk(byte[] img, String fileName){  
+    public static String writeImageToDisk(byte[] img, String fileName){  
         try {  
-            File file = new File(PATH_ROOT + fileName);  
+        	//先创建一个文件夹
+        	String dirname=NameOfDate.getDir()+"/";
+        	File dirFile=new File(PATH_ROOT+dirname);
+        	if (!dirFile.exists()) {
+				dirFile.mkdirs();
+			}
+        	//将文件名改为时间+原始文件名，防止重名
+        	String fileNameTmp=NameOfDate.getFileName()+"_"+fileName;
+            File file = new File(PATH_ROOT+dirname+fileNameTmp);
+            while(file.exists()==true){//这个文件如果存在，也就是重名的话
+				//先延迟500ms，然后再生成一个名字
+				Thread.sleep(500);
+				fileNameTmp=NameOfDate.getFileName()+"_"+fileName;
+				file = new File(PATH_ROOT+dirname+fileNameTmp);
+            }
             FileOutputStream fops = new FileOutputStream(file);  
             fops.write(img);  
             fops.flush();  
-            fops.close();  
-            System.out.println("图片已经写入到"+PATH_ROOT);
+            fops.close();
+            System.out.println("图片已经写入到"+(PATH_ROOT+dirname+fileNameTmp));
+            return dirname+fileNameTmp;
         } catch (Exception e) {  
-            e.printStackTrace();  
+            e.printStackTrace();
+            return null;
         }  
     }  
     /** 
