@@ -1,5 +1,7 @@
 package com.zs.service;
 
+import java.util.List;
+
 import com.zs.entity.Blog;
 import com.zs.entity.Users;
 
@@ -12,4 +14,7 @@ public interface BlogSer extends BaseService<Blog, Integer>{
 	//增加一次阅读次数
 	public String read(Integer uid,Integer bid);
 	
+	//通过标题查找博客
+	public List<Blog> queryByTitle(String title);
+		
 }

@@ -27,7 +27,7 @@
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{blOrder,jdbcType=INTEGER}, #{uId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.zs.entity.BlogList" >
+  <insert id="insertSelective" parameterType="com.zs.entity.BlogList" useGeneratedKeys="true" keyProperty="id">
     insert into blog_list
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >

@@ -37,7 +37,7 @@ public class HttpClientReq {
     	String content = null;  
         CloseableHttpClient closeableHttpClient = HttpClientBuilder.create().build();     
         String udata = URLEncoder.encode(data,encode);
-        log.warn(udata);
+//        log.warn(udata);
         HttpGet httpGet = new HttpGet(url+"?uid="+uid+"&data="+udata);
         CloseableHttpResponse response = null;    
         try {    

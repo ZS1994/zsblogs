@@ -35,6 +35,7 @@ public class BlogCommentConR extends BaseRestController<BlogComment, Integer>{
 	@Resource
 	private BlogCommentSer blogCommentSer;
 	
+	
 	@RequestMapping(value="/list",method=RequestMethod.GET)
 	@Override
 	public EasyUIPage doQuery(EasyUIAccept accept, HttpServletRequest req, HttpServletResponse resp) {

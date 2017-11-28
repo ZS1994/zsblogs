@@ -50,7 +50,8 @@ public class BlogListSerImpl implements BlogListSer{
 	}
 
 	public String add(BlogList obj) {
-		return String.valueOf(blogListMapper.insertSelective(obj));
+		blogListMapper.insertSelective(obj);
+		return String.valueOf(obj.getId());
 	}
 
 	public String update(BlogList obj) {

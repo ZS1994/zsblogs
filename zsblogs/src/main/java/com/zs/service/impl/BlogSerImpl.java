@@ -154,5 +154,10 @@ public class BlogSerImpl implements BlogSer{
 		return String.valueOf(readMapper.insertSelective(new Read(uid, bid)));
 	}
 
+	@Override
+	public List<Blog> queryByTitle(String title) {
+		return blogMapper.queryByTitle(title);
+	}
+
 	
 }

@@ -51,6 +51,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     function preview(){
     	$("#blog_preview").html($("#blog_content").val());
+    	//给table全都加上.table
+		$("table").addClass("table");
     }
     
     //保存成功的小特效，不足一提

@@ -75,4 +75,18 @@ public class BlogList {
     public void setuId(Integer uId) {
         this.uId = uId;
     }
+
+	public BlogList() {
+		super();
+	}
+
+	public BlogList(String name, Date createTime, Integer blOrder, Integer uId) {
+		super();
+		this.name = name;
+		this.createTime = createTime;
+		this.blOrder = blOrder;
+		this.uId = uId;
+	}
+
+    
 }

@@ -26,6 +26,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			$("#blog_title").html(data.title);
     			$("#blog_author").html(data.user.name+"&nbsp;&nbsp;&nbsp;&nbsp;"+data.createTime+"&nbsp;&nbsp;&nbsp;&nbsp;<a class='blog_read_a' href='${path}/menu/blogList/blog/read?bId="+bid+"'>"+data.readCount+"次阅读</a>");
     			$("#blog_content").html(data.content);
+    			//给table全都加上.table
+    			$("table").addClass("table");
     		}
     	});
     	//填充评论内容

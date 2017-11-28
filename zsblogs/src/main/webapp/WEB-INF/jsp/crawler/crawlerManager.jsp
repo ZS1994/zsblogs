@@ -23,10 +23,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		success:function(data){
    				$("#blogSer").html(data.blogSer?"[已加载]":"[未加载]");
    				var str="";
-   				$.each(data.urls, function(key, val) {
-   					str=str+val+"<br>";
+   				$.each(data.list, function(key, val) {
+   					str=str+val.url+"&nbsp;&nbsp;&nbsp;&nbsp;"+val.urlBlogList+"<br>";
    				});
-   				$("#urls").html(str);
+   				$("#list").html(str);
+   				
    				$("#isBegin").html(data.isBegin?"true":"false");
    				
    				if (data.isBegin) {//已开启
@@ -99,10 +100,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	<br>
 	    	<br>
 	    	
+	    	<!-- 
 	    	<div class="input-append">
 				<input class="span3" id="targetURL" type="text" placeholder="请输入目标URL..." style="height: inherit;">
 				<button class="btn" type="button" onclick="addURL()">添加</button>
 			</div>
+	    	 -->
 	    	
 	    	<div>
 		    	<h4>目前的参数数值</h4>
@@ -112,8 +115,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<td id="blogSer"></td>
 					</tr>
 					<tr>
-						<td>urls</td>
-						<td id="urls"></td>
+						<td>list</td>
+						<td id="list"></td>
 					</tr>
 					<tr>
 						<td>isBegin</td>

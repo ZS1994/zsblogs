@@ -26,5 +26,6 @@ public interface BlogMapper {
     List<Blog> queryFenye(EasyUIAccept accept);
     int getCount(EasyUIAccept accept);
     
+    List<Blog> queryByTitle(String title);
     
 }

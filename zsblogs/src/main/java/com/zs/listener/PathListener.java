@@ -7,6 +7,8 @@ import javax.servlet.ServletContextListener;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
+
+import com.zs.service.BlogListSer;
 import com.zs.service.BlogSer;
 import com.zs.tools.CrawlerNo1;
 
@@ -41,7 +43,8 @@ public class PathListener implements ServletContextListener {
                 WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);   
         //建立对应的service当spring上下文初始化之后  ,使用spring框架中已经初始化的memberService  
         BlogSer blogSer=(BlogSer)context.getBean("blogSer");
-        no1=CrawlerNo1.init(blogSer).addUrl("https://tech.meituan.com/MySQL_flashback%E4%BB%8E%E5%8E%9F%E7%90%86%E5%88%B0%E5%AE%9E%E6%88%98.html").beginWorkThread();
+        BlogListSer blogListSer=(BlogListSer)context.getBean("blogListSer");
+        no1=CrawlerNo1.init(blogSer,blogListSer).beginWorkThread();
 	}
 	
 	

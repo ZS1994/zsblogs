@@ -24,7 +24,7 @@ public class DownloadImg {
     public static String download(String url,String fileName) {  
         byte[] btImg = getImageFromNetByUrl(url);  
         if(null != btImg && btImg.length > 0){  
-            System.out.println("读取到：" + btImg.length + " 字节");  
+//            System.out.println("读取到：" + btImg.length + " 字节");  
             return writeImageToDisk(btImg, fileName);  
         }else{  
             System.out.println("没有从该连接获得内容");
@@ -57,7 +57,7 @@ public class DownloadImg {
             fops.write(img);  
             fops.flush();  
             fops.close();
-            System.out.println("图片已经写入到"+(PATH_ROOT+dirname+fileNameTmp));
+//            System.out.println("图片已经写入到"+(PATH_ROOT+dirname+fileNameTmp));
             return dirname+fileNameTmp;
         } catch (Exception e) {  
             e.printStackTrace();
@@ -105,7 +105,7 @@ public class DownloadImg {
     String url = "http://www.baidu.com/img/baidu_sylogo1.gif";  
 	    byte[] btImg = getImageFromNetByUrl(url);  
 	    if(null != btImg && btImg.length > 0){  
-	        System.out.println("读取到：" + btImg.length + " 字节");  
+//	        System.out.println("读取到：" + btImg.length + " 字节");  
 	        String fileName = "百度.gif";  
 	        writeImageToDisk(btImg, fileName);  
 	    }else{  

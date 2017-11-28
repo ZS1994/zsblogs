@@ -184,4 +184,10 @@
   	</where>
   </select>
   
+  <select id="queryByTitle" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from blog
+    where title = #{0}
+  </select>
 </mapper>
