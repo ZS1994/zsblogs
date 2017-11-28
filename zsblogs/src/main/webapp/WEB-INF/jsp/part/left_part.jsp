@@ -195,7 +195,7 @@ function logout(){
 	<a href="${path }/menu/system/timeline">
 		<div class="entry">
 			操作日志
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/13爬.png">
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/14志.png">
 		</div>
 	</a>
 	
