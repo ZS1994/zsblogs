@@ -2,6 +2,8 @@ package com.zs.entity;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Timeline {
     private Integer id;
 
@@ -13,7 +15,9 @@ public class Timeline {
 
     private String info;
 
-    
+    //-------------
+    private Users user;
+    private Permission per;
     
 
 	public Timeline(Integer uId, Integer pId, String info) {
@@ -51,7 +55,7 @@ public class Timeline {
     public void setpId(Integer pId) {
         this.pId = pId;
     }
-
+    @JsonFormat(pattern="yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
     public Date getCreateTime() {
         return createTime;
     }
@@ -67,4 +71,21 @@ public class Timeline {
     public void setInfo(String info) {
         this.info = info == null ? null : info.trim();
     }
+
+	public Users getUser() {
+		return user;
+	}
+
+	public void setUser(Users user) {
+		this.user = user;
+	}
+
+	public Permission getPer() {
+		return per;
+	}
+
+	public void setPer(Permission per) {
+		this.per = per;
+	}
+    
 }

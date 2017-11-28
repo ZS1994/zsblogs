@@ -100,6 +100,11 @@ public class IndexCon{
 		return "/system/users";
 	}
 	
+	@RequestMapping("/system/timeline")
+	public String gotoTimeLine(){
+		return "/system/timeline";
+	}
+	
 	//我的信息
 	@RequestMapping("/system/users/own")
 	public String gotOwnInfo(HttpServletRequest req,Users user){
@@ -127,10 +132,6 @@ public class IndexCon{
 		return "/system/own";
 	}
 	
-	@RequestMapping("/system/timeline")
-	public String gotoTimeline(){
-		return "/system/timeline";
-	}
 	
 	//注册一个
 	@RequestMapping("/system/users/logup")

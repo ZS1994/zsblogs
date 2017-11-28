@@ -192,5 +192,11 @@ function logout(){
 			<img class="menu_img" alt="" src="${path }/framework/image/menu/13爬.png">
 		</div>
 	</a>
+	<a href="${path }/menu/system/timeline">
+		<div class="entry">
+			操作日志
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/13爬.png">
+		</div>
+	</a>
 	
 </div>

@@ -108,6 +108,18 @@
   <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
   	select * from timeline
   	<where>
+  		<if test="date1!=null"><!-- date1:创建时间开始 -->
+	  		and create_time >= #{date1}
+  		</if>
+  		<if test="date2!=null"><!-- date1:创建时间结束 -->
+  		and create_time &lt;= #{date2}
+  		</if>
+  		<if test="str1!=null"><!-- str1:用户名字 -->
+  		and u_id in(select id from users where name like '%${str1}%')
+  		</if>
+  		<if test="str2!=null"><!-- str2:操作项名字 -->
+  		and p_id in (select id from permission where name like '%${str2}%')
+  		</if>
   	</where>
   	<if test="sort!=null and order!=null">
   		order by ${sort} ${order}
@@ -117,6 +129,18 @@
   <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
   	select count(*) from timeline
   	<where>
+  		<if test="date1!=null"><!-- date1:创建时间开始 -->
+	  		and create_time >= #{date1}
+  		</if>
+  		<if test="date2!=null"><!-- date1:创建时间结束 -->
+  		and create_time &lt;= #{date2}
+  		</if>
+  		<if test="str1!=null"><!-- str1:用户名字 -->
+  		and u_id in(select id from users where name like '%${str1}%')
+  		</if>
+  		<if test="str2!=null"><!-- str2:操作项名字 -->
+  		and p_id in (select id from permission where name like '%${str2}%')
+  		</if>
   	</where>
   </select>
   
