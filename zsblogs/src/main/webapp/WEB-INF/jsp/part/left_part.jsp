@@ -198,5 +198,11 @@ function logout(){
 			<img class="menu_img" alt="" src="${path }/framework/image/menu/14志.png">
 		</div>
 	</a>
+	<a href="${path }/menu/system/apidoc">
+		<div class="entry">
+			api文档管理
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/14志.png">
+		</div>
+	</a>
 	
 </div>

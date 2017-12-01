@@ -141,6 +141,15 @@ public class RoleInter extends HandlerInterceptorAdapter{
 			if(user!=null){
 				user.setRoles(roles);
 				request.setAttribute(Constans.USER, user);
+				//张顺，2017-12-1，也要尝试存储操作日志
+				Permission p=perSer.get(url, method);
+				if (user.getId()!=null && p!=null) {
+					Timeline tl=new Timeline(user.getId(), p.getId(), gson.toJson(req.getParameterMap()));
+					try {
+						timeLineSer.add(tl);
+					} catch (Exception e) {
+					}
+				}
 			}
 			return true;
 		}

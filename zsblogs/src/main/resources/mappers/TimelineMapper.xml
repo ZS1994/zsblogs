@@ -124,6 +124,9 @@
   	<if test="sort!=null and order!=null">
   		order by ${sort} ${order}
   	</if>
+  	<if test="sort==null or order==null">
+  		order by create_time desc
+  	</if>
   	limit ${start},${rows}
   </select>
   <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">

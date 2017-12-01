@@ -145,4 +145,9 @@ public class IndexCon{
 		return "/crawler/crawlerManager";
 	}
 	
+	//---api接口文档管理----------------------
+	@RequestMapping("/system/apidoc")
+	public String gotoApiDocList(){
+		return "/system/apiDocList";
+	}
 }
