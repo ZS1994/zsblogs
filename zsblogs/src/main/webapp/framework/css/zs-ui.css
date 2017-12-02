@@ -1,0 +1,5 @@
+@CHARSET "UTF-8";
+.fitem .zs-validatebox-error{
+	border-color: #ffa8a8;
+	background-color: #fff3f3;
+}

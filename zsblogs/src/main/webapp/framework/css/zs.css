@@ -30,6 +30,10 @@ body{
 	.fitem select{
 		width: 279px;
 	    border: #cbcbcb 1px solid;
+	}
+	.fitem textarea{
+		width: 279px;
+		height: 200px;
 	}	
 	/* 张顺，2017-3-1，下面是双列DIV样式，clear要在最后用，用于清除浮动 */
 	.two_column{
@@ -67,7 +71,11 @@ body{
 	.fitem select{
 		width:150px;
 	    border: #cbcbcb 1px solid;
-	}	
+	}
+	.fitem textarea{
+		width: 150px;
+		height: 100px;
+	}
 	/* 张顺，2017-3-1，下面是双列DIV样式，clear要在最后用，用于清除浮动 */
 	.two_column{
 		width:350px;

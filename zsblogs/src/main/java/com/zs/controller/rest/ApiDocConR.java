@@ -9,11 +9,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import com.zs.entity.ApiDoc;
+import com.zs.entity.Users;
 import com.zs.entity.other.EasyUIAccept;
 import com.zs.entity.other.EasyUIPage;
 import com.zs.entity.other.Result;
+import com.zs.service.ApiDocParamSer;
 import com.zs.service.ApiDocSer;
 import com.zs.tools.ColumnName;
+import com.zs.tools.Constans;
 import com.zs.tools.Trans;
 import com.zs.tools.mail.MailManager;
 import com.zs.tools.mail.MailModel;
@@ -62,7 +65,11 @@ public class ApiDocConR extends BaseRestController<ApiDoc, Integer>{
 			try {
 				if (obj.getCreateTime()==null) {
 					obj.setCreateTime(new Date());
-				} 
+				}
+				Users u=(Users) req.getAttribute(Constans.USER);
+				if (obj.getuId()==null && u!=null && u.getId()!=null) {
+					obj.setuId(u.getId());
+				}
 				return new Result<String>(SUCCESS, Code.SUCCESS, apiDocSer.add(obj));
 			} catch (Exception e) {
 				e.printStackTrace();

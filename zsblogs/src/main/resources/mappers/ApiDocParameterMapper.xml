@@ -114,4 +114,55 @@
       eg = #{eg,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="selectByAdid" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from api_doc_parameter
+    where ad_id = #{adId}
+  </select>
+  
+  <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
+  	select * from api_doc_parameter
+  	<where>
+  		and ad_id in (
+  			select id from api_doc 
+  			<where>
+		  		<if test="str1!=null"><!-- str1:api接口名称 -->
+		  			and name like '%${str1}%'
+		  		</if>
+		  		<if test="str2!=null"><!-- str2:所属项目名称 -->
+		  			and project like '%${str2}%'
+		  		</if>
+  			</where>
+		) 
+  		<if test="int1!=null"><!-- int1:adId -->
+  			and ad_id = #{int1}
+  		</if>
+  	</where>
+  	<if test="sort!=null and order!=null">
+  		order by ${sort} ${order}
+  	</if>
+  	limit ${start},${rows}
+  </select>
+  <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
+  	select count(*) from api_doc_parameter
+  	<where>
+  		and ad_id in (
+  			select id from api_doc 
+  			<where>
+		  		<if test="str1!=null"><!-- str1:api接口名称 -->
+		  			and name like '%${str1}%'
+		  		</if>
+		  		<if test="str2!=null"><!-- str2:所属项目名称 -->
+		  			and project like '%${str2}%'
+		  		</if>
+  			</where>
+		) 
+  		<if test="int1!=null"><!-- int1:adId -->
+  			and ad_id = #{int1}
+  		</if>
+  	</where>
+  </select>
+  
 </mapper>

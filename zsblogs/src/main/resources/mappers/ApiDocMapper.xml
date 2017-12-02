@@ -30,7 +30,7 @@
       name, project, flag, 
       return_eg, url, method
       )
-    values (#{id,jdbcType=INTEGER}, #{uId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, 
+    values (#{id,jdbcType=INTEGER}, #{uId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
       #{name,jdbcType=VARCHAR}, #{project,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, 
       #{returnEg,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}
       )
@@ -44,7 +44,7 @@
       <if test="uId != null" >
         u_id,
       </if>
-      <if test="updateTime != null" >
+      <if test="createTime != null" >
         create_time,
       </if>
       <if test="name != null" >
@@ -73,8 +73,8 @@
       <if test="uId != null" >
         #{uId,jdbcType=INTEGER},
       </if>
-      <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="name != null" >
         #{name,jdbcType=VARCHAR},
@@ -102,8 +102,8 @@
       <if test="uId != null" >
         u_id = #{uId,jdbcType=INTEGER},
       </if>
-      <if test="updateTime != null" >
-        create_time = #{updateTime,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="name != null" >
         name = #{name,jdbcType=VARCHAR},
@@ -129,7 +129,7 @@
   <update id="updateByPrimaryKey" parameterType="com.zs.entity.ApiDoc" >
     update api_doc
     set u_id = #{uId,jdbcType=INTEGER},
-      create_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
       name = #{name,jdbcType=VARCHAR},
       project = #{project,jdbcType=VARCHAR},
       flag = #{flag,jdbcType=VARCHAR},
@@ -141,6 +141,24 @@
   <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
   	select * from api_doc
   	<where>
+  		<if test="date1!=null"><!-- date1:创建时间开始 -->
+	  		and create_time >= #{date1}
+  		</if>
+  		<if test="date2!=null"><!-- date1:创建时间结束 -->
+  			and create_time &lt;= #{date2}
+  		</if>
+  		<if test="str1!=null"><!-- str1:api接口名称 -->
+  			and name like '%${str1}%'
+  		</if>
+  		<if test="str2!=null"><!-- str2:所属项目名称 -->
+  			and project like '%${str2}%'
+  		</if>
+  		<if test="str3!=null"><!-- str3:创建者名字 -->
+  			and u_id in (select id from users where name like '%${str3}%')
+  		</if>
+  		<if test="str4!=null"><!-- str4:falg -->
+  			and flag = #{str4}
+  		</if>
   	</where>
   	<if test="sort!=null and order!=null">
   		order by ${sort} ${order}
@@ -153,6 +171,24 @@
   <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
   	select count(*) from api_doc
   	<where>
+  		<if test="date1!=null"><!-- date1:创建时间开始 -->
+	  		and create_time >= #{date1}
+  		</if>
+  		<if test="date2!=null"><!-- date1:创建时间结束 -->
+  			and create_time &lt;= #{date2}
+  		</if>
+  		<if test="str1!=null"><!-- str1:api接口名称 -->
+  			and name like '%${str1}%'
+  		</if>
+  		<if test="str2!=null"><!-- str2:所属项目名称 -->
+  			and project like '%${str2}%'
+  		</if>
+  		<if test="str3!=null"><!-- str3:创建者名字 -->
+  			and u_id in (select id from users where name like '%${str3}%')
+  		</if>
+  		<if test="str4!=null"><!-- str4:falg -->
+  			and flag = #{str4}
+  		</if>
   	</where>
   </select>
   

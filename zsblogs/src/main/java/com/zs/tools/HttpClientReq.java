@@ -1,10 +1,13 @@
 package com.zs.tools;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -28,17 +31,18 @@ public class HttpClientReq {
 
 	private static Logger log = Logger.getLogger(HttpClientReq.class);
 	private static Gson gson=new Gson();
+	
 	/**  
 	 * @author John丶辉
      * 发送http get请求  
      */    
-    public static String httpGet(String url,String uid,String data) throws Exception{    
+    public static String httpGet(String url,String uid,Map data) throws Exception{    
     	String encode = "utf-8";    
     	String content = null;  
         CloseableHttpClient closeableHttpClient = HttpClientBuilder.create().build();     
-        String udata = URLEncoder.encode(data,encode);
-//        log.warn(udata);
-        HttpGet httpGet = new HttpGet(url+"?uid="+uid+"&data="+udata);
+        String udata = getUrlParamsByMap(data);
+        System.out.println(udata);
+        HttpGet httpGet = new HttpGet(url+"?uid="+uid+"&"+udata);
         CloseableHttpResponse response = null;    
         try {    
         	response = closeableHttpClient.execute(httpGet);    
@@ -72,17 +76,18 @@ public class HttpClientReq {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String httpPost(String url,String uid,String data) throws Exception {
+	public static String httpPost(String url,String uid,Map data) throws Exception {
 		String encode = "utf-8"; 
 		String content = null;  
 		// 创建默认的httpClient实例.    
         CloseableHttpClient httpclient = HttpClients.createDefault();  
-        // 创建httppost    
-        HttpPost httppost = new HttpPost(url);  
+        // 创建httppost
+        String udata = getUrlParamsByMap(data);
+        System.out.println(udata);
+        HttpPost httppost = new HttpPost(url+"?"+udata);  
         // 创建参数队列    
         List<NameValuePair> formparams = new ArrayList<NameValuePair>();  
         formparams.add(new BasicNameValuePair("uid", uid));
-        formparams.add(new BasicNameValuePair("data", data));
         UrlEncodedFormEntity uefEntity;  
         try {  
             uefEntity = new UrlEncodedFormEntity(formparams, encode);  
@@ -117,13 +122,14 @@ public class HttpClientReq {
 	 * @author John丶辉
      * 发送http delete请求  
      */    
-    public static String httpDelete(String url,String uid,String data) throws Exception{    
+    public static String httpDelete(String url,String uid,Map data) throws Exception{    
         String encode = "utf-8";    
         String content = null;   
         //since 4.3 不再使用 DefaultHttpClient    
         CloseableHttpClient closeableHttpClient = HttpClientBuilder.create().build();     
-        String udata = URLEncoder.encode(data,encode);
-        HttpDelete httpdelete = new HttpDelete(url+"?uid="+uid+"&data="+udata);    
+        String udata = getUrlParamsByMap(data);
+        System.out.println(udata);
+        HttpDelete httpdelete = new HttpDelete(url+"?uid="+uid+"&"+udata);    
         CloseableHttpResponse response = null;    
         try {    
         	response = closeableHttpClient.execute(httpdelete);    
@@ -157,14 +163,16 @@ public class HttpClientReq {
      * @return
      * @throws Exception
      */
-    public static String httpPut(String url,String uid,String data) throws Exception {
+    public static String httpPut(String url,String uid,Map data) throws Exception {
 		String encode = "utf-8";
 		String content = null; 
 		// 创建默认的httpClient实例.    
         CloseableHttpClient httpclient = HttpClients.createDefault();  
         // 创建httpput    
-        String udata = URLEncoder.encode(data,encode);
-        HttpPut httpput = new HttpPut(url+"?uid="+uid+"&data="+udata);  
+//        String udata = URLEncoder.encode(data,encode);
+        String udata = getUrlParamsByMap(data);
+        System.out.println(udata);
+        HttpPut httpput = new HttpPut(url+"?uid="+uid+"&"+udata);  
         try {  
             CloseableHttpResponse response = httpclient.execute(httpput);  
             try {  
@@ -192,5 +200,31 @@ public class HttpClientReq {
         return content;
     }
     
+    
+    /** 
+     * 将map转换成url 
+     * @param map 
+     * @return 
+     */  
+    public static String getUrlParamsByMap(Map<String, Object> map) {  
+    	String encode = "utf-8";
+    	if (map == null) {  
+            return "";  
+        }  
+        StringBuffer sb = new StringBuffer();  
+        for (Map.Entry<String, Object> entry : map.entrySet()) {  
+            try {
+				sb.append(entry.getKey() + "=" + URLEncoder.encode((String)(entry.getValue()),encode) );
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}  
+            sb.append("&");  
+        }  
+        String s = sb.toString();  
+        if (s.endsWith("&")) {  
+            s = StringUtils.substringBeforeLast(s, "&");  
+        }  
+        return s;  
+    }  
     
 }

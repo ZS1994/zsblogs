@@ -9,130 +9,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
   	
     <base href="<%=basePath%>">
-    <title>api接口文档工具</title>
+    <title>api接口文档管理</title>
     <jsp:include page="/WEB-INF/jsp/part/common.jsp"/>
     <script type="text/javascript">
-	var url;
-	function addObj(){
-		$("#dlg").dialog("open").dialog("setTitle","新建");	
-		$("#fm").form("clear");
-		$("#fm input[name='_method']").val("post");
-		$("#fm input[name='_token']").val("${token}");
-		url="${path}/api/users";
-	}
-	function updateObj(){
+	url="${path}/api/apidoc";
+	function gotoInfo(){
 		var row=$("#dg").datagrid("getSelected");
 		if(row){
-			$("#dlg").dialog("open").dialog("setTitle","修改");
-			var ss=row.rids.split(",");
-			row.rids=ss;
-			$("#fm").form("load",row);
-			$("#fm input[name='_method']").val("put");
-			$("#fm input[name='_token']").val("${token}");
-			url="${path}/api/users";
+			var id=row.id;
+			window.location.href="${path}/menu/system/apidoc/info?id="+id;
 		}
 	}
-	function save(){
-		$("#fm").form("submit",{
-			url:url,		
-			onSubmit:function(){
-				return $(this).form('validate');
-			},
-			success:function(data){
-				if(data){
-					var json;
-					if(isJson(data)){
-						json=data;
-					}else{
-						json=JSON.parse(data);
-					}
-					if(json.result=='success'){
-						$('#dg').datagrid('reload');
-						$("#dlg").dialog("close");
-					}else{
-						alert("错误:["+json.code+"]"+json.data);
-					}
-				}else{
-					alert("错误:返回值为空。");
-				}
-			}
-		});
-	}
-	$(function(){
-		//直接查一次，不查的话第一次进入默认是不查的
-		search_toolbar();
-		//组装角色复选框
-		handleRoles();
-	});
-	/*将img拼接成html代码*/
-	function imgStrToHtml(img){
-		return "<img class=\"img-rounded\" src=\""+img+"\" onerror=\"this.src='${path }/framework/image/user/superman_1.png'\" style=\"width:20px;height:20px;\">";
-	}
-	function isdeleteToHtml(value){
-		if(value==0){
-			return "<span class='green'>否</span>";
-		}else if(value==1){
-			return "<span class='red'>是</span>";
-		}else{
-			return value;
+	function gotoParam(){
+		var row=$("#dg").datagrid("getSelected");
+		var id="";
+		if(row){
+			id=row.id;
 		}
-	}
-	//组装角色复选框
-	function handleRoles(){
-		var rs=$("#roles"); 
-		pullRequest({
-			urlb:"/api/role/all",
-			type:"get",
-			success:function(data){
-				var str="";
-				for (var i = 0; i < data.length; i++) {
-					var r=data[i];					
-					str=str+"<input class=\"zs_checkbox\" type=\"checkbox\" name=\"rids\" value=\""+r.id+"\">["+r.id+"]"+r.name+"（"+r.introduction+"）"+"<br>";
-				}
-				rs.append(str);
-			}
-		});
-	}
-	function selectAll(){
-		var a = $('#roles>input');
-		if(a[0].checked){
-			for(var i = 0;i<a.length;i++){
-				if(a[i].type == "checkbox") a[i].checked = false;
-			}
-		}else{
-			for(var i = 0;i<a.length;i++){
-				if(a[i].type == "checkbox") a[i].checked = true;
-			}
-		}
-	}
-	function negated(){
-		$("#roles input:checkbox").each(function () {  
-	        this.checked = !this.checked;  
-	     }) 
+		window.location.href="${path}/menu/system/apidoc/param?adId="+id;
 	}
 	</script>
 	<style type="text/css">
-	.green{
-		color:green;
-		font-weight: bold;
-	}
-	.red{
-		color: red;
-		font-weight: bold;
-	}
-	.img-circle {
-	    -webkit-border-radius: 500px;
-	    -moz-border-radius: 500px;
-	    border-radius: 500px;
-	}
-	img {
-	    width: auto\9;
-	    height: auto;
-	    max-width: 100%;
-	    vertical-align: middle;
-	    border: 0;
-	    -ms-interpolation-mode: bicubic;
-	}
 	</style>
   </head>
   
@@ -141,7 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<div class="p_body" style="overflow-y:hidden;">
   			
   			<table id="dg" border="true"
-				url="<%=path %>/api/users/list"
+				url="<%=path %>/api/apidoc/list"
 				method="get" toolbar="#toolbar"
 				loadMsg="数据加载中请稍后……"
 				striped="true" pagination="true"
@@ -150,30 +47,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				pageSize="100" pageList="[100,500,1000,5000]">
 				<thead>
 					<tr>
-						<th field="id" width="50" sortable="true">ID</th>
-						<th field="usernum" width="200" sortable="true">账号</th>
-						<th field="userpass" width="200" sortable="true">密码</th>
-						<th field="name" width="150" sortable="true">名字</th>
-						<th field="mail" width="150" sortable="true">邮箱</th>
-						<th field="phone" width="200" sortable="true">手机号</th>
-						<th field="isdelete" width="80" sortable="true" data-options="
-						formatter:function(value,row,index){
-							return isdeleteToHtml(value);
-		             	}">是否被注销</th>
+						<th field="id" width="70" sortable="true">ID</th>
+						<th field="uId" width="90" sortable="true">用户id</th>
 						<th field="createTime" width="200" sortable="true">创建时间</th>
-						<th field="rids" width="200" sortable="true">角色id序列</th>
-						<th field="roleNames" width="200" sortable="false">角色名字序列</th>
-						<th field="img" width="100" sortable="false" data-options="
-						formatter:function(value,row,index){
-							return imgStrToHtml(value);
-		             	}">头像</th>
+						<th field="name" width="200" sortable="true">api接口名字</th>
+						<th field="project" width="200" sortable="true">所属项目名称</th>
+						<th field="flag" width="200" sortable="true">flag标签</th>
+						<th field="url" width="200" sortable="true">url</th>
+						<th field="method" width="200" sortable="true">method</th>
+						<th field="returnEg" width="200" sortable="false">返回示例</th>
 					</tr>
 				</thead>
 			</table>
 			<div id="toolbar">
 				<div class="btn-separator-none">
-					<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addObj()">添加用户</a>
-					<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateObj()">编辑用户</a>
+					<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addObj()">添加api接口文档</a>
+					<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateObj()">编辑api接口文档</a>
+					<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteObj()">删除api接口文档</a>
+					<a class="easyui-linkbutton" iconCls="icon-zs-forward" plain="true" onclick="gotoParam()">api接口参数管理</a>
+					<a class="easyui-linkbutton" iconCls="icon-zs-forward" plain="true" onclick="gotoInfo()">查看详细信息</a>
 					<a class="easyui-linkbutton" iconCls="icon-help" plain="true" disabled="true">帮助</a>
 				</div>
 				<div class="clear"></div>
@@ -189,10 +81,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   		</div>
 			   		<div class="searchBar-input">
 			    		<div>
-				    		账号：<input name ="str1" />
+				    		api接口名称：<input name ="str1" />
 			    		</div>
 			    		<div>
-			    			名字：<input name ="str2" />
+			    			所属项目名称：<input name ="str2" />
+			    		</div>
+			   		</div>
+			   		<div class="searchBar-input">
+			    		<div>
+				    		创建者名字：<input name ="str3" />
+			    		</div>
+			    		<div>
+			    			标签(flag)：<input name ="str4" />
 			    		</div>
 			   		</div>
 			   	</form>
@@ -207,43 +107,40 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div id="dlg" class="easyui-dialog" style="padding: 20px;"
 					closed="true" buttons="#dlg-buttons" modal="true">
 				<div class="dlg_widthAndHeight">
-					<div class="ftitle">用户</div>
+					<div class="ftitle">api接口文档</div>
 					<hr>
 					<form id="fm" method="post" >
 						<input type="hidden" name="_method" value="post"/>
 						<input type="hidden" name="_token" value="${token}"/>
 						<input type="hidden" name="id"/>
 						<div class="fitem">
-							<label>账号:</label>
-							<input name="usernum" class="easyui-validatebox" required="true">
-						</div>
-						<div class="fitem">
-							<label>密码:</label>
-							<input name="userpass" class="easyui-validatebox" required="true">
-						</div>
-						<div class="fitem">
-							<label>名字:</label>
+							<label>api接口名称:</label>
 							<input name="name" class="easyui-validatebox" required="true">
 						</div>
 						<div class="fitem">
-							<label>邮箱:</label>
-							<input name="mail" class="easyui-validatebox" >
+							<label>所属项目:</label>
+							<input name="project" class="easyui-validatebox" required="true">
 						</div>
 						<div class="fitem">
-							<label>手机:</label>
-							<input name="phone" class="easyui-validatebox" >
+							<label>flag标签:</label>
+							<input name="flag" class="easyui-validatebox" required="true">
 						</div>
 						<div class="fitem">
-							<label>是否被注销:</label>
-							<select name="isdelete">
-								<option value="1">是</option>
-								<option value="0">否</option>
+							<label>url:</label>
+							<input name="url" class="easyui-validatebox" required="true">
+						</div>
+						<div class="fitem">
+							<label>method:</label>
+							<select name="method" class="zs-validatebox-select">
+								<option value="GET">GET</option>
+								<option value="POST">POST</option>
+								<option value="PUT">PUT</option>
+								<option value="DELETE">DELETE</option>
 							</select>
 						</div>
 						<div class="fitem">
-							<label style="width: 100%;">角色:（角色至少要选择一个）</label>
-							<div id="roles" style="line-height: normal;font-size: 14px;">
-							</div>
+							<label>返回值示例:</label>
+							<textarea name="returnEg" rows="" cols=""></textarea>
 						</div>
 					</form>
 				</div>

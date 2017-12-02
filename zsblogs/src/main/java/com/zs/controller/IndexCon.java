@@ -150,4 +150,16 @@ public class IndexCon{
 	public String gotoApiDocList(){
 		return "/system/apiDocList";
 	}
+	//接口详情
+	@RequestMapping("/system/apidoc/info")
+	public String gotoApiDocInfo(String id,HttpServletRequest req){
+		req.setAttribute("id", id);
+		return "/system/apiDocInfo";
+	}
+	//接口参数
+	@RequestMapping("/system/apidoc/param")
+	public String gotoApiDocParam(String adId,HttpServletRequest req){
+		req.setAttribute("adId", adId);
+		return "/system/apiDocParam";
+	}
 }

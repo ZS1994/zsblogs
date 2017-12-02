@@ -4,6 +4,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import com.zs.dao.ApiDocMapper;
+import com.zs.dao.ApiDocParameterMapper;
 import com.zs.entity.ApiDoc;
 import com.zs.entity.other.EasyUIAccept;
 import com.zs.entity.other.EasyUIPage;
@@ -14,6 +15,8 @@ public class ApiDocSerImpl implements ApiDocSer{
 
 	@Resource
 	private ApiDocMapper apiDocMapper;
+	@Resource
+	private ApiDocParameterMapper apiDocParameterMapper;
 	
 	
 	@Override
@@ -50,6 +53,7 @@ public class ApiDocSerImpl implements ApiDocSer{
 	@Override
 	public ApiDoc get(Integer id) {
 		ApiDoc a=apiDocMapper.selectByPrimaryKey(id);
+		a.setParams(apiDocParameterMapper.selectByAdid(a.getId()));
 		return a;
 	}
 

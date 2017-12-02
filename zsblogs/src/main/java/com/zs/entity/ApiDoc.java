@@ -1,6 +1,9 @@
 package com.zs.entity;
 
 import java.util.Date;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class ApiDoc {
     private Integer id;
@@ -21,7 +24,19 @@ public class ApiDoc {
 
     private String method;
 
-    public Integer getId() {
+    //----------------
+    private List<ApiDocParameter> params;
+    
+    
+    public List<ApiDocParameter> getParams() {
+		return params;
+	}
+
+	public void setParams(List<ApiDocParameter> params) {
+		this.params = params;
+	}
+
+	public Integer getId() {
         return id;
     }
 
@@ -36,7 +51,7 @@ public class ApiDoc {
     public void setuId(Integer uId) {
         this.uId = uId;
     }
-
+    @JsonFormat(pattern="yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
     public Date getCreateTime() {
 		return createTime;
 	}

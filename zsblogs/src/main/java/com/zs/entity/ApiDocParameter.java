@@ -15,7 +15,19 @@ public class ApiDocParameter {
 
     private String eg;
 
-    public Integer getId() {
+    //---------
+    private ApiDoc apiDoc;
+    
+    
+    public ApiDoc getApiDoc() {
+		return apiDoc;
+	}
+
+	public void setApiDoc(ApiDoc apiDoc) {
+		this.apiDoc = apiDoc;
+	}
+
+	public Integer getId() {
         return id;
     }
 

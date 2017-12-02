@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
-<link rel="stylesheet" type="text/css" href="<%=path %>/framework/jquery-easyui/themes/bootstrap/easyui.css">
+<link rel="stylesheet" type="text/css" href="<%=path %>/framework/jquery-easyui/themes/default/easyui.css">
 <link rel="stylesheet" type="text/css" href="<%=path %>/framework/jquery-easyui/themes/icon.css">
 <link rel="stylesheet" type="text/css" href="<%=path %>/framework/jquery-easyui/demo/demo.css">
 <script type="text/javascript" src="<%=path %>/framework/jquery-easyui/jquery.min.js"></script>
@@ -24,6 +24,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" type="text/css" href="<%=path%>/framework/css/mainPagePart.css">
 <link rel="stylesheet" type="text/css" href="<%=path%>/framework/css/public.css">
 
+<link rel="stylesheet" type="text/css" href="<%=path %>/framework/css/zs-ui.css">
+<script type="text/javascript" src="<%=path %>/framework/js/zs-ui.js"></script>
 
 <script type="text/javascript">
 /*张顺，2017-2-25
@@ -136,6 +138,84 @@ $(function(){
 	}
 	$('#dg').datagrid(dg_options);
 	//-------------张顺，2017-6-29，第一次进入页面不加载数据（结束）-----------------------------
+});
+/*-----------------封装的增删改查等等的基本方法，如果需要自定义，请在页面中重写以下方法中的一个或多个------------------*/
+var url;
+function addObj(){
+	$("#dlg").dialog("open").dialog("setTitle","新建");	
+	$("#fm").form("clear");
+	$("#fm input[name='_method']").val("post");
+	$("#fm input[name='_token']").val("${token}");
+}
+function updateObj(){
+	var row=$("#dg").datagrid("getSelected");
+	if(row){
+		$("#dlg").dialog("open").dialog("setTitle","修改");
+		$("#fm").form("load",row);
+		$("#fm input[name='_method']").val("put");
+		$("#fm input[name='_token']").val("${token}");
+	}
+}
+function save(){
+	$("#fm").form("submit",{
+		url:url,		
+		onSubmit:function(){
+			return $(this).form('validate') && validate_zs($(this));
+		},
+		success:function(data){
+			if(data){
+				var json;
+				if(isJson(data)){
+					json=data;
+				}else{
+					json=JSON.parse(data);
+				}
+				if(json.result=='success'){
+					$('#dg').datagrid('reload');
+					$("#dlg").dialog("close");
+				}else{
+					alert("错误:["+json.code+"]"+json.data);
+				}
+			}else{
+				alert("错误:返回值为空。");
+			}
+		}
+	});
+}
+function deleteObj(){
+	var row=$("#dg").datagrid("getSelected");
+	var id=row.id;
+	if(row){
+		$.messager.confirm(
+			"操作提示",
+			"您确定要删除吗？",
+			function(data){
+				if(data){
+					$.ajax({
+						url:url+"/one?id="+id,
+						type:"delete",
+						success:function(data){
+							var json;
+							if(isJson(data)){
+								json=data;
+							}else{
+								json=JSON.parse(data);
+							}
+							if(json.result=='success'){
+								$('#dg').datagrid('reload');
+							}else{
+								alert("错误:["+json.code+"]"+json.data);
+							}
+						}
+					});
+				}
+			}
+		);
+	}
+}
+$(function(){
+	//直接查一次，不查的话第一次进入默认是不查的
+	search_toolbar_2();
 });
 </script>
 <jsp:include page="/WEB-INF/jsp/part/hintModal.jsp"></jsp:include>
