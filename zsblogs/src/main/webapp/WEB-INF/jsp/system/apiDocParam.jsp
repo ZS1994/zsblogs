@@ -13,6 +13,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <jsp:include page="/WEB-INF/jsp/part/common.jsp"/>
     <script type="text/javascript">
 	url="${path}/api/apidoc/param";
+	$(function(){
+		//直接查一次，不查的话第一次进入默认是不查的
+		search_toolbar_2();
+	});
 	</script>
 	<style type="text/css">
 	</style>

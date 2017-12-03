@@ -132,7 +132,7 @@
         rids = #{rids,jdbcType=VARCHAR},
       </if>
       <if test="img != null" >
-        rids = #{img,jdbcType=VARCHAR},
+        img = #{img,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

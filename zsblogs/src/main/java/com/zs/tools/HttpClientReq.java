@@ -41,7 +41,7 @@ public class HttpClientReq {
     	String content = null;  
         CloseableHttpClient closeableHttpClient = HttpClientBuilder.create().build();     
         String udata = getUrlParamsByMap(data);
-        System.out.println(udata);
+//        System.out.println(udata);
         HttpGet httpGet = new HttpGet(url+"?uid="+uid+"&"+udata);
         CloseableHttpResponse response = null;    
         try {    
@@ -83,7 +83,7 @@ public class HttpClientReq {
         CloseableHttpClient httpclient = HttpClients.createDefault();  
         // 创建httppost
         String udata = getUrlParamsByMap(data);
-        System.out.println(udata);
+//        System.out.println(udata);
         HttpPost httppost = new HttpPost(url+"?"+udata);  
         // 创建参数队列    
         List<NameValuePair> formparams = new ArrayList<NameValuePair>();  
@@ -128,7 +128,7 @@ public class HttpClientReq {
         //since 4.3 不再使用 DefaultHttpClient    
         CloseableHttpClient closeableHttpClient = HttpClientBuilder.create().build();     
         String udata = getUrlParamsByMap(data);
-        System.out.println(udata);
+//        System.out.println(udata);
         HttpDelete httpdelete = new HttpDelete(url+"?uid="+uid+"&"+udata);    
         CloseableHttpResponse response = null;    
         try {    
@@ -171,7 +171,7 @@ public class HttpClientReq {
         // 创建httpput    
 //        String udata = URLEncoder.encode(data,encode);
         String udata = getUrlParamsByMap(data);
-        System.out.println(udata);
+//        System.out.println(udata);
         HttpPut httpput = new HttpPut(url+"?uid="+uid+"&"+udata);  
         try {  
             CloseableHttpResponse response = httpclient.execute(httpput);  

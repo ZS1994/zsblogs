@@ -134,7 +134,11 @@ public class RoleInter extends HandlerInterceptorAdapter{
 				
 				allowThrough("/menu/system/login", GET) || //登录
 				allowThrough("/menu/system/users/logup", GET) || //注册
-				allowThrough("/api/login/logup", POST) //注册
+				allowThrough("/api/login/logup", POST) || //注册
+				
+				allowThrough("/api/apidoc/one", GET) || //某api信息展示接口
+				allowThrough("/menu/system/apidoc/info", GET) || //某api信息展示页面
+				allowThrough("/api/system/apitest", POST) //api测试接口
 				
 				) {
 			//张顺，2017-10-19。即使访问的是例外列表，也得看看token，因为后续的user是从这里获取的，如果有token，不管它是不是例外，都去获取user，以便后续使用

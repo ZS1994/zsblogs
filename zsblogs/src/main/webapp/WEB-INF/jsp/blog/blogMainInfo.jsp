@@ -71,7 +71,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			str=str+
 			"<div class='media'>"+
 				"<a class=\"pull-left\">"+
-					"<img class=\"img-polaroid\" src=\""+userImg+"\" onerror=\"this.src='${path }/framework/image/user/superman_1.png'\">"+
+					"<img class=\"img-polaroid\" src=\""+userImg+"\" onerror=\"this.src='${path }/framework/image/user/superman_1.png'\" width=\"64\" height=\"64\">"+
 				"</a>"+
 				"<div class=\"media-body\">"+
 					"<div class=\"blog_comment\">"+

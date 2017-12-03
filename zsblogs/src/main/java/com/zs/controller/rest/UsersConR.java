@@ -85,6 +85,7 @@ public class UsersConR extends BaseRestController<Users, Integer>{
 	@RequestMapping(value="",method=RequestMethod.PUT)
 	@Override
 	public Result<String> doUpdate(Users obj, HttpServletRequest req, HttpServletResponse resp) {
+//		System.out.println(gson.toJson(obj));
 		if(obj!=null && obj.getId()!=null){
 			try {
 				return new Result<String>(SUCCESS, Code.SUCCESS, userSer.update(obj));

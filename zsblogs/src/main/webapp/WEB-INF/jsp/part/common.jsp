@@ -213,9 +213,5 @@ function deleteObj(){
 		);
 	}
 }
-$(function(){
-	//直接查一次，不查的话第一次进入默认是不查的
-	search_toolbar_2();
-});
 </script>
 <jsp:include page="/WEB-INF/jsp/part/hintModal.jsp"></jsp:include>

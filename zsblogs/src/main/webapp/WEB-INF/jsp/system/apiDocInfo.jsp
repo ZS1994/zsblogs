@@ -17,6 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	pullRequest({
     		urlb:"/api/apidoc/one",
     		type:"GET",
+    		isNeedToken:false,
     		data:{id:${id}},
     		success:function(data){
     			$("#project").html(data.project);
@@ -51,25 +52,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		}
     	});
     });
+    var isBtn1=true;
     function sendHttpRequest(){
-    	var arr=formToJson($('#http_body'));
-        var urltmp=$('#url_test').val();
-        var t=$("#method_test").val();
-        var token=$("#token").val();
-        pullRequest({
-        	urlb:"/api/system/apitest",
-        	type:"POST",
-        	data:{
-       			url:urltmp,
-       			method:t,
-       			token:token,
-       			data:JSON.stringify(arr)
-        	},
-        	success:function(data){
-        		console.log(data);
-				$("#result").append("<P>"+data+"</p>");
-        	}
-        });
+    	if(isBtn1){
+	    	$("#btn1").addClass("disabled");
+	    	$("#btn1").html("正在请求中，请稍后...");
+	    	isBtn1=false;
+	    	var arr=formToJson($('#http_body'));
+	        var urltmp=$('#url_test').val();
+	        var t=$("#method_test").val();
+	        var token=$("#token").val();
+	        pullRequest({
+	        	urlb:"/api/system/apitest",
+	        	type:"POST",
+	        	isNeedToken:false,
+	        	data:{
+	       			url:urltmp,
+	       			method:t,
+	       			token:token,
+	       			data:JSON.stringify(arr)
+	        	},
+	        	success:function(data){
+	        		console.log(data);
+					$("#result").append("<P>"+data+"</p>");
+					$("#btn1").removeClass("disabled");
+					$("#btn1").html("发送请求");
+					isBtn1=true;
+	        	},
+	        	error:function(code,da){
+	        		alert("错误。\n错误代码："+code+"。\n错误参数："+da);
+	        		$("#btn1").removeClass("disabled");
+	        		$("#btn1").html("发送请求");
+	        		isBtn1=true;
+	        	}
+	        });
+    	}
     }
 	function clearResult(){
     	$("#result").html("");
@@ -147,8 +164,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					
 					
 					<br>
-					<button type="button" class="btn" onclick="sendHttpRequest()">发送请求</button>
-					<button type="button" class="btn" onclick="clearResult()">清除结果</button>
+					<button id="btn1" type="button" class="btn" onclick="sendHttpRequest()">发送请求</button>
+					<button id="btn2" type="button" class="btn" onclick="clearResult()">清除结果</button>
 					<span class="help-block">如果发现点击发送请求没有反应，很大可能是请求出错，请按F12看详细错误信息</span>
 					<div id="result" class="well well-small" style="margin-top: 4px;">
 					

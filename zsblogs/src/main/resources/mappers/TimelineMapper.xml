@@ -112,13 +112,16 @@
 	  		and create_time >= #{date1}
   		</if>
   		<if test="date2!=null"><!-- date1:创建时间结束 -->
-  		and create_time &lt;= #{date2}
+  			and create_time &lt;= #{date2}
   		</if>
   		<if test="str1!=null"><!-- str1:用户名字 -->
-  		and u_id in(select id from users where name like '%${str1}%')
+  			and u_id in(select id from users where name like '%${str1}%')
   		</if>
   		<if test="str2!=null"><!-- str2:操作项名字 -->
-  		and p_id in (select id from permission where name like '%${str2}%')
+  			and p_id in (select id from permission where name like '%${str2}%')
+  		</if>
+  		<if test="int1!=null and int1!=0"><!-- int1:去除操作日志部分 -->
+  			and p_id not in (56,57,58,59,60,61)
   		</if>
   	</where>
   	<if test="sort!=null and order!=null">
@@ -136,13 +139,16 @@
 	  		and create_time >= #{date1}
   		</if>
   		<if test="date2!=null"><!-- date1:创建时间结束 -->
-  		and create_time &lt;= #{date2}
+  			and create_time &lt;= #{date2}
   		</if>
   		<if test="str1!=null"><!-- str1:用户名字 -->
-  		and u_id in(select id from users where name like '%${str1}%')
+  			and u_id in(select id from users where name like '%${str1}%')
   		</if>
   		<if test="str2!=null"><!-- str2:操作项名字 -->
-  		and p_id in (select id from permission where name like '%${str2}%')
+  			and p_id in (select id from permission where name like '%${str2}%')
+  		</if>
+  		<if test="int1!=null and int1!=0"><!-- int1:去除操作日志部分 -->
+  			and p_id not in (56,57,58,59,60,61)
   		</if>
   	</where>
   </select>

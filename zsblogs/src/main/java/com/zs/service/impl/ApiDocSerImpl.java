@@ -5,14 +5,17 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import com.zs.dao.ApiDocMapper;
 import com.zs.dao.ApiDocParameterMapper;
+import com.zs.dao.UsersMapper;
 import com.zs.entity.ApiDoc;
+import com.zs.entity.Users;
 import com.zs.entity.other.EasyUIAccept;
 import com.zs.entity.other.EasyUIPage;
 import com.zs.service.ApiDocSer;
 
 @Service("apiDoc")
 public class ApiDocSerImpl implements ApiDocSer{
-
+	@Resource
+	private UsersMapper usersMapper;
 	@Resource
 	private ApiDocMapper apiDocMapper;
 	@Resource
@@ -30,6 +33,11 @@ public class ApiDocSerImpl implements ApiDocSer{
 			}
 			List list=apiDocMapper.queryFenye(accept);
 			int rows=apiDocMapper.getCount(accept);
+			for (Object obj : list) {
+				ApiDoc ad=(ApiDoc) obj;
+				Users u=usersMapper.selectByPrimaryKey(ad.getuId());
+				ad.setUser(u);
+			}
 			return new EasyUIPage(rows, list);
 		}
 		return null;

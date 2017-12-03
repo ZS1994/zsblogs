@@ -28,6 +28,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 		window.location.href="${path}/menu/system/apidoc/param?adId="+id;
 	}
+	$(function(){
+		//直接查一次，不查的话第一次进入默认是不查的
+		search_toolbar_2();
+	});
 	</script>
 	<style type="text/css">
 	</style>
@@ -48,7 +52,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<thead>
 					<tr>
 						<th field="id" width="70" sortable="true">ID</th>
-						<th field="uId" width="90" sortable="true">用户id</th>
+						<th field="uId" width="70" sortable="true">创建者id</th>
+						<th field="uname" width="150" sortable="false" data-options="
+						formatter:function(value,row,index){
+							if(row.user){
+								return row.user.name;
+							}else{
+								return '[无法获取其信息]';
+							}
+		             	}">创建者名字</th>
 						<th field="createTime" width="200" sortable="true">创建时间</th>
 						<th field="name" width="200" sortable="true">api接口名字</th>
 						<th field="project" width="200" sortable="true">所属项目名称</th>

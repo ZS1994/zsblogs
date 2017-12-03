@@ -49,6 +49,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    border: 0;
 	    -ms-interpolation-mode: bicubic;
 	}
+	.radio1{
+		width: auto;
+		height: auto;
+		line-height: 1;
+	}
 	</style>
   </head>
   
@@ -114,6 +119,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    		</div>
 			    		<div>
 			    			操作项：<input name ="str2" />
+			    		</div>
+			   		</div>
+			   		<div class="searchBar-input">
+			    		<div>
+				    		<input name="int1" class="radio1" type="radio" value="0" checked="checked"/>
+				    		<span>显示全部</span>
+				    		<input name="int1" class="radio1" type="radio" value="1"/>
+				    		<span>去除操作日志部分</span>
 			    		</div>
 			   		</div>
 			   	</form>

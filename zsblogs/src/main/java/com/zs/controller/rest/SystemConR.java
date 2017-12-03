@@ -57,7 +57,6 @@ public class SystemConR {
 	
 	@RequestMapping(value="/apitest",method=RequestMethod.POST)
 	public Result<String> doTest(String url,String method,String data,String token){
-		System.out.println(data);
 		try {
 			Map map=null;
 			if (data!=null) {

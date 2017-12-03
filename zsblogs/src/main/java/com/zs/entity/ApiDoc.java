@@ -26,9 +26,18 @@ public class ApiDoc {
 
     //----------------
     private List<ApiDocParameter> params;
+    private Users user;
     
     
-    public List<ApiDocParameter> getParams() {
+    public Users getUser() {
+		return user;
+	}
+
+	public void setUser(Users user) {
+		this.user = user;
+	}
+
+	public List<ApiDocParameter> getParams() {
 		return params;
 	}
 

@@ -73,7 +73,6 @@ public class BlogCommentConR extends BaseRestController<BlogComment, Integer>{
 		if(obj!=null){
 			try {
 				Users user=Constans.getUserFromReq(req);
-				log.info(user);
 				obj.setCreateTime(new Date());
 				obj.setuId(user!=null?user.getId():null);
 				return new Result<String>(SUCCESS, Code.SUCCESS, blogCommentSer.add(obj));
