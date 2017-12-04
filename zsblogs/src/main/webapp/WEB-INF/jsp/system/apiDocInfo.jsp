@@ -22,6 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		success:function(data){
     			$("#project").html(data.project);
     			$("#flag").html(data.flag);
+    			$("#name").html(data.name);
     			$("#method").html(data.method);
     			$("#url").html(data.url);
    				var str="";
@@ -102,6 +103,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	table thead{
 		font-weight: bold;
 	}
+	#name{
+		font-weight: bold;
+	}
 	</style>
   </head>
   
@@ -121,6 +125,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="tab-pane fade" id="info">
 					<span id="project" class="label label-info"></span>
 		  			<span id="flag" class="label label-inverse"></span>
+		  			<span id="name"></span>
 		  			<div style="height: 4px;"></div>
 					<div class="well well-small">
 			  			<span id="method"></span>
