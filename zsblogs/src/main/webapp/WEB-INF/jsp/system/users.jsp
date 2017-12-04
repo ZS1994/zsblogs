@@ -66,7 +66,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	});
 	/*将img拼接成html代码*/
 	function imgStrToHtml(img){
-		return "<img class=\"img-rounded\" src=\""+img+"\" onerror=\"this.src='${path }/framework/image/user/superman_1.png'\" style=\"width:20px;height:20px;\">";
+		return "<img class=\"uimg\" src=\""+img+"\" onerror=\"this.src='${path }/framework/image/user/superman_1.png'\">";
 	}
 	function isdeleteToHtml(value){
 		if(value==0){
@@ -133,6 +133,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    border: 0;
 	    -ms-interpolation-mode: bicubic;
 	}
+	.uimg{
+		width: 30px;
+		height: 30px;
+	}
 	</style>
   </head>
   
@@ -163,10 +167,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<th field="createTime" width="200" sortable="true">创建时间</th>
 						<th field="rids" width="200" sortable="true">角色id序列</th>
 						<th field="roleNames" width="200" sortable="false">角色名字序列</th>
-						<th field="img" width="100" sortable="false" data-options="
+						<th field="uimg" width="100" sortable="false" data-options="
 						formatter:function(value,row,index){
-							return imgStrToHtml(value);
+							return imgStrToHtml(row.img);
 		             	}">头像</th>
+						<th field="img" width="200" sortable="true">头像路径</th>
 					</tr>
 				</thead>
 			</table>

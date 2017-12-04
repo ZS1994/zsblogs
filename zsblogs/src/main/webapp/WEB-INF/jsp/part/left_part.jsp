@@ -213,7 +213,7 @@ img {
 	<a href="${path }/menu/system/apidoc">
 		<div class="entry">
 			api文档管理
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/14志.png">
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/15文.png">
 		</div>
 	</a>
 	

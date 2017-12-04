@@ -54,7 +54,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				((parseInt(i)+1)+((parseInt(page)-1)*parseInt(rows)))+
 				"</td>"+
 				"<td>"+
-					"<img class=\"img-rounded\" src=\""+userImg+"\" onerror=\"this.src='${path }/framework/image/user/superman_1.png'\" style=\"width:20px;height:20px;\">"+
+					"<img class=\"uimg\" src=\""+userImg+"\" onerror=\"this.src='${path }/framework/image/user/superman_1.png'\">"+
 					userName+
 				"</td>"+
 				"<td>"+
@@ -84,7 +84,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     }
     </script>
     <style type="text/css">
-    
+    .uimg{
+		width: 30px;
+		height: 30px;
+		margin-right: 4px;
+    }
     </style>
   </head>
   
