@@ -8,4 +8,6 @@ public interface UserSer extends BaseService<Users, Integer>{
 	
 	public String validateUserInfo2(String usernumber,String userpassword);
 	
+	
+	public Users getByNum(String num);
 }

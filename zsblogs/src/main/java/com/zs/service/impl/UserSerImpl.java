@@ -91,4 +91,9 @@ public class UserSerImpl implements UserSer{
 		}
 	}
 
+	@Override
+	public Users getByNum(String num) {
+		return usersMapper.selectByNum(num);
+	}
+
 }

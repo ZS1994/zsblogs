@@ -16,6 +16,8 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,6 +38,7 @@ import com.zs.service.RoleSer;
 import com.zs.service.TimeLineSer;
 import com.zs.service.UserSer;
 import com.zs.tools.Constans;
+import com.zs.tools.HttpHelper;
 import com.zs.tools.StringHelper;
 
 
@@ -74,6 +77,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 	String tokenS;
 	Token lcToken;
 	boolean isTimeout=false;//是否过期
+	String ip=null;//ip地址
 	
 	private void init(HttpServletRequest request, HttpServletResponse response){
 		req=request;
@@ -92,7 +96,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 	    if(token==null && tokenS!=null){
 	    	token=tokenS;
 	    }
-	    
+	    ip=HttpHelper.getIp2(request);
 	}
 	
 	private final String GET="GET",POST="POST",PUT="PUT",DELETE="DELETE";
@@ -141,17 +145,36 @@ public class RoleInter extends HandlerInterceptorAdapter{
 				allowThrough("/api/system/apitest", POST) //api测试接口
 				
 				) {
+			/*张顺，2017-12-19,如果是游客，那么：
+			1、查一下这个账号为这个ip的用户有没有
+			2、有就获取该用户，没有就先创建再获取
+			3、给他相应的记录
+			*/
+			if(user==null && ip!=null){
+				Users u2=userSer.getByNum(ip);
+				if (u2==null) {
+					try {
+						u2=new Users(ip, "ZS1994", "游客("+ip+")", new Date(), "3");
+						userSer.add(u2);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					u2=userSer.getByNum(ip);
+				}
+				user=u2;
+			}
 			//张顺，2017-10-19。即使访问的是例外列表，也得看看token，因为后续的user是从这里获取的，如果有token，不管它是不是例外，都去获取user，以便后续使用
 			if(user!=null){
 				user.setRoles(roles);
 				request.setAttribute(Constans.USER, user);
 				//张顺，2017-12-1，也要尝试存储操作日志
 				Permission p=perSer.get(url, method);
-				if (user.getId()!=null && p!=null) {
+				if (user!=null && user.getId()!=null && p!=null) {
 					Timeline tl=new Timeline(user.getId(), p.getId(), gson.toJson(req.getParameterMap()));
 					try {
 						timeLineSer.add(tl);
 					} catch (Exception e) {
+						e.printStackTrace();
 					}
 				}
 			}
@@ -305,4 +328,8 @@ public class RoleInter extends HandlerInterceptorAdapter{
 		user=null;
 		roles=null;
 	}
+	
+	
 }
+
+

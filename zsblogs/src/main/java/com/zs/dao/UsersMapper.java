@@ -26,4 +26,5 @@ public interface UsersMapper {
     
     List<Users> queryFenye(EasyUIAccept accept);
     int getCount(EasyUIAccept accept);
+    
 }

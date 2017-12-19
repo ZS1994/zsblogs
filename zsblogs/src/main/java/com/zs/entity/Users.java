@@ -126,4 +126,20 @@ public class Users {
     public void setRids(String rids) {
         this.rids = rids == null ? null : rids.trim();
     }
+
+	public Users() {
+		super();
+	}
+
+	public Users(String usernum, String userpass, String name, Date createTime, String rids) {
+		super();
+		this.usernum = usernum;
+		this.userpass = userpass;
+		this.name = name;
+		this.createTime = createTime;
+		this.rids = rids;
+	}
+    
+    
+    
 }

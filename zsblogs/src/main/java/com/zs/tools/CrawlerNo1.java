@@ -98,7 +98,7 @@ public class CrawlerNo1 implements Runnable{
 				if (isBegin) {
 					getAllUrlAndList();
 //					System.out.println("list的大小是："+list.size());
-					log.info("list的大小是："+list.size());
+//					log.info("list的大小是："+list.size());
 					for (int i = list.size()-1; i >= 0; i--) {
 						Blog blog=null;
 						Elements content=null;
@@ -150,9 +150,9 @@ public class CrawlerNo1 implements Runnable{
 							CrawlerData1 res=list.remove(i);
 						}
 					}
-				}else{
-					Thread.sleep(1000*60*60*2);//每2小时进行一次判断
-				}
+					Thread.sleep(1000*60*60*2);//每2小时重新爬取一次
+				}   
+				Thread.sleep(1000*3);//每3s进行一次判断
 			} catch (Exception e) {
 				//出错了就休息2小时再尝试
 				e.printStackTrace();
