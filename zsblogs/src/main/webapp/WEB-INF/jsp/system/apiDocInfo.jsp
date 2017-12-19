@@ -78,6 +78,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					$("#result").append("<P>"+data+"</p>");
 					$("#btn1").removeClass("disabled");
 					$("#btn1").html("发送请求");
+					jsontool(data);
 					isBtn1=true;
 	        	},
 	        	error:function(code,da){
@@ -88,6 +89,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	        	}
 	        });
     	}
+    }
+    function jsontool(str){
+    	$("#frame_json").contents().find("#edit").val(str);
     }
 	function clearResult(){
     	$("#result").html("");
@@ -171,10 +175,31 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<br>
 					<button id="btn1" type="button" class="btn" onclick="sendHttpRequest()">发送请求</button>
 					<button id="btn2" type="button" class="btn" onclick="clearResult()">清除结果</button>
+					<button href="#myModal" role="button" class="btn" data-toggle="modal">json工具</button>
 					<span class="help-block">如果发现点击发送请求没有反应，很大可能是请求出错，请按F12看详细错误信息</span>
 					<div id="result" class="well well-small" style="margin-top: 4px;">
 					
 					</div>
+					
+					
+					<div id="myModal" class="modal hide fade modal-lg" tabindex="-1" 
+						role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					  <div class="modal-header">
+					    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					    <span id="myModalLabel" style="font-weight: bold;">json工具</span>
+					  </div>
+					  <div class="modal-body">
+					  	<iframe id="frame_json" src="staticView/json_tools/jsonTool1.html" style="width: 100%;height: 100%;border-width: 0px;">
+						</iframe>
+					  </div>
+					  <div class="modal-footer">
+					    <button class="btn" type="button" data-dismiss="modal" aria-hidden="true">关闭</button>
+					  </div>
+					</div>
+					
+					
+					
+					
 				
 				</div>
 			</div>
