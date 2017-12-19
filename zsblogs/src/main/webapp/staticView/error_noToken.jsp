@@ -22,6 +22,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="container" style="width:90%;">
 			<h1>错误代码：1</h1>
 			<p>没有证书，请重新获取。</p>
+			<p>您可以<a href="${path }/menu/system/login">登录</a>获取证书，若没有账号，可前往<a href="${path }/menu/system/users/logup">注册</a>。</p>
 	    </div>
   	</div>
   </body>

@@ -138,11 +138,13 @@ public class RoleInter extends HandlerInterceptorAdapter{
 				
 				allowThrough("/menu/system/login", GET) || //登录
 				allowThrough("/menu/system/users/logup", GET) || //注册
-				allowThrough("/api/login/logup", POST) || //注册
+				allowThrough("/api/login/logup", POST) //注册
 				
+				/*张顺，2017-12-19，发现有多个上海ip查询api信息，考虑到安全因素，故将其排除例外列表
 				allowThrough("/api/apidoc/one", GET) || //某api信息展示接口
 				allowThrough("/menu/system/apidoc/info", GET) || //某api信息展示页面
 				allowThrough("/api/system/apitest", POST) //api测试接口
+				*/
 				
 				) {
 			/*张顺，2017-12-19,如果是游客，那么：
