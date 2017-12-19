@@ -90,6 +90,30 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 								return [找不到该操作项];
 							}
 		             	}">操作项</th>
+		             	<th field="per_method" width="100" sortable="false" data-options="
+						formatter:function(value,row,index){
+							if(row.per){
+								return row.per.method;
+							}else{
+								return [找不到该操作项];
+							}
+		             	}">请求方式</th>
+		             	<th field="per_type" width="100" sortable="false" data-options="
+						formatter:function(value,row,index){
+							if(row.per){
+								return row.per.type;
+							}else{
+								return [找不到该操作项];
+							}
+		             	}">操作项类型</th>
+		             	<th field="per_flag" width="100" sortable="false" data-options="
+						formatter:function(value,row,index){
+							if(row.per){
+								return row.per.flag;
+							}else{
+								return [找不到该操作项];
+							}
+		             	}">操作项flag</th>
 						<th field="createTime" width="200" sortable="true">创建时间</th>
 						<th field="info" width="700" sortable="true">参数信息</th>
 					</tr>
