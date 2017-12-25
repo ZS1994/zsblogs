@@ -98,6 +98,43 @@ function logout(){
 		}
 	});
 }
+
+$(function(){
+	//初始化菜单展开与否
+	var menu=$(".p_left");
+	var body=$(".p_body");
+	var btn=$("#showBtn");
+	var isMenuHidden=window.localStorage.getItem("isMenuHidden");
+	if (isMenuHidden) {//收缩
+		menu.addClass("menu_hidden");//就收缩
+		body.addClass("body_full");
+		btn.addClass("btn_hidden");
+	}
+});
+function toggleHidden(){
+	var menu=$(".p_left");
+	var body=$(".p_body");
+	var btn=$("#showBtn");
+	var dg=body.find("#dg");
+	var isMenuHidden=window.localStorage.getItem("isMenuHidden");
+	if(isMenuHidden){//如果是收缩的话
+		menu.removeClass("menu_hidden");
+		body.removeClass("body_full");
+		btn.removeClass("btn_hidden");
+		window.localStorage.removeItem("isMenuHidden");
+	}else{//展开的话
+		menu.addClass("menu_hidden");//就收缩
+		body.addClass("body_full");
+		btn.addClass("btn_hidden");
+		window.localStorage.setItem("isMenuHidden",true);
+	}
+	if(dg){
+		try{
+			dg.datagrid('resize',{});
+		}catch (e) {
+		}
+	}
+}
 </script>
 <style>
 .img-circle {
@@ -112,6 +149,17 @@ img {
     vertical-align: middle;
     border: 0;
     -ms-interpolation-mode: bicubic;
+}
+.show_btn{
+	width: 10px;
+	height: 50px;
+	position: absolute;
+	right: -10px;
+	top: 50%;
+	background: url(${path}/framework/image/menu/向左.png);
+}
+.btn_hidden{
+	background: url(${path}/framework/image/menu/向右.png);
 }
 </style>  
 <div class="p_left">
@@ -217,4 +265,5 @@ img {
 		</div>
 	</a>
 	
+	<div id="showBtn" class="show_btn" onclick="toggleHidden()" style="z-index: 999;background-color: #777474;"></div>
 </div>

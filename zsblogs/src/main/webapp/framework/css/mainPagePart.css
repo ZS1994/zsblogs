@@ -45,6 +45,9 @@ a {
 	.body_top_jiange{
 		height: 50px;
 	}
+	.menu_hidden{
+	margin-left: -15%;
+	}
 }
 @media screen and (max-width: 1120px){
 	.p_left{
@@ -78,6 +81,12 @@ a {
 	.body_top_jiange{
 		height: 10px;
 	}
+	.menu_hidden{
+		margin-left: -50px;
+	}
+}
+.body_full{
+	left: 0px;
 }
 .p_body_right{
 	float: right;

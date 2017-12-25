@@ -1,6 +1,7 @@
 /**
  * 纯粹的公共函数，除了依赖jquery之外，不依赖任何第三方库
  */
+
 /**获取token*/
 function getToken(){
 	var tokenNuber =  window.localStorage.getItem("token");
