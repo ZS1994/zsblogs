@@ -36,13 +36,16 @@ public class HttpClientReq {
 	 * @author John丶辉
      * 发送http get请求  
      */    
-    public static String httpGet(String url,String uid,Map data) throws Exception{    
+    public static String httpGet(String url,String uid,Map data,String token) throws Exception{    
     	String encode = "utf-8";    
     	String content = null;  
         CloseableHttpClient closeableHttpClient = HttpClientBuilder.create().build();     
         String udata = getUrlParamsByMap(data);
 //        System.out.println(udata);
         HttpGet httpGet = new HttpGet(url+"?uid="+uid+"&"+udata);
+        if (token!=null) {
+        	httpGet.setHeader("token", token);
+		}
         CloseableHttpResponse response = null;    
         try {    
         	response = closeableHttpClient.execute(httpGet);    
@@ -76,7 +79,7 @@ public class HttpClientReq {
 	 * @return
 	 * @throws Exception
 	 */
-	public static String httpPost(String url,String uid,Map data) throws Exception {
+	public static String httpPost(String url,String uid,Map data,String token) throws Exception {
 		String encode = "utf-8"; 
 		String content = null;  
 		// 创建默认的httpClient实例.    
@@ -85,6 +88,9 @@ public class HttpClientReq {
         String udata = getUrlParamsByMap(data);
 //        System.out.println(udata);
         HttpPost httppost = new HttpPost(url+"?"+udata);  
+        if (token!=null) {
+        	httppost.setHeader("token", token);
+		}
         // 创建参数队列    
         List<NameValuePair> formparams = new ArrayList<NameValuePair>();  
         formparams.add(new BasicNameValuePair("uid", uid));
@@ -122,14 +128,17 @@ public class HttpClientReq {
 	 * @author John丶辉
      * 发送http delete请求  
      */    
-    public static String httpDelete(String url,String uid,Map data) throws Exception{    
+    public static String httpDelete(String url,String uid,Map data,String token) throws Exception{    
         String encode = "utf-8";    
         String content = null;   
         //since 4.3 不再使用 DefaultHttpClient    
         CloseableHttpClient closeableHttpClient = HttpClientBuilder.create().build();     
         String udata = getUrlParamsByMap(data);
 //        System.out.println(udata);
-        HttpDelete httpdelete = new HttpDelete(url+"?uid="+uid+"&"+udata);    
+        HttpDelete httpdelete = new HttpDelete(url+"?uid="+uid+"&"+udata);   
+        if (token!=null) {
+        	httpdelete.setHeader("token", token);
+		}
         CloseableHttpResponse response = null;    
         try {    
         	response = closeableHttpClient.execute(httpdelete);    
@@ -163,7 +172,7 @@ public class HttpClientReq {
      * @return
      * @throws Exception
      */
-    public static String httpPut(String url,String uid,Map data) throws Exception {
+    public static String httpPut(String url,String uid,Map data,String token) throws Exception {
 		String encode = "utf-8";
 		String content = null; 
 		// 创建默认的httpClient实例.    
@@ -172,7 +181,10 @@ public class HttpClientReq {
 //        String udata = URLEncoder.encode(data,encode);
         String udata = getUrlParamsByMap(data);
 //        System.out.println(udata);
-        HttpPut httpput = new HttpPut(url+"?uid="+uid+"&"+udata);  
+        HttpPut httpput = new HttpPut(url+"?uid="+uid+"&"+udata); 
+        if (token!=null) {
+        	httpput.setHeader("token", token);
+		}
         try {  
             CloseableHttpResponse response = httpclient.execute(httpput);  
             try {  

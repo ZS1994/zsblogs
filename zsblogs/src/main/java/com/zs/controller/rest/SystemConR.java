@@ -66,16 +66,16 @@ public class SystemConR {
 				String result="";
 				switch (method) {
 				case "GET":
-					result=HttpClientReq.httpGet(url, null, map);
+					result=HttpClientReq.httpGet(url, null, map,token);
 					break;
 				case "POST":
-					result=HttpClientReq.httpPost(url, null, map);
+					result=HttpClientReq.httpPost(url, null, map,token);
 					break;
 				case "PUT":
-					result=HttpClientReq.httpPut(url, null, map);
+					result=HttpClientReq.httpPut(url, null, map,token);
 					break;
 				case "DELETE":
-					result=HttpClientReq.httpDelete(url, null, map);
+					result=HttpClientReq.httpDelete(url, null, map,token);
 					break;
 				default:
 					break;
