@@ -104,11 +104,18 @@ $(function(){
 	var menu=$(".p_left");
 	var body=$(".p_body");
 	var btn=$("#showBtn");
+	var dg=body.find("#dg");
 	var isMenuHidden=window.localStorage.getItem("isMenuHidden");
 	if (isMenuHidden) {//收缩
 		menu.addClass("menu_hidden");//就收缩
 		body.addClass("body_full");
 		btn.addClass("btn_hidden");
+	}
+	if(dg){
+		try{
+			dg.datagrid('resize',{});
+		}catch (e) {
+		}
 	}
 });
 function toggleHidden(){
