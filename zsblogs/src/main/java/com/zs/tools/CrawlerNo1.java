@@ -109,7 +109,7 @@ public class CrawlerNo1 implements Runnable{
 							String url=list.get(i).getUrl();
 							url=url.replaceAll(" ", "%20");
 							String root=url.split("//")[0]+"//"+url.split("//")[1].split("/")[0];
-							String str=HttpClientReq.httpGet(url, "", null,null);
+							String str=HttpClientReq.httpGet(url, null,null);
 							Document doc=Jsoup.parse(str);
 							Elements summaryE=doc.select("meta[name=description]");
 							summary=summaryE.size()>0?summaryE.get(0).attr("content"):"[未获取到摘要]";
@@ -172,7 +172,7 @@ public class CrawlerNo1 implements Runnable{
 		try {
 			String urlroot="https://tech.meituan.com";
 			
-			String str=HttpClientReq.httpGet("https://tech.meituan.com/archives", "", null,null);
+			String str=HttpClientReq.httpGet("https://tech.meituan.com/archives", null,null);
 			Document doc=Jsoup.parse(str);
 			Elements elements=doc.select("article");
 			for (Element e : elements) {

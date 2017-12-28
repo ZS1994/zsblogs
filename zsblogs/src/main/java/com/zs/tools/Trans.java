@@ -268,4 +268,8 @@ public class Trans {
         }
         return sOut;
     }
+	
+	public static boolean StrEmpty(String str) {
+		return str==null || (str!=null && str.trim().equals(""));
+	}
 }
