@@ -4,6 +4,14 @@ public class Result<T> {
 	private String result;
 	private Integer code;
 	private T data;
+	private String description;//描述
+	
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	public String getResult() {
 		return result;
 	}
@@ -34,6 +42,13 @@ public class Result<T> {
 	}
 	public Result() {
 		super();
+	}
+	public Result(String result, Integer code, T data, String description) {
+		super();
+		this.result = result;
+		this.code = code;
+		this.data = data;
+		this.description = description;
 	}
 	
 	
