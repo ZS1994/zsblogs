@@ -76,7 +76,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<div class="parent">
 		<div class="child">
 			<center>
-				<img alt="张顺的个人博客" src="${path }/framework/image/login/logo_zs_transparent.png">
+				<img alt="张顺的网站" src="${path }/framework/image/login/logo_zs_white.png">
 			</center>
 			<div style="text-align: center;font-size: 24px;line-height: 2;font-family: 宋体;margin-top: 50px;">
 				登录
