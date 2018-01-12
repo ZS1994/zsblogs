@@ -184,6 +184,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="clear"></div>
 				<hr class="hr-geay">
 				<form id="search">
+					<input type="hidden" name="int1" value="1"/>
 					<div class="searchBar-input">
 			    		<div>
 				    		创建时间开始：<input name="date1" id="d4311" class="Wdate" type="text" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'d4312\')}' ,dateFmt:'yyyy/MM/dd HH:mm:ss'})"/>

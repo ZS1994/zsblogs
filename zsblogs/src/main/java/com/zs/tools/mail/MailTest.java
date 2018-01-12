@@ -27,7 +27,7 @@ public class MailTest {
         props.put("mail.smtp.host", "smtp.exmail.qq.com");
         props.put("mail.smtp.port", "587");
         props.put("mail.user", "itrobot@szexpress.com.cn");// 发件人的账号
-        props.put("mail.password", "tPu66H6ouqxNCKof");// 访问SMTP服务时需要提供的密码	
+        props.put("mail.password", "tPu66H6ouqxNCKof");// 访问SMTP服务时需要提供的密码
         
 	}
 	

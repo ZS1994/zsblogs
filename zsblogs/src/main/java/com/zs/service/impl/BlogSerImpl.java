@@ -59,7 +59,9 @@ public class BlogSerImpl implements BlogSer{
 				//获取所属栏目
 				Blog b=(Blog)obj;
 				b.setUser(getAutorOfBlog(b.getId()));
-				b.setBlogListNames(getBlogListNamesOfBlog(b.getId())[0]);
+				String ss[]=getBlogListNamesOfBlog(b.getId());
+				b.setBlogListNames(ss[0]);
+				b.setBlogListNamesA(ss[2]);
 				//获取阅读次数
 				EasyUIAccept accept2=new EasyUIAccept();
 				accept2.setInt1(b.getId());
@@ -131,20 +133,24 @@ public class BlogSerImpl implements BlogSer{
 	}
 
 	public String[] getBlogListNamesOfBlog(Integer bid) {
-		String ss[]=new String[2];
+		String ss[]=new String[3];
 		if(bid!=null){
 			List<BlogListRel> rels=blogListRelMapper.selectByBlidOrBid(null, bid);
 			String blNames="";
 			String blIds="";
+			String blNamesA="";
 			for (BlogListRel rel : rels) {
 				BlogList bl=blogListMapper.selectByPrimaryKey(rel.getBlId());
 				blNames=blNames+bl.getName()+",";
 				blIds=blIds+bl.getId()+",";
+				blNamesA=blNamesA+"<span class=\"blNameA\" id=\""+bl.getId()+"\">"+bl.getName()+"</span>,";
 			}
 			blNames=blNames.lastIndexOf(",")>0?blNames.substring(0, blNames.lastIndexOf(",")):blNames;
 			blIds=blIds.lastIndexOf(",")>0?blIds.substring(0, blIds.lastIndexOf(",")):blIds;
+			blNamesA=blNamesA.lastIndexOf(",")>0?blNamesA.substring(0, blNamesA.lastIndexOf(",")):blNamesA;
 			ss[0]=blNames;
-			ss[1]=blIds;;
+			ss[1]=blIds;
+			ss[2]=blNamesA;
 			return ss;
 		}
 		return ss;

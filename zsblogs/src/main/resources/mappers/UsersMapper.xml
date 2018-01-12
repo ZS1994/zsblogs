@@ -16,9 +16,12 @@
   <sql id="Base_Column_List" >
     id, usernum, userpass, name, mail, phone, isdelete, create_time, rids ,img
   </sql>
+  <sql id="no_password_Column_List" >
+    id, usernum, name, mail, phone, isdelete, create_time, rids ,img
+  </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
-    <include refid="Base_Column_List" />
+    <include refid="no_password_Column_List" />
     from users
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -152,7 +155,7 @@
   </update>
   <select id="selectByNumAndPass" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
-    <include refid="Base_Column_List" />
+    <include refid="no_password_Column_List" />
     from users
     where usernum = #{num,jdbcType=VARCHAR} and userpass=#{pass,jdbcType=VARCHAR}
   </select>
@@ -164,7 +167,14 @@
   </select>
   
   <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
-  	select * from users
+  	select 
+  	<if test="int1==null"><!-- int1:不显示密码 -->
+	  	<include refid="no_password_Column_List" /> 
+  	</if>
+  	<if test="int1!=null"><!-- int1:显示密码 -->
+	  	<include refid="Base_Column_List" /> 
+  	</if>
+  	from users
   	<where>
 	  	<if test="date1!=null"><!-- date1:创建时间开始 -->
 	  		and create_time >= #{date1}

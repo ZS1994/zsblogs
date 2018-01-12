@@ -12,16 +12,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <base href="<%=basePath%>">
     <title>所有博客</title>
     <script type="text/javascript">
-    var page="${acc.page}",total,rows="${acc.rows}",pageSize,str1="${not empty acc.str1 ? acc.str1 : null}";
+    var page="${acc.page}",total,rows="${acc.rows}",pageSize,str1="${not empty acc.str1 ? acc.str1 : null}",int3="${not empty acc.int3 ? acc.int3 : null}",str3="${not empty acc.str3 ? acc.str3 : null}";
     //获取博客，查询所有博客
     function getBlogList(){
     	var json={
    			page:page,
    			rows:rows,
-   			int1:1,
-   			sort:"createTime",
-   			order:"desc",
-   			str1:str1
+   			int1:0,
+   			str1:str1,
+   			int3:int3,
+   			str3:str3
 		};
     	pullRequest({
     		urlb:"/api/blog/list",
@@ -54,13 +54,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	    			$("#page_position").html("第"+page+"/"+pageSize+"页");//设置当前第几页了
     				}
     			}
+    			initBlogListQuery();
     		}
     	});
     }
     $(function(){
-    	getBlogList();
+	    getBlogList();
     	//填充搜索框内容
     	$("#ssTitle").val(str1);
+    	//填充栏目筛选
+    	if(int3){
+    		console.log(int3);
+	    	$("#blId_tj").html("<a class=\"blId_tj\" href=\"${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc&int1=0&str1="+str1+"\">"+str3+" ×</a>");
+    	}
     });
     //填充博客
     function appendBlog(rows){
@@ -68,7 +74,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		for(var i=0;i<rows.length;i++){
 			str="<div class='blog_block'><h4><a class='blog_title' onclick='gotoBlogMain("+rows[i].id+")'>"+rows[i].title+"</a></h4>"+
 			"<p>"+rows[i].summary+"</p>"+
-			"<div class='blog_introduction'>"+(rows[i].user?rows[i].user.name:"[无法找到该用户]")+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].createTime+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].blogListNames+"&nbsp;&nbsp;&nbsp;&nbsp;<a class='blog_read_a' href='${path}/menu/blogList/blog/read?bId="+rows[i].id+"'>"+rows[i].readCount+"次阅读</a></div>"+
+			"<div class='blog_introduction'>"+(rows[i].user?rows[i].user.name:"[无法找到该用户]")+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].createTime+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].blogListNamesA+"&nbsp;&nbsp;&nbsp;&nbsp;<a class='blog_read_a' href='${path}/menu/blogList/blog/read?bId="+rows[i].id+"'>"+rows[i].readCount+"次阅读</a></div>"+
 			"</div>";
 			$("#blogs").append(str);
 		}
@@ -79,18 +85,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     function lastPage(){
     	if($("#page_last").parent().attr('class')!="disabled"){
     		page--;
-    		window.location.href="${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc&int1=1&str1="+str1;
+    		window.location.href="${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc&int1=0&str1="+str1+"&int3="+int3+"&str3="+str3;
     	}
     }
     function nextPage(){
     	if($("#page_next").parent().attr('class')!="disabled"){
     		page++;
-    		window.location.href="${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc&int1=1&str1="+str1;
+    		window.location.href="${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc&int1=0&str1="+str1+"&int3="+int3+"&str3="+str3;
     	}
     }
     function sousuo(){
     	str1=$("#ssTitle").val().trim();
-   		window.location.href="${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc&int1=1&str1="+str1;
+   		window.location.href="${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc&int1=0&str1="+str1+"&int3="+int3+"&str3="+str3;
+    }
+    //初始化按栏目搜索的事件监听
+    function initBlogListQuery(){
+    	$(".blNameA").each(function(i,el){
+    		$(el).click(function(){
+    			int3=$(el).attr("id");
+    			str3=$(el).html();
+    			window.location.href="${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc&int1=0&str1="+str1+"&int3="+int3+"&str3="+str3;
+    		});
+    	});
     }
     </script>
     <style type="text/css">
@@ -109,6 +125,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     .blog_read_a{
     	font-size: 12px;
     }
+    .blNameA{
+    	font-size: 12px;
+    	cursor: pointer;
+    	color: #08c;
+    	text-decoration: none; 
+    }
+    .blNameA:hover{
+    	color: #005580;
+    	text-decoration: underline;
+    	outline: 0;
+    }
+    .blId_tj{
+    	color: #ffffff;
+    	font-size: 14px;
+    	background-color: #9f9c9c;
+    	padding: 2 5px;
+    	border-radius:2px;
+    }
+    .blId_tj:hover{
+    	color:#403f3f;
+    	text-decoration: none;
+    }
     </style>
   </head>
   
@@ -124,6 +162,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				  <input class="span3" id="ssTitle" type="text" placeholder="请输入标题..." style="height: inherit;">
 				  <button class="btn" type="button" onclick="sousuo()">搜索</button>
 				</div>
+				<span id="blId_tj" style="margin-left: 10px;"></span>
 							    
 			    <div id="blogs">
 			    	

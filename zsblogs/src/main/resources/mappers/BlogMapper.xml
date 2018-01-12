@@ -122,8 +122,8 @@
   	id,title,create_time,summary,ishide  
   	from blog
   	<where>
-  		<if test="int1!=null and int1==1"><!-- int1：是否只查未影藏的 -->
-  		and ishide=0
+  		<if test="int1!=null"><!-- int1：是否隐藏 -->
+  		and ishide=#{int1}
   		</if>
   		<if test="int2!=null"><!-- int2：查看某个用户的 -->
   		and id in ( 
@@ -151,20 +151,23 @@
   	<if test="sort!=null and order!=null">
   		order by ${sort} ${order}
   	</if>
+  	<if test="sort==null and order==null">
+  		order by create_time desc
+  	</if>
   	limit ${start},${rows}
   </select>
   <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
   	select count(*) from blog
   	<where>
-  		<if test="int1!=null and int1==1"><!-- int1：是否只查未影藏的 -->
-  		and ishide=0
+  		<if test="int1!=null"><!-- int1：是否隐藏 -->
+  		and ishide=#{int1}
   		</if>
-  		<if test="int2!=null"><!-- int2：用户ID，查看某个用户的 -->
+  		<if test="int2!=null"><!-- int2：查看某个用户的 -->
   		and id in ( 
   			select b_id from blog_list_rel where bl_id in (select id from blog_list where u_id=#{int2}) 
 		)
 		</if>
-		<if test="int3!=null"><!-- int3：博客栏目id，查看某个栏目的 -->
+		<if test="int3!=null"><!-- int3：查看某个栏目的 -->
   		and id in ( 
   			select b_id from blog_list_rel where bl_id=#{int3}
 		)
@@ -189,5 +192,6 @@
     <include refid="Base_Column_List" />
     from blog
     where title = #{0}
+    order by create_time desc
   </select>
 </mapper>

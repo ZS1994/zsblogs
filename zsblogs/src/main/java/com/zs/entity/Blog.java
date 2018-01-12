@@ -23,7 +23,16 @@ public class Blog {
     private String blIds;
     private Users user;
     private String blogListNames;//所属栏目（名字）
+    private String blogListNamesA;//所属栏目（名字）超链接
     private Integer readCount;//阅读次数
+
+	public String getBlogListNamesA() {
+		return blogListNamesA;
+	}
+
+	public void setBlogListNamesA(String blogListNamesA) {
+		this.blogListNamesA = blogListNamesA;
+	}
 
 	public Integer getReadCount() {
 		return readCount;
