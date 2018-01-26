@@ -109,6 +109,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 		});
 	});
+	function gotoBlogMain(id){
+		var row=$("#dg").datagrid("getSelected");
+		var id=row.id;
+		if(row){
+	    	window.location.href="${path}/menu/blogList/blog/one?id="+id;
+		}
+    }
 	</script>
 	<style type="text/css">
 	.img-circle {
@@ -166,6 +173,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addObj()">创建博客</a>
 					<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateObj()">编辑博客</a>
 					<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteObj()">删除博客</a>
+					<a class="easyui-linkbutton" iconCls="icon-zs-forward" plain="true" onclick="gotoBlogMain()">查看该博客</a>
 					<a class="easyui-linkbutton" iconCls="icon-help" plain="true" disabled="true">帮助</a>
 				</div>
 				<div class="clear"></div>

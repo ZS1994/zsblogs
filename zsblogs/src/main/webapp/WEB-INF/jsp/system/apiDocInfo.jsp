@@ -43,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			$.each(data.params,function(index,obj){
     				str2=str2+"<tr>"+
     				"<td>"+obj.name+"</td>"+
-    				"<td><input name='"+obj.name+"' value='"+obj.eg+"' type='text' style='width: 80%;height: inherit;margin-bottom: 0px;'/></td>"+
+    				"<td><input name='"+obj.name+"' value='"+obj.eg+"' type='text' style='width: 80%;height: inherit;margin-bottom: 0px;'/></td><td><button type=\"button\" class=\"btn\" onclick=\"deleteClumn($(this))\">删除参数</button></td>"+
     				"</tr>";
     			});
     			$("#param_test").append(str2);
@@ -96,6 +96,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	function clearResult(){
     	$("#result").html("");
     }
+	function deleteClumn(clu){
+		clu.parent().parent().remove();
+		
+	}
+	function addClumn(){
+		var str=prompt("请输入name");
+		$("#tab").append("<tr><td>"+str+"</td><td><input name='"+str+"' type='text' style='width: 80%;height: inherit;margin-bottom: 0px;'/></td><td><button type=\"button\" class=\"btn\" onclick=\"deleteClumn($(this))\">删除参数</button></td></tr>");
+	}
 	</script>
 	<style type="text/css">
 	#method{
@@ -157,13 +165,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					url(完整):<input id="url_test" type="text" class="span4" style="height: inherit;"/>
 					请求方式:<input id="method_test" type="text" class="span2" style="height: inherit;"/>
 					token:<input type="text" id="token" class="span2" style="height: inherit;"/>
+					<button class="btn" type="button" style="margin-bottom: 10px;" onclick="addClumn()">添加参数</button>
 					<br>
 					<form id="http_body">
-						<table class="table table-bordered">
+						<table id="tab" class="table table-bordered">
 							<thead>
 								<tr>
 									<td>参数(key)</td>
 									<td>值(value)</td>
+									<td>操作</td>
 								</tr>
 							</thead>
 							<tbody id="param_test">
