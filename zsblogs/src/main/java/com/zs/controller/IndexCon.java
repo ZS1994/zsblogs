@@ -1,6 +1,7 @@
 package com.zs.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -162,4 +163,39 @@ public class IndexCon{
 		req.setAttribute("adId", adId);
 		return "/system/apiDocParam";
 	}
+	
+	//-----基金管理----------------------------------------
+	@RequestMapping("/fund/fundHistory")
+	public String gotoFundHistory(){
+		return "/fund/fundHistory";
+	}
+	@RequestMapping("/fund/fundInfo")
+	public String gotoFundInfo(){
+		return "/fund/fundInfo";
+	}
+	@RequestMapping("/fund/fundTrade")
+	public String gotoFundTrade(String username,HttpServletRequest req){
+		Users u=(Users) req.getAttribute(Constans.USER);
+		req.setAttribute("username", u.getName());
+		return "/fund/fundTrade";
+	}
+	//图表分析
+	@RequestMapping("/fund/fundCharts")
+	public String gotoFundCharts(HttpServletRequest req){
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd");
+		EasyUIAccept accept=new EasyUIAccept();
+		Calendar calendar=Calendar.getInstance();
+		calendar.add(Calendar.DATE, -1);
+		accept.setStr2(sdf.format(calendar.getTime()));
+		calendar.add(Calendar.DATE, -15);
+		accept.setStr1(sdf.format(calendar.getTime()));
+		Users u=(Users) req.getAttribute(Constans.USER);
+		accept.setInt1(u.getId());
+		accept.setStr3("110022");//这里传一个基金编号，本想是传该用户持有之一，但是没办法，暂时就传一个固定的
+		req.setAttribute("accept", accept);
+		return "/fund/fundCharts";
+	}
+	
 }
+
+

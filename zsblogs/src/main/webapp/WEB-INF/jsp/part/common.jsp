@@ -174,7 +174,7 @@ function save(){
 					$('#dg').datagrid('reload');
 					$("#dlg").dialog("close");
 				}else{
-					alert("错误:["+json.code+"]"+json.data);
+					alert("错误:["+json.code+"]"+json.data+"<br>"+json.describtion);
 				}
 			}else{
 				alert("错误:返回值为空。");
@@ -182,13 +182,13 @@ function save(){
 		}
 	});
 }
-function deleteObj(){
+function deleteObj(message){
 	var row=$("#dg").datagrid("getSelected");
 	var id=row.id;
 	if(row){
 		$.messager.confirm(
 			"操作提示",
-			"您确定要删除吗？",
+			message?message:"您确定要删除吗？",
 			function(data){
 				if(data){
 					$.ajax({
@@ -204,7 +204,7 @@ function deleteObj(){
 							if(json.result=='success'){
 								$('#dg').datagrid('reload');
 							}else{
-								alert("错误:["+json.code+"]"+json.data);
+								alert("错误:["+json.code+"]"+json.data+"<br>"+json.describtion);
 							}
 						}
 					});

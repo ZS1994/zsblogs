@@ -14,12 +14,16 @@ $(function(){
 });
 function validate_zs(ff){
 	var a=ff.find("select.zs-validatebox-select");
-	if(a && a.val()){
-		a.removeClass("zs-validatebox-error");
-		return true;
+	if(a.html()){
+		if(a.val()){
+			a.removeClass("zs-validatebox-error");
+			return true;
+		}else{
+			a.addClass("zs-validatebox-error");
+			a.focus();
+			return false;
+		}
 	}else{
-		a.addClass("zs-validatebox-error");
-		a.focus();
-		return false;
+		return true;
 	}
 }

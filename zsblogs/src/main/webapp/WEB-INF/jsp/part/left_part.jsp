@@ -67,7 +67,7 @@ function pullRequest(options){
 		        				if(error){
 		        					error(json.code,json.data);
 		        				}else{
-		        					alert("错误。\n错误代码："+json.code+"。\n错误参数："+json.data);
+		        					alert("错误。\n错误代码："+json.code+"。\n错误参数："+json.data+"。\n错误详情："+json.description);
 		        				}
 		        			}
 		        		}else{
@@ -268,6 +268,24 @@ img {
 	<a href="${path }/menu/system/apidoc">
 		<div class="entry">
 			api文档管理
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/15文.png">
+		</div>
+	</a>
+	<a href="${path }/menu/fund/fundInfo">
+		<div class="entry">
+			基金信息管理
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/15文.png">
+		</div>
+	</a>
+	<a href="${path }/menu/fund/fundHistory">
+		<div class="entry">
+			基金历史管理
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/15文.png">
+		</div>
+	</a>
+	<a href="${path }/menu/fund/fundTrade">
+		<div class="entry">
+			基金交易管理
 			<img class="menu_img" alt="" src="${path }/framework/image/menu/15文.png">
 		</div>
 	</a>
