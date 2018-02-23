@@ -27,4 +27,6 @@ public interface FundHistoryMapper {
     
     FundHistory selectByFiIdAndTime(@Param("fiId")String fiId,@Param("time")Date time);
     
+    Date getFirstDate(@Param("fiId")String fiId);
+    Date getEndDate(@Param("fiId")String fiId);
 }

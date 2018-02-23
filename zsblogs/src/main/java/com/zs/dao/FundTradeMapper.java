@@ -33,5 +33,4 @@ public interface FundTradeMapper {
     List<TimeValueBean> obtainTrade(@Param("begin")Date begin,@Param("end")Date end,
     		@Param("fiId")String fiId,@Param("uid")Integer uid);
     
-    
 }

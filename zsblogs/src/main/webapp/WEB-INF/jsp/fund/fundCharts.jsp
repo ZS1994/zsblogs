@@ -12,6 +12,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <jsp:include page="/WEB-INF/jsp/part/common.jsp"/>
     <script type="text/javascript" src="${path }/framework/ECharts/echarts.js"></script>
     <script type="text/javascript">
+    	var maxtotal=99999;//最大条数，尝试获取所有
    		// 基于准备好的dom，初始化echarts实例
    		var myChart;
    		// 指定图表的配置项和数据
@@ -33,6 +34,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		};
    		$(function(){
    			myChart = echarts.init($("#main")[0]);
+   			handleFundAndUser();
    			searchProfit();
    		});
     	function searchProfit(){
@@ -71,6 +73,42 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             	});
 			}
     	}
+    	function handleFundAndUser(){
+    		pullRequest({
+    			urlb:"/api/fundInfo/list",
+    			type:"GET",
+    			async:false,
+    			data:{
+    				page:1,
+    				rows:maxtotal
+    			},
+    			superSuccess:function(data){
+    				var str="";
+    				$.each(data.rows,function(i,v){
+    					str=str+"<option value='"+v.id+"'>"+"("+v.id+")"+v.name+"</option>";
+    				});
+    				$("#str1").append(str);
+    			}
+    		});
+    		pullRequest({
+    			urlb:"/api/users/list",
+    			type:"GET",
+    			async:false,
+    			data:{
+    				page:1,
+    				rows:maxtotal
+    			},
+    			superSuccess:function(data){
+    				var str="";
+    				$.each(data.rows,function(i,v){
+    					str=str+"<option value='"+v.id+"'>"+v.name+"("+v.usernum+")"+"</option>";
+    				});
+    				$("#int1").append(str);
+    			}
+    		});
+    		$("#str1").find("option[value = '${accept.str3 }']").attr("selected","selected");
+    		$("#int1").find("option[value = '${accept.int1 }']").attr("selected","selected");
+    	}
 	</script>
 	<style type="text/css">
 	.img-circle {
@@ -107,10 +145,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		   		</div>
 		   		<div class="searchBar-input">
 		    		<div>
-			    		基金编号：<input name ="str1" value="${accept.str3 }"/>
+			    		基金编号：
+			    		<%-- <input name ="str1" value="${accept.str3 }"/> --%>
+			    		<select name="str1" id="str1">
+			    			<option>--请选择--</option>
+			    		</select>
 		    		</div>
 		    		<div>
-		    			用户id：<input name ="int1" value="${accept.int1 }"/>
+		    			用户id：
+		    			<%-- <input name ="int1" value="${accept.int1 }"/> --%>
+		    			<select name="int1" id="int1">
+			    			<option>--请选择--</option>
+			    		</select>
 		    		</div>
 		   		</div>
 		   	</form>

@@ -2,13 +2,18 @@ package com.zs.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.zs.dao.FundHistoryMapper;
+import com.zs.dao.FundInfoMapper;
+import com.zs.entity.FundInfo;
 import com.zs.entity.Role;
 import com.zs.entity.Users;
 import com.zs.entity.other.EasyUIAccept;
@@ -17,6 +22,12 @@ import com.zs.tools.Constans;
 @Controller
 @RequestMapping("/menu")
 public class IndexCon{
+	
+	@Resource
+	private FundInfoMapper fundInfoMapper;
+	@Resource
+	private FundHistoryMapper fundHistoryMapper;
+	
 	
 	@RequestMapping("/index")
 	public String gotoIndex(){
@@ -184,14 +195,13 @@ public class IndexCon{
 	public String gotoFundCharts(HttpServletRequest req){
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy/MM/dd");
 		EasyUIAccept accept=new EasyUIAccept();
-		Calendar calendar=Calendar.getInstance();
-		calendar.add(Calendar.DATE, -1);
-		accept.setStr2(sdf.format(calendar.getTime()));
-		calendar.add(Calendar.DATE, -15);
-		accept.setStr1(sdf.format(calendar.getTime()));
 		Users u=(Users) req.getAttribute(Constans.USER);
+		List<FundInfo> fis=fundInfoMapper.selectAllFundByUser(u.getId());
+		String fiId=fis.size()>0?fis.get(0).getId():"110022";//这里传一个基金编号，本想是传该用户持有之一，但是没办法，暂时就传一个固定的
+		accept.setStr2(sdf.format(fundHistoryMapper.getEndDate(fiId)));
+		accept.setStr1(sdf.format(fundHistoryMapper.getFirstDate(fiId)));
 		accept.setInt1(u.getId());
-		accept.setStr3("110022");//这里传一个基金编号，本想是传该用户持有之一，但是没办法，暂时就传一个固定的
+		accept.setStr3(fiId);
 		req.setAttribute("accept", accept);
 		return "/fund/fundCharts";
 	}

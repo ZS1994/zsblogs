@@ -128,5 +128,14 @@
   	where fi_id=#{fiId} and time=#{time}
   </select>
   
+  <select id="getFirstDate" resultType="java.util.Date" >
+  	select min(time) from fund_history
+  	where fi_id=#{fiId}
+  </select>
+  
+  <select id="getEndDate" resultType="java.util.Date" >
+  	select max(time) from fund_history
+  	where fi_id=#{fiId}
+  </select>
   
 </mapper>
