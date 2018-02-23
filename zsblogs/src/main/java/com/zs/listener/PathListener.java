@@ -8,9 +8,12 @@ import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
 
+import com.zs.dao.FundHistoryMapper;
+import com.zs.dao.FundInfoMapper;
 import com.zs.service.BlogListSer;
 import com.zs.service.BlogSer;
 import com.zs.tools.CrawlerNo1;
+import com.zs.tools.CrawlerNo2;
 
 /**
  * 2017-7-19
@@ -23,6 +26,7 @@ public class PathListener implements ServletContextListener {
 	private Logger log=Logger.getLogger(getClass());
 
 	private CrawlerNo1 no1;
+	private CrawlerNo2 no2;
 	
 	/*张顺，2017-8-5，本来想使用application缓存token，从而避免每次都从数据库查，当关闭tomcat时将所有缓存存入数据库，当再次启动时，就把缓存取出
 	 * 但是，想了想，有点复杂，就留着以后再写吧，毕竟没有这个也不影响功能
@@ -45,6 +49,12 @@ public class PathListener implements ServletContextListener {
         BlogSer blogSer=(BlogSer)context.getBean("blogSer");
         BlogListSer blogListSer=(BlogListSer)context.getBean("blogListSer");
         no1=CrawlerNo1.init(blogSer,blogListSer).beginWorkThread();
+        
+        //爬虫二号
+        FundInfoMapper fundInfoMapper=(FundInfoMapper)context.getBean("fundInfoMapper");
+    	FundHistoryMapper fundHistoryMapper=(FundHistoryMapper)context.getBean("fundHistoryMapper");
+    	no2=CrawlerNo2.init(fundInfoMapper, fundHistoryMapper).beginWorkThread();
+    	
 	}
 	
 	
