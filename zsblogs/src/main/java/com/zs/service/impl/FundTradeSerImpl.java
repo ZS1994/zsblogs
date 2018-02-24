@@ -170,7 +170,7 @@ public class FundTradeSerImpl implements FundTradeSer{
 			String time=sdf.format(ft.getCreateTime());
 			TimeValueBean tvtmp=new TimeValueBean();
 			tvtmp.setTime(sdf.format(ft.getCreateTime()));
-			tvtmp.setStr1(ft.getType()+ft.getBuyMoney()+"元，"+ft.getBuyNumber()+"份");
+			tvtmp.setStr1(ft.getType()+ft.getBuyMoney()+"元，"+new BigDecimal(ft.getBuyNumber()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()+"份");
 			for (int i = 0; i < tts.size(); i++) {
 				String t=tts.get(i);
 				if (t.equals(time)) {

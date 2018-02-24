@@ -274,19 +274,19 @@ img {
 	<a href="${path }/menu/fund/fundInfo">
 		<div class="entry">
 			基金信息管理
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/15文.png">
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/16基金信息.png">
 		</div>
 	</a>
 	<a href="${path }/menu/fund/fundHistory">
 		<div class="entry">
 			基金历史管理
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/15文.png">
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/17基金历史.png">
 		</div>
 	</a>
 	<a href="${path }/menu/fund/fundTrade">
 		<div class="entry">
 			基金交易管理
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/15文.png">
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/18基金交易.png">
 		</div>
 	</a>
 	

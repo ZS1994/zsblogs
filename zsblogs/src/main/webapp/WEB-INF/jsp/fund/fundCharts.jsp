@@ -46,6 +46,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             		data:dtmp,
             		success:function(data){
             			option.title={
+           					top:20,
                		        text: data.fundName
                		    },
             			option.xAxis={
