@@ -186,21 +186,14 @@
   </resultMap>
   
   <select id="obtainHistory" resultMap="TimeValueMap">
-  	select
-  	DATE_FORMAT(cd.time,'%Y-%m-%d') as time,
-  	IFNULL(fh.netvalue,0) as dou1
-  	from(
-	  	select date as time from continuous_date
-	  	where date between #{begin} and #{end}
-	  	and DAYOFWEEK(date)!=1 and DAYOFWEEK(date)!=7
-  	)cd
-  	left join(
-  		select *
-  		from fund_history
-  		where fi_id=#{fiId}
-  	)fh
-  	on cd.time=fh.time
-  	order by cd.time
+	select
+		DATE_FORMAT(time,'%Y-%m-%d') as time,
+		IFNULL(netvalue,0) as dou1
+	from fund_history
+	where 
+		fi_id=#{fiId} and
+		time between #{begin} and #{end}
+	order by time
   </select>
   
   <select id="obtainTrade" resultMap="TimeValueMap">
@@ -210,9 +203,8 @@
   	IFNULL(ft.buy_number,0) as dou2,
   	ft.type as str1s
   	from(
-	  	select date as time from continuous_date
-	  	where date between #{begin} and #{end}
-	  	and DAYOFWEEK(date)!=1 and DAYOFWEEK(date)!=7
+	  	select time from fund_history
+	  	where time between #{begin} and #{end} and fi_id=#{fiId}
   	)cd
   	left join(
   		select *
