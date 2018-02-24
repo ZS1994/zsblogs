@@ -52,6 +52,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            					type:'category',
              			    data:data.xTime
            				};
+            			var arr1=new Array();
+            			$.each(data.marks,function(i,v){
+							arr1[i]={
+								coord:[v.time,v.dou1],
+								value:v.str1
+							};            				
+            			});
             			option.series=[
             		    	{
         	    		        name: '净值变化率',
@@ -64,7 +71,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	    		        name: '收益率',
         	    		        type: 'line',
         	    		        smooth: false,
-        	    		        data: data.yRate2
+        	    		        data: data.yRate2,
+        	    		        markPoint:{
+        	    		        	symbol:'pin',
+        	    		        	symbolSize:15,
+        	    		        	label:{
+        	    		        		offset:[0,-15],
+        	    		        		formatter: function(param){
+	        	    		        		return param.value;
+	        	    		        	},
+	        	    		        	color:'auto'
+            		    			},
+        	    		        	data:arr1
+        	    		        }
             		    	}
             		    ];
             			// 使用刚指定的配置项和数据显示图表。

@@ -1,6 +1,7 @@
 package com.zs.service.impl;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -156,10 +157,34 @@ public class FundTradeSerImpl implements FundTradeSer{
 			list2.add(rate);
 		}
 		
+		//交易标记计算
+		EasyUIAccept accept=new EasyUIAccept();
+		accept.setStart(0);
+		accept.setRows(999999);
+		accept.setStr1(fiId);
+		accept.setInt1(uid);
+		List<FundTrade> fts=fundTradeMapper.queryFenye(accept);
+		List<TimeValueBean> list3=new ArrayList<>();
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+		for (FundTrade ft : fts) {
+			String time=sdf.format(ft.getCreateTime());
+			TimeValueBean tvtmp=new TimeValueBean();
+			tvtmp.setTime(sdf.format(ft.getCreateTime()));
+			tvtmp.setStr1(ft.getType()+ft.getBuyMoney()+"元，"+ft.getBuyNumber()+"份");
+			for (int i = 0; i < tts.size(); i++) {
+				String t=tts.get(i);
+				if (t.equals(time)) {
+					tvtmp.setDou1(list2.get(i));
+				}
+			}
+			list3.add(tvtmp);
+		}
+		
 		profit.setFundName(fi.getName()+"("+fi.getId()+")");
 		profit.setxTime(tts);
 		profit.setyRate1(list1);
 		profit.setyRate2(list2);
+		profit.setMarks(list3);
 		
 		return profit;
 	}

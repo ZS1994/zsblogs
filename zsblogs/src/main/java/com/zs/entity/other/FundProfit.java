@@ -8,8 +8,15 @@ public class FundProfit {
 	private List<String> xTime;//x轴，时间
 	private List<Double> yRate1;
 	private List<Double> yRate2;
+	private List<TimeValueBean> marks;//标记
 	
 	
+	public List<TimeValueBean> getMarks() {
+		return marks;
+	}
+	public void setMarks(List<TimeValueBean> marks) {
+		this.marks = marks;
+	}
 	public String getFundName() {
 		return fundName;
 	}
