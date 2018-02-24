@@ -10,6 +10,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.zs.dao.FundHistoryMapper;
 import com.zs.dao.FundInfoMapper;
+import com.zs.dao.TimelineMapper;
 import com.zs.service.BlogListSer;
 import com.zs.service.BlogSer;
 import com.zs.tools.CrawlerNo1;
@@ -53,7 +54,9 @@ public class PathListener implements ServletContextListener {
         //爬虫二号
         FundInfoMapper fundInfoMapper=(FundInfoMapper)context.getBean("fundInfoMapper");
     	FundHistoryMapper fundHistoryMapper=(FundHistoryMapper)context.getBean("fundHistoryMapper");
-    	no2=CrawlerNo2.init(fundInfoMapper, fundHistoryMapper).beginWorkThread();
+    	
+    	TimelineMapper timelineMapper=(TimelineMapper)context.getBean("timelineMapper");
+    	no2=CrawlerNo2.init(fundInfoMapper, fundHistoryMapper,timelineMapper).beginWorkThread();
     	
 	}
 	
