@@ -24,6 +24,7 @@ import com.zs.entity.other.EasyUIPage;
 import com.zs.entity.other.FundProfit;
 import com.zs.entity.other.TimeValueBean;
 import com.zs.service.FundTradeSer;
+import com.zs.tools.Trans;
 
 @Service("fundTradeSer")
 public class FundTradeSerImpl implements FundTradeSer{
@@ -180,7 +181,19 @@ public class FundTradeSerImpl implements FundTradeSer{
 			list3.add(tvtmp);
 		}
 		
-		profit.setFundName(fi.getName()+"("+fi.getId()+")");
+		//计算本金、当前资金、份额、盈亏
+		Double bj=0.0;
+		Double dqzj=0.0;
+		Double cyfe=0.0;
+		Double yk=0.0;
+		for (FundTrade ft : fts) {
+			bj=bj+ft.getBuyMoney();
+			cyfe=cyfe+ft.getBuyNumber();
+		}
+		dqzj=cyfe*tv1.get(tv1.size()-1).getDou1();
+		yk=dqzj-bj;
+		
+		profit.setFundName(fi.getName()+"("+fi.getId()+")\r\n本金:"+bj+"元  当前资金:"+Trans.omissionDecimal(dqzj, 2)+"元  持有份额:"+Trans.omissionDecimal(cyfe,2)+"份  盈亏:"+Trans.omissionDecimal(yk,2)+"元");
 		profit.setxTime(tts);
 		profit.setyRate1(list1);
 		profit.setyRate2(list2);

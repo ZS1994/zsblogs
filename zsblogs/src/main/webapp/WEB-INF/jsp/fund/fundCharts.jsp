@@ -29,7 +29,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		    	}
    		    },
    		    legend: {
+   		    	top: 60,
    		        data:['净值变化率','收益率']
+   		    },
+   		 	grid: {
+   		 		top: 100 
    		    }
    		};
    		$(function(){
@@ -46,7 +50,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             		data:dtmp,
             		success:function(data){
             			option.title={
-           					top:20,
+           					left: 'center',
+           					textStyle:{
+           						fontWeight:'normal',
+           						fontSize:14
+           					},
                		        text: data.fundName
                		    },
             			option.xAxis={

@@ -272,4 +272,11 @@ public class Trans {
 	public static boolean StrEmpty(String str) {
 		return str==null || (str!=null && str.trim().equals(""));
 	}
+	
+	//省略多少小数位
+	public static Double omissionDecimal(Double d,int n){
+		return new BigDecimal(d).setScale(n, BigDecimal.ROUND_HALF_UP).doubleValue();
+	}
+	
+	
 }
