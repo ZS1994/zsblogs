@@ -199,7 +199,7 @@ public class FundTradeSerImpl implements FundTradeSer{
 				}
 			}
 			tvtmp.setStr2(ft.getType().equals("赎回")?"blue":"red");
-			tvtmp.setStr3("pin");
+			tvtmp.setStr3("circle");
 			list3.add(tvtmp);
 		}
 		//交易标记计算2:算补仓和卖出时机标记
@@ -217,11 +217,13 @@ public class FundTradeSerImpl implements FundTradeSer{
 					}
 				}
 				if (isHas) {
-					tvtmp.setStr1(tvtmp.getStr1()+"\n[推荐补仓:"+(listJinE.get(i)*0.3)+"元]");
+					if (!tvtmp.getStr1().contains("补仓")) {
+						tvtmp.setStr1(tvtmp.getStr1()+"\n[推荐补仓]");
+					}
 				}else{
 					TimeValueBean tv=new TimeValueBean();
 					tv.setTime(tts.get(i));
-					tv.setStr1("[推荐补仓:"+(Trans.omissionDecimal(listJinE.get(i)*0.3, 0) )+"元]");
+					tv.setStr1("[推荐补仓:"+Trans.omissionDecimal(listJinE.get(i)*0.3, 0)+"元]");
 					tv.setDou1(list2.get(i));
 					tv.setStr2("purple");
 					tv.setStr3("diamond");
