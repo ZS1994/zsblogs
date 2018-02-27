@@ -221,7 +221,7 @@ public class FundTradeSerImpl implements FundTradeSer{
 				}else{
 					TimeValueBean tv=new TimeValueBean();
 					tv.setTime(tts.get(i));
-					tv.setStr1("[推荐补仓:"+(listJinE.get(i)*0.3)+"元]");
+					tv.setStr1("[推荐补仓:"+(Trans.omissionDecimal(listJinE.get(i)*0.3, 0) )+"元]");
 					tv.setDou1(list2.get(i));
 					tv.setStr2("purple");
 					tv.setStr3("diamond");

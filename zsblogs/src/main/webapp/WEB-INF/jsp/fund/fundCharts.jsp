@@ -58,8 +58,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             		    	formatter:function(params,ticket,callback){
             		    		console.log(params);
             		    		return params[0].axisValue+
-            		    			"<br><font color='"+params[0].color+"'>"+params[0].seriesName+"</font>:"+params[0].data+"%"+
-            		    			"<br><font color='"+params[1].color+"'>"+params[1].seriesName+"</font>:"+params[1].data+"%(同比:"+data.yRate3[params[1].dataIndex]+"%)";
+            		    			"<br><div class='biaodian' style='background-color:"+params[0].color+";'></div>"+params[0].seriesName+"："+params[0].data+"%"+
+            		    			"<br><div class='biaodian' style='background-color:"+params[1].color+";'></div>"+params[1].seriesName+"："+params[1].data+"%（同比:"+data.yRate3[params[1].dataIndex]+"%）";
             		    	}
             		    };
             			option.xAxis={
@@ -161,6 +161,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    vertical-align: middle;
 	    border: 0;
 	    -ms-interpolation-mode: bicubic;
+	}
+	.biaodian{
+		float:left;
+		width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        margin-top: 6px;
+        margin-right: 4px;
 	}
 	</style>
   </head>
