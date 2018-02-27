@@ -129,6 +129,9 @@ public class FundTradeSerImpl implements FundTradeSer{
 		List<String> tts=new ArrayList<>();
 		List<Double> list1=new ArrayList<>();
 		List<Double> list2=new ArrayList<>();
+		List<Double> list4=new ArrayList<>();
+		List<Double> listJinE=new ArrayList<>();//金额
+		List<Double> listFenE=new ArrayList<>();//份额
 		list1.add(0.0);
 		list2.add(0.0);
 		
@@ -145,11 +148,16 @@ public class FundTradeSerImpl implements FundTradeSer{
 		//这个是求利润率的,dou1是金额，dou2是份额，str1是类型
 		Double jine=tv2.get(0).getDou1();
 		Double fene=tv2.get(0).getDou2();
+		listJinE.add(jine);
+		listFenE.add(fene);
 		for (int i = 1; i < tv2.size(); i++) {
 			TimeValueBean lt=tv2.get(i-1);
 			TimeValueBean nt=tv2.get(i);
 			jine=jine+nt.getDou1();
 			fene=fene+nt.getDou2();
+			
+			listJinE.add(jine);
+			listFenE.add(fene);
 			
 			//当前的净值
 			Double jingzhi=tv1.get(i).getDou1();
@@ -158,7 +166,19 @@ public class FundTradeSerImpl implements FundTradeSer{
 			list2.add(rate);
 		}
 		
-		//交易标记计算
+		//计算利润率同比
+		for (int i = 0; i < list2.size(); i++) {
+			Double d=list2.get(i);
+			Double dl=i-1>=0?list2.get(i-1):0.0;
+			if (d==0.0 || dl==0.0) {
+				list4.add(0.0);
+			}else{
+				Double rate=new BigDecimal(d-dl).divide(new BigDecimal(Math.abs(dl)), 4,BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)).doubleValue();
+				list4.add(rate);
+			}
+		}
+		
+		//交易标记计算1:算交易标记
 		EasyUIAccept accept=new EasyUIAccept();
 		accept.setStart(0);
 		accept.setRows(999999);
@@ -178,7 +198,36 @@ public class FundTradeSerImpl implements FundTradeSer{
 					tvtmp.setDou1(list2.get(i));
 				}
 			}
+			tvtmp.setStr2(ft.getType().equals("赎回")?"blue":"red");
+			tvtmp.setStr3("pin");
 			list3.add(tvtmp);
+		}
+		//交易标记计算2:算补仓和卖出时机标记
+		for (int i = 0; i < list4.size(); i++) {
+			Double d=list4.get(i);
+			if (d<=-20.0) {
+				//看一下有没有这个时间点的标记
+				boolean isHas=false;
+				TimeValueBean tvtmp=null;
+				for (TimeValueBean tvt : list3) {
+					if (tvt.getTime().equals(tts.get(i))) {
+						isHas=true;
+						tvtmp=tvt;
+						break;
+					}
+				}
+				if (isHas) {
+					tvtmp.setStr1(tvtmp.getStr1()+"\n[推荐补仓:"+(listJinE.get(i)*0.3)+"元]");
+				}else{
+					TimeValueBean tv=new TimeValueBean();
+					tv.setTime(tts.get(i));
+					tv.setStr1("[推荐补仓:"+(listJinE.get(i)*0.3)+"元]");
+					tv.setDou1(list2.get(i));
+					tv.setStr2("purple");
+					tv.setStr3("diamond");
+					list3.add(tv);
+				}
+			}
 		}
 		
 		//计算本金、当前资金、份额、盈亏
@@ -198,6 +247,7 @@ public class FundTradeSerImpl implements FundTradeSer{
 		profit.setyRate1(list1);
 		profit.setyRate2(list2);
 		profit.setMarks(list3);
+		profit.setyRate3(list4);
 		
 		return profit;
 	}

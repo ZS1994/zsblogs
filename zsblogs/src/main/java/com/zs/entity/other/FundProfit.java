@@ -6,10 +6,10 @@ public class FundProfit {
 
 	private String fundName;//名称
 	private List<String> xTime;//x轴，时间
-	private List<Double> yRate1;
-	private List<Double> yRate2;
+	private List<Double> yRate1;//涨幅
+	private List<Double> yRate2;//收益率
 	private List<TimeValueBean> marks;//标记
-	
+	private List<Double> yRate3;//收益率同比
 	
 	public List<TimeValueBean> getMarks() {
 		return marks;
@@ -41,12 +41,28 @@ public class FundProfit {
 	public void setyRate2(List<Double> yRate2) {
 		this.yRate2 = yRate2;
 	}
+	public List<Double> getyRate3() {
+		return yRate3;
+	}
+	public void setyRate3(List<Double> yRate3) {
+		this.yRate3 = yRate3;
+	}
 	public FundProfit(String fundName, List<String> xTime, List<Double> yRate1, List<Double> yRate2) {
 		super();
 		this.fundName = fundName;
 		this.xTime = xTime;
 		this.yRate1 = yRate1;
 		this.yRate2 = yRate2;
+	}
+	public FundProfit(String fundName, List<String> xTime, List<Double> yRate1, List<Double> yRate2,
+			List<TimeValueBean> marks, List<Double> yRate3) {
+		super();
+		this.fundName = fundName;
+		this.xTime = xTime;
+		this.yRate1 = yRate1;
+		this.yRate2 = yRate2;
+		this.marks = marks;
+		this.yRate3 = yRate3;
 	}
 	public FundProfit() {
 		super();

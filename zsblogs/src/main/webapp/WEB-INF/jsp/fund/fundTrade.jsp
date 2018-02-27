@@ -13,7 +13,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <jsp:include page="/WEB-INF/jsp/part/common.jsp"/>
     <script type="text/javascript">
 	url="${path}/api/fundTrade";
+	var maxtotal=99999;//最大条数，尝试获取所有
 	$(function(){
+		pullRequest({
+			urlb:"/api/fundInfo/list",
+			type:"GET",
+			async:false,
+			data:{
+				page:1,
+				rows:maxtotal
+			},
+			superSuccess:function(data){
+				var str="";
+				$.each(data.rows,function(i,v){
+					str=str+"<option value='"+v.id+"'>"+"("+v.id+")"+v.name+"</option>";
+				});
+				$("#str1").append(str);
+			}
+		});
 		//直接查一次，不查的话第一次进入默认是不查的
 		search_toolbar_2();
 	});
@@ -96,7 +113,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   		</div>
 			   		<div class="searchBar-input">
 			    		<div>
-				    		基金编号：<input name ="str1" />
+				    		基金：
+				    		<select  id="str1" name ="str1">
+				    			<option value="">--请选择--</option>
+				    		</select>
 			    		</div>
 			    		<div>
 			    			用户：<input name ="str2" value="${username }"/>

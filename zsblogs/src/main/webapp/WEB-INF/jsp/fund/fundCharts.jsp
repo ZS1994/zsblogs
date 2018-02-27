@@ -18,10 +18,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		// 指定图表的配置项和数据
    		var option = {
    		    color:['#0080C0','#F90000'],
-   		    tooltip:{
-   		    	trigger: 'axis',
-   		    	formatter:'{b}<br/>{a0}: {c0}%<br/>{a1}: {c1}%'
-   		    },
    		    yAxis:{
    		    	type: 'value',
    		    	axisLabel:{
@@ -56,7 +52,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
            						fontSize:14
            					},
                		        text: data.fundName
-               		    },
+               		    };
+               		 	option.tooltip={
+            		    	trigger: 'axis',
+            		    	formatter:function(params,ticket,callback){
+            		    		console.log(params);
+            		    		return params[0].axisValue+
+            		    			"<br><font color='"+params[0].color+"'>"+params[0].seriesName+"</font>:"+params[0].data+"%"+
+            		    			"<br><font color='"+params[1].color+"'>"+params[1].seriesName+"</font>:"+params[1].data+"%(同比:"+data.yRate3[params[1].dataIndex]+"%)";
+            		    	}
+            		    };
             			option.xAxis={
            					type:'category',
              			    data:data.xTime
@@ -65,7 +70,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             			$.each(data.marks,function(i,v){
 							arr1[i]={
 								coord:[v.time,v.dou1],
-								value:v.str1
+								value:v.str1,
+								symbol:v.str3,
+								label:{
+									color:v.str2
+								},
+								itemStyle:{
+									color:v.str2
+								}
 							};            				
             			});
             			option.series=[
@@ -73,7 +85,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	    		        name: '净值变化率',
         	    		        type: 'line',
         	    		        smooth: false,
-        	    		        color:"",
         	    		        data: data.yRate1
             		    	},
             		    	{
@@ -82,14 +93,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	    		        smooth: false,
         	    		        data: data.yRate2,
         	    		        markPoint:{
-        	    		        	symbol:'pin',
         	    		        	symbolSize:15,
         	    		        	label:{
         	    		        		offset:[0,-15],
         	    		        		formatter: function(param){
 	        	    		        		return param.value;
 	        	    		        	},
-	        	    		        	color:'auto'
+	        	    		        	fontWeight:'bold'
             		    			},
         	    		        	data:arr1
         	    		        }

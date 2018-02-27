@@ -15,7 +15,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	url="${path}/api/fundHistory";
 	var maxtotal=99999;//最大条数，尝试获取所有
 	$(function(){
-		//直接查一次，不查的话第一次进入默认是不查的
 		pullRequest({
 			urlb:"/api/fundInfo/list",
 			type:"GET",
@@ -32,6 +31,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				$("#str1").append(str);
 			}
 		});
+		//直接查一次，不查的话第一次进入默认是不查的
 		search_toolbar_2();
 	});
 	function styleRate(val){
