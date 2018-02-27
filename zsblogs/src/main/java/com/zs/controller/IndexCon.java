@@ -2,6 +2,7 @@ package com.zs.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -198,8 +199,14 @@ public class IndexCon{
 		Users u=(Users) req.getAttribute(Constans.USER);
 		List<FundInfo> fis=fundInfoMapper.selectAllFundByUser(u.getId());
 		String fiId=fis.size()>0?fis.get(0).getId():"110022";//这里传一个基金编号，本想是传该用户持有之一，但是没办法，暂时就传一个固定的
-		accept.setStr2(sdf.format(fundHistoryMapper.getEndDate(fiId)));
-		accept.setStr1(sdf.format(fundHistoryMapper.getFirstDate(fiId)));
+		Date edate=fundHistoryMapper.getEndDate(fiId);
+		//这里默认显示最近一个月的数据
+		accept.setStr2(sdf.format(edate));
+		Calendar calendar=Calendar.getInstance();
+		calendar.setTime(edate);
+		calendar.add(Calendar.MONTH, -1);
+		Date bdate=calendar.getTime();
+		accept.setStr1(sdf.format(bdate));
 		accept.setInt1(u.getId());
 		accept.setStr3(fiId);
 		req.setAttribute("accept", accept);

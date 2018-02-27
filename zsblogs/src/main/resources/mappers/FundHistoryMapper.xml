@@ -6,9 +6,10 @@
     <result column="fi_id" property="fiId" jdbcType="VARCHAR" />
     <result column="time" property="time" jdbcType="DATE" />
     <result column="netvalue" property="netvalue" jdbcType="DOUBLE" />
+    <result column="rate" property="rate" jdbcType="DOUBLE" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, fi_id, time, netvalue
+    id, fi_id, time, netvalue, rate
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -22,9 +23,9 @@
   </delete>
   <insert id="insert" parameterType="com.zs.entity.FundHistory" >
     insert into fund_history (id, fi_id, time, 
-      netvalue)
+      netvalue, rate)
     values (#{id,jdbcType=INTEGER}, #{fiId,jdbcType=VARCHAR}, #{time,jdbcType=DATE}, 
-      #{netvalue,jdbcType=DOUBLE})
+      #{netvalue,jdbcType=DOUBLE}, #{rate,jdbcType=DOUBLE})
   </insert>
   <insert id="insertSelective" parameterType="com.zs.entity.FundHistory" >
     insert into fund_history
@@ -41,6 +42,9 @@
       <if test="netvalue != null" >
         netvalue,
       </if>
+      <if test="rate != null" >
+        rate,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -54,6 +58,9 @@
       </if>
       <if test="netvalue != null" >
         #{netvalue,jdbcType=DOUBLE},
+      </if>
+      <if test="rate != null" >
+        #{rate,jdbcType=DOUBLE},
       </if>
     </trim>
   </insert>
@@ -69,6 +76,9 @@
       <if test="netvalue != null" >
         netvalue = #{netvalue,jdbcType=DOUBLE},
       </if>
+      <if test="rate != null" >
+        rate = #{rate,jdbcType=DOUBLE},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -76,7 +86,8 @@
     update fund_history
     set fi_id = #{fiId,jdbcType=VARCHAR},
       time = #{time,jdbcType=DATE},
-      netvalue = #{netvalue,jdbcType=DOUBLE}
+      netvalue = #{netvalue,jdbcType=DOUBLE},
+      rate = #{rate,jdbcType=DOUBLE}
     where id = #{id,jdbcType=INTEGER}
   </update>
   

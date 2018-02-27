@@ -13,10 +13,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <jsp:include page="/WEB-INF/jsp/part/common.jsp"/>
     <script type="text/javascript">
 	url="${path}/api/fundHistory";
+	var maxtotal=99999;//最大条数，尝试获取所有
 	$(function(){
 		//直接查一次，不查的话第一次进入默认是不查的
+		pullRequest({
+			urlb:"/api/fundInfo/list",
+			type:"GET",
+			async:false,
+			data:{
+				page:1,
+				rows:maxtotal
+			},
+			superSuccess:function(data){
+				var str="";
+				$.each(data.rows,function(i,v){
+					str=str+"<option value='"+v.id+"'>"+"("+v.id+")"+v.name+"</option>";
+				});
+				$("#str1").append(str);
+			}
+		});
 		search_toolbar_2();
 	});
+	function styleRate(val){
+		if (val>0) {
+			return "<font color='red'>"+val+"%</font>";
+		}else if(val<0){
+			return "<font color='green'>"+val+"%</font>";
+		}else{
+			return "<font color='black'>"+val+"%</font>";
+		}
+	}
 	</script>
 	<style type="text/css">
 	.img-circle {
@@ -60,6 +86,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		             	}">基金</th>
 						<th field="time" width="200" sortable="true">时间</th>
 						<th field="netvalue" width="200" sortable="true">净值</th>
+						<th field="rate" width="200" sortable="true" data-options="
+						formatter:function(value,row,index){
+							return styleRate(value);
+		             	}">涨幅</th>
 					</tr>
 				</thead>
 			</table>
@@ -83,10 +113,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   		</div>
 			   		<div class="searchBar-input">
 			    		<div>
-				    		基金编号：<input name ="str1" />
-			    		</div>
-			    		<div>
-			    			基金名称：<input name ="str2" />
+				    		基金：
+				    		<select  id="str1" name ="str1">
+				    			<option value="">--请选择--</option>
+				    		</select>
 			    		</div>
 			   		</div>
 			   	</form>

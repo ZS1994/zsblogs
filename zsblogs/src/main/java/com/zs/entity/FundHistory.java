@@ -13,6 +13,8 @@ public class FundHistory {
 
     private Double netvalue;
 
+    private Double rate;
+    
     //--------------------
     private FundInfo fi;
     
@@ -58,6 +60,15 @@ public class FundHistory {
 
     public FundHistory setNetvalue(Double netvalue) {
         this.netvalue = netvalue;
+        return this;
+    }
+    
+    public Double getRate() {
+        return rate;
+    }
+
+    public FundHistory setRate(Double rate) {
+        this.rate = rate;
         return this;
     }
 }

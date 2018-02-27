@@ -32,7 +32,7 @@ public class CrawlerNo2 implements Runnable{
 	private boolean isBegin=true;//是否开始,默认开启
 	private Gson gson=new Gson();
 	private Logger log=Logger.getLogger(getClass());
-	
+	private SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 	
 	private CrawlerNo2() {
 		super();
@@ -103,22 +103,25 @@ public class CrawlerNo2 implements Runnable{
 							str=str.substring(0, str.length()-1);
 							JSONObject jsonObject=JSONObject.parseObject(str);
 							Document doc=Jsoup.parse(jsonObject.get("content").toString());
-							Elements summaryE=doc.select("tr td:eq(1)");
-							Elements summaryD=doc.select("tr td:eq(0)");
+								
+							Elements summaryE=doc.select("tr:eq(0) td:eq(1)");
+							Elements summaryD=doc.select("tr:eq(0) td:eq(0)");
+							Elements summaryR=doc.select("tr:eq(0) td:eq(3)");
 							
-							Double nv=Double.valueOf(summaryE.html());
-							Date d=new SimpleDateFormat("yyyy-MM-dd").parse(summaryD.html());
-//							log.error(jsonObject.get("content"));
-//							log.error(nv);
-//							log.error(d.toLocaleString());
+							Double nv=summaryE.html().trim().equals("")?0.00:Double.valueOf(summaryE.html());
+							Date d=summaryD.html().trim().equals("")?sdf.parse("2018-1-2"):sdf.parse(summaryD.html());
+							Double rate=summaryR.html().trim().equals("")?0.00:Double.valueOf(summaryR.html().replaceAll("%", ""));
+							
+//							log.error(summaryD.html()+"    "+d.toLocaleString());
+							
 							//尝试插入
-							FundHistory history=new FundHistory().setFiId(fi.getId()).setNetvalue(nv).setTime(d);
+							FundHistory history=new FundHistory().setFiId(fi.getId()).setNetvalue(nv).setTime(d).setRate(rate);
 							try {
 								fundHistoryMapper.insert(history);
 								Timeline tl=new Timeline();
 								tl.setCreateTime(new Date());
 								tl.setuId(97);//目前就我，后面给它建个账号
-								tl.setpId(79);//基金历史单条添加
+								tl.setpId(79);//操作：基金历史单条添加
 								tl.setInfo(gson.toJson(history));
 								timelineMapper.insert(tl);
 							} catch (Exception e) {
