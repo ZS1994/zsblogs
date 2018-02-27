@@ -231,6 +231,34 @@ public class FundTradeSerImpl implements FundTradeSer{
 				}
 			}
 		}
+		//交易标记3：赎回时机计算
+		for (int j = 0; j < list2.size(); j++) {
+			Double rate=list2.get(j);
+			if (rate>=12.0) {
+				boolean isHas=false;
+				TimeValueBean tvtmp=null;
+				for (TimeValueBean tvt : list3) {
+					if (tvt.getTime().equals(tts.get(j))) {
+						isHas=true;
+						tvtmp=tvt;
+						break;
+					}
+				}
+				if (isHas) {
+					if (!tvtmp.getStr1().contains("赎回")) {
+						tvtmp.setStr1(tvtmp.getStr1()+"\n[推荐赎回]");
+					}
+				}else{
+					TimeValueBean tv=new TimeValueBean();
+					tv.setTime(tts.get(j));
+					tv.setStr1("[推荐赎回:"+Trans.omissionDecimal(tv1.get(j).getDou1()*listFenE.get(j)-listJinE.get(j), 0)+"元]");
+					tv.setDou1(list2.get(j));
+					tv.setStr2("sienna ");
+					tv.setStr3("diamond");
+					list3.add(tv);
+				}
+			}
+		}
 		
 		//计算本金、当前资金、份额、盈亏
 		Double bj=0.0;
