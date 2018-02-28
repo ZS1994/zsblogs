@@ -97,34 +97,34 @@ public class CrawlerNo2 implements Runnable{
 						List<FundInfo> fis=fundInfoMapper.queryFenye(accept);
 						for (FundInfo fi : fis) {
 							//找到该基金的当日净值
-							String url="http://fund.eastmoney.com/f10/F10DataApi.aspx?type=lsjz&code="+fi.getId()+"&page=1&per=1&sdate=&edate=";
+							String url="http://fund.eastmoney.com/f10/F10DataApi.aspx?type=lsjz&code="+fi.getId()+"&page=1&per=100&sdate=&edate=";
 							String str=HttpClientReq.httpGet(url, null,null);
 							str=str.replaceFirst("var apidata=", "");
 							str=str.substring(0, str.length()-1);
 							JSONObject jsonObject=JSONObject.parseObject(str);
 							Document doc=Jsoup.parse(jsonObject.get("content").toString());
+							
+							for (int i = 0; i < 100; i++) {
+								Elements summaryE=doc.select("tr:eq("+i+") td:eq(1)");
+								Elements summaryD=doc.select("tr:eq("+i+") td:eq(0)");
+								Elements summaryR=doc.select("tr:eq("+i+") td:eq(3)");
 								
-							Elements summaryE=doc.select("tr:eq(0) td:eq(1)");
-							Elements summaryD=doc.select("tr:eq(0) td:eq(0)");
-							Elements summaryR=doc.select("tr:eq(0) td:eq(3)");
-							
-							Double nv=summaryE.html().trim().equals("")?0.00:Double.valueOf(summaryE.html());
-							Date d=summaryD.html().trim().equals("")?sdf.parse("2018-1-2"):sdf.parse(summaryD.html());
-							Double rate=summaryR.html().trim().equals("")?0.00:Double.valueOf(summaryR.html().replaceAll("%", ""));
-							
-//							log.error(summaryD.html()+"    "+d.toLocaleString());
-							
-							//尝试插入
-							FundHistory history=new FundHistory().setFiId(fi.getId()).setNetvalue(nv).setTime(d).setRate(rate);
-							try {
-								fundHistoryMapper.insert(history);
-								Timeline tl=new Timeline();
-								tl.setCreateTime(new Date());
-								tl.setuId(97);//目前就我，后面给它建个账号
-								tl.setpId(79);//操作：基金历史单条添加
-								tl.setInfo(gson.toJson(history));
-								timelineMapper.insert(tl);
-							} catch (Exception e) {
+								Double nv=summaryE.html().trim().equals("")?0.00:Double.valueOf(summaryE.html());
+								Date d=summaryD.html().trim().equals("")?sdf.parse("2018-1-2"):sdf.parse(summaryD.html());
+								Double rate=summaryR.html().trim().equals("")?0.00:Double.valueOf(summaryR.html().replaceAll("%", ""));
+								
+								//尝试插入
+								FundHistory history=new FundHistory().setFiId(fi.getId()).setNetvalue(nv).setTime(d).setRate(rate);
+								try {
+									fundHistoryMapper.insert(history);
+									Timeline tl=new Timeline();
+									tl.setCreateTime(new Date());
+									tl.setuId(97);//目前就我，后面给它建个账号
+									tl.setpId(79);//操作：基金历史单条添加
+									tl.setInfo(gson.toJson(history));
+									timelineMapper.insert(tl);
+								} catch (Exception e) {
+								}
 							}
 						}
 					} catch (Exception e) {
