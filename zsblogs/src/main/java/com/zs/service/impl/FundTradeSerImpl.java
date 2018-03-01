@@ -161,8 +161,7 @@ public class FundTradeSerImpl implements FundTradeSer{
 			
 			//当前的净值
 			Double jingzhi=tv1.get(i).getDou1();
-			
-			Double rate=new BigDecimal(jine).compareTo(new BigDecimal(0))!=0?new BigDecimal(fene*jingzhi-jine).divide(new BigDecimal(jine),4, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)).doubleValue():0.0;
+			Double rate=new BigDecimal(jine).setScale(2, BigDecimal.ROUND_HALF_UP).compareTo(new BigDecimal(0))!=0 && new BigDecimal(fene).setScale(2, BigDecimal.ROUND_HALF_UP).compareTo(new BigDecimal(0))!=0?new BigDecimal(fene*jingzhi-jine).divide(new BigDecimal(jine),4, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)).doubleValue():0.0;
 			list2.add(rate);
 		}
 		
@@ -191,7 +190,7 @@ public class FundTradeSerImpl implements FundTradeSer{
 			String time=sdf.format(ft.getCreateTime());
 			TimeValueBean tvtmp=new TimeValueBean();
 			tvtmp.setTime(sdf.format(ft.getCreateTime()));
-			tvtmp.setStr1(ft.getType()+ft.getBuyMoney()+"元，"+new BigDecimal(ft.getBuyNumber()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()+"份");
+			tvtmp.setStr1(ft.getType()+Trans.omissionDecimal(ft.getBuyMoney(), 2)+"元，"+new BigDecimal(ft.getBuyNumber()).setScale(2, BigDecimal.ROUND_HALF_UP).toString()+"份");
 			for (int i = 0; i < tts.size(); i++) {
 				String t=tts.get(i);
 				if (t.equals(time)) {
@@ -217,9 +216,7 @@ public class FundTradeSerImpl implements FundTradeSer{
 					}
 				}
 				if (isHas) {
-					if (!tvtmp.getStr1().contains("补仓")) {
-						tvtmp.setStr1(tvtmp.getStr1()+"\n[推荐补仓]");
-					}
+					tvtmp.setStr1(tvtmp.getStr1()+"\n[推荐补仓]");
 				}else{
 					TimeValueBean tv=new TimeValueBean();
 					tv.setTime(tts.get(i));
@@ -245,13 +242,11 @@ public class FundTradeSerImpl implements FundTradeSer{
 					}
 				}
 				if (isHas) {
-					if (!tvtmp.getStr1().contains("赎回")) {
-						tvtmp.setStr1(tvtmp.getStr1()+"\n[推荐赎回]");
-					}
+					tvtmp.setStr1(tvtmp.getStr1()+"\n[推荐赎回]");
 				}else{
 					TimeValueBean tv=new TimeValueBean();
 					tv.setTime(tts.get(j));
-					tv.setStr1("[推荐赎回:"+Trans.omissionDecimal(tv1.get(j).getDou1()*listFenE.get(j)-listJinE.get(j), 0)+"元]");
+					tv.setStr1("[推荐赎回:"+Trans.omissionDecimal(tv1.get(j).getDou1()*listFenE.get(j)-listJinE.get(j), 0)+"元，"+Trans.omissionDecimal((tv1.get(j).getDou1()*listFenE.get(j)-listJinE.get(j))/tv1.get(j).getDou1(), 2)+"份]");
 					tv.setDou1(list2.get(j));
 					tv.setStr2("sienna ");
 					tv.setStr3("diamond");
@@ -272,7 +267,7 @@ public class FundTradeSerImpl implements FundTradeSer{
 		dqzj=cyfe*tv1.get(tv1.size()-1).getDou1();
 		yk=dqzj-bj;
 		
-		profit.setFundName(fi.getName()+"("+fi.getId()+")\r\n本金:"+bj+"元  当前资金:"+Trans.omissionDecimal(dqzj, 2)+"元  持有份额:"+Trans.omissionDecimal(cyfe,2)+"份  盈亏:"+Trans.omissionDecimal(yk,2)+"元");
+		profit.setFundName(fi.getName()+"("+fi.getId()+")\r\n本金:"+Trans.omissionDecimal(bj, 2)+"元  当前资金:"+Trans.omissionDecimal(dqzj, 2)+"元  持有份额:"+Trans.omissionDecimal(cyfe,2)+"份  盈亏:"+Trans.omissionDecimal(yk,2)+"元");
 		profit.setxTime(tts);
 		profit.setyRate1(list1);
 		profit.setyRate2(list2);
