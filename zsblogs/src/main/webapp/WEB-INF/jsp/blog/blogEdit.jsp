@@ -10,16 +10,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
   	<jsp:include page="/WEB-INF/jsp/part/include_bootstrap.jsp"/>
 	<link rel="stylesheet" type="text/css" href="${path }/framework/css/blog.css">
+	<!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
+    <script type="text/javascript" src="${path }/framework/wangEditor/wangEditor.min.js"></script>
     <base href="<%=basePath%>">
     <title>编辑博客</title>
     <script type="text/javascript">
     var result_hint_num=1;//提示框计数器
     var id="${id}";
+    var E = window.wangEditor;
+    var editor = new E('#blog_content');
     $(function(){
     	//获取博客栏目
     	pullRequest({
     		urlb:"/api/blogList/user/all",
     		type:"get",
+    		async:false,
     		success:function(data){
     			var str="";
     			for(var i=0;i<data.length;i++){
@@ -34,10 +39,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		pullRequest({
     			urlb:"/api/blog/one",
     			type:"get",
+    			async:false,
     			data:{id:id},
     			success:function(data){
     				$("#ff [name='title']").val(data.title);
-    				$("#ff [name='content']").val(data.content);
+    				$("#ff [name='content']").html(data.content);
     				$("#ff [name='summary']").val(data.summary);
     				$("#ff [name='ishide'][value='"+data.ishide+"']").attr("checked","checked");
     				var blidss=data.blIds.split(",");
@@ -47,10 +53,46 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			}
     		});
     	}
+    	
+    	editor.customConfig.uploadImgShowBase64 = true;
+    	editor.customConfig.menus = [
+    		'head',  // 标题
+    	    'bold',  // 粗体
+    	    'foreColor',  // 文字颜色
+    	    'list',  // 列表
+    	    'justify',  // 对齐方式
+    	    'quote',  // 引用
+    	    'emoticon',  // 表情
+    	    'image',  // 插入图片
+    	    'table',  // 表格
+    	    'code'  // 插入代码
+        ];
+    	editor.customConfig.debug = true;
+    	editor.customConfig.uploadImgMaxLength = 1;
+    	editor.customConfig.uploadFileName = 'file';
+    	editor.customConfig.uploadImgServer = '${path}/api/blog/file/upload';
+    	editor.customConfig.uploadImgHooks = {
+   			fail: function (xhr, editor, result) {
+   		        // 图片上传并返回结果，但图片插入错误时触发
+   		        // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象，result 是服务器端返回的结果
+   				alert("图片上传异常，其详细信息："+result);
+   		    },
+   		    error: function (xhr, editor) {
+   		        // 图片上传出错时触发
+   		        // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
+   		    	alert("图片上传出错");
+   		    },
+   		    timeout: function (xhr, editor) {
+   		        // 图片上传超时时触发
+   		        // xhr 是 XMLHttpRequst 对象，editor 是编辑器对象
+   		        alert("图片上传超时");
+   		    }
+    	};
+        editor.create();
     });
     
     function preview(){
-    	$("#blog_preview").html($("#blog_content").val());
+    	$("#blog_preview").html(editor.txt.html());
     	//给table全都加上.table
 		$("table").addClass("table");
     }
@@ -70,13 +112,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     function save(){
     	var d=formToJson($("#ff"));
+    	d.content=editor.txt.html();
+    	/*字数检查
+		标题：100个字符
+		正文：500000个字符
+		摘要：600个字符
+		*/
     	//为空检查
     	if(d!=null && d.title!=null && d.content!=null && d.summary!=null && d.blIds!=null && d.ishide){
-    		/*字数检查
-    		标题：100个字符
-    		正文：500000个字符
-    		摘要：600个字符
-    		*/
     		console.log(d.title.length);
     		console.log(d.content.length);
     		console.log(d.summary.length);
@@ -148,7 +191,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					    <input id="blog_title" name="title" type="text" placeholder="请输入标题..." style="width: 100%;height: inherit;" required>
 					    
 					    <lable>正文<span class="muted">（最大字数限制：500000个字符）</span></lable>
-					    <textarea id="blog_content" name="content" rows="15" style="width: 100%;" required></textarea>
+					    <div id="blog_content" name="content">
+					    </div>
+					    
 					    <span class="help-block">样式使用的是bootstrap</span>
 					    
 					    <lable>摘要<span class="muted">（最大字数限制：600个字符）</span></lable>

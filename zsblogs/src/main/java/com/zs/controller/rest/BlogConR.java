@@ -1,5 +1,6 @@
 package com.zs.controller.rest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -14,14 +15,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.mysql.jdbc.UpdatableResultSet;
 import com.zs.entity.Blog;
 import com.zs.entity.Users;
 import com.zs.entity.other.EasyUIAccept;
 import com.zs.entity.other.EasyUIPage;
 import com.zs.entity.other.Result;
+import com.zs.entity.other.UploadFileResult;
 import com.zs.service.BlogSer;
 import com.zs.tools.ColumnName;
 import com.zs.tools.Constans;
+import com.zs.tools.DownloadImg;
 import com.zs.tools.Trans;
 import com.zs.tools.mail.MailManager;
 import com.zs.tools.mail.MailModel;
@@ -127,6 +132,21 @@ public class BlogConR extends BaseRestController<Blog, Integer>{
 		return null;
 	}
 
-	
+	@RequestMapping(value="/file/upload",method=RequestMethod.POST)
+	public UploadFileResult fileUpload(MultipartFile file, HttpServletRequest req, HttpServletResponse resp){
+		if(file!=null && !file.isEmpty()){
+			try {
+				List<String> data=new ArrayList<>();
+				String re=DownloadImg.writeImageToDisk(DownloadImg.readInputStream(file.getInputStream()), file.getOriginalFilename());
+				data.add("/tomcat_imgs/"+re);
+				return new UploadFileResult().setErrno(0).setData(data);
+			} catch (Exception e) {
+				e.printStackTrace();
+				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				return new UploadFileResult().setErrno(1);
+			}
+		}
+		return new UploadFileResult().setErrno(-1);
+	}
 
 }

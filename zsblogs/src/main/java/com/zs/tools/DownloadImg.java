@@ -82,7 +82,23 @@ public class DownloadImg {
             e.printStackTrace();  
         }  
         return null;  
+    } 
+    
+    /** 
+     * 直接给一个流，文件上传用的到
+     * @param inStream 图片流
+     * @return 
+     */  
+    public static byte[] getImageFromNetByUrl(InputStream inStream){  
+        try {  
+            byte[] btImg = readInputStream(inStream);//得到图片的二进制数据  
+            return btImg;  
+        } catch (Exception e) {  
+            e.printStackTrace();  
+        }  
+        return null;  
     }  
+    
     /** 
      * 从输入流中获取数据 
      * @param inStream 输入流 
