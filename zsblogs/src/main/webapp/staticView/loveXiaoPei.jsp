@@ -10,12 +10,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
   	<jsp:include page="/WEB-INF/jsp/part/common.jsp"/>
     <base href="<%=basePath%>">
-    <title>小佩走进我的生活</title>
+    <title>《小佩走进我的生活》</title>
     <script type="text/javascript">
     var zs="zs",xp="xp";
     var isAni=true;//动画是否播放的标志
     var dd,now;
-    var str="张顺  对方正在输入 ";
+    var str="对方正在输入";
    	var timeID;
    	
     $(function(){
@@ -77,19 +77,35 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    	addContent(option);
 	    	},option.delay);
     	}else{
-    		if (option.child && option.child.length>0 && option.child[0].author=="zs") {
+    		if (option.child && option.child.length>0) {
     			isWorkXp=true;
 			}
     		$("#message-mod").html("");
     		$('#xuanxiang').html("<button class=\"button\" iconCls=\"icon-cancel\" onclick=\"javascript:$('#myModal').dialog('close')\">关闭</button>");
     		$('#myModal').window('close');
-    		isAni=false;
-    		addContent(option);
+    		
+    		if(option.author=="zs"){
+	    		//延迟开启窗口
+		    	setTimeout(function(){
+		    		//先关闭动画
+		    		isAni=false;
+		    		//再做别的事
+			    	addContent(option);
+		    		
+			    	if (isWorkXp==true) {
+			    		next(option.child[0].id);
+					}
+		    	},option.delay);
+			}else{
+				//先关闭动画
+	    		isAni=false;
+	    		//再做别的事
+		    	addContent(option);
+		    	if (isWorkXp==true) {
+		    		next(option.child[0].id);
+				}
+			}
     	}
-    	
-    	if (isWorkXp==true) {
-    		next(option.child[0].id);
-		}
     	
     	//这里写动画效果
    		animateStart();
@@ -101,9 +117,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	if (option.author=="zs") {
     		img="<img alt=\"张顺\" src=\"${path }/framework/image/love/zs.jpg\" width=\"30\" height=\"30\" style=\"float:left\">"
 	    	$("#daPingMu").append("<div class='zhangshun'>"+img+"<span class='bubble color_zs'>"+option.message+"</span></div><div style=\"clear:both;\"></div>");
-		}else{
+		}else if(option.author=="xp"){
 			img="<img alt=\"小佩\" src=\"${path }/framework/image/love/xiaopei.jpg\" width=\"30\" height=\"30\" style=\"float:right\">"
 			$("#daPingMu").append("<div class='xiaopei'>"+img+"<span class='bubble color_xp'>"+option.message+"</span></div><div style=\"clear:both;\"></div>");
+		}else if(option.author=="xt"){
+			$("#daPingMu").append("<div class='xt'>"+option.message+"</div>");
 		}
     }
    	
@@ -114,26 +132,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	if (isAni==true) {
     		timeID=setTimeout(function(){
     			str=str+".";
-    			if (str=='张顺  对方正在输入 .......') {
-    				str="张顺  对方正在输入 ";
+    			if (str=="对方正在输入.......") {
+    				str="对方正在输入";
 				}
     			$("#title").html(str);
     			animateStart();
     		},300);
 		}else{
-			$("#title").html("张顺  ");
-			str="张顺  对方正在输入 ";//先初始化动画一下
+			$("#title").html("");
+			str="对方正在输入";//先初始化动画一下
 		}
     }
     </script>
     <style type="text/css">
-    #title{
+    #title_1{
     	padding: 7px;
-    	background-color: #393A3E;
+    	background-color: #1208a7;
     	color: white;
     }
     #daPingMu{
-    	padding: 3px;
+    	padding: 4px;
     }
     .zhangshun{
     	text-align: left;
@@ -182,13 +200,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  box-shadow: 0 0px #666;
 	  transform: translateY(2px);
 	}
+	
+	.hint{
+		font-size: 8px;
+		margin-left: 20px;
+	}
+	.xt{
+		text-align: center;
+		padding: 10px;
+	}
     </style>
   </head>
   
   <body style="margin: 0px;padding: 0px;">
-  	<div style="background-color: #E6F7FF;height: 100%;height: 100%;">
-  		<div id="title">
-  			张顺
+  	<div style="background-color: #E6F7FF;height: 100%;">
+  		<div id="title_1">
+  			张顺<span id="title" class="hint"></span>
   		</div>
   		<!-- <button class="button" onclick="init()">开始</button> -->
   		<div id="daPingMu" style="width: 100%;height: 80%;overflow-y: scroll;">
