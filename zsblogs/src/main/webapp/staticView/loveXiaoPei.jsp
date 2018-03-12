@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
   	<jsp:include page="/WEB-INF/jsp/part/common.jsp"/>
     <base href="<%=basePath%>">
-    <title>LoveXiaoPei</title>
+    <title>小佩走进我的生活</title>
     <script type="text/javascript">
     var zs="zs",xp="xp";
     var isAni=true;//动画是否播放的标志

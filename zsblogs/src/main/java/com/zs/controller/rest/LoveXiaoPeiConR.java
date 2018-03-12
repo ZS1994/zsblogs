@@ -35,7 +35,7 @@ public class LoveXiaoPeiConR {
 						).addPlus(
 							new LoveXiaoPeiDataBean(xp, "明天给你打电话")
 						))
-					)) 
+					))
 				).addPlus(
 					new LoveXiaoPeiDataBean(xp, "好的")
 				))))
