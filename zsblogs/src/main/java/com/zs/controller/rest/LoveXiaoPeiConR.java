@@ -26,11 +26,11 @@ public class LoveXiaoPeiConR {
 	@RequestMapping("/init")
 	public LoveXiaoPeiDataBean initData(){
 		bean=
-		new LoveXiaoPeiDataBean(zs, "xp,ni hao a", new ListPlus().addPlus(
-			new LoveXiaoPeiDataBean(xp, "zs,zao shang hao", new ListPlus().addPlus(
-				new LoveXiaoPeiDataBean(zs, "dao hui zai liao",new ListPlus().addPlus(
+		new LoveXiaoPeiDataBean(zs, "小佩，早！", new ListPlus().addPlus(
+			new LoveXiaoPeiDataBean(xp, "张顺，早上好！", new ListPlus().addPlus(
+				new LoveXiaoPeiDataBean(zs, "待会再聊吧",new ListPlus().addPlus(
 					new LoveXiaoPeiDataBean(xp, "不，我就要现在就聊",new ListPlus().addPlus(
-						new LoveXiaoPeiDataBean(zs, "好啊",3000, new ListPlus().addPlus(
+						new LoveXiaoPeiDataBean(zs, "好啊",10000, new ListPlus().addPlus(
 							new LoveXiaoPeiDataBean(xp, "明天我就过来看你好不好")
 						).addPlus(
 							new LoveXiaoPeiDataBean(xp, "明天给你打电话")
@@ -40,7 +40,7 @@ public class LoveXiaoPeiConR {
 					new LoveXiaoPeiDataBean(xp, "好的")
 				))))
 		).addPlus(
-			new LoveXiaoPeiDataBean(xp, "wo ai ni"))
+			new LoveXiaoPeiDataBean(xp, "再见"))
 		);
 		return bean;
 	}

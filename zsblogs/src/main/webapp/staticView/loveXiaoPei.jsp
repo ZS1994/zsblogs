@@ -13,10 +13,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>LoveXiaoPei</title>
     <script type="text/javascript">
     var zs="zs",xp="xp";
-    
+    var isAni=true;//动画是否播放的标志
     var dd,now;
+    var str="张顺  对方正在输入 ";
+   	var timeID;
+   	
     $(function(){
     	$('#myModal').window('close');
+    	init();
     });
     
     function init(){
@@ -46,87 +50,138 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     function next(id){
     	selectById(dd,id);
-    	//console.log(now);
     	if(now){
 	    	openMessage(now);
     	}
     }
-    function last(){
-    	$('#myModal').window('open');
-    }
     
     function openMessage(option){
+    	isAni=true;
     	var isWorkXp=false;
-    	setTimeout(function(){
-    		//先恢复动画
-    		$("#title").html("张顺");
-    		//再做别的事
-	    	if(option.author=="zs" && (option.child && option.child.length>0 && option.child[0].author=="xp") ){
-		    	$("#message-mod").html(option.message);
-		    	if(option.child){
-		    		var str="";
-		    		$.each(option.child,function(i,item){
-		    			str=str+"<button class=\"btn\" onclick='next("+item.id+")'>"+item.message+"</button>";
-		    		});
-		    		$('#xuanxiang').html(str);
-		    	}
-		    	console.log("------我开启了---------");
-		    	$('#myModal').window('open');
-	    	}else{
-	    		if (option.child && option.child.length>0 && option.child[0].author=="zs") {
-	    			isWorkXp=true;
-				}
-	    		$("#message-mod").html("");
-	    		$('#xuanxiang').html("<button class=\"easyui-linkbutton\" iconCls=\"icon-cancel\" onclick=\"javascript:$('#myModal').dialog('close')\">关闭</button>");
-	    		console.log("------我关闭了---------");
-	    		$('#myModal').window('close');
+    	if(option.author=="zs" && (option.child && option.child.length>0 && option.child[0].author=="xp") ){
+	    	$("#message-mod").html(option.message);
+	    	if(option.child){
+	    		var str="<div style=\"text-align:left;\">";
+	    		$.each(option.child,function(i,item){
+	    			str=str+"<button class=\"button\" onclick='next("+item.id+")'>"+item.message+"</button><br>";
+	    		});
+	    		str=str+"</div>"
+	    		$('#xuanxiang').html(str);
 	    	}
-	    	var img="";
-	    	if (option.author=="zs") {
-	    		img="<img alt=\"张顺\" src=\"${path }/framework/image/love/zs.jpg\" width=\"30\" height=\"30\">"
-		    	$("#daPingMu").append("<div class='zhangshun'>"+"&nbsp;"+img+option.message+"</div>");
-			}else{
-				img="<img alt=\"小佩\" src=\"${path }/framework/image/love/xiaopei.jpg\" width=\"30\" height=\"30\">"
-				$("#daPingMu").append("<div class='xiaopei'>"+option.message+"&nbsp;"+img+"</div>");
+	    	//延迟开启窗口
+	    	setTimeout(function(){
+	    		//先关闭动画
+	    		isAni=false;
+	    		//再做别的事
+		    	$('#myModal').window('open');
+		    	addContent(option);
+	    	},option.delay);
+    	}else{
+    		if (option.child && option.child.length>0 && option.child[0].author=="zs") {
+    			isWorkXp=true;
 			}
-	    	if (isWorkXp==true) {
-	    		next(option.child[0].id);
-			}
-    	},option.delay);
+    		$("#message-mod").html("");
+    		$('#xuanxiang').html("<button class=\"button\" iconCls=\"icon-cancel\" onclick=\"javascript:$('#myModal').dialog('close')\">关闭</button>");
+    		$('#myModal').window('close');
+    		isAni=false;
+    		addContent(option);
+    	}
     	
-    	//这里写动画效果
-    	if (option.delay!=0) {
-			$("#title").html("张顺  对方正在输入 ......");
-		}else{
-			$("#title").html("张顺");
+    	if (isWorkXp==true) {
+    		next(option.child[0].id);
 		}
     	
+    	//这里写动画效果
+   		animateStart();
+		
     	return option.message;
     }
-    function sleep(numberMillis) { 
-    	var now = new Date(); 
-    	var exitTime = now.getTime() + numberMillis; 
-    	while (true) { 
-    		now = new Date(); 
-    		if (now.getTime() > exitTime) 
-    		return; 
+    function addContent(option){
+    	var img="";
+    	if (option.author=="zs") {
+    		img="<img alt=\"张顺\" src=\"${path }/framework/image/love/zs.jpg\" width=\"30\" height=\"30\" style=\"float:left\">"
+	    	$("#daPingMu").append("<div class='zhangshun'>"+img+"<span class='bubble color_zs'>"+option.message+"</span></div><div style=\"clear:both;\"></div>");
+		}else{
+			img="<img alt=\"小佩\" src=\"${path }/framework/image/love/xiaopei.jpg\" width=\"30\" height=\"30\" style=\"float:right\">"
+			$("#daPingMu").append("<div class='xiaopei'>"+img+"<span class='bubble color_xp'>"+option.message+"</span></div><div style=\"clear:both;\"></div>");
+		}
+    }
+   	
+    function animateStart(){
+    	if(timeID){
+    		clearTimeout(timeID);
     	}
-   	}
+    	if (isAni==true) {
+    		timeID=setTimeout(function(){
+    			str=str+".";
+    			if (str=='张顺  对方正在输入 .......') {
+    				str="张顺  对方正在输入 ";
+				}
+    			$("#title").html(str);
+    			animateStart();
+    		},300);
+		}else{
+			$("#title").html("张顺  ");
+			str="张顺  对方正在输入 ";//先初始化动画一下
+		}
+    }
     </script>
     <style type="text/css">
     #title{
-    	padding: 5px;
+    	padding: 7px;
     	background-color: #393A3E;
     	color: white;
     }
+    #daPingMu{
+    	padding: 3px;
+    }
     .zhangshun{
     	text-align: left;
-    	background-color: white;
     }
     .xiaopei{
     	text-align: right;
-    	background-color: #B0DD42;
     }
+    .bubble{
+    	margin-top:7px;
+	    border: 1px solid black;
+	    border-radius: 7px;
+	    padding: 3px;
+	}
+	.color_zs{
+		margin-left:3px;
+		float:left;
+		background-color: white;
+	}
+	.color_xp{
+		margin-right:3px;
+		float:right;
+		background-color: #B0DD42;
+	}
+	
+	.button {
+	  display: inline-block;
+	  padding: 3px 7px;
+	  font-size: 12px;
+	  cursor: pointer;
+	  text-align: center;   
+	  text-decoration: none;
+	  outline: none;
+	  color: #fff;
+	  background-color: #4CAF50;
+	  border: none;
+	  border-radius: 4px;
+	  box-shadow: 0 2px #999;
+	  margin-top: 2px;
+	  margin-bottom: 2px;
+	}
+	
+	.button:hover {background-color: #3e8e41}
+	
+	.button:active {
+	  background-color: #3e8e41;
+	  box-shadow: 0 0px #666;
+	  transform: translateY(2px);
+	}
     </style>
   </head>
   
@@ -135,22 +190,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		<div id="title">
   			张顺
   		</div>
-  		<button class="btn" onclick="init()">AnNiu_Init</button>
-  		<button class="btn" onclick="next()">AnNiu_Next</button>
-  		<button class="btn" onclick="last()">AnNiu_Last</button>
+  		<!-- <button class="button" onclick="init()">开始</button> -->
   		<div id="daPingMu" style="width: 100%;height: 80%;overflow-y: scroll;">
   		
   		</div>
+  		
   	</div>
   
 	
 	<div id="xuanxiang">
 		<button class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#myModal').dialog('close')">关闭</button>
 	</div>
-	<div id="myModal" class="easyui-dialog" title="ZS" style="width:80%;height:200px;max-width:800px;padding:10px"
+	
+	
+	<div id="myModal" class="easyui-dialog" title="对话" style="width:80%;height:200px;max-width:800px;padding:10px"
 		buttons="#xuanxiang" closable="false" modal="true"
 		data-options="
-			iconCls:'icon-save',
+			iconCls:'icon-zs-dialog',
 			onResize:function(){
 				$(this).dialog('center');
 			}">

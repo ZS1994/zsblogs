@@ -62,7 +62,6 @@ public class CrawlerNo1 implements Runnable{
 	
 	@Deprecated
 	public CrawlerNo1 addUrl(String url){
-//		urls.add(url);
 		return this;
 	}
 

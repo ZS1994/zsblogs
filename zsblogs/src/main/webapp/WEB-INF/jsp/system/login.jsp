@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     				if(isJson(data)){
     					if(data.result=="success"){
     						setToken(data.data);
-    						window.location.href="${path}";
+    						window.location.href="${path}/menu/blogList/blog?page=1&rows=10&sort=createTime&order=desc";//张顺，2018-3-12，改为跳转到最新博客
     					}else{
     						str="<div class='alert alert-error fade in'>"+
     			        	"<a class='close' href='#' data-dismiss='alert'>&times;</a>"+

@@ -17,7 +17,7 @@ public class LoveXiaoPeiDataBean {
 	private String message;//问话内容
 	private ListPlus child;//子项
 	private HashMap<String, String> otherInfo;//其他信息，备用
-	private int delay=0;//延时多少秒
+	private int delay=3000;//延时多少秒，默认给一点延迟
 	
 	
 	public int getDelay() {
