@@ -58,11 +58,15 @@ public class LoveXiaoPeiConR {
 															))
 														).addPlus(
 															new LoveXiaoPeiDataBean(xp, "好啊",new ListPlus().addPlus(
-																new LoveXiaoPeiDataBean(xt, "-------2020-1-1-------",0,new ListPlus().addPlus(
-																	new LoveXiaoPeiDataBean(zs, "明天你去接孩子吧，公司里有点事", new ListPlus().addPlus(
-																		new LoveXiaoPeiDataBean(xp, "嗯，放心吧",new ListPlus().addPlus(
-																			new LoveXiaoPeiDataBean(zs, "爱你，小佩",new ListPlus().addPlus(
-																				new LoveXiaoPeiDataBean(xt, "-------小佩，恭喜你达成了[完美结局]-------")
+																new LoveXiaoPeiDataBean(xt, "-------2020-2-1-------",0,new ListPlus().addPlus(
+																	new LoveXiaoPeiDataBean(zs, "在家在干什么呢", new ListPlus().addPlus(
+																		new LoveXiaoPeiDataBean(xp, "我在哥这玩呢",new ListPlus().addPlus(
+																			new LoveXiaoPeiDataBean(zs, "我明天就出发了",new ListPlus().addPlus(
+																				new LoveXiaoPeiDataBean(xp, "嗯，你记得把我那件红色的衣服带上哦",new ListPlus().addPlus(
+																					new LoveXiaoPeiDataBean(zs, "嗯，记着呢",new ListPlus().addPlus(
+																						new LoveXiaoPeiDataBean(xt, "-------小佩，恭喜你达成了[完美结局]-------")
+																					))
+																				))
 																			))
 																		))
 																	))
@@ -114,7 +118,7 @@ public class LoveXiaoPeiConR {
 																											new LoveXiaoPeiDataBean(zs, "哈哈，那恭喜你了", new ListPlus().addPlus(
 																												new LoveXiaoPeiDataBean(xp, "谢谢",new ListPlus().addPlus(
 																													new LoveXiaoPeiDataBean(zs, "不用谢，希望你幸福",15000,new ListPlus().addPlus(
-																														new LoveXiaoPeiDataBean(xt, "-------小佩，恭喜你达成了[和平结局]-------")
+																														new LoveXiaoPeiDataBean(xt, "-------小佩，恭喜你达成了[遗憾结局]-------")
 																													))
 																												))	
 																											))	
@@ -131,11 +135,13 @@ public class LoveXiaoPeiConR {
 																		new LoveXiaoPeiDataBean(xp, "如果可以的话我可以陪你一起", new ListPlus().addPlus(
 																			new LoveXiaoPeiDataBean(zs, "&nbsp;&nbsp;&nbsp;&nbsp;", 6000,new ListPlus().addPlus(
 																				new LoveXiaoPeiDataBean(zs, "我也愿意陪你",10000,new ListPlus().addPlus(
-																					new LoveXiaoPeiDataBean(xt, "-------2020-1-1-------",0,new ListPlus().addPlus(
-																						new LoveXiaoPeiDataBean(zs, "明天你去接孩子吧，公司里有点事", new ListPlus().addPlus(
-																							new LoveXiaoPeiDataBean(xp, "嗯，放心吧",new ListPlus().addPlus(
-																								new LoveXiaoPeiDataBean(zs, "爱你，小佩",new ListPlus().addPlus(
-																									new LoveXiaoPeiDataBean(xt, "-------小佩，恭喜你达成了[完美结局]-------")
+																					new LoveXiaoPeiDataBean(xt, "-------2038-5-1-------",0,new ListPlus().addPlus(
+																						new LoveXiaoPeiDataBean(zs, "你知道吗，我们女儿可能谈恋爱了", new ListPlus().addPlus(
+																							new LoveXiaoPeiDataBean(xp, "真的吗，怪不得小丫头天天往外跑",new ListPlus().addPlus(
+																								new LoveXiaoPeiDataBean(zs, "我也是有一次偶然在外面看到的，小男孩看起来很温柔",new ListPlus().addPlus(
+																									new LoveXiaoPeiDataBean(xp, "哈哈，真期待能看一下这个小男孩",new ListPlus().addPlus(
+																										new LoveXiaoPeiDataBean(xt, "-------小佩，恭喜你达成了[完美结局]-------")
+																									))
 																								))
 																							))
 																						))
@@ -150,10 +156,10 @@ public class LoveXiaoPeiConR {
 													))
 												))
 											).addPlus(
-												new LoveXiaoPeiDataBean(xp, "你就只会这一句吗", new ListPlus().addPlus(
+												new LoveXiaoPeiDataBean(xp, "没干嘛呢", new ListPlus().addPlus(
 													new LoveXiaoPeiDataBean(zs, "&nbsp;&nbsp;&nbsp;&nbsp;", new ListPlus().addPlus(
 														new LoveXiaoPeiDataBean(xp, "......", new ListPlus().addPlus(
-															new LoveXiaoPeiDataBean(xt, "-------小佩，恭喜你达成了[遗憾结局]-------")	
+															new LoveXiaoPeiDataBean(xt, "-------小佩，恭喜你达成了[和平结局]-------")	
 														))
 													))
 												))
