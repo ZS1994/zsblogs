@@ -1,6 +1,7 @@
 package com.zs.service.impl;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.xml.registry.infomodel.User;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
@@ -39,6 +41,7 @@ public class FundTradeSerImpl implements FundTradeSer{
 	private UsersMapper usersMapper;
 	private Gson gson=new Gson();
 	
+	private Logger log=Logger.getLogger(getClass());
 	
 	@Override
 	public EasyUIPage queryFenye(EasyUIAccept accept) {
@@ -122,9 +125,15 @@ public class FundTradeSerImpl implements FundTradeSer{
 		Users u=usersMapper.selectByPrimaryKey(uid);
 		FundInfo fi=fundInfoMapper.selectByPrimaryKey(fiId);
 		
-		List<TimeValueBean> tv1=fundTradeMapper.obtainHistory(begin, end, fiId);
+		//得到基金购买的第一天
+		Date dbegin=fundTradeMapper.getBeginDate(fiId, uid);
+		Date ddd=begin;
+		if (dbegin!=null && dbegin.before(begin)) {
+			ddd=dbegin;
+		}
 		
-		List<TimeValueBean> tv2=fundTradeMapper.obtainTrade(begin, end, fiId, uid);
+		List<TimeValueBean> tv1=fundTradeMapper.obtainHistory(ddd, end, fiId);
+		List<TimeValueBean> tv2=fundTradeMapper.obtainTrade(ddd, end, fiId, uid);
 		
 		List<String> tts=new ArrayList<>();
 		List<Double> list1=new ArrayList<>();
@@ -132,10 +141,10 @@ public class FundTradeSerImpl implements FundTradeSer{
 		List<Double> list4=new ArrayList<>();
 		List<Double> listJinE=new ArrayList<>();//金额
 		List<Double> listFenE=new ArrayList<>();//份额
-		list1.add(0.0);
-		list2.add(0.0);
 		
 		tts.add(tv1.get(0).getTime());
+		list1.add(0.0);
+		list2.add(0.0);
 		//这个是求净值涨幅的，dou1是净值
 		for (int i = 1; i < tv1.size(); i++) {
 			Double last=tv1.get(i-1).getDou1();
@@ -144,24 +153,25 @@ public class FundTradeSerImpl implements FundTradeSer{
 			list1.add(rate);
 			tts.add(tv1.get(i).getTime());
 		}
-		
-		//这个是求利润率的,dou1是金额，dou2是份额，str1是类型
-		Double jine=tv2.get(0).getDou1();
-		Double fene=tv2.get(0).getDou2();
+		Double jine=tv2.get(0).getDou1(),fene=tv2.get(0).getDou2();
 		listJinE.add(jine);
 		listFenE.add(fene);
+		//这个是求利润率的,dou1是金额，dou2是份额，str1是类型
 		for (int i = 1; i < tv2.size(); i++) {
-			TimeValueBean lt=tv2.get(i-1);
-			TimeValueBean nt=tv2.get(i);
-			jine=jine+nt.getDou1();
-			fene=fene+nt.getDou2();
+			jine=jine+tv2.get(i).getDou1();
+			fene=fene+tv2.get(i).getDou2();
 			
 			listJinE.add(jine);
 			listFenE.add(fene);
 			
 			//当前的净值
 			Double jingzhi=tv1.get(i).getDou1();
-			Double rate=new BigDecimal(jine).setScale(2, BigDecimal.ROUND_HALF_UP).compareTo(new BigDecimal(0))!=0 && new BigDecimal(fene).setScale(2, BigDecimal.ROUND_HALF_UP).compareTo(new BigDecimal(0))!=0?new BigDecimal(fene*jingzhi-jine).divide(new BigDecimal(jine),4, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)).doubleValue():0.0;
+			Double rate;
+			if (new BigDecimal(jine).setScale(0, BigDecimal.ROUND_HALF_UP).compareTo(new BigDecimal(0))!=0 && new BigDecimal(fene).setScale(2, BigDecimal.ROUND_HALF_UP).compareTo(new BigDecimal(0))!=0) {
+				rate=new BigDecimal(fene*jingzhi-jine).divide(new BigDecimal(jine),4, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)).doubleValue();
+			}else{
+				rate=0.0;
+			}
 			list2.add(rate);
 		}
 		
@@ -201,6 +211,7 @@ public class FundTradeSerImpl implements FundTradeSer{
 			tvtmp.setStr3("circle");
 			list3.add(tvtmp);
 		}
+		
 		//交易标记计算2:算补仓和卖出时机标记
 		for (int i = 0; i < list4.size(); i++) {
 			Double d=list4.get(i);
@@ -267,12 +278,45 @@ public class FundTradeSerImpl implements FundTradeSer{
 		dqzj=cyfe*tv1.get(tv1.size()-1).getDou1();
 		yk=dqzj-bj;
 		
+		//最后一步是，根据穿过来日期进行裁剪，得到前端想要的数据
+		List<String> tts_2=new ArrayList<>();
+		List<Double> list1_2=new ArrayList<>();
+		List<Double> list2_2=new ArrayList<>();
+		List<TimeValueBean> list3_2=new ArrayList<>();
+		List<Double> list4_2=new ArrayList<>();
+		for (int i = 0; i < tts.size(); i++) {
+			Date dtmp=null;
+			try {
+				dtmp=sdf.parse(tts.get(i));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			if(dtmp!=null && !begin.after(dtmp)){
+				tts_2.add(tts.get(i));
+				list1_2.add(list1.get(i));
+				list2_2.add(list2.get(i));
+				list4_2.add(list4.get(i));
+			}
+		}
+		for (int i = 0; i < list3.size(); i++) {
+			Date dtmp=null;
+			try {
+				dtmp=sdf.parse(list3.get(i).getTime());
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			if(dtmp!=null && !begin.after(dtmp)){
+				list3_2.add(list3.get(i));
+			}
+		}
+		
+		
 		profit.setFundName(fi.getName()+"("+fi.getId()+")\r\n本金:"+Trans.omissionDecimal(bj, 2)+"元  当前资金:"+Trans.omissionDecimal(dqzj, 2)+"元  持有份额:"+Trans.omissionDecimal(cyfe,2)+"份  盈亏:"+Trans.omissionDecimal(yk,2)+"元");
-		profit.setxTime(tts);
-		profit.setyRate1(list1);
-		profit.setyRate2(list2);
-		profit.setMarks(list3);
-		profit.setyRate3(list4);
+		profit.setxTime(tts_2);
+		profit.setyRate1(list1_2);
+		profit.setyRate2(list2_2);
+		profit.setMarks(list3_2);
+		profit.setyRate3(list4_2);
 		
 		return profit;
 	}

@@ -205,6 +205,7 @@
   	from(
 	  	select time from fund_history
 	  	where time between #{begin} and #{end} and fi_id=#{fiId}
+	  	GROUP BY time
   	)cd
   	left join(
   		select *
@@ -215,5 +216,9 @@
   	order by cd.time
   </select>
   
+  <select id="getBeginDate" resultType="java.util.Date">
+  	select min(create_time) from fund_trade
+  	where fi_id=#{fiId} and u_id=#{uid}
+  </select>
   
 </mapper>
