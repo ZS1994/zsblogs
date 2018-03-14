@@ -84,7 +84,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		$('#xuanxiang').html("<button class=\"button\" iconCls=\"icon-cancel\" onclick=\"javascript:$('#myModal').dialog('close')\">关闭</button>");
     		$('#myModal').window('close');
     		
-    		if(option.author=="zs"){
+    		if(option.author!="xp"){
 	    		//延迟开启窗口
 		    	setTimeout(function(){
 		    		//先关闭动画
@@ -108,7 +108,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	}
     	
     	//这里写动画效果
-   		animateStart();
+    	if(option.author!='xt'){
+	   		animateStart(option);
+    	}else{
+    		//先关闭动画
+    		isAni=false;
+    	}
 		
     	return option.message;
     }
@@ -123,9 +128,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}else if(option.author=="xt"){
 			$("#daPingMu").append("<div class='xt'>"+option.message+"</div>");
 		}
+    	scrollToBottom();
     }
    	
-    function animateStart(){
+    function animateStart(option){
     	if(timeID){
     		clearTimeout(timeID);
     	}
@@ -143,11 +149,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			str="对方正在输入";//先初始化动画一下
 		}
     }
+    //滚动条滚动到底部
+    function scrollToBottom(){
+    	var div = document.getElementById('daPingMu');
+    	div.scrollTop = div.scrollHeight;
+    }
     </script>
     <style type="text/css">
     #title_1{
     	padding: 7px;
-    	background-color: #1208a7;
+    	background-color: rgb(211, 126, 0);
     	color: white;
     }
     #daPingMu{
@@ -202,7 +213,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	}
 	
 	.hint{
-		font-size: 8px;
 		margin-left: 20px;
 	}
 	.xt{
@@ -213,7 +223,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body style="margin: 0px;padding: 0px;">
-  	<div style="background-color: #E6F7FF;height: 100%;">
+  	<div style="background-color: #FDF2D4;height: 100%;">
   		<div id="title_1">
   			张顺<span id="title" class="hint"></span>
   		</div>

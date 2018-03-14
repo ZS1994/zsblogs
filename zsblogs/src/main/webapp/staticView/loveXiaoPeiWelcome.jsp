@@ -65,15 +65,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </style>
   </head>
   
-  <body style="margin: 0px;padding: 0px;background-color:#CCECFB;">
+  <body style="margin: 0px;padding: 0px;background-color:#FDF2D4;">
   	
   	<div class="title">小佩走进我的生活</div>
   	
-  	<img alt="" src="${path }/framework/image/love/timg.gif" style="width: 100%;">
+  	<img alt="" src="${path }/framework/image/love/小王子.png" style="width: 100%;">
   	
-  	<div class="main" style="margin-bottom: 100px;">
-		<p style="font-family: 楷体;color: #fb03ff;text-align: left;">也许这一次就是那早已注定的前缘，不然怎曾有如此的企盼，真想要将你的名字烙在心上，成为我情感的驻足点，小佩，祝你生日快乐！你永远是我的小仙女！哈哈，这段时间我制作了一个小游戏想送给你，希望你能喜欢。</p>  	
-		<p style="font-family: 楷体;color: #fb03ff;text-align: right;">——爱你的张顺</p>
+  	<div class="main" style="margin-bottom: 80px;">
+		<p style="font-family: 楷体;color: #FC6F97;text-align: left;font-weight: bold;">也许这一次就是那早已注定的前缘，不然怎会有如此的期盼，真想要将你的名字烙在心上，成为我情感的驻足点，小佩，祝你生日快乐！这段时间我制作了一个小游戏想送给你，希望你能喜欢。</p>  	
+		<p style="font-family: 楷体;color: #FC6F97;text-align: right;font-weight: bold;">——喜欢你的张顺</p>
 	  	<button class="button" onclick="window.location.href='${path}/staticView/loveXiaoPei.jsp'">点这里开始游戏</button>
   	</div>
   	
