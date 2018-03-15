@@ -1,6 +1,10 @@
 package com.zs.controller.rest;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.zs.controller.rest.BaseRestController.Code;
 import com.zs.entity.other.ListPlus;
@@ -176,17 +180,12 @@ public class LoveXiaoPeiConR {
 		return bean;
 	}
 	
-	//得到下一节点
-	@RequestMapping("/next")
-	public ListPlus getNextPoint(String id){
-		return null;
+	//保存结果
+	@RequestMapping(value="/result/save",method=RequestMethod.POST)
+	public Result<String> getNextPoint(String jieju,HttpServletRequest req, HttpServletResponse resp) {
+		return new Result<String>(BaseRestController.SUCCESS, Code.SUCCESS, "保存结局成功");
 	}
 	
-	//得到上一节点
-	@RequestMapping("/last")
-	public LoveXiaoPeiDataBean getLastPoint(String id){
-		return null;
-	}
 	
 
 }

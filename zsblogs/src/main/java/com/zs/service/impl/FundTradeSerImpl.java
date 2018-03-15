@@ -175,7 +175,8 @@ public class FundTradeSerImpl implements FundTradeSer{
 			list2.add(rate);
 		}
 		
-		//计算利润率同比
+		/*计算利润率同比
+		 * */
 		for (int i = 0; i < list2.size(); i++) {
 			Double d=list2.get(i);
 			Double dl=i-1>=0?list2.get(i-1):0.0;
@@ -212,10 +213,32 @@ public class FundTradeSerImpl implements FundTradeSer{
 			list3.add(tvtmp);
 		}
 		
+		/*
+		 * 张顺，2018-3-15，规则改为：
+		 * 1、找到当前最高点
+		 * 2、累计下跌5%，补仓当前本金30%，但如果在累计的过程中发现的新的最高点，那么就以这个为起点再找
+		 * 3、每当补仓，便重新找最高点
+		 * */
 		//交易标记计算2:算补仓和卖出时机标记
+		int maxIndex=0;//最高点的下标
+		Double maxNum=list2.get(0);//最高点的利润率
+		boolean isSearch=false;//是否往后寻找
+		Double downRange=0.0;//下降的幅度
 		for (int i = 0; i < list4.size(); i++) {
-			Double d=list4.get(i);
-			if (d<=-20.0) {
+			if (list4.get(i)<0) {//代表下降了,开始计算跌幅
+				isSearch=true;
+			}else{//上涨了，那么就看是否出现新的最高点
+				if (list2.get(i)>maxNum) {//出现新的最高点了,那么初始化，重新找
+					maxIndex=i;
+					maxNum=list2.get(i);
+					isSearch=false;
+					downRange=0.0;
+				}
+			}
+			if (isSearch) {
+				downRange=maxNum-list2.get(i);
+			}
+			if (downRange>=4) {//跌幅大于4%，就开始提示补仓
 				//看一下有没有这个时间点的标记
 				boolean isHas=false;
 				TimeValueBean tvtmp=null;
@@ -237,12 +260,17 @@ public class FundTradeSerImpl implements FundTradeSer{
 					tv.setStr3("diamond");
 					list3.add(tv);
 				}
+				//变量初始化，开始找下一个点
+				maxIndex=i;
+				maxNum=list2.get(i);
+				isSearch=false;
+				downRange=0.0;
 			}
 		}
 		//交易标记3：赎回时机计算
 		for (int j = 0; j < list2.size(); j++) {
 			Double rate=list2.get(j);
-			if (rate>=12.0) {
+			if (rate>=10.0) {
 				boolean isHas=false;
 				TimeValueBean tvtmp=null;
 				for (TimeValueBean tvt : list3) {
