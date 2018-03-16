@@ -277,10 +277,11 @@ public class Trans {
 				u=user.getName()+"（"+user.getId()+"）";
 			}
 		}
-		String str="【操作用户id】："+u+"\r\n"+
+		String str="<pre>"+
+				"【操作用户id】："+u+"\r\n"+
 				"【异常产生时间】："+new Date().toLocaleString()+"\r\n"+
 				"【异常详情】：\r\n"+
-				"<pre>"+getExceptionAllinformation(e)+"</pre>";
+				getExceptionAllinformation(e)+"</pre>";
 		return str;
 	}
 	
