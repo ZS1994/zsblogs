@@ -49,7 +49,7 @@ public class BlogConR extends BaseRestController<Blog, Integer>{
 				return blogSer.queryFenye(accept);
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 				return null;
 			}
 		}
@@ -66,7 +66,7 @@ public class BlogConR extends BaseRestController<Blog, Integer>{
 				return new Result<Blog>(SUCCESS, Code.SUCCESS, blogSer.get(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<Blog>(ERROR, Code.ERROR, null);
@@ -79,7 +79,7 @@ public class BlogConR extends BaseRestController<Blog, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, blogSer.add(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);
@@ -94,7 +94,7 @@ public class BlogConR extends BaseRestController<Blog, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, blogSer.update(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);
@@ -108,7 +108,7 @@ public class BlogConR extends BaseRestController<Blog, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, blogSer.delete(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);
@@ -142,7 +142,7 @@ public class BlogConR extends BaseRestController<Blog, Integer>{
 				return new UploadFileResult().setErrno(0).setData(data);
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 				return new UploadFileResult().setErrno(1);
 			}
 		}

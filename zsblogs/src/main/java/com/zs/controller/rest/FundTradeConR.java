@@ -40,7 +40,7 @@ public class FundTradeConR extends BaseRestController<FundTrade, Integer>{
 				return fundTradeSer.queryFenye(accept);
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 				return null;
 			}
 		}
@@ -54,8 +54,8 @@ public class FundTradeConR extends BaseRestController<FundTrade, Integer>{
 				return new Result<FundTrade>(SUCCESS, Code.SUCCESS, fundTradeSer.get(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
-				return new Result<FundTrade>(ERROR, Code.ERROR, null,Trans.strToHtml(e));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
+				return new Result<FundTrade>(ERROR, Code.ERROR, null,Trans.strToHtml(e,req));
 			}
 		}
 		return new Result<FundTrade>(ERROR, Code.ERROR, null,"接口传入参数为空");
@@ -70,8 +70,8 @@ public class FundTradeConR extends BaseRestController<FundTrade, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, fundTradeSer.add(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
-				return new Result<String>(ERROR, Code.ERROR, null,Trans.strToHtml(e));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
+				return new Result<String>(ERROR, Code.ERROR, null,Trans.strToHtml(e,req));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, "接口传入参数为空");
@@ -84,8 +84,8 @@ public class FundTradeConR extends BaseRestController<FundTrade, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, fundTradeSer.update(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
-				return new Result<String>(ERROR, Code.ERROR, null,Trans.strToHtml(e));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
+				return new Result<String>(ERROR, Code.ERROR, null,Trans.strToHtml(e,req));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, "接口传入参数为空");
@@ -98,8 +98,8 @@ public class FundTradeConR extends BaseRestController<FundTrade, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, fundTradeSer.delete(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
-				return new Result<String>(ERROR, Code.ERROR, null,Trans.strToHtml(e));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
+				return new Result<String>(ERROR, Code.ERROR, null,Trans.strToHtml(e,req));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null,"接口传入参数为空");
@@ -130,8 +130,8 @@ public class FundTradeConR extends BaseRestController<FundTrade, Integer>{
 				return new Result<FundProfit>(SUCCESS,Code.SUCCESS,fundTradeSer.obtainProfit(accept.getInt1(), accept.getStr1(), accept.getDate1(), accept.getDate2()));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
-				return new Result<FundProfit>(ERROR, Code.ERROR, null,Trans.strToHtml(e));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
+				return new Result<FundProfit>(ERROR, Code.ERROR, null,Trans.strToHtml(e,req));
 			}
 		}
 		return new Result<FundProfit>(ERROR, Code.ERROR, null,"接口传入参数为空");

@@ -33,7 +33,7 @@ public class TimeLineConR extends BaseRestController<Timeline, Integer>{
 				return timeLineSer.queryFenye(accept);
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 				return null;
 			}
 		}
@@ -48,7 +48,7 @@ public class TimeLineConR extends BaseRestController<Timeline, Integer>{
 				return new Result<Timeline>(SUCCESS, Code.SUCCESS, timeLineSer.get(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<Timeline>(ERROR, Code.ERROR, null);
@@ -62,7 +62,7 @@ public class TimeLineConR extends BaseRestController<Timeline, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, timeLineSer.add(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);
@@ -76,7 +76,7 @@ public class TimeLineConR extends BaseRestController<Timeline, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, timeLineSer.update(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);
@@ -91,7 +91,7 @@ public class TimeLineConR extends BaseRestController<Timeline, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, timeLineSer.delete(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);

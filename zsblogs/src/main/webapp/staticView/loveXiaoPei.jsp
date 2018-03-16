@@ -129,6 +129,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			$("#daPingMu").append("<div class='xt'>"+option.message+"</div>");
 		}
     	scrollToBottom();
+    	//这里判断是否获得了结局
+    	if(option.author=="xt" && option.message.indexOf("小佩，恭喜你达成了")>=0 && option.message.indexOf("结局")>=0){
+    		saveResult();
+    	}
     }
    	
     function animateStart(option){
@@ -153,6 +157,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     function scrollToBottom(){
     	var div = document.getElementById('daPingMu');
     	div.scrollTop = div.scrollHeight;
+    }
+    //保存结果
+    function saveResult(){
+    	var a=$("#daPingMu").html();
+    	console.log(a);
+    	$.ajax({
+    		url:"${path}/api/loveXiaoPei/result/save",
+    		type:"POST",
+    		async:false,
+    		data:{jieju:a},
+    		success:function(data){
+    			console.log(data);
+    		}
+    	});
     }
     </script>
     <style type="text/css">

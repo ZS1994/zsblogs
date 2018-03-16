@@ -47,7 +47,7 @@ public class CrawlerConR {
 				return new Result<String>(BaseRestController.SUCCESS, Code.SUCCESS, "爬虫机器人"+no+"号已"+(isBegin?"开启":"关闭"));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 				return new Result<String>(BaseRestController.ERROR, Code.ERROR, null);
 			}
 		}
@@ -63,8 +63,8 @@ public class CrawlerConR {
 				return new Result<String>(BaseRestController.SUCCESS, Code.SUCCESS, "爬虫机器人1号已添加"+url+"到爬取列表");
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
-				return new Result<String>(BaseRestController.ERROR, Code.ERROR, Trans.strToHtml(e));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
+				return new Result<String>(BaseRestController.ERROR, Code.ERROR, Trans.strToHtml(e,req));
 			}
 		}
 		return new Result<String>(BaseRestController.ERROR, Code.ERROR, null);
@@ -77,7 +77,7 @@ public class CrawlerConR {
 			return new Result<CrawlerNo1>(BaseRestController.SUCCESS, Code.SUCCESS, no1);
 		} catch (Exception e) {
 			e.printStackTrace();
-			mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+			mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			return new Result<CrawlerNo1>(BaseRestController.ERROR, Code.ERROR, null);
 		}
 	}
@@ -89,7 +89,7 @@ public class CrawlerConR {
 			return new Result<CrawlerNo2>(BaseRestController.SUCCESS, Code.SUCCESS, no2);
 		} catch (Exception e) {
 			e.printStackTrace();
-			mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+			mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			return new Result<CrawlerNo2>(BaseRestController.ERROR, Code.ERROR, null);
 		}
 	}

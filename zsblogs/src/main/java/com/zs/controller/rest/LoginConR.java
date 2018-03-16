@@ -60,13 +60,13 @@ public class LoginConR{
 			return new Result<String>(BaseRestController.SUCCESS, Code.SUCCESS, "登出成功");
 		} catch (Exception e) {
 			e.printStackTrace();
-			mail.addMail(new MailModel(MailManager.MAIL_ZS, MailManager.MAIL_ZS, Trans.strToHtml(e), MailManager.TITLE));
+			mail.addMail(new MailModel(MailManager.MAIL_ZS, MailManager.MAIL_ZS, Trans.strToHtml(e,req), MailManager.TITLE));
 			return new Result<String>(BaseRestController.ERROR, Code.ERROR, e.getMessage());
 		}
 	}
 	
 	@RequestMapping(value="/logup",method=RequestMethod.POST)
-	public Result<String> logup(Users user){
+	public Result<String> logup(Users user,HttpServletRequest req, HttpServletResponse resp){
 		if(user!=null){
 			try {
 				user.setCreateTime(new Date());
@@ -74,7 +74,7 @@ public class LoginConR{
 				return new Result<String>(BaseRestController.SUCCESS, Code.SUCCESS, userSer.add(user));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(MailManager.MAIL_ZS, MailManager.MAIL_ZS, Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(MailManager.MAIL_ZS, MailManager.MAIL_ZS, Trans.strToHtml(e,req), MailManager.TITLE));
 				return new Result<String>(BaseRestController.ERROR, Code.ERROR, e.getMessage());
 			}
 		}

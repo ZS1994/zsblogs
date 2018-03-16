@@ -34,7 +34,7 @@ public class RoleConR extends BaseRestController<Role, Integer>{
 				return roleSer.queryFenye(accept);
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 				return null;
 			}
 		}
@@ -42,12 +42,12 @@ public class RoleConR extends BaseRestController<Role, Integer>{
 	}
 
 	@RequestMapping(value="/all",method=RequestMethod.GET)
-	public Result<List<Role>> getAllRole(){
+	public Result<List<Role>> getAllRole(HttpServletRequest req, HttpServletResponse resp){
 		try {
 			return new Result<List<Role>>(SUCCESS, Code.SUCCESS, roleSer.getAllRole());
 		} catch (Exception e) {
 			e.printStackTrace();
-			mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+			mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 		}
 		return new Result<List<Role>>(ERROR, Code.ERROR, null);
 	}
@@ -60,7 +60,7 @@ public class RoleConR extends BaseRestController<Role, Integer>{
 				return new Result<Role>(SUCCESS, Code.SUCCESS, roleSer.get(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<Role>(ERROR, Code.ERROR, null);
@@ -74,7 +74,7 @@ public class RoleConR extends BaseRestController<Role, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, roleSer.add(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);
@@ -88,7 +88,7 @@ public class RoleConR extends BaseRestController<Role, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, roleSer.update(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);
@@ -106,7 +106,7 @@ public class RoleConR extends BaseRestController<Role, Integer>{
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);

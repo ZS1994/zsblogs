@@ -33,7 +33,7 @@ public class FundHistoryConR extends BaseRestController<FundHistory, Integer>{
 				return fundHistroySer.queryFenye(accept);
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 				return null;
 			}
 		}
@@ -47,8 +47,8 @@ public class FundHistoryConR extends BaseRestController<FundHistory, Integer>{
 				return new Result<FundHistory>(SUCCESS, Code.SUCCESS, fundHistroySer.get(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
-				return new Result<FundHistory>(ERROR, Code.ERROR, null,Trans.strToHtml(e));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
+				return new Result<FundHistory>(ERROR, Code.ERROR, null,Trans.strToHtml(e,req));
 			}
 		}
 		return new Result<FundHistory>(ERROR, Code.ERROR, null,"接口传入参数为空");
@@ -61,8 +61,8 @@ public class FundHistoryConR extends BaseRestController<FundHistory, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, fundHistroySer.add(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
-				return new Result<String>(ERROR, Code.ERROR, null,Trans.strToHtml(e));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
+				return new Result<String>(ERROR, Code.ERROR, null,Trans.strToHtml(e,req));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null,"接口传入参数为空");
@@ -75,8 +75,8 @@ public class FundHistoryConR extends BaseRestController<FundHistory, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, fundHistroySer.update(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
-				return new Result<String>(ERROR, Code.ERROR, null,Trans.strToHtml(e));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
+				return new Result<String>(ERROR, Code.ERROR, null,Trans.strToHtml(e,req));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null,"接口传入参数为空");
@@ -89,8 +89,8 @@ public class FundHistoryConR extends BaseRestController<FundHistory, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, fundHistroySer.delete(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
-				return new Result<String>(ERROR, Code.ERROR, null,Trans.strToHtml(e));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
+				return new Result<String>(ERROR, Code.ERROR, null,Trans.strToHtml(e,req));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null,"接口传入参数为空");

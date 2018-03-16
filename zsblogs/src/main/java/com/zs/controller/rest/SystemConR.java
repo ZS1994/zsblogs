@@ -48,7 +48,7 @@ public class SystemConR {
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 				return new Result<List<Permission>>(BaseRestController.ERROR, Code.ERROR, null);
 			}
 		}
@@ -56,7 +56,7 @@ public class SystemConR {
 	}
 	
 	@RequestMapping(value="/apitest",method=RequestMethod.POST)
-	public Result<String> doTest(String url,String method,String data,String token){
+	public Result<String> doTest(String url,String method,String data,String token,HttpServletRequest req, HttpServletResponse resp){
 		try {
 			Map map=null;
 			if (data!=null) {
@@ -86,8 +86,8 @@ public class SystemConR {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
-			return new Result<String>(BaseRestController.ERROR, Code.ERROR, Trans.strToHtml(e));
+			mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
+			return new Result<String>(BaseRestController.ERROR, Code.ERROR, Trans.strToHtml(e,req));
 		}
 	}
 }

@@ -39,7 +39,7 @@ public class ReadConR extends BaseRestController<Read, Integer>{
 				return readSer.queryFenye(accept);
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 				return null;
 			}
 		}
@@ -54,7 +54,7 @@ public class ReadConR extends BaseRestController<Read, Integer>{
 				return new Result<Read>(SUCCESS, Code.SUCCESS, readSer.get(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<Read>(ERROR, Code.ERROR, null);
@@ -68,7 +68,7 @@ public class ReadConR extends BaseRestController<Read, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, readSer.add(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);
@@ -82,7 +82,7 @@ public class ReadConR extends BaseRestController<Read, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, readSer.update(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);
@@ -96,7 +96,7 @@ public class ReadConR extends BaseRestController<Read, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, readSer.delete(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);

@@ -37,7 +37,7 @@ public class PermissionConR extends BaseRestController<Permission, Integer>{
 				return perSer.queryFenye(accept);
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 				return null;
 			}
 		}
@@ -45,12 +45,12 @@ public class PermissionConR extends BaseRestController<Permission, Integer>{
 	}
 
 	@RequestMapping(value="/all",method=RequestMethod.GET)
-	public Result<List<Permission>> getAllRole(){
+	public Result<List<Permission>> getAllRole( HttpServletRequest req, HttpServletResponse resp){
 		try {
 			return new Result<List<Permission>>(SUCCESS, Code.SUCCESS, perSer.getAllPermission());
 		} catch (Exception e) {
 			e.printStackTrace();
-			mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+			mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 		}
 		return new Result<List<Permission>>(ERROR, Code.ERROR, null);
 	}
@@ -63,7 +63,7 @@ public class PermissionConR extends BaseRestController<Permission, Integer>{
 				return new Result<Permission>(SUCCESS, Code.SUCCESS, perSer.get(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<Permission>(ERROR, Code.ERROR, null);
@@ -77,7 +77,7 @@ public class PermissionConR extends BaseRestController<Permission, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, perSer.add(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);
@@ -91,7 +91,7 @@ public class PermissionConR extends BaseRestController<Permission, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, perSer.update(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);
@@ -105,7 +105,7 @@ public class PermissionConR extends BaseRestController<Permission, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, perSer.delete(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);

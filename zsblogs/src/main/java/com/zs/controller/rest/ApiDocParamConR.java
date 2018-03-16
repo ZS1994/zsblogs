@@ -34,7 +34,7 @@ public class ApiDocParamConR extends BaseRestController<ApiDocParameter, Integer
 				return apiDocParamSer.queryFenye(accept);
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 				return null;
 			}
 		}
@@ -49,7 +49,7 @@ public class ApiDocParamConR extends BaseRestController<ApiDocParameter, Integer
 				return new Result<ApiDocParameter>(SUCCESS, Code.SUCCESS, apiDocParamSer.get(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<ApiDocParameter>(ERROR, Code.ERROR, null);
@@ -63,7 +63,7 @@ public class ApiDocParamConR extends BaseRestController<ApiDocParameter, Integer
 				return new Result<String>(SUCCESS, Code.SUCCESS, apiDocParamSer.add(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);
@@ -77,7 +77,7 @@ public class ApiDocParamConR extends BaseRestController<ApiDocParameter, Integer
 				return new Result<String>(SUCCESS, Code.SUCCESS, apiDocParamSer.update(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);
@@ -91,7 +91,7 @@ public class ApiDocParamConR extends BaseRestController<ApiDocParameter, Integer
 				return new Result<String>(SUCCESS, Code.SUCCESS, apiDocParamSer.delete(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);

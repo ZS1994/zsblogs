@@ -37,7 +37,7 @@ public class ApiDocConR extends BaseRestController<ApiDoc, Integer>{
 				return apiDocSer.queryFenye(accept);
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 				return null;
 			}
 		}
@@ -52,7 +52,7 @@ public class ApiDocConR extends BaseRestController<ApiDoc, Integer>{
 				return new Result<ApiDoc>(SUCCESS, Code.SUCCESS, apiDocSer.get(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<ApiDoc>(ERROR, Code.ERROR, null);
@@ -73,7 +73,7 @@ public class ApiDocConR extends BaseRestController<ApiDoc, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, apiDocSer.add(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);
@@ -87,7 +87,7 @@ public class ApiDocConR extends BaseRestController<ApiDoc, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, apiDocSer.update(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);
@@ -101,7 +101,7 @@ public class ApiDocConR extends BaseRestController<ApiDoc, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, apiDocSer.delete(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);

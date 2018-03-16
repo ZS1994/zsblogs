@@ -38,7 +38,7 @@ public class FundInfoConR extends BaseRestController<FundInfo, String>{
 				return fundInfoSer.queryFenye(accept);
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 				return null;
 			}
 		}
@@ -51,8 +51,8 @@ public class FundInfoConR extends BaseRestController<FundInfo, String>{
 				return new Result<FundInfo>(SUCCESS, Code.SUCCESS, fundInfoSer.get(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
-				return new Result<FundInfo>(ERROR, Code.ERROR, null,Trans.strToHtml(e));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
+				return new Result<FundInfo>(ERROR, Code.ERROR, null,Trans.strToHtml(e,req));
 			}
 		}
 		return new Result<FundInfo>(ERROR, Code.ERROR, null,"接口传入参数为空");
@@ -65,8 +65,8 @@ public class FundInfoConR extends BaseRestController<FundInfo, String>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, fundInfoSer.add(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
-				return new Result<String>(ERROR, Code.ERROR, null,Trans.strToHtml(e));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
+				return new Result<String>(ERROR, Code.ERROR, null,Trans.strToHtml(e,req));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, "接口传入参数为空");
@@ -79,8 +79,8 @@ public class FundInfoConR extends BaseRestController<FundInfo, String>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, fundInfoSer.update(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
-				return new Result<String>(ERROR, Code.ERROR, null,Trans.strToHtml(e));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
+				return new Result<String>(ERROR, Code.ERROR, null,Trans.strToHtml(e,req));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, "接口传入参数为空");
@@ -92,8 +92,8 @@ public class FundInfoConR extends BaseRestController<FundInfo, String>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, fundInfoSer.delete(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
-				return new Result<String>(ERROR, Code.ERROR, null,Trans.strToHtml(e));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
+				return new Result<String>(ERROR, Code.ERROR, null,Trans.strToHtml(e,req));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, "接口传入参数为空");

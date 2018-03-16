@@ -44,7 +44,7 @@ public class UsersConR extends BaseRestController<Users, Integer>{
 				return userSer.queryFenye(accept);
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 				return null;
 			}
 		}
@@ -59,7 +59,7 @@ public class UsersConR extends BaseRestController<Users, Integer>{
 				return new Result<Users>(SUCCESS, Code.SUCCESS, userSer.get(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<Users>(ERROR, Code.ERROR, null);
@@ -76,7 +76,7 @@ public class UsersConR extends BaseRestController<Users, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, userSer.add(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);
@@ -91,7 +91,7 @@ public class UsersConR extends BaseRestController<Users, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, userSer.update(obj));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);
@@ -105,7 +105,7 @@ public class UsersConR extends BaseRestController<Users, Integer>{
 				return new Result<String>(SUCCESS, Code.SUCCESS, userSer.delete(id));
 			} catch (Exception e) {
 				e.printStackTrace();
-				mail.addMail(new MailModel(Trans.strToHtml(e), MailManager.TITLE));
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			}
 		}
 		return new Result<String>(ERROR, Code.ERROR, null);

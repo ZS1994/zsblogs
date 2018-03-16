@@ -7,7 +7,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
+
+import com.zs.entity.Users;
 
 public class Trans {
 	
@@ -255,8 +259,29 @@ public class Trans {
 	public static String strToHtml(String str){
 		return "<pre>"+str+"</pre>";
 	}
+	/**
+	 * 张顺，2018-3-16，该方法已废弃，以后将使用strToHtml(Exception e,HttpServletRequest req)方法
+	 * @param e
+	 * @return
+	 */
+	@Deprecated
 	public static String strToHtml(Exception e){
-		return "<pre>"+getExceptionAllinformation(e)+"</pre>";
+		return strToHtml(e, null);
+	}
+	//张顺，以后使用这个函数，因为好多时候只知道异常，却不知道是谁导致了异常
+	public static String strToHtml(Exception e,HttpServletRequest req){
+		String u="（无法获取该用户信息）";
+		if (req!=null) {
+			Users user=(Users) req.getAttribute(Constans.USER);
+			if (user!=null) {
+				u=user.getName()+"（"+user.getId()+"）";
+			}
+		}
+		String str="【操作用户id】："+u+"\r\n"+
+				"【异常产生时间】："+new Date().toLocaleString()+"\r\n"+
+				"【异常详情】：\r\n"+
+				"<pre>"+getExceptionAllinformation(e)+"</pre>";
+		return str;
 	}
 	
 	public static String getExceptionAllinformation(Exception ex){
