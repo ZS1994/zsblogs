@@ -12,6 +12,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <jsp:include page="/WEB-INF/jsp/part/common.jsp"/>
     <script type="text/javascript" src="${path }/framework/ECharts/echarts.js"></script>
     <script type="text/javascript">
+    
+	    //alert("浏览器分辨率是"+document.documentElement.clientWidth+"*"+document.documentElement.clientHeight );  
+	    //alert("屏幕分辨率是"+window.screen.width+"*"+window.screen.height);  
+    
     	var maxtotal=99999;//最大条数，尝试获取所有
    		// 基于准备好的dom，初始化echarts实例
    		var myChart;
@@ -99,7 +103,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	    		        	label:{
         	    		        		offset:[0,-15],
         	    		        		formatter: function(param){
-        	    		        			console.log(param);
 	        	    		        		return param.value;
 	        	    		        	},
 	        	    		        	fontWeight:'bold'
@@ -156,6 +159,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		$("#str1").find("option[value = '${accept.str3 }']").attr("selected","selected");
     		$("#int1").find("option[value = '${accept.int1 }']").attr("selected","selected");
     	}
+    	function zhedieOrZhankai(){
+    		var a=$("#search").attr("isZhedie");
+    		if (a) {
+	    		$("#search").show();
+	    		$("#search").removeAttr("isZhedie");
+			}else{
+				$("#search").hide();
+				$("#search").attr("isZhedie","zhedie");
+			}
+    	}
 	</script>
 	<style type="text/css">
 	.img-circle {
@@ -182,20 +195,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	#main{
 		width: 100%;
 		height:80%;
-		min-width:1200px;
-		min-height:700px;
+		min-width:620px;
+		min-height:360px;
 		background-color: #FFB786;
 	}
 	</style>
   </head>
   
-  <body>
+  <body style="padding: 0px;margin: 0px;">
   	<jsp:include page="/WEB-INF/jsp/part/left_part.jsp"/>
   	<div class="p_body" style="overflow-y:scroll;">
   		
   		<div style="padding-left: 3px;padding-right: 3px;">
-  		
-	  		
 			<form id="search">
 				<div class="searchBar-input">
 		    		<div>
@@ -225,6 +236,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		   	<div class="clear"></div>
 		   	<hr class="hr-geay">
 			<a class="easyui-linkbutton" iconCls="icon-sum" onclick="searchProfit()">查看统计数据</a>
+			<a class="easyui-linkbutton" iconCls="icon-sum" onclick="zhedieOrZhankai()">折叠/展开</a>
 			<div class="pull-away"></div>
 	  		
 			<div id="main"></div>
