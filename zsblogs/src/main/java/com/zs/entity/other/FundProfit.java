@@ -10,7 +10,15 @@ public class FundProfit {
 	private List<Double> yRate2;//收益率
 	private List<TimeValueBean> marks;//标记
 	private List<Double> yRate3;//收益率同比
+	private List<Double> yRateJs;//假定的收益率，即指数收益率
 	
+	
+	public List<Double> getyRateJs() {
+		return yRateJs;
+	}
+	public void setyRateJs(List<Double> yRateJs) {
+		this.yRateJs = yRateJs;
+	}
 	public List<TimeValueBean> getMarks() {
 		return marks;
 	}

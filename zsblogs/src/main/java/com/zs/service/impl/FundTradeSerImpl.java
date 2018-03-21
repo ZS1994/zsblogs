@@ -107,16 +107,19 @@ public class FundTradeSerImpl implements FundTradeSer{
 		return a;
 	}
 
-	/**
+	/**<pre>
 	 * 张顺，2018-2-9
+	 * 1
 	 * 关键在于利润率的计算，如何计算呢？现实生活中是这样的：
 	 * (总份额*当前的净值-投资总金额)/投资总金额
-	 * 
+	 * 2
 	 * 净值涨幅如何计算的呢？
 	 * (今天净值-昨天净值)/昨天净值
-	 * 
+	 * 3
 	 * 收益同比如何金酸呢？
 	 * (今天收益率-昨天收益率)/昨天收益率
+	 * 4、2018-3-21，新增一条辅助线，即以你选择的开始日期为起点，以这一天的利润率为起点假设买入多少，份额多少，然后计算后续的利润率得到指数利润率，目的是看是否能跑过无操作的利润率，从而对比得知自己的操作是否错误
+	 * </pre>
 	 */
 	@Override
 	public FundProfit obtainProfit(Integer uid, String fiId, Date begin, Date end) {
@@ -270,7 +273,7 @@ public class FundTradeSerImpl implements FundTradeSer{
 		//交易标记3：赎回时机计算
 		for (int j = 0; j < list2.size(); j++) {
 			Double rate=list2.get(j);
-			if (rate>=10.0) {
+			if (rate>=8.0) {
 				boolean isHas=false;
 				TimeValueBean tvtmp=null;
 				for (TimeValueBean tvt : list3) {
@@ -312,6 +315,8 @@ public class FundTradeSerImpl implements FundTradeSer{
 		List<Double> list2_2=new ArrayList<>();
 		List<TimeValueBean> list3_2=new ArrayList<>();
 		List<Double> list4_2=new ArrayList<>();
+		List<Double> listJs=new ArrayList<>();//假设的利润率
+		Double jsje=null,jsfe=null;//假设金额、份额
 		for (int i = 0; i < tts.size(); i++) {
 			Date dtmp=null;
 			try {
@@ -324,6 +329,22 @@ public class FundTradeSerImpl implements FundTradeSer{
 				list1_2.add(list1.get(i));
 				list2_2.add(list2.get(i));
 				list4_2.add(list4.get(i));
+				//4、以你选择的开始日期为起点，以这一天的利润率为起点假设买入多少，份额多少，然后计算后续的利润率得到指数利润率
+				if (jsje==null && jsfe==null) {
+					if (listJinE.get(i).intValue()==0 || listFenE.get(i).intValue()==0) {
+						jsje=1000.0;
+						jsfe=jsje/tv1.get(i).getDou1();
+					}else{
+						jsje=listJinE.get(i);
+						jsfe=listFenE.get(i);
+					}
+				}
+				double rate=0.0;
+				if (jsje!=null && !jsje.isNaN() && jsje.intValue()!=0
+						&& jsfe!=null && !jsfe.isNaN()) {
+					rate=new BigDecimal((jsfe*tv1.get(i).getDou1()-jsje)/jsje*100).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+				}
+				listJs.add(rate);
 			}
 		}
 		for (int i = 0; i < list3.size(); i++) {
@@ -345,6 +366,7 @@ public class FundTradeSerImpl implements FundTradeSer{
 		profit.setyRate2(list2_2);
 		profit.setMarks(list3_2);
 		profit.setyRate3(list4_2);
+		profit.setyRateJs(listJs);
 		
 		return profit;
 	}

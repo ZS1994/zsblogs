@@ -17,7 +17,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		var myChart;
    		// 指定图表的配置项和数据
    		var option = {
-   		    color:['#0080C0','#F90000'],
+   		    color:['#0080C0','#F90000','rgba(255, 102, 0, 0.56)','#800000','#800080'],
    		    yAxis:{
    		    	type: 'value',
    		    	axisLabel:{
@@ -26,7 +26,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		    },
    		    legend: {
    		    	top: 60,
-   		        data:['净值变化率','收益率']
+   		        data:['净值变化率','收益率','指数收益率']
    		    },
    		 	grid: {
    		 		top: 100 
@@ -59,7 +59,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             		    		console.log(params);
             		    		return params[0].axisValue+
             		    			"<br><div class='biaodian' style='background-color:"+params[0].color+";'></div>"+params[0].seriesName+"："+params[0].data+"%"+
-            		    			"<br><div class='biaodian' style='background-color:"+params[1].color+";'></div>"+params[1].seriesName+"："+params[1].data+"%（同比:"+data.yRate3[params[1].dataIndex]+"%）";
+            		    			"<br><div class='biaodian' style='background-color:"+params[1].color+";'></div>"+params[1].seriesName+"："+params[1].data+"%（同比:"+data.yRate3[params[1].dataIndex]+"%）"+
+            		    			"<br><div class='biaodian' style='background-color:"+params[2].color+";'></div>"+params[2].seriesName+"："+params[2].data+"%"
+            		    			;
             		    	}
             		    };
             			option.xAxis={
@@ -83,7 +85,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             			option.series=[
             		    	{
         	    		        name: '净值变化率',
-        	    		        type: 'line',
+        	    		        type: 'bar',
         	    		        smooth: false,
         	    		        data: data.yRate1
             		    	},
@@ -97,12 +99,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         	    		        	label:{
         	    		        		offset:[0,-15],
         	    		        		formatter: function(param){
+        	    		        			console.log(param);
 	        	    		        		return param.value;
 	        	    		        	},
 	        	    		        	fontWeight:'bold'
             		    			},
         	    		        	data:arr1
         	    		        }
+            		    	},
+            		    	{
+        	    		        name: '指数收益率',
+        	    		        type: 'line',
+        	    		        smooth: false,
+        	    		        data: data.yRateJs
             		    	}
             		    ];
             			// 使用刚指定的配置项和数据显示图表。
@@ -170,12 +179,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         margin-top: 6px;
         margin-right: 4px;
 	}
+	#main{
+		width: 100%;
+		height:80%;
+		min-width:1200px;
+		min-height:700px;
+		background-color: #FFB786;
+	}
 	</style>
   </head>
   
   <body>
   	<jsp:include page="/WEB-INF/jsp/part/left_part.jsp"/>
-  	<div class="p_body" style="overflow-y:hidden;">
+  	<div class="p_body" style="overflow-y:scroll;">
   		
   		<div style="padding-left: 3px;padding-right: 3px;">
   		
@@ -211,7 +227,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<a class="easyui-linkbutton" iconCls="icon-sum" onclick="searchProfit()">查看统计数据</a>
 			<div class="pull-away"></div>
 	  		
-			<div id="main" style="width: 100%;height:80%;background-color: red;"></div>
+			<div id="main"></div>
   		</div>
   			
 	</div>
