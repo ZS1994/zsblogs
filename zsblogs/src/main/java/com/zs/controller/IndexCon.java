@@ -1,23 +1,37 @@
 package com.zs.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.quartz.CronTrigger;
+import org.quartz.JobDataMap;
+import org.quartz.JobDetail;
+import org.quartz.JobKey;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.quartz.TriggerKey;
+import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.zs.dao.FundHistoryMapper;
 import com.zs.dao.FundInfoMapper;
 import com.zs.entity.FundInfo;
 import com.zs.entity.Role;
 import com.zs.entity.Users;
 import com.zs.entity.other.EasyUIAccept;
+import com.zs.entity.other.JobEntity;
+import com.zs.service.QuartzSer;
 import com.zs.tools.Constans;
 
 @Controller
@@ -28,7 +42,8 @@ public class IndexCon{
 	private FundInfoMapper fundInfoMapper;
 	@Resource
 	private FundHistoryMapper fundHistoryMapper;
-	
+	@Resource
+	private Scheduler scheduler;
 	
 	@RequestMapping("/index")
 	public String gotoIndex(){
@@ -212,6 +227,106 @@ public class IndexCon{
 		req.setAttribute("accept", accept);
 		return "/fund/fundCharts";
 	}
+	
+	
+	
+	//------------quartz实验室-----------------------------
+	private List<JobEntity> getSchedulerJobInfo() throws SchedulerException {
+		List<JobEntity> jobInfos = new ArrayList<JobEntity>();
+		List<String> triggerGroupNames = scheduler.getTriggerGroupNames();
+		for (String triggerGroupName : triggerGroupNames) {
+			Set<TriggerKey> triggerKeySet = scheduler
+					.getTriggerKeys(GroupMatcher
+							.triggerGroupEquals(triggerGroupName));
+			for (TriggerKey triggerKey : triggerKeySet) {
+				Trigger t = scheduler.getTrigger(triggerKey);
+				if (t instanceof CronTrigger) {
+					CronTrigger trigger = (CronTrigger) t;
+					JobKey jobKey = trigger.getJobKey();
+					JobDetail jd = scheduler.getJobDetail(jobKey);
+					JobEntity jobInfo = new JobEntity();
+					jobInfo.setJobName(jobKey.getName());
+					jobInfo.setJobGroup(jobKey.getGroup());
+					jobInfo.setTriggerName(triggerKey.getName());
+					jobInfo.setTriggerGroupName(triggerKey.getGroup());
+					jobInfo.setCronExpr(trigger.getCronExpression());
+					jobInfo.setNextFireTime(trigger.getNextFireTime());
+					jobInfo.setPreviousFireTime(trigger.getPreviousFireTime());
+					jobInfo.setStartTime(trigger.getStartTime());
+					jobInfo.setEndTime(trigger.getEndTime());
+					jobInfo.setJobClass(jd.getJobClass().getCanonicalName());
+					// jobInfo.setDuration(Long.parseLong(jd.getDescription()));
+					Trigger.TriggerState triggerState = scheduler
+							.getTriggerState(trigger.getKey());
+					jobInfo.setJobStatus(triggerState.toString());// NONE无,
+																	// NORMAL正常,
+																	// PAUSED暂停,
+																	// COMPLETE完全,
+																	// ERROR错误,
+																	// BLOCKED阻塞
+					JobDataMap map = scheduler.getJobDetail(jobKey)
+							.getJobDataMap();
+					if (null!=map && map.size()!=0) {
+						jobInfo.setCount(map.get("count")!=null?Integer.parseInt((String)map.get("count")):0);
+						jobInfo.setJobDataMap(map);
+					} else {
+						jobInfo.setJobDataMap(new JobDataMap());
+					}
+					jobInfos.add(jobInfo);
+				}
+			}
+		}
+		return jobInfos;
+	}
+	
+	/**
+	 * 定时列表页
+	 */
+	@RequestMapping(value="/quartz/listJob")
+	public String listJob(HttpServletRequest request,HttpServletResponse response) throws SchedulerException {
+		List<JobEntity> jobInfos = this.getSchedulerJobInfo();
+		request.setAttribute("jobInfos", jobInfos);
+		return "/quartz/listjob";
+	}
+	
+	/**
+	 * 跳转到新增
+	 */
+	@RequestMapping(value="/quartz/toAdd")
+	public String toAdd(HttpServletRequest request,HttpServletResponse response) throws SchedulerException {
+		return "/quartz/addjob";
+	}
+	
+	/**
+	 * 跳转到编辑
+	 */
+	@RequestMapping(value="/quartz/toEdit")
+	public String toEdit(HttpServletRequest request,HttpServletResponse response) throws SchedulerException {
+		String jobName = request.getParameter("jobName");
+		String jobGroup = request.getParameter("jobGroup");
+		
+		JobKey jobKey = JobKey.jobKey(jobName, jobGroup);
+		JobDetail jd = scheduler.getJobDetail(jobKey);
+		@SuppressWarnings("unchecked")
+		List<CronTrigger> triggers = (List<CronTrigger>) scheduler
+				.getTriggersOfJob(jobKey);
+		CronTrigger trigger = triggers.get(0);
+		TriggerKey triggerKey = trigger.getKey();
+		String cron = trigger.getCronExpression();
+		Map<String, String> pd = new HashMap<String, String>();
+		pd.put("jobName", jobKey.getName());
+		pd.put("jobGroup", jobKey.getGroup());
+		pd.put("triggerName", triggerKey.getName());
+		pd.put("triggerGroupName", triggerKey.getGroup());
+		pd.put("cron", cron);
+		pd.put("clazz", jd.getJobClass().getCanonicalName());
+
+		request.setAttribute("pd", pd);
+		request.setAttribute("msg", "edit");
+		
+		return "/quartz/editjob";
+	}
+	
 	
 }
 

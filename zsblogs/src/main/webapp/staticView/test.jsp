@@ -14,11 +14,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 <jsp:include page="/WEB-INF/jsp/part/common.jsp"/>
 <script type="text/javascript">
-	function addBody(){
+	function addBody(opt){
+		var k="",v="";
+		if(opt){
+			k=opt.k?opt.k:k;
+			v=opt.v?opt.v:v;
+		}
 		var par=$('#http_body');
 		var first=$('#div1');
 		var len=par.children().length;
-		first.after("<div id='div"+(len+1)+"'>Key:<input type=\"text\"/>Value:<input type=\"text\"/><input type=\"button\" value=\"删除参数\" onclick=\"removeChildren('div"+(len+1)+"')\"/></div>");  
+		first.after("<div id='div"+(len+1)+"'>Key:<input type=\"text\" value=\""+k+"\"/>Value:<input type=\"text\" value=\""+v+"\"/><input type=\"button\" value=\"删除参数\" onclick=\"removeChildren('div"+(len+1)+"')\"/></div>");  
 	}
 	function removeChildren(id){
 		$("#"+id).remove();
@@ -68,7 +73,39 @@ token:<input type="text" id="token"/>
 <div id="http_body" style="border:1px solid rgba(4, 253, 4, 0.43);padding: 10px;">
 	<div id="div1">Key:<input type="text"/>Value:<input type="text"/></div>
 </div>
-<br>
+<script type="text/javascript">
+function quartszStart(){
+	$("#urltmp").val("api/quartsz/start");
+	$("#method").val("GET");
+}
+function quartszPause(){
+	$("#urltmp").val("api/quartsz/pause");
+	$("#method").val("GET");
+	addBody({k:"name",v:"hw_job"});
+	addBody({k:"group",v:"hw_group"});
+}
+function resumeJob(){
+	$("#urltmp").val("api/quartsz/resume");
+	$("#method").val("GET");
+	addBody({k:"name",v:"hw_job"});
+	addBody({k:"group",v:"hw_group"});
+}
+function quartszShutdown(){
+	$("#urltmp").val("api/quartsz/shutdown");
+	$("#method").val("GET");
+}
+function show(){
+	$("#urltmp").val("api/quartsz/show");
+	$("#method").val("GET");
+}
+</script>
+<button onclick="quartszStart()">quartsz开启</button>
+<button onclick="quartszPause()">quartsz暂停</button>
+<button onclick="resumeJob()">quartsz暂停恢复</button>
+<button onclick="quartszShutdown()">quartsz关闭</button>
+<button onclick="show()">quartsz显示所有任务</button>
+
+<hr>
 <input type="button" value="发送请求" onclick="sendHttpPost()"/>请在开发者模式的console中查看结果
 
 <hr>

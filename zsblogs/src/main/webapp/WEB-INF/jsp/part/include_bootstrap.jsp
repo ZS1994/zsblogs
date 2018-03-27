@@ -17,3 +17,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="<%=path %>/framework/js/public.js"></script>
 <link rel="stylesheet" type="text/css" href="<%=path%>/framework/css/public.css">
 <script type="text/javascript" src="<%=path %>/framework/json2/json2.js"></script>
+<style type="text/css">
+	select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input{
+		height: auto;
+		margin-top: 1px;
+		margin-bottom: 1px;
+	}
+</style>

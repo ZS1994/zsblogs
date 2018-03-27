@@ -66,6 +66,7 @@ public class Trans {
 				return i;
 			}
 		}
+		
 		return i;
 	}
 	public static String TransToString(Date date){
@@ -271,14 +272,19 @@ public class Trans {
 	//张顺，以后使用这个函数，因为好多时候只知道异常，却不知道是谁导致了异常
 	public static String strToHtml(Exception e,HttpServletRequest req){
 		String u="（无法获取该用户信息）";
+		String url="",method="";
 		if (req!=null) {
-			Users user=(Users) req.getAttribute(Constans.USER);
+			Users user=Constans.getUserFromReq(req);
+			url=Constans.getUrlFromReq(req);
+			method=Constans.getMethodFromReq(req);
 			if (user!=null) {
 				u=user.getName()+"（"+user.getId()+"）";
 			}
 		}
 		String str="<pre>"+
 				"【操作用户id】："+u+"\r\n"+
+				"【请求的url】："+url+"\r\n"+
+				"【请求的method】："+method+"\r\n"+
 				"【异常产生时间】："+new Date().toLocaleString()+"\r\n"+
 				"【异常详情】：\r\n"+
 				getExceptionAllinformation(e)+"</pre>";

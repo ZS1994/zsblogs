@@ -146,7 +146,11 @@ public class RoleInter extends HandlerInterceptorAdapter{
 				allowThrough("/api/system/apitest", POST) //api测试接口
 				*/
 				allowThrough("/api/loveXiaoPei/init", GET) || //注册
-				allowThrough("/api/loveXiaoPei/result/save", POST)
+				allowThrough("/api/loveXiaoPei/result/save", POST) ||
+				
+				//----quartz实验室----------
+				url.contains("/api/quartz/") ||
+				url.contains("/menu/quartz/")
 				
 				) {
 			/*张顺，2017-12-19,如果是游客，那么：
@@ -171,6 +175,9 @@ public class RoleInter extends HandlerInterceptorAdapter{
 			if(user!=null){
 				user.setRoles(roles);
 				request.setAttribute(Constans.USER, user);
+				//张顺，2018-3-26，不仅要传用户信息，也要传url和method信息，让异常邮件显示,后面不再赘述
+				request.setAttribute(Constans.URL, url);
+				request.setAttribute(Constans.METHOD, method);
 				//张顺，2017-12-1，也要尝试存储操作日志
 				Permission p=perSer.get(url, method);
 				if (user!=null && user.getId()!=null && p!=null) {
@@ -217,6 +224,8 @@ public class RoleInter extends HandlerInterceptorAdapter{
 						log.error("[req==null]"+(req==null));
 					}
 					request.setAttribute(Constans.USER, user);
+					request.setAttribute(Constans.URL, url);
+					request.setAttribute(Constans.METHOD, method);
 					return true;
 				}else{
 					gotoHadle(Code.ROLE_USER_NO_PERMISSION);

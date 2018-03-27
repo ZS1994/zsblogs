@@ -61,11 +61,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             		    	trigger: 'axis',
             		    	formatter:function(params,ticket,callback){
             		    		console.log(params);
-            		    		return params[0].axisValue+
-            		    			"<br><div class='biaodian' style='background-color:"+params[0].color+";'></div>"+params[0].seriesName+"："+params[0].data+"%"+
-            		    			"<br><div class='biaodian' style='background-color:"+params[1].color+";'></div>"+params[1].seriesName+"："+params[1].data+"%（同比:"+data.yRate3[params[1].dataIndex]+"%）"+
-            		    			"<br><div class='biaodian' style='background-color:"+params[2].color+";'></div>"+params[2].seriesName+"："+params[2].data+"%"
-            		    			;
+            		    		var str="";
+            		    		if (params) {
+            		    			str=params[0].axisValue;
+								}
+            		    		if (params) {
+									$.each(params,function(ind,ite){
+										if (ite.seriesName=="收益率") {
+											str=str+"<br><div class='biaodian' style='background-color:"+ite.color+";'></div>"+ite.seriesName+"："+ite.data+"%（同比:"+data.yRate3[ite.dataIndex]+"%）";
+										}else{
+											str=str+"<br><div class='biaodian' style='background-color:"+ite.color+";'></div>"+ite.seriesName+"："+ite.data+"%";
+										}
+									});
+								}
+            		    		return str;
             		    	}
             		    };
             			option.xAxis={

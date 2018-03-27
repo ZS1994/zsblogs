@@ -248,7 +248,17 @@
 			<groupId>org.apache.httpcomponents</groupId>  
 			<artifactId>httpmime</artifactId>  
 			<version>4.5.2</version>  
-		</dependency> 
+		</dependency>
+		
+		<!-- quartz任务调度器 -->
+		<dependency>
+		    <groupId>org.quartz-scheduler</groupId>
+		    <artifactId>quartz</artifactId>
+		    <version>2.3.0</version>
+		</dependency>
+				
+		
+		 
 	</dependencies>
   <build>
     <finalName>example</finalName>

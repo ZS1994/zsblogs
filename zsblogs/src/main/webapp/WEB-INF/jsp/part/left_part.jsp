@@ -289,6 +289,12 @@ img {
 			<img class="menu_img" alt="" src="${path }/framework/image/menu/18基金交易.png">
 		</div>
 	</a>
+	<a href="${path }/menu/quartz/listJob">
+		<div class="entry">
+			quartz实验室
+			<img class="menu_img" alt="" src="${path }/framework/image/menu/18基金交易.png">
+		</div>
+	</a>
 	
 	<div id="showBtn" class="show_btn" onclick="toggleHidden()" style="z-index: 999;background-color: #777474;"></div>
 </div>
