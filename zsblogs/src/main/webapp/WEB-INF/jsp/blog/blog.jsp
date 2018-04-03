@@ -65,7 +65,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	//填充栏目筛选
     	if(int3){
     		console.log(int3);
-	    	$("#blId_tj").html("<a class=\"blId_tj\" href=\"${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc&int1=0&str1="+str1+"\">"+str3+" ×</a>");
+	    	$("#blId_tj").html("<a class=\"blId_tj\" href=\"${path}/menu/blogList/blog?page="+1+"&rows="+rows+"&sort=createTime&order=desc&int1=0&str1="+str1+"\">"+str3+" ×</a>");
     	}
     });
     //填充博客
@@ -104,7 +104,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		$(el).click(function(){
     			int3=$(el).attr("id");
     			str3=$(el).html();
-    			window.location.href="${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc&int1=0&str1="+str1+"&int3="+int3+"&str3="+str3;
+    			window.location.href="${path}/menu/blogList/blog?page="+1+"&rows="+rows+"&sort=createTime&order=desc&int1=0&str1="+str1+"&int3="+int3+"&str3="+str3;
     		});
     	});
     }
