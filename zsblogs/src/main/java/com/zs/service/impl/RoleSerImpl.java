@@ -73,7 +73,8 @@ public class RoleSerImpl implements RoleSer{
 	}
 
 	public String update(Role obj) {
-		return String.valueOf(roleMapper.updateByPrimaryKeySelective(obj));
+		String re=String.valueOf(roleMapper.updateByPrimaryKeySelective(obj));
+		return re;
 	}
 
 	public String delete(Integer id) {

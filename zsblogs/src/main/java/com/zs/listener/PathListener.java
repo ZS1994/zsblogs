@@ -44,7 +44,7 @@ public class PathListener implements ServletContextListener {
 		
 		
 		ServletContext servletContext = arg0.getServletContext();  
-        ApplicationContext context = (ApplicationContext) servletContext.getAttribute(  
+        ApplicationContext context = (ApplicationContext) servletContext.getAttribute(
                 WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);   
         //建立对应的service当spring上下文初始化之后  ,使用spring框架中已经初始化的memberService  
         BlogSer blogSer=(BlogSer)context.getBean("blogSer");

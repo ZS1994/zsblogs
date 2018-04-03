@@ -257,7 +257,18 @@
 		    <version>2.3.0</version>
 		</dependency>
 				
-		
+		<!-- aop aspect注解导包 -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>1.8.6</version>
+	    </dependency>
+		<dependency>
+		    <groupId>org.aspectj</groupId>
+		    <artifactId>aspectjweaver</artifactId>
+		    <version>1.8.6</version>
+		</dependency>
+
 		 
 	</dependencies>
   <build>

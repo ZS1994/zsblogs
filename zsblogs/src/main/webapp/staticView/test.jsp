@@ -98,13 +98,17 @@ function show(){
 	$("#urltmp").val("api/quartsz/show");
 	$("#method").val("GET");
 }
+function transaction(){
+	$("#urltmp").val("api/test/transaction");
+	$("#method").val("POST");
+}
 </script>
 <button onclick="quartszStart()">quartsz开启</button>
 <button onclick="quartszPause()">quartsz暂停</button>
 <button onclick="resumeJob()">quartsz暂停恢复</button>
 <button onclick="quartszShutdown()">quartsz关闭</button>
 <button onclick="show()">quartsz显示所有任务</button>
-
+<button onclick="transaction()">aop测试(事务配置测试前置)</button>
 <hr>
 <input type="button" value="发送请求" onclick="sendHttpPost()"/>请在开发者模式的console中查看结果
 

@@ -150,7 +150,10 @@ public class RoleInter extends HandlerInterceptorAdapter{
 				
 				//----quartz实验室----------
 				url.contains("/api/quartz/") ||
-				url.contains("/menu/quartz/")
+				url.contains("/menu/quartz/") ||
+				
+				//----测试----------------
+				url.contains("/api/test/transaction")
 				
 				) {
 			/*张顺，2017-12-19,如果是游客，那么：

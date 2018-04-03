@@ -4,6 +4,7 @@
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"  
 	xsi:schemaLocation="http://www.springframework.org/schema/beans  
                         http://www.springframework.org/schema/beans/spring-beans-3.1.xsd  
                         http://www.springframework.org/schema/context  
@@ -11,14 +12,20 @@
                         http://www.springframework.org/schema/mvc  
                         http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
                         http://www.springframework.org/schema/tx
+         				http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+         				http://www.springframework.org/schema/aop
+         				http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+         				http://www.springframework.org/schema/tx
          				http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
-	<!-- 自动扫描 -->
-	<context:component-scan base-package="com.zs" />
+	
 	<!-- 引入配置文件 -->
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location" value="classpath:jdbc.properties" />
 	</bean>
+	
+	<!-- 自动扫描 -->
+	<context:component-scan base-package="com.zs" />
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
@@ -59,13 +66,35 @@
 	</bean>
 
 	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
-	<tx:annotation-driven />
-	<bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	<tx:annotation-driven/>
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-
 	
+	<!-- <bean id="transactionHelper" class="com.zs.test.TransactionHelper"/>
+	<aop:config>
+		<aop:pointcut id="transactionPointcut" expression="execution(public * com.zs.service.impl.*.*(..))"/>
+		<aop:aspect ref="transactionHelper" order="0">
+			<aop:before method="before" pointcut-ref="transactionPointcut"/>
+			<aop:after method="after" pointcut-ref="transactionPointcut"/>
+		</aop:aspect>
+	</aop:config> -->
+	<tx:advice id="txAdvice" transaction-manager="txManager">  
+        <tx:attributes>  
+            <tx:method name="queryFenye" read-only="true"/>
+            <tx:method name="get" read-only="true"/>
+            <tx:method name="add"/>
+            <tx:method name="update"/>
+            <tx:method name="delete"/>
+        </tx:attributes>
+    </tx:advice>
+	<aop:config>
+		<aop:pointcut id="txPointcut" expression="execution(public * com.zs.service.impl.*.*(..))"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" order="1"/>
+	</aop:config>
+	
+	
+	<!-- quartz配置 -->
 	<bean name="quartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" >
         <property name="dataSource" ref ="dataSource" />       
         <property name="applicationContextSchedulerContextKey" value="applicationContextKey"/>
