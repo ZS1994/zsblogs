@@ -170,7 +170,7 @@ public class FundTradeSerImpl implements FundTradeSer{
 			//当前的净值
 			Double jingzhi=tv1.get(i).getDou1();
 			Double rate;
-			if (new BigDecimal(jine).setScale(0, BigDecimal.ROUND_HALF_UP).compareTo(new BigDecimal(0))!=0 && new BigDecimal(fene).setScale(2, BigDecimal.ROUND_HALF_UP).compareTo(new BigDecimal(0))!=0) {
+			if (new BigDecimal(jine).setScale(0, BigDecimal.ROUND_HALF_UP).intValue()!=0 && new BigDecimal(fene).intValue()!=0) {
 				rate=new BigDecimal(fene*jingzhi-jine).divide(new BigDecimal(jine),4, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)).doubleValue();
 			}else{
 				rate=0.0;
