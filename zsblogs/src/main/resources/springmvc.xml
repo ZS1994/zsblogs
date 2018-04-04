@@ -12,9 +12,9 @@
 	
 	
 	<!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
-	<context:component-scan base-package="com.zs.controller" />
-	<context:component-scan base-package="com.zs.tools" />
-	
+	<!-- <context:component-scan base-package="com.zs.controller" />
+	<context:component-scan base-package="com.zs.tools" /> -->
+	<context:component-scan base-package="com.zs" />
 	
 	<mvc:annotation-driven conversion-service="conversionService"/>
     <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
@@ -100,10 +100,10 @@
     <!-- 匹配的是url路径， 如果不配置或/**,将拦截所有的Controller -->  
 	<!-- 当设置多个拦截器时，先按顺序调用preHandle方法，然后逆序调用每个拦截器的postHandle和afterCompletion方法 -->  
 	<mvc:interceptors>
-	    <mvc:interceptor>    
+	    <mvc:interceptor>
 	        <mvc:mapping path="/api/**" />
-	        <mvc:mapping path="/menu/**" />  
-	        <bean class="com.zs.interceptor.RoleInter"></bean> 
+	        <mvc:mapping path="/menu/**" />
+	        <bean class="com.zs.interceptor.RoleInter"></bean>
 	    </mvc:interceptor>  
 	</mvc:interceptors>
 	

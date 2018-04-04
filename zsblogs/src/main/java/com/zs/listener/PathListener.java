@@ -7,6 +7,7 @@ import javax.servlet.ServletContextListener;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.zs.dao.FundHistoryMapper;
 import com.zs.dao.FundInfoMapper;
@@ -42,10 +43,7 @@ public class PathListener implements ServletContextListener {
 		//在这里写出栈操作，从数据库lc_stack去除所有数据，全部存入application中，并将lc_stack清空，以此实现恢复上次关闭时的现场情况
 		arg0.getServletContext().setAttribute("path", arg0.getServletContext().getContextPath());
 		
-		
-		ServletContext servletContext = arg0.getServletContext();  
-        ApplicationContext context = (ApplicationContext) servletContext.getAttribute(
-                WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE);   
+        WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(arg0.getServletContext());
         //建立对应的service当spring上下文初始化之后  ,使用spring框架中已经初始化的memberService  
         BlogSer blogSer=(BlogSer)context.getBean("blogSer");
         BlogListSer blogListSer=(BlogListSer)context.getBean("blogListSer");

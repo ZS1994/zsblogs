@@ -81,18 +81,17 @@
 	</aop:config> -->
 	<tx:advice id="txAdvice" transaction-manager="txManager">  
         <tx:attributes>  
-            <tx:method name="queryFenye" read-only="true"/>
-            <tx:method name="get" read-only="true"/>
-            <tx:method name="add"/>
-            <tx:method name="update"/>
-            <tx:method name="delete"/>
+            <tx:method name="queryFenye*" read-only="true"/>
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="add*"/>
+            <tx:method name="update*"/>
+            <tx:method name="delete*"/>
         </tx:attributes>
     </tx:advice>
 	<aop:config>
-		<aop:pointcut id="txPointcut" expression="execution(public * com.zs.service.impl.*.*(..))"/>
-		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" order="1"/>
+		<aop:pointcut id="txPointcut" expression="execution(public * com.zs.service.*.*(..))"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
 	</aop:config>
-	
 	
 	<!-- quartz配置 -->
 	<bean name="quartzScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" >

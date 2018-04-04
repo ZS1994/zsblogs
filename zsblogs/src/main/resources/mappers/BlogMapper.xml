@@ -135,8 +135,12 @@
   			select b_id from blog_list_rel where bl_id=#{int3}
 		)
   		</if>
-  		<if test="str1!=null"><!-- str1：通过博客标题模糊查询 -->
-  		and title like '%${str1}%'
+  		<if test="str1!=null"><!-- str1：通过博客标题、栏目、摘要、作者名称模糊查询 -->
+  		and (title like '%${str1}%' or 
+  			summary like '%${str1}%' or
+  			id in (select b_id from blog_list_rel where bl_id in (select id from blog_list where name like '%${str1}%')) or 
+  			id in (select b_id from blog_list_rel where bl_id in (select id from blog_list where u_id in (select id from users where name like '%${str1}%'))) 
+		)
   		</if>
   		<if test="str2!=null"><!-- str2：通过博客摘要模糊查询 -->
   		and summary like '%${str2}%'

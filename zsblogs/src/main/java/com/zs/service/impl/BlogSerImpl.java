@@ -52,6 +52,7 @@ public class BlogSerImpl implements BlogSer{
 				accept.setStart((page-1)*size);
 				accept.setEnd(page*size);
 			}
+			//张顺，2018-4-3，str1，搜索关键字改为标题、栏目名称、用户名称、摘要进行匹配，原来只是标题
 			List list=blogMapper.queryFenye(accept);
 			int rows=blogMapper.getCount(accept);
 			

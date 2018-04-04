@@ -226,46 +226,22 @@ public class CrawlerNo1 implements Runnable{
 	}
 
 
-	public BlogSer getBlogSer() {
-		return blogSer;
-	}
-
-
-	public void setBlogSer(BlogSer blogSer) {
-		this.blogSer = blogSer;
-	}
-
 
 	public boolean getIsBegin() {
 		return isBegin;
 	}
 
-
 	public void setIsBegin(boolean isBegin) {
 		this.isBegin = isBegin;
 	}
-
-
-	public BlogListSer getBlogListSer() {
-		return blogListSer;
-	}
-
-
-	public void setBlogListSer(BlogListSer blogListSer) {
-		this.blogListSer = blogListSer;
-	}
-
 
 	public List<CrawlerData1> getList() {
 		return list;
 	}
 
-
 	public void setList(List<CrawlerData1> list) {
 		this.list = list;
 	}
-	
-	
 	
 	
 	

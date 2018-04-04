@@ -159,8 +159,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    
 				
 				<div class="input-append">
-				  <input class="span3" id="ssTitle" type="text" placeholder="请输入标题..." style="height: inherit;">
-				  <button class="btn" type="button" onclick="sousuo()">搜索</button>
+				  <input class="span4" id="ssTitle" type="text" placeholder="请输入标题、作者、摘要、博客栏目搜索..." style="height: inherit;">
+				  <button class="btn" type="button" onclick="sousuo()" style="margin-top: 1px;">搜索</button>
 				</div>
 				<span id="blId_tj" style="margin-left: 10px;"></span>
 							    

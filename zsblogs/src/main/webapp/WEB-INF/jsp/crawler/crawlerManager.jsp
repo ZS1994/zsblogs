@@ -21,7 +21,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		urlb:"/api/crawler/info/1",
     		type:"get",
     		success:function(data){
-   				$("#blogSer").html(data.blogSer?"[已加载]":"[未加载]");
    				var str="";
    				$.each(data.list, function(key, val) {
    					str=str+val.url+"&nbsp;&nbsp;&nbsp;&nbsp;"+val.urlBlogList+"<br>";
@@ -31,11 +30,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    				$("#isBegin").html(data.isBegin?"true":"false");
    				
    				if (data.isBegin) {//已开启
-					$("#btn_begin").addClass("disabled");
-					$("#btn_finish").removeClass("disabled");
+					$("#btn_begin").attr("disabled","disabled");
+					$("#btn_finish").removeAttr("disabled");
 				}else{//已关闭
-					$("#btn_begin").removeClass("disabled");
-					$("#btn_finish").addClass("disabled");
+					$("#btn_begin").removeAttr("disabled");
+					$("#btn_finish").attr("disabled","disabled");
 				}
     		}
     	});
@@ -43,12 +42,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		urlb:"/api/crawler/info/2",
     		type:"get",
     		success:function(data){
+    			$("#isBegin_2").html(data.isBegin?"true":"false");
    				if (data.isBegin) {//已开启
-					$("#btn_begin_2").addClass("disabled");
-					$("#btn_finish_2").removeClass("disabled");
+					$("#btn_begin_2").attr("disabled","disabled");
+					$("#btn_finish_2").removeAttr("disabled");
 				}else{//已关闭
-					$("#btn_begin_2").removeClass("disabled");
-					$("#btn_finish_2").addClass("disabled");
+					$("#btn_begin_2").removeAttr("disabled");
+					$("#btn_finish_2").attr("disabled","disabled");
 				}
     		}
     	});
@@ -108,27 +108,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    	<button id="btn_finish" class="btn btn btn-danger span2" onclick="finish('1')">关闭</button>
 		    	<button id="btn_finish" class="btn btn btn-danger span2" onclick="refreshHtml()">刷新</button>
 	    	</div>
-	    	
-	    	
 	    	<br>
 	    	<br>
-	    	
-	    	<!-- 
-	    	<div class="input-append">
-				<input class="span3" id="targetURL" type="text" placeholder="请输入目标URL..." style="height: inherit;">
-				<button class="btn" type="button" onclick="addURL()">添加</button>
-			</div>
-	    	 -->
-	    	
 	    	<div>
 		    	<h4>目前的参数数值</h4>
 		    	<table class="table">
 					<tr>
-						<td>blogSer</td>
-						<td id="blogSer"></td>
-					</tr>
-					<tr>
-						<td>list</td>
+						<td style="width: 150px;">list</td>
 						<td id="list"></td>
 					</tr>
 					<tr>
@@ -144,7 +130,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    	<button id="btn_finish_2" class="btn btn btn-danger span2" onclick="finish('2')">关闭</button>
 		    	<button id="btn_finish_2" class="btn btn btn-danger span2" onclick="refreshHtml()">刷新</button>
 	    	</div>
-		    
+		    <br>
+	    	<br>
+	    	<div>
+		    	<h4>目前的参数数值</h4>
+		    	<table class="table">
+					<tr>
+						<td style="width: 150px;">isBegin</td>
+						<td id="isBegin_2"></td>
+					</tr>		    		
+		    	</table>
+	    	</div>
+	    	
+	    	
+	    	
+	    	
 	    </div>
   		
   		

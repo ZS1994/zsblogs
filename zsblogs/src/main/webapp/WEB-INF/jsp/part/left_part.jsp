@@ -177,7 +177,7 @@ img {
 			<img class="img-circle" src="<%=path %>/framework/image/zhangshun.png" width="32" height="32" style="margin-left: 9px;" />
 		</div>
 		<div class="my_logo_child2">
-			张顺的网站
+			时光的细节
 		</div>
 	</div>
 	</a>
