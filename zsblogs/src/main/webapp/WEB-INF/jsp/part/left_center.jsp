@@ -131,7 +131,7 @@ ol,ul{list-style:none}
   </head>
   
   <body>
-  	<div class="p_body" style="left: 0px;background-color: #2A2A2A;">
+  	<div class="p_body" style="left: 0px;top:0; background-color: #2A2A2A;">
   	
 		<div class="body_top_jiange"></div>	
 		<div class="container" style="width: 90%;">

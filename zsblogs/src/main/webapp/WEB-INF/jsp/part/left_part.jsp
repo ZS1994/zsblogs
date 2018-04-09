@@ -118,7 +118,7 @@ $(function(){
 		}
 	}
 });
-function toggleHidden(){
+/* function toggleHidden(){
 	var menu=$(".p_left");
 	var body=$(".p_body");
 	var btn=$("#showBtn");
@@ -141,7 +141,7 @@ function toggleHidden(){
 		}catch (e) {
 		}
 	}
-}
+} */
 </script>
 <style>
 .img-circle {
@@ -193,31 +193,26 @@ img {
 	<a href="<%=path%>/menu/blogList/blog?page=1&rows=10&sort=createTime&order=desc"> 
 		<div class="entry">
 			最新博客
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/1新.png">
 		</div>
 	</a>
 	<a href="<%=path%>/menu/user/blogList">
 		<div class="entry">
 			博客栏目
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/2栏.png">
 		</div>
 	</a>
 	<a href="<%=path%>/menu/user/blog">
 		<div class="entry">
 			我的博客
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/3博.png">
 		</div>
 	</a>
 	<a href="<%=path%>/menu/blogList/blog/user/edit">
 		<div class="entry">
 			写博客
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/4写.png">
 		</div>
 	</a>
 	<a href="<%=path%>/menu/system/users/own">
 		<div class="entry">
 			我的信息
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/5我.png">
 		</div>
 	</a>
 
@@ -225,76 +220,64 @@ img {
 	<a href="${path }/menu/system/users">
 		<div class="entry">
 			用户管理
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/6户.png">
 		</div>
 	</a>
 	<a href="${path }/menu/system/role">
 		<div class="entry">
 			角色管理
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/9角.png">
 		</div>
 	</a>
 	<a href="${path }/menu/system/permission">
 		<div class="entry">
 			权限管理
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/10权.png">
 		</div>
 	</a>
 
 	<a href="<%=path%>/menu/system/login">
 		<div class="entry">
 			登录
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/11入.png">
 		</div>
 	</a>
 	<a onclick="logout()">
 	  	<div class="entry">
 			登出
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/12出.png">
 		</div>
 	</a>
 	<a href="${path }/menu/crawler/manager">
 		<div class="entry">
 			爬虫管理
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/13爬.png">
 		</div>
 	</a>
 	<a href="${path }/menu/system/timeline">
 		<div class="entry">
 			操作日志
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/14志.png">
 		</div>
 	</a>
 	<a href="${path }/menu/system/apidoc">
 		<div class="entry">
 			api文档管理
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/15文.png">
 		</div>
 	</a>
 	<a href="${path }/menu/fund/fundInfo">
 		<div class="entry">
 			基金信息管理
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/16基金信息.png">
 		</div>
 	</a>
 	<a href="${path }/menu/fund/fundHistory">
 		<div class="entry">
 			基金历史管理
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/17基金历史.png">
 		</div>
 	</a>
 	<a href="${path }/menu/fund/fundTrade">
 		<div class="entry">
 			基金交易管理
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/18基金交易.png">
 		</div>
 	</a>
 	<a href="${path }/menu/quartz/listJob">
 		<div class="entry">
 			quartz实验室
-			<img class="menu_img" alt="" src="${path }/framework/image/menu/18基金交易.png">
 		</div>
 	</a>
 	
-	<div id="showBtn" class="show_btn" onclick="toggleHidden()" style="z-index: 999;background-color: #777474;"></div>
+	<!-- <div id="showBtn" class="show_btn" onclick="toggleHidden()" style="z-index: 999;background-color: #777474;"></div> -->
 </div>

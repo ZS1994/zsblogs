@@ -12,6 +12,12 @@ a {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 @media screen and (min-width: 1120px){
+	.nav-modal {
+	    display: none;
+	}
+	.nav-small {
+		display: none;
+	}
 	.p_left{
 		position: absolute;
 		top: 0;
@@ -20,14 +26,41 @@ a {
 		width: 15%;
 		height: 100%;
 		background-color: #2A2935;
+		overflow:hidden;
 	}
 	.p_body{
 		position: absolute;
 		top: 0;
 		left: 15%;
-		right: 0px;
+		right: 0;
 		bottom: 0;
-		overflow-y: scroll;
+		overflow: auto;
+	}
+	.p_top{
+		position: absolute;
+		top: 0;
+		left: 15%;
+		right: 0;
+		height: 0;
+		display: none;
+	}
+	.p_right{
+		position: absolute;
+		top: 0;
+		width:0;
+		right: 0;
+		bottom: 0;
+		height: 100%;
+		overflow:hidden;
+		display: none;
+	}
+	.p_bottom{
+		position: absolute;
+		bottom: 0;
+		left: 15%;
+		right: 0;
+		height: 0;
+		display: none;
 	}
 	.entry{
 		text-align: right;
@@ -50,6 +83,27 @@ a {
 	}
 }
 @media screen and (max-width: 1120px){
+	.nav-modal {
+		left:0;
+		top:0;
+	    width: 100%;
+	    height:100%;
+	    position: absolute;
+	    background-color: rgba(0, 0, 0, 0.52);
+	    display: none;
+	    z-index: 10002;
+	}
+	.nav-small {
+		left:-200px;
+		top:0;
+	    width: 200px;
+	    height:100%;
+	    position: absolute;
+	    background-color: white;
+	    z-index: 10003;
+	    overflow-x: hidden;
+	    overflow-y: auto;
+	}
 	.p_left{
 		position: absolute;
 		top: 0;
@@ -58,14 +112,40 @@ a {
 		width: 50px;
 		height: 100%;
 		background-color: #2A2935;
+		display: none;
 	}
 	.p_body{
 		position: absolute;
-		top: 0;
-		left: 50px;
-		right: 0px;
+		top: 40px;
+		left: 0;
+		right: 0;
 		bottom: 0;
-		overflow-y: scroll;
+		overflow: auto;
+	}
+	.p_top{
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 40px;
+	}
+	.p_right{
+		position: absolute;
+		top: 0;
+		width:0;
+		right: 0;
+		bottom: 0;
+		height: 100%;
+		overflow:hidden;
+		display: none;
+	}
+	.p_bottom{
+		position: absolute;
+		bottom: 0;
+		left: 15%;
+		right: 0;
+		height: 0;
+		display: none;
 	}
 	.entry{
 		padding-top: 1px;

@@ -111,6 +111,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
   	<jsp:include page="/WEB-INF/jsp/part/left_part.jsp"/>
+  	<jsp:include page="/WEB-INF/jsp/part/top_part.jsp"/>
   	<div class="p_body" style="overflow-y:hidden;">
   			
   			<table id="dg" border="true"
@@ -232,6 +233,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			
   			
   		</div>
-  	
+  	<jsp:include page="/WEB-INF/jsp/part/bottom_part.jsp"/>
+  	<jsp:include page="/WEB-INF/jsp/part/right_part.jsp"/>
   </body>
 </html>

@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
   	<jsp:include page="/WEB-INF/jsp/part/include_bootstrap.jsp"/>
     <base href="<%=basePath%>">
-    <title>所有博客</title>
+    <title>最新博客</title>
     <script type="text/javascript">
     var page="${acc.page}",total,rows="${acc.rows}",pageSize,str1="${not empty acc.str1 ? acc.str1 : null}",int3="${not empty acc.int3 ? acc.int3 : null}",str3="${not empty acc.str3 ? acc.str3 : null}";
     //获取博客，查询所有博客
@@ -152,6 +152,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
   	<jsp:include page="/WEB-INF/jsp/part/left_part.jsp"/>
+  	<jsp:include page="/WEB-INF/jsp/part/top_part.jsp"/>
   	<div class="p_body">
 			
   			
@@ -188,6 +189,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		
   		
   	</div>
-  	
+  	<jsp:include page="/WEB-INF/jsp/part/bottom_part.jsp"/>
+  	<jsp:include page="/WEB-INF/jsp/part/right_part.jsp"/>
   </body>
 </html>

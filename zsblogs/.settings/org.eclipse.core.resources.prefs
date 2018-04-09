@@ -2,4 +2,5 @@ eclipse.preferences.version=1
 encoding//src/main/resources/jdbc.properties=UTF-8
 encoding//src/main/resources/log4j.properties=UTF-8
 encoding//src/main/resources/quartz.properties=UTF-8
+encoding//src/main/webapp/WEB-INF/jsp/part/top_part.jsp=UTF-8
 encoding//src/main/webapp/staticView/NewFile.jsp=UTF-8

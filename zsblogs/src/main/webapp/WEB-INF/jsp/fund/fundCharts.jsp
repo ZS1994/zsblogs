@@ -213,6 +213,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body style="padding: 0px;margin: 0px;">
   	<jsp:include page="/WEB-INF/jsp/part/left_part.jsp"/>
+  	<jsp:include page="/WEB-INF/jsp/part/top_part.jsp"/>
   	<div class="p_body" style="overflow-y:scroll;">
   		
   		<div style="padding-left: 3px;padding-right: 3px;">
@@ -252,6 +253,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   		</div>
   			
 	</div>
-  	
+  	<jsp:include page="/WEB-INF/jsp/part/bottom_part.jsp"/>
+  	<jsp:include page="/WEB-INF/jsp/part/right_part.jsp"/>
   </body>
 </html>
