@@ -74,8 +74,15 @@ $(function(){
     transform: translateY(-50%);
 }
 .nav-small ul{
-	margin-top: 10px;
+	margin-top: 20px;
 	list-style:none;
+}
+.nav-small ul li{
+    margin-top: 5px;
+}
+.nav-small ul li a{
+    color: #555353;
+    font-size: 16px;
 }
 </style>
 <div class="p_top" style="background-color: #1e1d26;">
@@ -102,7 +109,7 @@ $(function(){
 					<img class="img-circle" src="<%=path %>/framework/image/zhangshun.png" width="32" height="32" style="margin-left: 4px;" />
 				</div>
 				<div class="my_logo_child2" style="color: #2d2d2d;">
-					时光的细节
+					时光与细节
 				</div>
 			</div>
 		</a>

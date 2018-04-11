@@ -63,7 +63,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    	<button href="#myModal" role="button" class="btn" data-toggle="modal" style="width: 210px;margin-top: 5px;"><i class="icon-pencil"> </i>更换头像</button>
 			    </a>
 			    <div class="media-body">
-			    	<legend>${user.name }${user.id }</legend>
+			    	<legend>${user.name }</legend>
+			    	ID:${user.id }
+			    	<br>
 			    	账号：${user.usernum }
 			    	<br>
 			    	邮箱：${user.mail }

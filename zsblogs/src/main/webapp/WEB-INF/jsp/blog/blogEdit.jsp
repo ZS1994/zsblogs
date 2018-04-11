@@ -13,7 +13,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!-- 注意， 只需要引用 JS，无需引用任何 CSS ！！！-->
     <script type="text/javascript" src="${path }/framework/wangEditor/wangEditor.min.js"></script>
     <base href="<%=basePath%>">
-    <title>编辑博客</title>
+    <title>写博客</title>
     <script type="text/javascript">
     var result_hint_num=1;//提示框计数器
     var id="${id}";
@@ -244,7 +244,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 			<div class="span6" style="border-left: 1px solid #e5e5e5;min-height:1400px;">
 			
-				<div class="container" style="width: 90%;padding-top: 0px;">
+				<div class="container" style="width: 90%;padding-top: 0px;height: 100%;overflow-y: scroll;">
 				    <legend>预览博客</legend>
 				    
 				    <div id="blog_preview"></div>
