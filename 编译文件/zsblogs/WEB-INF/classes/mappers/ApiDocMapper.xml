@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zs.dao.ApiDocMapper" >
+  <resultMap id="BaseResultMap" type="com.zs.entity.ApiDoc" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="u_id" property="uId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="project" property="project" jdbcType="VARCHAR" />
+    <result column="flag" property="flag" jdbcType="VARCHAR" />
+    <result column="return_eg" property="returnEg" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="method" property="method" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, u_id, create_time, name, project, flag, return_eg, url, method
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from api_doc
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from api_doc
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zs.entity.ApiDoc" >
+    insert into api_doc (id, u_id, create_time, 
+      name, project, flag, 
+      return_eg, url, method
+      )
+    values (#{id,jdbcType=INTEGER}, #{uId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{name,jdbcType=VARCHAR}, #{project,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, 
+      #{returnEg,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{method,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zs.entity.ApiDoc" >
+    insert into api_doc
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uId != null" >
+        u_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="project != null" >
+        project,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+      <if test="returnEg != null" >
+        return_eg,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="method != null" >
+        method,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uId != null" >
+        #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="project != null" >
+        #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="returnEg != null" >
+        #{returnEg,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null" >
+        #{method,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zs.entity.ApiDoc" >
+    update api_doc
+    <set >
+      <if test="uId != null" >
+        u_id = #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="project != null" >
+        project = #{project,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="returnEg != null" >
+        return_eg = #{returnEg,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null" >
+        method = #{method,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zs.entity.ApiDoc" >
+    update api_doc
+    set u_id = #{uId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      name = #{name,jdbcType=VARCHAR},
+      project = #{project,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=VARCHAR},
+      return_eg = #{returnEg,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      method = #{method,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
+  	select * from api_doc
+  	<where>
+  		<if test="date1!=null"><!-- date1:创建时间开始 -->
+	  		and create_time >= #{date1}
+  		</if>
+  		<if test="date2!=null"><!-- date1:创建时间结束 -->
+  			and create_time &lt;= #{date2}
+  		</if>
+  		<if test="str1!=null"><!-- str1:api接口名称 -->
+  			and name like '%${str1}%'
+  		</if>
+  		<if test="str2!=null"><!-- str2:所属项目名称 -->
+  			and project like '%${str2}%'
+  		</if>
+  		<if test="str3!=null"><!-- str3:创建者名字 -->
+  			and u_id in (select id from users where name like '%${str3}%')
+  		</if>
+  		<if test="str4!=null"><!-- str4:falg -->
+  			and flag = #{str4}
+  		</if>
+  	</where>
+  	<if test="sort!=null and order!=null">
+  		order by ${sort} ${order}
+  	</if>
+  	<if test="sort==null or order==null">
+  		order by create_time desc
+  	</if>
+  	limit ${start},${rows}
+  </select>
+  <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
+  	select count(*) from api_doc
+  	<where>
+  		<if test="date1!=null"><!-- date1:创建时间开始 -->
+	  		and create_time >= #{date1}
+  		</if>
+  		<if test="date2!=null"><!-- date1:创建时间结束 -->
+  			and create_time &lt;= #{date2}
+  		</if>
+  		<if test="str1!=null"><!-- str1:api接口名称 -->
+  			and name like '%${str1}%'
+  		</if>
+  		<if test="str2!=null"><!-- str2:所属项目名称 -->
+  			and project like '%${str2}%'
+  		</if>
+  		<if test="str3!=null"><!-- str3:创建者名字 -->
+  			and u_id in (select id from users where name like '%${str3}%')
+  		</if>
+  		<if test="str4!=null"><!-- str4:falg -->
+  			and flag = #{str4}
+  		</if>
+  	</where>
+  </select>
+  
+  
+</mapper>

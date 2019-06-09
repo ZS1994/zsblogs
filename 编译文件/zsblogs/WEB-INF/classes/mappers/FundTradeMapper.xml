@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zs.dao.FundTradeMapper" >
+  <resultMap id="BaseResultMap" type="com.zs.entity.FundTrade" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="u_id" property="uId" jdbcType="INTEGER" />
+    <result column="fi_id" property="fiId" jdbcType="VARCHAR" />
+    <result column="buy_money" property="buyMoney" jdbcType="DOUBLE" />
+    <result column="buy_number" property="buyNumber" jdbcType="DOUBLE" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, u_id, fi_id, buy_money, buy_number, create_time, type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from fund_trade
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from fund_trade
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zs.entity.FundTrade" >
+    insert into fund_trade (id, u_id, fi_id, 
+      buy_money, buy_number, create_time, 
+      type)
+    values (#{id,jdbcType=INTEGER}, #{uId,jdbcType=INTEGER}, #{fiId,jdbcType=VARCHAR}, 
+      #{buyMoney,jdbcType=DOUBLE}, #{buyNumber,jdbcType=DOUBLE}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{type,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zs.entity.FundTrade" >
+    insert into fund_trade
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="uId != null" >
+        u_id,
+      </if>
+      <if test="fiId != null" >
+        fi_id,
+      </if>
+      <if test="buyMoney != null" >
+        buy_money,
+      </if>
+      <if test="buyNumber != null" >
+        buy_number,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uId != null" >
+        #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="fiId != null" >
+        #{fiId,jdbcType=VARCHAR},
+      </if>
+      <if test="buyMoney != null" >
+        #{buyMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="buyNumber != null" >
+        #{buyNumber,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zs.entity.FundTrade" >
+    update fund_trade
+    <set >
+      <if test="uId != null" >
+        u_id = #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="fiId != null" >
+        fi_id = #{fiId,jdbcType=VARCHAR},
+      </if>
+      <if test="buyMoney != null" >
+        buy_money = #{buyMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="buyNumber != null" >
+        buy_number = #{buyNumber,jdbcType=DOUBLE},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zs.entity.FundTrade" >
+    update fund_trade
+    set u_id = #{uId,jdbcType=INTEGER},
+      fi_id = #{fiId,jdbcType=VARCHAR},
+      buy_money = #{buyMoney,jdbcType=DOUBLE},
+      buy_number = #{buyNumber,jdbcType=DOUBLE},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
+  	select * from fund_trade
+  	<where>
+  		<if test="date1!=null"><!-- date1:创建时间开始 -->
+	  		and create_time >= #{date1}
+  		</if>
+  		<if test="date2!=null"><!-- date1:创建时间结束 -->
+  			and create_time &lt;= #{date2}
+  		</if>
+  		<if test="str1!=null"><!-- str1:基金编号 -->
+  			and fi_id = #{str1}
+  		</if>
+  		<if test="str2!=null"><!-- str2:用户名称 -->
+  			and u_id in (select id from users where name like '%${str2}%') 
+  		</if>
+  		<if test="str3!=null"><!-- str3:类型 -->
+  			and type = #{str3}
+  		</if>
+  		<if test="int1!=null"><!-- int1:用户id -->
+  			and u_id = #{int1}
+  		</if>
+  	</where>
+  	<if test="sort!=null and order!=null">
+  		order by ${sort} ${order}
+  	</if>
+  	<if test="sort==null and order==null">
+  		order by create_time desc
+  	</if>
+  	limit ${start},${rows}
+  </select>
+  
+  <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
+  	select count(*) from fund_trade
+  	<where>
+  		<if test="date1!=null"><!-- date1:创建时间开始 -->
+	  		and create_time >= #{date1}
+  		</if>
+  		<if test="date2!=null"><!-- date1:创建时间结束 -->
+  			and create_time &lt;= #{date2}
+  		</if>
+  		<if test="str1!=null"><!-- str1:基金编号 -->
+  			and fi_id = #{str1}
+  		</if>
+  		<if test="str2!=null"><!-- str2:用户名称 -->
+  			and u_id in (select id from users where name like '%${str2}%') 
+  		</if>
+  		<if test="str3!=null"><!-- str3:类型 -->
+  			and type = #{str3}
+  		</if>
+  		<if test="int1!=null"><!-- int1:用户id -->
+  			and u_id = #{int1}
+  		</if>
+  	</where>
+  </select>
+  
+  <resultMap id="TimeValueMap" type="com.zs.entity.other.TimeValueBean" >
+    <result column="time" property="time" jdbcType="VARCHAR" />
+    <result column="dou1" property="dou1" jdbcType="DOUBLE" />
+    <result column="dou2" property="dou2" jdbcType="DOUBLE" />
+    <result column="dou3" property="dou3" jdbcType="DOUBLE" />
+    <result column="dou4" property="dou4" jdbcType="DOUBLE" />
+    <result column="dou5" property="dou5" jdbcType="DOUBLE" />
+    <result column="str1" property="str1" jdbcType="VARCHAR" />
+    <result column="str2" property="str2" jdbcType="VARCHAR" />
+    <result column="str3" property="str3" jdbcType="VARCHAR" />
+    <result column="str4" property="str4" jdbcType="VARCHAR" />
+    <result column="str5" property="str5" jdbcType="VARCHAR" />
+    
+  </resultMap>
+  
+  <select id="obtainHistory" resultMap="TimeValueMap">
+	select
+		DATE_FORMAT(time,'%Y-%m-%d') as time,
+		IFNULL(netvalue,0) as dou1
+	from fund_history
+	where 
+		fi_id=#{fiId} and
+		time between #{begin} and #{end}
+	order by time
+  </select>
+  
+  <select id="obtainTrade" resultMap="TimeValueMap">
+  	select
+  	DATE_FORMAT(cd.time,'%Y-%m-%d') as time,
+  	IFNULL(ft.buy_money,0) as dou1,
+  	IFNULL(ft.buy_number,0) as dou2,
+  	ft.type as str1s
+  	from(
+	  	select time from fund_history
+	  	where time between #{begin} and #{end} and fi_id=#{fiId}
+	  	GROUP BY time
+  	)cd
+  	left join(
+  		select *
+  		from fund_trade
+  		where fi_id=#{fiId} and u_id=#{uid}
+  	)ft
+  	on DATE_FORMAT(cd.time,'%Y-%m-%d')=DATE_FORMAT(ft.create_time,'%Y-%m-%d')
+  	order by cd.time
+  </select>
+  
+  <select id="getBeginDate" resultType="java.util.Date">
+  	select min(create_time) from fund_trade
+  	where fi_id=#{fiId} and u_id=#{uid}
+  </select>
+  
+</mapper>

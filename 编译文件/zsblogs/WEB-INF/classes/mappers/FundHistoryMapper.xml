@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zs.dao.FundHistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.zs.entity.FundHistory" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="fi_id" property="fiId" jdbcType="VARCHAR" />
+    <result column="time" property="time" jdbcType="DATE" />
+    <result column="netvalue" property="netvalue" jdbcType="DOUBLE" />
+    <result column="rate" property="rate" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, fi_id, time, netvalue, rate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from fund_history
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from fund_history
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zs.entity.FundHistory" >
+    insert into fund_history (id, fi_id, time, 
+      netvalue, rate)
+    values (#{id,jdbcType=INTEGER}, #{fiId,jdbcType=VARCHAR}, #{time,jdbcType=DATE}, 
+      #{netvalue,jdbcType=DOUBLE}, #{rate,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zs.entity.FundHistory" >
+    insert into fund_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="fiId != null" >
+        fi_id,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+      <if test="netvalue != null" >
+        netvalue,
+      </if>
+      <if test="rate != null" >
+        rate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="fiId != null" >
+        #{fiId,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=DATE},
+      </if>
+      <if test="netvalue != null" >
+        #{netvalue,jdbcType=DOUBLE},
+      </if>
+      <if test="rate != null" >
+        #{rate,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zs.entity.FundHistory" >
+    update fund_history
+    <set >
+      <if test="fiId != null" >
+        fi_id = #{fiId,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        time = #{time,jdbcType=DATE},
+      </if>
+      <if test="netvalue != null" >
+        netvalue = #{netvalue,jdbcType=DOUBLE},
+      </if>
+      <if test="rate != null" >
+        rate = #{rate,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zs.entity.FundHistory" >
+    update fund_history
+    set fi_id = #{fiId,jdbcType=VARCHAR},
+      time = #{time,jdbcType=DATE},
+      netvalue = #{netvalue,jdbcType=DOUBLE},
+      rate = #{rate,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
+  	select * from fund_history
+  	<where>
+  		<if test="date1!=null"><!-- date1:成立时间开始 -->
+	  		and time >= #{date1}
+  		</if>
+  		<if test="date2!=null"><!-- date1:成立时间结束 -->
+  			and time &lt;= #{date2}
+  		</if>
+  		<if test="str1!=null"><!-- str1:基金编号 -->
+  			and fi_id = #{str1}
+  		</if>
+  		<if test="str2!=null"><!-- str2:基金名称 -->
+  			and fi_id in (select id from fund_info where name like '%${str2}%')
+  		</if>
+  	</where>
+  	<if test="sort!=null and order!=null">
+  		order by ${sort} ${order}
+  	</if>
+  	<if test="sort==null and order==null">
+  		order by time desc
+  	</if>
+  	limit ${start},${rows}
+  </select>
+  
+  <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
+  	select count(*) from fund_history
+  	<where>
+  		<if test="date1!=null"><!-- date1:成立时间开始 -->
+	  		and time >= #{date1}
+  		</if>
+  		<if test="date2!=null"><!-- date1:成立时间结束 -->
+  			and time &lt;= #{date2}
+  		</if>
+  		<if test="str1!=null"><!-- str1:基金编号 -->
+  			and fi_id = #{str1}
+  		</if>
+  		<if test="str2!=null"><!-- str2:基金名称 -->
+  			and fi_id in (select id from fund_info where name like '%${str2}%')
+  		</if>
+  	</where>
+  </select>
+  
+  <select id="selectByFiIdAndTime" resultMap="BaseResultMap" >
+  	select * from fund_history
+  	where fi_id=#{fiId} and time=#{time}
+  </select>
+  
+  <select id="getFirstDate" resultType="java.util.Date" >
+  	select min(time) from fund_history
+  	where fi_id=#{fiId}
+  </select>
+  
+  <select id="getEndDate" resultType="java.util.Date" >
+  	select max(time) from fund_history
+  	where fi_id=#{fiId}
+  </select>
+  
+</mapper>

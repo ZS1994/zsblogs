@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zs.dao.TokenMapper" >
+  <resultMap id="BaseResultMap" type="com.zs.entity.Token" >
+    <id column="token" property="token" jdbcType="VARCHAR" />
+    <result column="u_id" property="uId" jdbcType="INTEGER" />
+    <result column="invalid_time" property="invalidTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    token, u_id, invalid_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from token
+    where token = #{token,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from token
+    where token = #{token,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zs.entity.Token" >
+    insert into token (token, u_id, invalid_time
+      )
+    values (#{token,jdbcType=VARCHAR}, #{uId,jdbcType=INTEGER}, #{invalidTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zs.entity.Token" >
+    insert into token
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="token != null" >
+        token,
+      </if>
+      <if test="uId != null" >
+        u_id,
+      </if>
+      <if test="invalidTime != null" >
+        invalid_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="token != null" >
+        #{token,jdbcType=VARCHAR},
+      </if>
+      <if test="uId != null" >
+        #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="invalidTime != null" >
+        #{invalidTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zs.entity.Token" >
+    update token
+    <set >
+      <if test="uId != null" >
+        u_id = #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="invalidTime != null" >
+        invalid_time = #{invalidTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where token = #{token,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zs.entity.Token" >
+    update token
+    set u_id = #{uId,jdbcType=INTEGER},
+      invalid_time = #{invalidTime,jdbcType=TIMESTAMP}
+    where token = #{token,jdbcType=VARCHAR}
+  </update>
+  <delete id="deleteByUid" parameterType="java.lang.Integer">
+    delete from token
+    where u_id = #{uId,jdbcType=INTEGER}
+  </delete>
+</mapper>
