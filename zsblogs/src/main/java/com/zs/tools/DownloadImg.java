@@ -106,12 +106,11 @@ public class DownloadImg {
     public void readInputStream(InputStream inStream,FileOutputStream outStream) throws Exception{  
         byte[] buffer = new byte[1024];  
         int len = 0;  
-        while( (len=inStream.read(buffer)) != -1 ){  
+        while( (len=inStream.read(buffer,0,1024)) != -1 ){  
             outStream.write(buffer, 0, len);  
         }
-        inStream.close();
-        outStream.flush();
         outStream.close();
+        inStream.close();
     }  
   
     
