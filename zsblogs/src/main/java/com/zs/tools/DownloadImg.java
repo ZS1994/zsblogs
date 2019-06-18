@@ -2,32 +2,44 @@ package com.zs.tools;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
   
 /** 
  * 2017-11-20
  * 下载图片 
  * @author 张顺
  * 
- */  
+ */
+@Component
 public class DownloadImg {  
   
-	private static final String PATH_ROOT="E:/tomcat_imgs/";
+	private Logger log=Logger.getLogger(getClass());
+	private String pathRoot;
 	
+	public String getPathRoot() {
+		return pathRoot;
+	}
+	public void setPathRoot(String pathRoot) {
+		this.pathRoot = pathRoot;
+	}
 	/** 
      * 测试 
      * @param args 
      */  
-    public static String download(String url,String fileName) {  
-        byte[] btImg = getImageFromNetByUrl(url);  
-        if(null != btImg && btImg.length > 0){  
-//            System.out.println("读取到：" + btImg.length + " 字节");  
-            return writeImageToDisk(btImg, fileName);  
+    public String download(String url,String fileName) {  
+        InputStream inputStream = getImageinputFromNetByUrl(url);
+        if(null != inputStream){  
+            return writeImageToDisk(inputStream, fileName);  
         }else{  
-            System.out.println("没有从该连接获得内容");
+            log.error("没有从该连接获得内容:"+url+"   (文件名:"+fileName+")");
             return null;
         }
     }
@@ -36,68 +48,54 @@ public class DownloadImg {
      * @param img 图片数据流 
      * @param fileName 文件保存时的名称 
      */  
-    public static String writeImageToDisk(byte[] img, String fileName){  
+    public String writeImageToDisk(InputStream inputStream, String fileName){  
+    	FileOutputStream fops=null;
         try {  
         	//先创建一个文件夹
-        	String dirname=NameOfDate.getDir()+"/";
-        	File dirFile=new File(PATH_ROOT+dirname);
+        	String dirname=NameOfDate.getDir();
+        	File dirFile=new File(pathRoot+dirname);
         	if (!dirFile.exists()) {
 				dirFile.mkdirs();
 			}
         	//将文件名改为时间+原始文件名，防止重名
         	String fileNameTmp=NameOfDate.getFileName()+"_"+fileName;
-            File file = new File(PATH_ROOT+dirname+fileNameTmp);
+            File file = new File(pathRoot+dirname+"/"+fileNameTmp);
             while(file.exists()==true){//这个文件如果存在，也就是重名的话
 				//先延迟500ms，然后再生成一个名字
 				Thread.sleep(500);
 				fileNameTmp=NameOfDate.getFileName()+"_"+fileName;
-				file = new File(PATH_ROOT+dirname+fileNameTmp);
+				file = new File(pathRoot+dirname+"/"+fileNameTmp);
             }
-            FileOutputStream fops = new FileOutputStream(file);  
-            fops.write(img);  
-            fops.flush();  
-            fops.close();
-//            System.out.println("图片已经写入到"+(PATH_ROOT+dirname+fileNameTmp));
-            return dirname+fileNameTmp;
+            fops = new FileOutputStream(file);
+            readInputStream(inputStream, fops);
+            return dirname+"/"+fileNameTmp;
         } catch (Exception e) {  
             e.printStackTrace();
             return null;
-        }  
+        }finally {
+        	IOUtils.closeQuietly(fops);
+        	IOUtils.closeQuietly(inputStream);
+		}
     }  
     /** 
      * 根据地址获得数据的字节流 
      * @param strUrl 网络连接地址 
      * @return 
      */  
-    public static byte[] getImageFromNetByUrl(String strUrl){  
+    public static InputStream getImageinputFromNetByUrl(String strUrl){  
         try {  
             URL url = new URL(strUrl);  
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();  
             conn.setRequestMethod("GET");  
             conn.setConnectTimeout(5 * 1000);  
             InputStream inStream = conn.getInputStream();//通过输入流获取图片数据  
-            byte[] btImg = readInputStream(inStream);//得到图片的二进制数据  
-            return btImg;  
+            return inStream;  
         } catch (Exception e) {  
             e.printStackTrace();  
         }  
         return null;  
     } 
     
-    /** 
-     * 直接给一个流，文件上传用的到
-     * @param inStream 图片流
-     * @return 
-     */  
-    public static byte[] getImageFromNetByUrl(InputStream inStream){  
-        try {  
-            byte[] btImg = readInputStream(inStream);//得到图片的二进制数据  
-            return btImg;  
-        } catch (Exception e) {  
-            e.printStackTrace();  
-        }  
-        return null;  
-    }  
     
     /** 
      * 从输入流中获取数据 
@@ -105,27 +103,31 @@ public class DownloadImg {
      * @return 
      * @throws Exception 
      */  
-    public static byte[] readInputStream(InputStream inStream) throws Exception{  
-        ByteArrayOutputStream outStream = new ByteArrayOutputStream();  
+    public void readInputStream(InputStream inStream,FileOutputStream outStream) throws Exception{  
         byte[] buffer = new byte[1024];  
         int len = 0;  
         while( (len=inStream.read(buffer)) != -1 ){  
             outStream.write(buffer, 0, len);  
-        }  
-        inStream.close();  
-        return outStream.toByteArray();  
+        }
+        inStream.close();
+        outStream.flush();
+        outStream.close();
     }  
   
     
     public static void main(String[] args) {  
-    String url = "http://www.baidu.com/img/baidu_sylogo1.gif";  
-	    byte[] btImg = getImageFromNetByUrl(url);  
-	    if(null != btImg && btImg.length > 0){  
-//	        System.out.println("读取到：" + btImg.length + " 字节");  
-	        String fileName = "百度.gif";  
-	        writeImageToDisk(btImg, fileName);  
-	    }else{  
-	        System.out.println("没有从该连接获得内容");  
-	    }  
+	    String url = "http://www.baidu.com/img/baidu_sylogo1.gif";
+	    String fileName = "百度.gif";
+	    DownloadImg dli=new DownloadImg();
+	    dli.setPathRoot(Constans.PATH_ROOT);
+	    try {
+			dli.readInputStream(getImageinputFromNetByUrl(url), new FileOutputStream(dli.pathRoot+NameOfDate.getDir()+"/"+fileName));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} ;  
 	}
 }  

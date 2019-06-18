@@ -9,11 +9,21 @@
                         http://www.springframework.org/schema/context/spring-context-4.3.xsd  
                         http://www.springframework.org/schema/mvc  
                         http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
-	
+	<!-- 
+		2019-6-13，张顺
+		 以后部署项目的话，需要在这个地方更改一些配置
+		1、下载图片的文件保存路径，在springmvc.xml文件中downLoadImg进行配置
+		2、tomcat配置的图片文件夹映射，请这样配：<Context docBase="E:/tomcat_imgs/" path="/tomcat_imgs" reloadable="true"/>
+		3、爬虫1号的id（可能需要改，目前需要在代码中Constans中进行修改）
+		4、jdbc的配置数据库路径，账号密码等
+		5、log的配置保存路径
+	-->
+	<!-- 张顺，2019-6-17，添加这个下载img的工具交由spring管理，因为1，可以灵活更改文件保存路径。2，bean就是单例的，不用编写单例模式。3，不用获取spring上下文获取bean了，省去很多麻烦，代码看起来也更加规范 -->
+	<bean id="downloadImg" class="com.zs.tools.DownloadImg">
+		<property name="pathRoot" value="E:/tomcat_imgs/"></property>
+	</bean>
 	
 	<!-- 自动扫描该包，使SpringMVC认为包下用了@controller注解的类是控制器 -->
-	<!-- <context:component-scan base-package="com.zs.controller" />
-	<context:component-scan base-package="com.zs.tools" /> -->
 	<context:component-scan base-package="com.zs" />
 	
 	<mvc:annotation-driven conversion-service="conversionService"/>
@@ -116,5 +126,5 @@
 	    <mvc:mapping path="/api/**"/>
 	</mvc:cors>
 	 -->
-	 
+	
 </beans>

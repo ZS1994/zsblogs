@@ -34,7 +34,8 @@ a {
 		left: 15%;
 		right: 0;
 		bottom: 0;
-		overflow: auto;
+		overflow-y: scroll;
+		overflow-x: hidden;
 	}
 	.p_top{
 		position: absolute;
@@ -120,7 +121,8 @@ a {
 		left: 0;
 		right: 0;
 		bottom: 0;
-		overflow: auto;
+		overflow-y: scroll;
+		overflow-x: hidden;
 	}
 	.p_top{
 		position: absolute;
@@ -196,4 +198,7 @@ a {
     top: 50%;
     right:50px;
     transform: translateY(-50%);
+}
+.table-body{
+	overflow: hidden;
 }

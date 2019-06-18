@@ -24,8 +24,9 @@
 		<property name="location" value="classpath:jdbc.properties" />
 	</bean>
 	
-	<!-- 自动扫描 -->
+	<!-- 自动扫描 
 	<context:component-scan base-package="com.zs" />
+	-->
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">

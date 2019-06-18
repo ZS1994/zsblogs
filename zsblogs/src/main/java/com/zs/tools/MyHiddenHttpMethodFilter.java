@@ -22,7 +22,7 @@ public class MyHiddenHttpMethodFilter extends HiddenHttpMethodFilter{
     @Override  
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)  
             throws ServletException, IOException {  
-        String header=request.getParameter("_token");  
+        String header=new HttpServletRequestWrapper(request).getParameter("_token");  
         if (header!=null && !header.trim().equals("")) {  
             HttpServletRequest wrapper = new HttpHeaderRequestWrapper(request,header);  
             super.doFilterInternal(wrapper, response, filterChain);  

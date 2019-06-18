@@ -112,7 +112,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   	<jsp:include page="/WEB-INF/jsp/part/left_part.jsp"/>
   	<jsp:include page="/WEB-INF/jsp/part/top_part.jsp"/>
-  	<div class="p_body" style="overflow-y:hidden;">
+  	<div class="p_body table-body">
   			
   			<table id="dg" border="true"
 				url="<%=path %>/api/permission/list"

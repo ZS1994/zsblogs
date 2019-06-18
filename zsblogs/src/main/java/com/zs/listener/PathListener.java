@@ -1,21 +1,9 @@
 package com.zs.listener;
 
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import org.apache.log4j.Logger;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.WebApplicationContextUtils;
-
-import com.zs.dao.FundHistoryMapper;
-import com.zs.dao.FundInfoMapper;
-import com.zs.dao.TimelineMapper;
-import com.zs.service.BlogListSer;
-import com.zs.service.BlogSer;
-import com.zs.tools.CrawlerNo1;
-import com.zs.tools.CrawlerNo2;
 
 /**
  * 2017-7-19
@@ -27,8 +15,6 @@ public class PathListener implements ServletContextListener {
 	
 	private Logger log=Logger.getLogger(getClass());
 
-	private CrawlerNo1 no1;
-	private CrawlerNo2 no2;
 	
 	/*张顺，2017-8-5，本来想使用application缓存token，从而避免每次都从数据库查，当关闭tomcat时将所有缓存存入数据库，当再次启动时，就把缓存取出
 	 * 但是，想了想，有点复杂，就留着以后再写吧，毕竟没有这个也不影响功能
@@ -42,20 +28,6 @@ public class PathListener implements ServletContextListener {
 		log.info("系统服务开始启动");
 		//在这里写出栈操作，从数据库lc_stack去除所有数据，全部存入application中，并将lc_stack清空，以此实现恢复上次关闭时的现场情况
 		arg0.getServletContext().setAttribute("path", arg0.getServletContext().getContextPath());
-		
-        WebApplicationContext context = WebApplicationContextUtils.getWebApplicationContext(arg0.getServletContext());
-        //建立对应的service当spring上下文初始化之后  ,使用spring框架中已经初始化的memberService  
-        BlogSer blogSer=(BlogSer)context.getBean("blogSer");
-        BlogListSer blogListSer=(BlogListSer)context.getBean("blogListSer");
-        no1=CrawlerNo1.init(blogSer,blogListSer).beginWorkThread();
-        
-        //爬虫二号
-        FundInfoMapper fundInfoMapper=(FundInfoMapper)context.getBean("fundInfoMapper");
-    	FundHistoryMapper fundHistoryMapper=(FundHistoryMapper)context.getBean("fundHistoryMapper");
-    	
-    	TimelineMapper timelineMapper=(TimelineMapper)context.getBean("timelineMapper");
-    	no2=CrawlerNo2.init(fundInfoMapper, fundHistoryMapper,timelineMapper).beginWorkThread();
-    	
 	}
 	
 	

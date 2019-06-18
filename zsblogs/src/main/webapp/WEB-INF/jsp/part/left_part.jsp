@@ -186,31 +186,31 @@ img {
 	
 	<%-- 
 	<div class="entry">
-		<a href="<%=path%>/menu/blogList/blog/edit">我的简历</a>
+		<a href="${path }/menu/blogList/blog/edit">我的简历</a>
 	</div>
 	--%>
 	 
-	<a href="<%=path%>/menu/blogList/blog?page=1&rows=10&sort=createTime&order=desc"> 
+	<a href="${path }/menu/blogList/blog?page=1&rows=10&sort=createTime&order=desc"> 
 		<div class="entry">
 			最新博客
 		</div>
 	</a>
-	<a href="<%=path%>/menu/user/blogList">
+	<a href="${path }/menu/user/blogList">
 		<div class="entry">
 			博客栏目
 		</div>
 	</a>
-	<a href="<%=path%>/menu/user/blog">
+	<a href="${path }/menu/user/blog">
 		<div class="entry">
 			我的博客
 		</div>
 	</a>
-	<a href="<%=path%>/menu/blogList/blog/user/edit">
+	<a href="${path }/menu/blogList/blog/user/edit">
 		<div class="entry">
 			写博客
 		</div>
 	</a>
-	<a href="<%=path%>/menu/system/users/own">
+	<a href="${path }/menu/system/users/own">
 		<div class="entry">
 			我的信息
 		</div>
@@ -233,7 +233,7 @@ img {
 		</div>
 	</a>
 
-	<a href="<%=path%>/menu/system/login">
+	<a href="${path }/menu/system/login">
 		<div class="entry">
 			登录
 		</div>

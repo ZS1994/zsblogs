@@ -2,10 +2,16 @@ package com.zs.tools;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.springframework.stereotype.Component;
+
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.zs.dao.FundHistoryMapper;
@@ -21,44 +27,21 @@ import com.zs.entity.other.EasyUIAccept;
  * @author 张顺
  * 爬虫机器人2号，基金净值更新
  */
+@Component
 public class CrawlerNo2 implements Runnable{
 
+	@Resource
 	private FundInfoMapper fundInfoMapper;
+	@Resource
 	private FundHistoryMapper fundHistoryMapper;
+	@Resource
 	private TimelineMapper timelineMapper;
 	
-	private static CrawlerNo2 no2=new CrawlerNo2();
 	
 	private boolean isBegin=false;//是否开始,默认关闭
 	private Gson gson=new Gson();
 	private Logger log=Logger.getLogger(getClass());
 	private SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-	
-	private CrawlerNo2() {
-		super();
-	}
-
-
-	/**
-	 * 初始化并返回机器人
-	 * @param blogSer
-	 * @return
-	 */
-	public static CrawlerNo2 init(FundInfoMapper fundInfoMapper,FundHistoryMapper fundHistoryMapper,TimelineMapper timelineMapper) {
-		no2.fundInfoMapper = fundInfoMapper;
-		no2.fundHistoryMapper = fundHistoryMapper;
-		no2.timelineMapper = timelineMapper;
-		return no2;
-	}
-	
-	/**
-	 * 返回机器人
-	 * @param blogSer
-	 * @return
-	 */
-	public static CrawlerNo2 getInstance() {
-		return no2;
-	}
 	
 	/**
 	 * 开始
@@ -78,12 +61,12 @@ public class CrawlerNo2 implements Runnable{
 		return this;
 	}
 	
-	public CrawlerNo2 beginWorkThread(){
+	@PostConstruct
+	public void beginWorkThread(){
 		Thread thread=new Thread(this);
 		if (!thread.isAlive()) {
 			thread.start();
 		}
-		return this;
 	}
 	
 	private void work() {

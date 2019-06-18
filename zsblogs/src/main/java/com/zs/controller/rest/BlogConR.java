@@ -38,6 +38,8 @@ public class BlogConR extends BaseRestController<Blog, Integer>{
 	private Logger log=Logger.getLogger(getClass());
 	private MailManager mail=MailManager.getInstance();
 	@Resource
+	private DownloadImg downloadImg;
+	@Resource
 	private BlogSer blogSer;
 	
 	@RequestMapping(value="/list",method=RequestMethod.GET)
@@ -137,7 +139,7 @@ public class BlogConR extends BaseRestController<Blog, Integer>{
 		if(file!=null && !file.isEmpty()){
 			try {
 				List<String> data=new ArrayList<>();
-				String re=DownloadImg.writeImageToDisk(DownloadImg.readInputStream(file.getInputStream()), file.getOriginalFilename());
+				String re=downloadImg.writeImageToDisk(file.getInputStream(), file.getOriginalFilename());
 				data.add("/tomcat_imgs/"+re);
 				return new UploadFileResult().setErrno(0).setData(data);
 			} catch (Exception e) {

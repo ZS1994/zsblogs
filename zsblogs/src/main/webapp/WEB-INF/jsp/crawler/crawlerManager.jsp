@@ -15,6 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	
     $(function(){
     	refreshHtml();
+    	setInterval("refreshHtml();",1000*5);
     });
     function refreshHtml(){
     	pullRequest({
@@ -107,7 +108,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	<div class="btn-group">
 		    	<button id="btn_begin" class="btn btn-danger span2" onclick="begin('1')">开启</button>
 		    	<button id="btn_finish" class="btn btn btn-danger span2" onclick="finish('1')">关闭</button>
-		    	<button id="btn_finish" class="btn btn btn-danger span2" onclick="refreshHtml()">刷新</button>
+		    	<!--<button id="btn_finish" class="btn btn btn-danger span2" onclick="refreshHtml()">刷新</button>  -->
 	    	</div>
 	    	<br>
 	    	<br>
@@ -129,7 +130,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	<div class="btn-group">
 		    	<button id="btn_begin_2" class="btn btn-danger span2" onclick="begin('2')">开启</button>
 		    	<button id="btn_finish_2" class="btn btn btn-danger span2" onclick="finish('2')">关闭</button>
-		    	<button id="btn_finish_2" class="btn btn btn-danger span2" onclick="refreshHtml()">刷新</button>
+		    	<!--<button id="btn_finish_2" class="btn btn btn-danger span2" onclick="refreshHtml()">刷新</button>  -->
 	    	</div>
 		    <br>
 	    	<br>
