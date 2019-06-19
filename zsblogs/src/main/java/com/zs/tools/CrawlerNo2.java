@@ -107,6 +107,7 @@ public class CrawlerNo2 implements Runnable{
 									tl.setInfo(gson.toJson(history));
 									timelineMapper.insert(tl);
 								} catch (Exception e) {
+									log.error(e.getMessage());
 								}
 							}
 						}

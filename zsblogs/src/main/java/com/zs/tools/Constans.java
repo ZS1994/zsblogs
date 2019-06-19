@@ -22,6 +22,7 @@ public class Constans {
 	public static final String URL="[url]";
 	public static final String METHOD="[method]";
 	public static final Integer CRAWLERNO1=6;
+	public static final Integer CRAWLERNO2=97;
 	@Deprecated
 	public static final String PATH_ROOT="E:/tomcat_imgs/";//张顺，2019-6-17，已改为spring配置文件配置
 	public static final String PATH_TOMCAT_IMGS="/tomcat_imgs/";

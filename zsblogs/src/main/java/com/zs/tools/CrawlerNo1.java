@@ -12,6 +12,7 @@ import javax.faces.validator.RegexValidator;
 import javax.mail.Flags.Flag;
 
 import org.apache.log4j.Logger;
+import org.bouncycastle.crypto.engines.TnepresEngine;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -21,8 +22,10 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
+import com.zs.dao.TimelineMapper;
 import com.zs.entity.Blog;
 import com.zs.entity.BlogList;
+import com.zs.entity.Timeline;
 import com.zs.entity.other.CrawlerData1;
 import com.zs.service.BlogListSer;
 import com.zs.service.BlogSer;
@@ -41,6 +44,8 @@ public class CrawlerNo1 implements Runnable{
 	private BlogListSer blogListSer;
 	@Resource
 	private DownloadImg downloadImg;
+	@Resource
+	private TimelineMapper timelineMapper;
 	
 	private List<CrawlerData1> list=new ArrayList<>();
 	
@@ -172,7 +177,15 @@ public class CrawlerNo1 implements Runnable{
 								e2.getMessage();
 							}
 						}finally {
-							CrawlerData1 res=list.remove(i);
+							list.remove(i);
+							//2019-6-19，张顺，保存日志
+							Timeline tl=new Timeline();
+							tl.setCreateTime(new Date());
+							tl.setuId(Constans.CRAWLERNO1);
+							tl.setpId(13);//操作：博客单条添加
+							Blog blog2=new Blog(EmojiFilterUtils.filterEmoji(title), null, EmojiFilterUtils.filterEmoji(summary), null);
+							tl.setInfo(gson.toJson(blog2));
+							timelineMapper.insert(tl);
 						}
 					}
 					Thread.sleep(1000*60*60*2);//每2小时重新爬取一次
@@ -232,10 +245,20 @@ public class CrawlerNo1 implements Runnable{
 					if (isHas==false) {
 						String id=blogListSer.add(new BlogList(stag, new Date(), 1, Constans.CRAWLERNO1));
 						urlbloglisttmp.add(Integer.valueOf(id));
+						//2019-6-19，张顺，保存日志
+						Timeline tl=new Timeline();
+						tl.setCreateTime(new Date());
+						tl.setuId(Constans.CRAWLERNO1);
+						tl.setpId(7);//操作：博客栏目单条添加
+						BlogList blogList=new BlogList(stag, new Date(), 1, Constans.CRAWLERNO1);
+						blogList.setId(Trans.TransToInteger(id));
+						tl.setInfo(gson.toJson(blogList));
+						timelineMapper.insert(tl);
 					}
 				}
 				//判断这个博客是否已经创建过？创建过就跳过，否则创建
 				if(blogSer.queryByTitle(title).size()>0){
+					log.info("判断这个博客是否已经创建过？创建过就跳过，否则创建："+title+"   "+url);
 					continue;
 				}else{
 					//保存这个博客的栏目id序列到list中
