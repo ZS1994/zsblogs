@@ -17,6 +17,8 @@
          				http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
          				http://www.springframework.org/schema/tx
          				http://www.springframework.org/schema/tx/spring-tx-3.1.xsd">
+
+	
 	
 	<!-- 引入配置文件 -->
 	<bean id="propertyConfigurer"
@@ -24,9 +26,6 @@
 		<property name="location" value="classpath:jdbc.properties" />
 	</bean>
 	
-	<!-- 自动扫描 
-	<context:component-scan base-package="com.zs" />
-	-->
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">

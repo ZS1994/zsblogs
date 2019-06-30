@@ -27,8 +27,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    					str=str+val.url+"&nbsp;&nbsp;&nbsp;&nbsp;"+val.urlBlogList+"<br>";
    				});
    				$("#list").html(str);
-   				
    				$("#isBegin").html(data.isBegin?"true":"false");
+   				$("#listSize").html(data.list.length);
+   				
    				
    				if (data.isBegin) {//已开启
 					$("#btn_begin").attr("disabled","disabled");
@@ -115,6 +116,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    	<div>
 		    	<h4>目前的参数数值</h4>
 		    	<table class="table">
+		    		<tr>
+						<td style="width: 150px;">list大小</td>
+						<td id="listSize"></td>
+					</tr>
 					<tr>
 						<td style="width: 150px;">list</td>
 						<td id="list"></td>

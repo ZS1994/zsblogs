@@ -22,6 +22,7 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
+import com.zs.dao.BlogMapper;
 import com.zs.dao.TimelineMapper;
 import com.zs.entity.Blog;
 import com.zs.entity.BlogList;
@@ -40,6 +41,8 @@ public class CrawlerNo1 implements Runnable{
 
 	@Resource
 	private BlogSer blogSer;
+	@Resource
+	private BlogMapper blogMapper;
 	@Resource
 	private BlogListSer blogListSer;
 	@Resource
@@ -117,7 +120,6 @@ public class CrawlerNo1 implements Runnable{
 			try {
 				if (isBegin) {
 					getAllUrlAndList();
-//					System.out.println("list的大小是："+list.size());
 //					log.info("list的大小是："+list.size());
 					for (int i = list.size()-1; i >= 0; i--) {
 						Blog blog=null;
@@ -134,7 +136,8 @@ public class CrawlerNo1 implements Runnable{
 							//摘要
 							Elements summaryE=doc.select("meta[property=og:description]");
 							summary=summaryE.size()>0?summaryE.get(0).attr("content"):"[未获取到摘要]";
-							title=doc.select("title").html();
+							title=doc.select("meta[property=og:title]").attr("content");
+							title=title.equals("")?"[未获取到标题]":title;
 							content=doc.select("div .content");
 							//图片
 							imgs=content.select("img");
@@ -222,6 +225,7 @@ public class CrawlerNo1 implements Runnable{
 				String url=urlroot+e.select("a").get(0).attr("href");
 				//得到标题
 				String title=e.select("a").get(0).html();
+//				log.error(i+"         "+elements.size()+"     "+title+"    "+list.size());
 				//得到栏目名称
 				Elements tags=tagAll.get(i).select("a");
 				List<BlogList> blist=blogListSer.queryAll(Constans.CRAWLERNO1);
@@ -256,17 +260,21 @@ public class CrawlerNo1 implements Runnable{
 						timelineMapper.insert(tl);
 					}
 				}
+				
+				if (title.equals("美团外卖客户端高可用建设体系 - 美团技术团队")) {
+					log.error(blogMapper.queryByTitle(title).size());
+					log.error(blogSer.queryByTitle(title).size());
+				}
+				
 				//判断这个博客是否已经创建过？创建过就跳过，否则创建
-				if(blogSer.queryByTitle(title).size()>0){
-					log.info("判断这个博客是否已经创建过？创建过就跳过，否则创建："+title+"   "+url);
-					continue;
+				if(blogMapper.queryByTitle(title).size()>0){
+					log.info("【判断这个博客是否已经创建过？创建过就跳过，否则创建】"+title+"("+url+")"+"  【list大小】"+list.size());
 				}else{
 					//保存这个博客的栏目id序列到list中
 					CrawlerData1 ctmp=new CrawlerData1(url, gson.toJson(urlbloglisttmp));
 					list.add(ctmp);
 				}
 			}
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

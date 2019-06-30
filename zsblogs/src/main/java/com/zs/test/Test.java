@@ -1,20 +1,36 @@
 package com.zs.test;
 
-import java.io.UnsupportedEncodingException;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
-import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTCreationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
+import javax.annotation.Resource;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-public class Test {
+import com.zs.dao.BlogMapper;
+import com.zs.dao.TokenMapper;
+import com.zs.dao.UsersMapper;
+import com.zs.entity.Users;
+import com.zs.service.BlogSer;
 
-	public static void main(String[] args) {
-		String str="（万元）";
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations={"classpath:spring-mybatis.xml"})
+public class Test{
+
+	@Resource
+	private UsersMapper userMapper;
+	@Resource
+	private TokenMapper tokenMapper;
+	@Resource
+	private BlogMapper blogMapper;
+	
+	
+	@org.junit.Test
+	public void test(){
+		Users user=userMapper.selectByNum("yd7111");
+		System.out.println(user.getName());
 		
-		
-		
+		int size=blogMapper.queryByTitle("美团点评智能支付核心交易系统的可用性实践 - 美团技术团队").size();
+		System.out.println(size);
 	}
 	
 }
