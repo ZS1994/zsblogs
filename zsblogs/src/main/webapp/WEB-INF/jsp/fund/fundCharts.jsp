@@ -214,7 +214,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body style="padding: 0px;margin: 0px;">
   	<jsp:include page="/WEB-INF/jsp/part/left_part.jsp"/>
   	<jsp:include page="/WEB-INF/jsp/part/top_part.jsp"/>
-  	<div class="p_body table-body">
+  	<div class="p_body">
   		
   		<div style="padding-left: 3px;padding-right: 3px;">
 			<form id="search">

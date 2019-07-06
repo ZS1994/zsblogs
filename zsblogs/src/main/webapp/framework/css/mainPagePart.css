@@ -2,7 +2,7 @@
 body{
 	height: 100%;
     /*用于隐藏滚动条*/
-    overflow-y: hidden;
+    overflow: hidden;
 }
 a {
     color: #08c;
@@ -34,8 +34,7 @@ a {
 		left: 15%;
 		right: 0;
 		bottom: 0;
-		overflow-y: scroll;
-		overflow-x: hidden;
+		overflow: auto;
 	}
 	.p_top{
 		position: absolute;
@@ -121,8 +120,7 @@ a {
 		left: 0;
 		right: 0;
 		bottom: 0;
-		overflow-y: scroll;
-		overflow-x: hidden;
+		overflow: auto;
 	}
 	.p_top{
 		position: absolute;
