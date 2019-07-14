@@ -216,10 +216,12 @@ public class IndexCon{
 		String fiId=fis.size()>0?fis.get(0).getId():"110022";//这里传一个基金编号，本想是传该用户持有之一，但是没办法，暂时就传一个固定的
 		Date edate=fundHistoryMapper.getEndDate(fiId);
 		//这里默认显示最近一个月的数据
+		//张顺，2019-7-14，1,一个月数据不直观，改为默认3个月
 		accept.setStr2(sdf.format(edate));
 		Calendar calendar=Calendar.getInstance();
 		calendar.setTime(edate);
-		calendar.add(Calendar.MONTH, -1);
+		calendar.add(Calendar.MONTH, -3);
+		//张顺，2019-7-14，-1
 		Date bdate=calendar.getTime();
 		accept.setStr1(sdf.format(bdate));
 		accept.setInt1(u.getId());

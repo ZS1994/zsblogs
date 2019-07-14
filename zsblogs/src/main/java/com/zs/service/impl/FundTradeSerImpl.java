@@ -197,6 +197,10 @@ public class FundTradeSerImpl implements FundTradeSer{
 		accept.setRows(999999);
 		accept.setStr1(fiId);
 		accept.setInt1(uid);
+		//张顺，2019-7-13，1，不再是查所有，因为太耗资源，而是加入时间范围限制 
+		accept.setDate1(begin);
+		accept.setDate2(end);
+		//张顺，2019-7-13，-1
 		List<FundTrade> fts=fundTradeMapper.queryFenye(accept);
 		List<TimeValueBean> list3=new ArrayList<>();
 		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");

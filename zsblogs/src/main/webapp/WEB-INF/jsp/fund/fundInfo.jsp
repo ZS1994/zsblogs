@@ -120,59 +120,59 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<input type="hidden" name="_token" value="${token}"/>
 						<div class="fitem">
 							<label>基金编码:</label>
-							<input name="id" class="easyui-validatebox" required="true">
+							<input name="id" class="easyui-validatebox" data-options="required:true,validType:['number','length[0,10]']">
 						</div>
 						<div class="fitem">
 							<label>基金名称:</label>
-							<input name="name" class="easyui-validatebox" required="true">
+							<input name="name" class="easyui-validatebox" data-options="required:true,validType:['text','length[0,20]']">
 						</div>
 						<div class="fitem">
 							<label>基金经理:</label>
-							<input name="manager" class="easyui-validatebox" required="true">
+							<input name="manager" class="easyui-validatebox" data-options="required:true,validType:['text','length[0,10]']">
 						</div>
 						<div class="fitem">
 							<label>基金规模:</label>
-							<input name="scale" class="easyui-validatebox" required="true">
+							<input name="scale" class="easyui-validatebox" data-options="required:true,validType:['text','length[0,10]']">
 						</div>
 						<div class="fitem">
 							<label>基金类型:</label>
-							<input name="type" class="easyui-validatebox" required="true">
+							<input name="type" class="easyui-validatebox" data-options="required:true,validType:['text','length[0,10]']">
 						</div>
 						<div class="fitem">
 							<label>基金公司:</label>
-							<input name="company" class="easyui-validatebox" required="true">
+							<input name="company" class="easyui-validatebox" data-options="required:true,validType:['text','length[0,10]']">
 						</div>
 						<div class="fitem">
 							<label>基金评级:</label>
-							<input name="grade" class="easyui-validatebox" required="true">
+							<input name="grade" class="easyui-validatebox" data-options="required:true,validType:['number','length[0,1]']">
 						</div>
 						<div class="fitem">
 							<label>最小购买:</label>
-							<input name="buyMin" class="easyui-validatebox" required="true">
+							<input name="buyMin" class="easyui-validatebox" data-options="required:true,validType:['number','length[0,10]']">
 						</div>
 						<div class="fitem">
 							<label>前端费率:</label>
-							<input name="buyRate" class="easyui-validatebox" required="true">
+							<input name="buyRate" class="easyui-validatebox" data-options="required:true,validType:['number','length[0,10]']">
 						</div>
 						<div class="fitem">
 							<label>赎回费率(&lt;1年):</label>
-							<input name="selloutRateOne" class="easyui-validatebox" required="true">
+							<input name="selloutRateOne" class="easyui-validatebox" data-options="required:true,validType:['number','length[0,10]']">
 						</div>
 						<div class="fitem">
 							<label>赎回费率(>=1年,&lt;2年):</label>
-							<input name="selloutRateTwo" class="easyui-validatebox" required="true">
+							<input name="selloutRateTwo" class="easyui-validatebox" data-options="required:true,validType:['number','length[0,10]']">
 						</div>
 						<div class="fitem">
 							<label>赎回费率(>2年):</label>
-							<input name="selloutRateThree" class="easyui-validatebox" required="true">
+							<input name="selloutRateThree" class="easyui-validatebox" data-options="required:true,validType:['number','length[0,10]']">
 						</div>
 						<div class="fitem">
 							<label>管理费率:</label>
-							<input name="managerRate" class="easyui-validatebox" required="true">
+							<input name="managerRate" class="easyui-validatebox" data-options="required:true,validType:['number','length[0,10]']">
 						</div>
 						<div class="fitem">
 							<label>成立日:</label>
-							<input name="createDate" class="Wdate" type="text" onFocus="WdatePicker({dateFmt:'yyyy/MM/dd'})"/>
+							<input name="createTime" class="Wdate easyui-validatebox" type="text" onFocus="WdatePicker({dateFmt:'yyyy/MM/dd'})" required="true"/>
 						</div>
 					</form>
 				</div>
