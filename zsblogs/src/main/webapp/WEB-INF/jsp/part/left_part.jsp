@@ -66,6 +66,11 @@ function pullRequest(options){
 		        			}else if(json.result=="error"){
 		        				if(error){
 		        					error(json.code,json.data);
+		        					//张顺，2019-7-20，1，即使成功，如果有信息也要显示出来
+		        					if(json.description){
+			        					alert(json.description);
+		        					}
+		        					//张顺，2019-7-20，-1，即使成功，如果有信息也要显示出来
 		        				}else{
 		        					alert("错误。\n错误代码："+json.code+"。\n错误参数："+json.data+"。\n错误详情："+json.description);
 		        				}

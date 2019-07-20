@@ -10,6 +10,7 @@ import com.zs.controller.rest.BaseRestController.Code;
 import com.zs.entity.other.Result;
 import com.zs.tools.CrawlerNo1;
 import com.zs.tools.CrawlerNo2;
+import com.zs.tools.CrawlerNo3;
 import com.zs.tools.Trans;
 import com.zs.tools.mail.MailManager;
 import com.zs.tools.mail.MailModel;
@@ -23,8 +24,17 @@ public class CrawlerConR {
 	private CrawlerNo1 crawlerNo1;
 	@Resource
 	private CrawlerNo2 crawlerNo2;
-	
+	@Resource
+	private CrawlerNo3 crawlerNo3;
 
+	/**
+	 * 开启或关闭某个爬虫
+	 * @param isBegin 是否开启
+	 * @param no 爬虫编号
+	 * @param req
+	 * @param resp
+	 * @return
+	 */
 	@RequestMapping(value="/control",method=RequestMethod.GET)
 	public Result<String> crawlerControl(Boolean isBegin,String no,HttpServletRequest req, HttpServletResponse resp){
 		if (isBegin!=null && !Trans.StrEmpty(no)) {
@@ -42,6 +52,13 @@ public class CrawlerConR {
 						crawlerNo2.begin();
 					}else {
 						crawlerNo2.finish();
+					}
+					break;
+				case "3":
+					if(isBegin){
+						crawlerNo3.begin();
+					}else {
+						crawlerNo3.finish();
 					}
 					break;
 				default:
@@ -91,6 +108,17 @@ public class CrawlerConR {
 			e.printStackTrace();
 			mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			return new Result<CrawlerNo2>(BaseRestController.ERROR, Code.ERROR, null);
+		}
+	}
+	
+	@RequestMapping(value="/info/3",method=RequestMethod.GET)
+	public Result<CrawlerNo3> info3(HttpServletRequest req, HttpServletResponse resp){
+		try {
+			return new Result<CrawlerNo3>(BaseRestController.SUCCESS, Code.SUCCESS, crawlerNo3);
+		} catch (Exception e) {
+			e.printStackTrace();
+			mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
+			return new Result<CrawlerNo3>(BaseRestController.ERROR, Code.ERROR, null);
 		}
 	}
 }

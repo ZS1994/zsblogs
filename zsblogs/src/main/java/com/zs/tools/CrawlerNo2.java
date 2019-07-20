@@ -80,7 +80,7 @@ public class CrawlerNo2 implements Runnable{
 						//张顺，2019-7-14，-1
 						EasyUIAccept accept=new EasyUIAccept();
 						accept.setStart(0);
-						accept.setRows(999999);
+						accept.setRows(Constans.INFINITY);
 						List<FundInfo> fis=fundInfoMapper.queryFenye(accept);
 						for (FundInfo fi : fis) {
 							//找到该基金的当日净值

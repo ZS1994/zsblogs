@@ -133,6 +133,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
     	}
     	function handleFundAndUser(){
+    		/* 
     		pullRequest({
     			urlb:"/api/fundInfo/list",
     			type:"GET",
@@ -149,6 +150,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     				$("#str1").append(str);
     			}
     		});
+    		 */
     		pullRequest({
     			urlb:"/api/users/list",
     			type:"GET",
@@ -229,17 +231,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		   		<div class="searchBar-input">
 		    		<div>
 			    		基金编号：
-			    		<%-- <input name ="str1" value="${accept.str3 }"/> --%>
+			    		<input name ="str1" value="${accept.str3 }"/>
+			    		<!-- 
 			    		<select name="str1" id="str1">
 			    			<option>--请选择--</option>
 			    		</select>
+			    		 -->
 		    		</div>
 		    		<div>
 		    			用户id：
-		    			<%-- <input name ="int1" value="${accept.int1 }"/> --%>
+		    			<input name ="int1" value="${accept.int1 }"/>
+		    			<!-- 
 		    			<select name="int1" id="int1">
 			    			<option>--请选择--</option>
 			    		</select>
+			    		 -->
 		    		</div>
 		   		</div>
 		   	</form>

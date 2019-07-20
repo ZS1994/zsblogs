@@ -245,7 +245,7 @@ public class FundTradeSerImpl implements FundTradeSer{
 			if (isSearch) {
 				downRange=maxNum-list2.get(i);
 			}
-			if (downRange>=3.5) {//跌幅大于3.5%，就开始提示补仓
+			if (downRange>=5) {//跌幅大于3.5%，就开始提示补仓
 				//看一下有没有这个时间点的标记
 				boolean isHas=false;
 				TimeValueBean tvtmp=null;

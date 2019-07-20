@@ -15,6 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	url="${path}/api/fundTrade";
 	var maxtotal=99999;//最大条数，尝试获取所有
 	$(function(){
+		/* 
 		pullRequest({
 			urlb:"/api/fundInfo/list",
 			type:"GET",
@@ -33,6 +34,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		});
 		//直接查一次，不查的话第一次进入默认是不查的
 		search_toolbar_2();
+		 */
 	});
 	function gotoCharts(){
 		window.location.href="${path}/menu/fund/fundCharts";
@@ -115,9 +117,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   		<div class="searchBar-input">
 			    		<div>
 				    		基金：
+				    		<!-- 
 				    		<select  id="str1" name ="str1">
 				    			<option value="">--请选择--</option>
 				    		</select>
+				    		 -->
+				    		 <input name="str1"/>
 			    		</div>
 			    		<div>
 			    			用户：<input name ="str2" value="${username }"/>

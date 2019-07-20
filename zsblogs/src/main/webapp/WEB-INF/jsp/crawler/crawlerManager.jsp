@@ -15,7 +15,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	
     $(function(){
     	refreshHtml();
-    	setInterval("refreshHtml();",1000*5);
+    	//setInterval("refreshHtml();",1000*5);
     });
     function refreshHtml(){
     	pullRequest({
@@ -51,6 +51,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				}else{//已关闭
 					$("#btn_begin_2").removeAttr("disabled");
 					$("#btn_finish_2").attr("disabled","disabled");
+				}
+    		}
+    	});
+    	pullRequest({
+    		urlb:"/api/crawler/info/3",
+    		type:"get",
+    		success:function(data){
+    			$("#isBegin_3").html(data.isBegin?"true":"false");
+   				if (data.isBegin) {//已开启
+					$("#btn_begin_3").attr("disabled","disabled");
+					$("#btn_finish_3").removeAttr("disabled");
+				}else{//已关闭
+					$("#btn_begin_3").removeAttr("disabled");
+					$("#btn_finish_3").attr("disabled","disabled");
 				}
     		}
     	});
@@ -107,8 +121,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<h3>爬虫机器人1号(爬取博客内容)</h3>
 	    	
 	    	<div class="btn-group">
-		    	<button id="btn_begin" class="btn btn-danger span2" onclick="begin('1')">开启</button>
-		    	<button id="btn_finish" class="btn btn btn-danger span2" onclick="finish('1')">关闭</button>
+		    	<button id="btn_begin" class="btn btn-danger span2" onclick="begin('1')" disabled="disabled">开启</button>
+		    	<button id="btn_finish" class="btn btn btn-danger span2" onclick="finish('1')" disabled="disabled">关闭</button>
 		    	<!--<button id="btn_finish" class="btn btn btn-danger span2" onclick="refreshHtml()">刷新</button>  -->
 	    	</div>
 	    	<br>
@@ -131,10 +145,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    	</table>
 	    	</div>
 	    	
-		    <h3>爬虫机器人2号(爬取基金信息)</h3>
+		    <h3>爬虫机器人2号(爬取基金历史信息)</h3>
 	    	<div class="btn-group">
-		    	<button id="btn_begin_2" class="btn btn-danger span2" onclick="begin('2')">开启</button>
-		    	<button id="btn_finish_2" class="btn btn btn-danger span2" onclick="finish('2')">关闭</button>
+		    	<button id="btn_begin_2" class="btn btn-danger span2" onclick="begin('2')" disabled="disabled">开启</button>
+		    	<button id="btn_finish_2" class="btn btn btn-danger span2" onclick="finish('2')" disabled="disabled">关闭</button>
 		    	<!--<button id="btn_finish_2" class="btn btn btn-danger span2" onclick="refreshHtml()">刷新</button>  -->
 	    	</div>
 		    <br>
@@ -149,7 +163,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    	</table>
 	    	</div>
 	    	
-	    	
+	    	<h3>爬虫机器人3号(爬取基金列表信息)</h3>
+	    	<div class="btn-group">
+		    	<button id="btn_begin_3" class="btn btn-danger span2" onclick="begin('3')" disabled="disabled">开启</button>
+		    	<button id="btn_finish_3" class="btn btn btn-danger span2" onclick="finish('3')" disabled="disabled">关闭</button>
+		    	<!--<button id="btn_finish_2" class="btn btn btn-danger span2" onclick="refreshHtml()">刷新</button>  -->
+	    	</div>
+		    <br>
+	    	<br>
+	    	<div>
+		    	<h4>目前的参数数值</h4>
+		    	<table class="table">
+					<tr>
+						<td style="width: 150px;">isBegin</td>
+						<td id="isBegin_3"></td>
+					</tr>		    		
+		    	</table>
+	    	</div>
 	    	
 	    	
 	    </div>

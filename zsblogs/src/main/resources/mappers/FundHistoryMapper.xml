@@ -97,7 +97,7 @@
   		<if test="date1!=null"><!-- date1:成立时间开始 -->
 	  		and time >= #{date1}
   		</if>
-  		<if test="date2!=null"><!-- date1:成立时间结束 -->
+  		<if test="date2!=null"><!-- date2:成立时间结束 -->
   			and time &lt;= #{date2}
   		</if>
   		<if test="str1!=null"><!-- str1:基金编号 -->
