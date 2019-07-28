@@ -109,7 +109,7 @@ public class CrawlerNo1 implements Runnable{
 	public void beginWorkThread(){
 		Thread thread=new Thread(this);
 		if (!thread.isAlive()) {
-			log.info("crawlerNo1已开启");
+			log.info("crawlerNo1爬虫一号初始化完成，线程已开启，等待爬取美团技术团队网。");
 			thread.start();
 		}
 	}

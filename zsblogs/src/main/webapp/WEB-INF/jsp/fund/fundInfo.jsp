@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
   	
     <base href="<%=basePath%>">
-    <title>基金历史</title>
+    <title>基金列表信息</title>
     <jsp:include page="/WEB-INF/jsp/part/common.jsp"/>
     <script type="text/javascript">
 	url="${path}/api/fundInfo";

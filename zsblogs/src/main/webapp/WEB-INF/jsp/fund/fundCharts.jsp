@@ -16,7 +16,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	    //alert("浏览器分辨率是"+document.documentElement.clientWidth+"*"+document.documentElement.clientHeight );  
 	    //alert("屏幕分辨率是"+window.screen.width+"*"+window.screen.height);  
     
-    	var maxtotal=99999;//最大条数，尝试获取所有
    		// 基于准备好的dom，初始化echarts实例
    		var myChart;
    		// 指定图表的配置项和数据
@@ -39,7 +38,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		$(function(){
    			myChart = echarts.init($("#main")[0]);
    			handleFundAndUser();
-   			searchProfit();
    		});
     	function searchProfit(){
     		var dtmp=formToJson($("#search"));
@@ -132,43 +130,58 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             	});
 			}
     	}
+    	//初始化基金编号和用户id两个控件
     	function handleFundAndUser(){
-    		/* 
     		pullRequest({
     			urlb:"/api/fundInfo/list",
     			type:"GET",
-    			async:false,
+    			async:true,
     			data:{
     				page:1,
-    				rows:maxtotal
+    				rows:MAXTOTAL
     			},
     			superSuccess:function(data){
-    				var str="";
+    				var array=[];
     				$.each(data.rows,function(i,v){
-    					str=str+"<option value='"+v.id+"'>"+"("+v.id+")"+v.name+"</option>";
+    					array.push({value:"("+v.id+")"+v.name,data:v.id});
     				});
-    				$("#str1").append(str);
+    				//初始化自动补全控件
+    				$("#str1").autocomplete({
+    					lookup:array,
+    					lookupLimit:SHOW_MAX_TOTALS,
+    					onSelect:function (suggestion) {
+    						$("#str1").val(suggestion.data);
+    					},
+    					width:SHOW_WIDTH,
+    					maxHeight:SHOW_MAXHEIGHT
+    				});
     			}
     		});
-    		 */
     		pullRequest({
     			urlb:"/api/users/list",
     			type:"GET",
-    			async:false,
+    			async:true,
     			data:{
     				page:1,
-    				rows:maxtotal
+    				rows:MAXTOTAL
     			},
     			superSuccess:function(data){
-    				var str="";
+    				var array=[];
     				$.each(data.rows,function(i,v){
-    					str=str+"<option value='"+v.id+"'>"+v.name+"("+v.usernum+")"+"</option>";
+    					array.push({value:"("+v.usernum+")"+v.name,data:v.id});
     				});
-    				$("#int1").append(str);
+    				//初始化自动补全控件
+    				$("#int1").autocomplete({
+    					lookup:array,
+    					lookupLimit:SHOW_MAX_TOTALS,
+    					onSelect:function (suggestion) {
+    						$("#int1").val(suggestion.data);
+    					},
+    					width:SHOW_WIDTH,
+    					maxHeight:SHOW_MAXHEIGHT
+    				});
     			}
     		});
-    		$("#str1").find("option[value = '${accept.str3 }']").attr("selected","selected");
-    		$("#int1").find("option[value = '${accept.int1 }']").attr("selected","selected");
     	}
     	function zhedieOrZhankai(){
     		var a=$("#search").attr("isZhedie");
@@ -208,7 +221,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		height:80%;
 		min-width:620px;
 		min-height:360px;
-		background-color: #FFB786;
+		background-image: url(${path}/framework/image/jiaZaiZhong2.gif);
 	}
 	</style>
   </head>
@@ -231,25 +244,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		   		<div class="searchBar-input">
 		    		<div>
 			    		基金编号：
-			    		<input name ="str1" value="${accept.str3 }"/>
-			    		<!-- 
-			    		<select name="str1" id="str1">
-			    			<option>--请选择--</option>
-			    		</select>
-			    		 -->
+			    		<input id="str1" name ="str1" autocomplete="off" value="${accept.str3 }"/>
 		    		</div>
 		    		<div>
 		    			用户id：
-		    			<input name ="int1" value="${accept.int1 }"/>
-		    			<!-- 
-		    			<select name="int1" id="int1">
-			    			<option>--请选择--</option>
-			    		</select>
-			    		 -->
+		    			<input id="int1" name ="int1" autocomplete="off" value="${accept.int1 }"/>
 		    		</div>
 		   		</div>
 		   	</form>
-		   	<div class="clear"></div>
+		   	<div class="clear" style="padding-top: 10px;"></div>
 		   	<hr class="hr-geay">
 			<a class="easyui-linkbutton" iconCls="icon-sum" onclick="searchProfit()">查看统计数据</a>
 			<a class="easyui-linkbutton" iconCls="icon-sum" onclick="zhedieOrZhankai()">折叠/展开</a>

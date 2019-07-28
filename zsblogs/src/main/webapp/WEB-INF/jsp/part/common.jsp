@@ -27,6 +27,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" type="text/css" href="<%=path %>/framework/css/zs-ui.css">
 <script type="text/javascript" src="<%=path %>/framework/js/zs-ui.js"></script>
 
+<!-- add 1 张顺 2019-7-28 新增自动补全插件的引用 -->
+<script src="<%=path %>/framework/autoComplete/jquery.autocomplete.js" type="text/javascript"></script>
+<script src="<%=path %>/framework/autoComplete/jquery.mockjax.js" type="text/javascript"></script>
+<link rel="stylesheet" href="<%=path %>/framework/autoComplete/styles.css">
+<!-- add -1 张顺 2019-7-28 新增自动补全插件的引用 -->
+
 <script type="text/javascript">
 /*张顺，2017-2-25
  * ajax添加头信息
@@ -213,5 +219,10 @@ function deleteObj(message){
 		);
 	}
 }
+//add 张顺 2019-7-28 公共常量
+var MAXTOTAL=99999;//最大条数，尝试获取所有
+var SHOW_MAX_TOTALS=15;//自动补全控件显示的最大条数
+var SHOW_WIDTH=270;
+var SHOW_MAXHEIGHT=300;
 </script>
 <jsp:include page="/WEB-INF/jsp/part/hintModal.jsp"></jsp:include>

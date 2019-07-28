@@ -13,29 +13,37 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <jsp:include page="/WEB-INF/jsp/part/common.jsp"/>
     <script type="text/javascript">
 	url="${path}/api/fundHistory";
-	var maxtotal=99999;//最大条数，尝试获取所有
 	$(function(){
-		/**
+		//modify 1 张顺 2019-7-28 基金输入框改为自动补全控件
+		//初始化表格控件
 		pullRequest({
 			urlb:"/api/fundInfo/list",
 			type:"GET",
 			async:true,
 			data:{
 				page:1,
-				rows:maxtotal
+				rows:MAXTOTAL
 			},
 			superSuccess:function(data){
-				var str="";
+				var array=[];
 				$.each(data.rows,function(i,v){
-					str=str+"<option value='"+v.id+"'>"+"("+v.id+")"+v.name+"</option>";
+					array.push({value:"("+v.id+")"+v.name,data:v.id});
 				});
-				$("#str1").append(str);
+				//初始化自动补全控件
+				$("#str1").autocomplete({
+					lookup:array,
+					lookupLimit:SHOW_MAX_TOTALS,
+					onSelect:function (suggestion) {
+						$("#str1").val(suggestion.data);
+					},
+					width:SHOW_WIDTH,
+					maxHeight:SHOW_MAXHEIGHT
+				});
 			}
 		});
-		
 		//直接查一次，不查的话第一次进入默认是不查的
-		search_toolbar_2();
-		*/
+		//search_toolbar_2();
+		//modify -1 张顺 2019-7-28 改为自动补全控件
 	});
 	function styleRate(val){
 		if (val>0) {
@@ -117,13 +125,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   		</div>
 			   		<div class="searchBar-input">
 			    		<div>
-				    		基金：
-				    		<!-- 
-				    		<select  id="str1" name ="str1">
-				    			<option value="">--请选择--</option>
-				    		</select>
-				    		 -->
-				    		 <input name="str1"/>
+				    		基金编码：
+				    		<input id=str1 name="str1" autocomplete="off"/>
 			    		</div>
 			   		</div>
 			   	</form>

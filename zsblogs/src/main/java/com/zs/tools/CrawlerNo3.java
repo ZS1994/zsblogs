@@ -70,7 +70,7 @@ public class CrawlerNo3 implements Runnable{
 	public void beginWorkThread(){
 		Thread thread=new Thread(this);
 		if (!thread.isAlive()) {
-			System.out.println("爬虫3号开启线程");
+			log.info("crawlerNo3爬虫三号初始化完成，线程已开启，等待爬取基金列表信息。");
 			thread.start();
 		}
 	}

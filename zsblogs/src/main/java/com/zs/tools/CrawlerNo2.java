@@ -66,6 +66,7 @@ public class CrawlerNo2 implements Runnable{
 	public void beginWorkThread(){
 		Thread thread=new Thread(this);
 		if (!thread.isAlive()) {
+			log.info("crawlerNo2爬虫二号初始化完成，线程已开启，等待爬取基金历史信息。");
 			thread.start();
 		}
 	}
@@ -93,7 +94,7 @@ public class CrawlerNo2 implements Runnable{
 							//张顺，2019-7-14，2，因为不能一次取值，所以必须循环遍历所有页面
 							if (pageSize>1) {
 								for (int pageNo = 1; pageNo <= pageSize; pageNo++) {
-									//不想浪费资源，这里判断一下如果连续累计找到10个已存在的(返回的是false)，那么久不往下找了，认为下面都是已存在的，即以前已经获取过了
+									//不想浪费资源，这里判断一下如果连续累计找到5个已存在的(返回的是false)，那么久不往下找了，认为下面都是已存在的，即以前已经获取过了
 									if (loopSave(pageNo, pageRows, fi.getId())==false) {
 										break;
 									};
@@ -137,8 +138,8 @@ public class CrawlerNo2 implements Runnable{
 		Document doc=Jsoup.parse(jsonObject.get("content").toString());
 		
 		for (int i = 0; i < pageRows; i++) {
-			//已存在的记录数，超过10次就不找了，返回false
-			if (exits>=10) {
+			//已存在的记录数，超过5次就不找了，返回false
+			if (exits>=5) {
 				return false;
 			}
 			Elements summaryE=doc.select("tr:eq("+i+") td:eq(1)");
