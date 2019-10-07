@@ -109,13 +109,13 @@ public class CrawlerNo2 implements Runnable{
 										break;
 									}
 								} catch (Exception e) {
-									log.error(e.toString());
+									//log.error(e.toString());
 								}
 							}
 						}
 						//张顺，2019-7-14，-2
 					}
-					Thread.sleep(1000*60*60*2);//每2小时重新爬取一次
+					Thread.sleep(1000*60*60*4);//每4小时重新爬取一次
 				}
 				Thread.sleep(1000*3);//每3s进行一次判断
 			} catch (Exception e) {
@@ -169,7 +169,7 @@ public class CrawlerNo2 implements Runnable{
 				d = summaryD.html().trim().equals("")?sdf.parse("2018-1-2"):sdf.parse(summaryD.html());
 			} catch (ParseException e1) {
 				e1.printStackTrace();
-				log.error("【日期错误："+summaryD.html()+"】");
+				//log.error("【日期错误："+summaryD.html()+"】");
 			}
 			Double rate=summaryR.html().trim().equals("")?0.00:Double.valueOf(summaryR.html().replaceAll("%", ""));
 			
@@ -185,7 +185,7 @@ public class CrawlerNo2 implements Runnable{
 				timelineMapper.insert(tl);
 			} catch (Exception e) {
 				exits++;//已存在了，累加
-				log.info("【不必关注】张顺，基金编号："+history.getFiId()+"（这个代表插入失败，因为基金历史表设置了为唯一索引fi_id_2，目的是防止重复插入。）"+e.getMessage());
+				//log.info("【不必关注】张顺，基金编号："+history.getFiId()+"（这个代表插入失败，因为基金历史表设置了为唯一索引fi_id_2，目的是防止重复插入。）"+e.getMessage());
 			}
 		}
 		return true;

@@ -107,7 +107,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 		/*if(StringHelper.checkStar(url, (urla+turl)) && tmethod.equals(method)){
 			return true;
 		}已抛弃不用，要问为何，那是因为我改变url命名思路了*/
-		if((urla+turl).equals(url) && tmethod.equals(method)){
+		if(url.contains(turl) && tmethod.equals(method)){
 			return true;
 		}
 		return false;

@@ -84,7 +84,7 @@ public class CrawlerNo3 implements Runnable{
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-					Thread.sleep(1000*60*60*2);//每2小时重新爬取一次
+					Thread.sleep(1000*60*60*4);//每4小时重新爬取一次
 				}
 				Thread.sleep(1000*3);//每3s进行一次判断
 			} catch (Exception e) {
@@ -131,7 +131,7 @@ public class CrawlerNo3 implements Runnable{
 				Timeline tl=new Timeline(Constans.CRAWLERNO3, 85, gson.toJson(fundInfo));
 				timelineMapper.insert(tl);
 			} catch (Exception e) {
-				log.info("【不必关注的错误，避免数据重复存储】"+e.toString());
+				//log.info("【不必关注的错误，避免数据重复存储】"+e.toString());
 			}
 		}
 	}

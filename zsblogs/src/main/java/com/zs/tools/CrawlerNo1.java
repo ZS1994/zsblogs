@@ -191,7 +191,7 @@ public class CrawlerNo1 implements Runnable{
 							timelineMapper.insert(tl);
 						}
 					}
-					Thread.sleep(1000*60*60*2);//每2小时重新爬取一次
+					Thread.sleep(1000*60*60*4);//每4小时重新爬取一次
 				}   
 				Thread.sleep(1000*3);//每3s进行一次判断
 			} catch (Exception e) {
