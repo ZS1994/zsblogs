@@ -183,10 +183,10 @@
   			and create_time &lt;= #{date2}
   		</if>
   		<if test="str1!=null"><!-- str1:账号 -->
-  			and usernum like '%${str1}%'
+  			and usernum like '${str1}%'
   		</if>
   		<if test="str2!=null"><!-- str2:名字 -->
-  			and name like '%${str2}%'
+  			and name like '${str2}%'
   		</if>
   	</where>
   	<if test="sort!=null and order!=null">
@@ -195,7 +195,7 @@
   	limit ${start},${rows}
   </select>
   <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
-  	select count(*) from users
+  	select count(id) from users
   	<where>
   		<if test="date1!=null"><!-- date1:创建时间开始 -->
 	  		and create_time >= #{date1}
@@ -204,10 +204,10 @@
   			and create_time &lt;= #{date2}
   		</if>
   		<if test="str1!=null"><!-- str1:账号 -->
-  			and usernum like '%${str1}%'
+  			and usernum like '${str1}%'
   		</if>
   		<if test="str2!=null"><!-- str2:名字 -->
-  			and name like '%${str2}%'
+  			and name like '${str2}%'
   		</if>
   	</where>
   </select>

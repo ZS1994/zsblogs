@@ -198,7 +198,9 @@
   </update>
   
   <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
-  	select * from fund_info
+  	select 
+  	<include refid="Base_Column_List" />
+  	from fund_info
   	<where>
   		<if test="date1!=null"><!-- date1:成立时间开始 -->
 	  		and create_date >= #{date1}
@@ -210,13 +212,13 @@
   			and id = #{str1}
   		</if>
   		<if test="str2!=null"><!-- str2:基金名称 -->
-  			and name like '%${str2}%' 
+  			and name like '${str2}%' 
   		</if>
   		<if test="str3!=null"><!-- str3:基金经理 -->
-  			and manager like '%${str3}%'
+  			and manager like '${str3}%'
   		</if>
   		<if test="str4!=null"><!-- str4:用户公司 -->
-  			and company like '%${str4}%' 
+  			and company like '${str4}%' 
   		</if>
   	</where>
   	<if test="sort!=null and order!=null">
@@ -229,7 +231,7 @@
   </select>
   
   <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
-  	select count(*) from fund_info
+  	select count(id) from fund_info
   	<where>
   		<if test="date1!=null"><!-- date1:成立时间开始 -->
 	  		and create_date >= #{date1}
@@ -241,13 +243,13 @@
   			and id = #{str1}
   		</if>
   		<if test="str2!=null"><!-- str2:基金名称 -->
-  			and name like '%${str2}%' 
+  			and name like '${str2}%' 
   		</if>
   		<if test="str3!=null"><!-- str3:基金经理 -->
-  			and manager like '%${str3}%'
+  			and manager like '${str3}%'
   		</if>
   		<if test="str4!=null"><!-- str4:用户公司 -->
-  			and company like '%${str4}%' 
+  			and company like '${str4}%' 
   		</if>
   	</where>
   </select>

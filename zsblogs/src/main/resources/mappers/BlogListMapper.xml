@@ -92,7 +92,9 @@
   </update>
   
   <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
-  	select * from blog_list
+  	select  
+  	<include refid="Base_Column_List" />
+  	from blog_list
   	<where>
   		<if test="int1!=null">
   		and u_id=#{int1}
@@ -101,7 +103,7 @@
   		and id=#{int2}
   		</if>
   		<if test="str1!=null">
-  		and name like '%${str1}%'
+  		and name like '${str1}%'
   		</if>
   		<if test="date1!=null"><!-- date1：时间范围开始时间 -->
   		and create_time >= #{date1}
@@ -116,7 +118,7 @@
   	limit ${start},${rows}
   </select>
   <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
-  	select count(*) from blog_list
+  	select count(id) from blog_list
   	<where>
   		<if test="int1!=null">
   		and u_id=#{int1}
@@ -125,7 +127,7 @@
   		and id=#{int2}
   		</if>
   		<if test="str1!=null">
-  		and name like '%${str1}%'
+  		and name like '${str1}%'
   		</if>
   		<if test="date1!=null"><!-- date1：时间范围开始时间 -->
   		and create_time >= #{date1}

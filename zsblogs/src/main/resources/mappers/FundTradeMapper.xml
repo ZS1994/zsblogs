@@ -116,7 +116,9 @@
   </update>
   
   <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
-  	select * from fund_trade
+  	select 
+  	<include refid="Base_Column_List" />
+  	from fund_trade
   	<where>
   		<if test="date1!=null"><!-- date1:创建时间开始 -->
 	  		and create_time >= #{date1}
@@ -128,7 +130,7 @@
   			and fi_id = #{str1}
   		</if>
   		<if test="str2!=null"><!-- str2:用户名称 -->
-  			and u_id in (select id from users where name like '%${str2}%') 
+  			and u_id in (select id from users where name like '${str2}%') 
   		</if>
   		<if test="str3!=null"><!-- str3:类型 -->
   			and type = #{str3}
@@ -147,7 +149,7 @@
   </select>
   
   <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
-  	select count(*) from fund_trade
+  	select count(id) from fund_trade
   	<where>
   		<if test="date1!=null"><!-- date1:创建时间开始 -->
 	  		and create_time >= #{date1}
@@ -159,7 +161,7 @@
   			and fi_id = #{str1}
   		</if>
   		<if test="str2!=null"><!-- str2:用户名称 -->
-  			and u_id in (select id from users where name like '%${str2}%') 
+  			and u_id in (select id from users where name like '${str2}%') 
   		</if>
   		<if test="str3!=null"><!-- str3:类型 -->
   			and type = #{str3}

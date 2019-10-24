@@ -11,6 +11,7 @@ import com.zs.dao.TokenMapper;
 import com.zs.dao.UsersMapper;
 import com.zs.entity.Users;
 import com.zs.service.BlogSer;
+import com.zs.tools.StopWatchUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations={"classpath:spring-mybatis.xml"})
@@ -24,7 +25,7 @@ public class Test{
 	private BlogMapper blogMapper;
 	
 	
-	@org.junit.Test
+	
 	public void test(){
 		Users user=userMapper.selectByNum("yd7111");
 		System.out.println(user.getName());

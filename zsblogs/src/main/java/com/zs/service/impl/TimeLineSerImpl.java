@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.transaction.Transactional;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.zs.dao.PermissionMapper;
@@ -17,6 +18,7 @@ import com.zs.entity.Users;
 import com.zs.entity.other.EasyUIAccept;
 import com.zs.entity.other.EasyUIPage;
 import com.zs.service.TimeLineSer;
+import com.zs.tools.StopWatchUtil;
 
 @Service("TimeLineSer")
 public class TimeLineSerImpl implements TimeLineSer{
@@ -28,20 +30,29 @@ public class TimeLineSerImpl implements TimeLineSer{
 	@Resource
 	private PermissionMapper permissionMapper;
 	
+	private Logger log = Logger.getLogger(getClass());
+	
 	public EasyUIPage queryFenye(EasyUIAccept accept) {
 		if (accept!=null) {
+			StopWatchUtil sw = new StopWatchUtil();
 			Integer page=accept.getPage();
 			Integer size=accept.getRows();
 			if (page!=null && size!=null) {
 				accept.setStart((page-1)*size);
 				accept.setEnd(page*size);
 			}
+			sw.start("开始进行分页查询");
 			List list=timelineMapper.queryFenye(accept);
 			int rows=timelineMapper.getCount(accept);
+			sw.stop();
+			sw.start("开始进行填充用户名处理");
 			for (Object obj : list) {
 				Timeline tl=(Timeline) obj;
 				tl=handleUsersAndPermission(tl);
 			}
+			sw.stop();
+			log.debug(sw.prettyPrint());
+			
 			return new EasyUIPage(rows, list);
 		}
 		return null;

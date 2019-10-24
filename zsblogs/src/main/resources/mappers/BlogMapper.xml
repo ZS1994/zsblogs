@@ -161,7 +161,7 @@
   	limit ${start},${rows}
   </select>
   <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
-  	select count(*) from blog
+  	select count(id) from blog
   	<where>
   		<if test="int1!=null"><!-- int1：是否隐藏 -->
   		and ishide=#{int1}

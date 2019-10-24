@@ -92,7 +92,9 @@
   </update>
   
   <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
-  	select * from blog_comment
+  	select 
+  	<include refid="Base_Column_List" /> 
+  	from blog_comment
   	<where>
   		<if test="int1!=null">
   			and b_id=#{int1}
@@ -104,7 +106,7 @@
   	limit ${start},${rows}
   </select>
   <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
-  	select count(*) from blog_comment
+  	select count(id) from blog_comment
   	<where>
   		<if test="int1!=null">
   			and b_id=#{int1}

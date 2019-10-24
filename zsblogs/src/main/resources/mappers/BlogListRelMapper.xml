@@ -68,7 +68,7 @@
   </update>
   
   <select id="getCountFromBlid" resultType="int" parameterType="java.lang.Integer">
-  	select count(*) from blog_list_rel
+  	select count(id) from blog_list_rel
   	where bl_id=#{blId}
   </select>
   <select id="selectByBlidOrBid" resultMap="BaseResultMap" parameterType="java.lang.Integer">

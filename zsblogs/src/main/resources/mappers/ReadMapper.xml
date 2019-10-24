@@ -81,7 +81,8 @@
   </update>
   
   <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
-  	select * from `read`
+  	select <include refid="Base_Column_List" /> 
+  	from `read`
   	<where>
   		<if test="int1!=null"><!-- int1:博客id -->
   		and b_id=#{int1}
@@ -93,7 +94,7 @@
   	limit ${start},${rows}
   </select>
   <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
-  	select count(*) from `read`
+  	select count(id) from `read`
   	<where>
   		<if test="int1!=null"><!-- int1:博客id -->
   		and b_id=#{int1}
