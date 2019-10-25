@@ -112,6 +112,10 @@ public class BlogSerImpl implements BlogSer{
 		EasyUIAccept accept2=new EasyUIAccept();
 		accept2.setInt1(b.getId());
 		b.setReadCount(readMapper.getCount(accept2));
+		//获取所属栏目
+		String ss[]=getBlogListNamesOfBlog(b.getId());
+		b.setBlogListNames(ss[0]);
+		b.setBlogListNamesA(ss[2]);
 		return b;
 	}
 

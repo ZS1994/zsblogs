@@ -25,6 +25,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     			console.log(data);
     			$("#blog_title").html(data.title);
     			$("#blog_author").html(data.user.name+"&nbsp;&nbsp;&nbsp;&nbsp;"+data.createTime+"&nbsp;&nbsp;&nbsp;&nbsp;<a class='blog_read_a' href='${path}/menu/blogList/blog/read?bId="+bid+"'>"+data.readCount+"次阅读</a>");
+    			$("#blog_summary").html("<strong>摘要:</strong>"+data.summary);
+    			$("#blog_list").html("<strong>栏目:</strong>"+data.blogListNames);
     			$("#blog_content").html(data.content);
     			//给table全都加上.table
     			$("table").addClass("table");
@@ -147,7 +149,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	min-height: 70px;
     }
     .blog_read_a{
-    	font-size: 12px;
+    	font-size: 14px;
+    }
+    .blog_summary{
+    	color: gray;
+    }
+    .blog_list{
+	    padding-bottom:30px;
+	    color: gray;
     }
     </style>
   </head>
@@ -160,9 +169,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div class="body_top_jiange"></div>		
   		<div class="container" style="width: 90%;">
 		    
-		    <div id="blog_title" class="blog_title" style="margin-bottom:30px; text-align: center;"></div>
+		    <div id="blog_title" class="blog_title" style="text-align: center;"></div>
 		    
 		    <legend id="blog_author" class="blog_introduction" style="text-align: center;"></legend>
+			
+			<div id="blog_summary" class="blog_summary"></div>
+			<div id="blog_list" class="blog_list"></div>
 			
 			<div id="blog_content" style="margin-bottom: 100px;"></div>	
 		    
