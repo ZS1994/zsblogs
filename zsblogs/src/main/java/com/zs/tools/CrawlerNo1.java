@@ -107,7 +107,7 @@ public class CrawlerNo1 implements Runnable{
 	
 	@PostConstruct
 	public void beginWorkThread(){
-		Thread thread=new Thread(this);
+		Thread thread = Constans.getThread(this, "CrawlerNo1");
 		if (!thread.isAlive()) {
 			log.info("crawlerNo1爬虫一号初始化完成，线程已开启，等待爬取美团技术团队网。");
 			thread.start();
@@ -268,7 +268,7 @@ public class CrawlerNo1 implements Runnable{
 				
 				//判断这个博客是否已经创建过？创建过就跳过，否则创建
 				if(blogMapper.queryByTitle(title).size()>0){
-					log.info("【判断这个博客是否已经创建过？创建过就跳过，否则创建】"+title+"("+url+")"+"  【list大小】"+list.size());
+					//log.info("【判断这个博客是否已经创建过？创建过就跳过，否则创建】"+title+"("+url+")"+"  【list大小】"+list.size());
 				}else{
 					//保存这个博客的栏目id序列到list中
 					CrawlerData1 ctmp=new CrawlerData1(url, gson.toJson(urlbloglisttmp));

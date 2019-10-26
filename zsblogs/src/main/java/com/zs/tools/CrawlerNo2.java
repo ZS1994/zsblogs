@@ -64,7 +64,7 @@ public class CrawlerNo2 implements Runnable{
 	
 	@PostConstruct
 	public void beginWorkThread(){
-		Thread thread=new Thread(this);
+		Thread thread = Constans.getThread(this, "CrawlerNo2");
 		if (!thread.isAlive()) {
 			log.info("crawlerNo2爬虫二号初始化完成，线程已开启，等待爬取基金历史信息。");
 			thread.start();

@@ -183,7 +183,8 @@ public class RoleInter extends HandlerInterceptorAdapter{
 				request.setAttribute(Constans.METHOD, method);
 				//张顺，2017-12-1，也要尝试存储操作日志
 				Permission p=perSer.get(url, method);
-				if (user!=null && user.getId()!=null && p!=null) {
+				//张顺，2019-10-26，分情况，查询就不要存了，浪费资源
+				if (user!=null && user.getId()!=null && p!=null && !method.equals("GET")) {
 					Timeline tl=new Timeline(user.getId(), p.getId(), gson.toJson(req.getParameterMap()));
 					try {
 						timeLineSer.add(tl);
@@ -215,7 +216,10 @@ public class RoleInter extends HandlerInterceptorAdapter{
 				return false;
 			}else{
 				if (roleSer.isPerInRoles(per, roles)) {
-					timeLineSer.add(new Timeline(user.getId(),per.getId(), gson.toJson(req.getParameterMap())));
+					//张顺，2019-10-26，分情况，查询就不要存了，浪费资源
+					if (!method.equals("GET")) {
+						timeLineSer.add(new Timeline(user.getId(),per.getId(), gson.toJson(req.getParameterMap())));
+					}
 					if(lcToken!=null){
 						Calendar calendar=Calendar.getInstance();
 						calendar.add(Calendar.DAY_OF_MONTH, 1);//加一天

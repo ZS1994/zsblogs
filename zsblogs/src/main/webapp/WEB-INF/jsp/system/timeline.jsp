@@ -17,6 +17,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		search_toolbar();
 		//组装角色复选框
 		handleRoles();
+		//自动补全控件初始化
+		initUsersAuto($("input[name='int2']"));
+		initPermissionAuto($("input[name='int3']"));
 	});
 	//组装角色复选框
 	function handleRoles(){
@@ -140,10 +143,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   		</div>
 			   		<div class="searchBar-input">
 			    		<div>
-				    		用户名字：<input name ="str1" />
+				    		用户：<input name ="int2" />
 			    		</div>
 			    		<div>
-			    			操作项：<input name ="str2" />
+			    			操作项：<input name ="int3" />
 			    		</div>
 			   		</div>
 			   		<div class="searchBar-input">

@@ -1,3 +1,4 @@
+<%@page import="com.zs.tools.CacheCharts"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 String path = request.getContextPath();
@@ -12,38 +13,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>基金历史</title>
     <jsp:include page="/WEB-INF/jsp/part/common.jsp"/>
     <script type="text/javascript">
-	url="${path}/api/fundHistory";
 	$(function(){
-		//modify 1 张顺 2019-7-28 基金输入框改为自动补全控件
-		//初始化表格控件
-		pullRequest({
-			urlb:"/api/fundInfo/list",
-			type:"GET",
-			async:true,
-			data:{
-				page:1,
-				rows:MAXTOTAL
-			},
-			superSuccess:function(data){
-				var array=[];
-				$.each(data.rows,function(i,v){
-					array.push({value:"("+v.id+")"+v.name,data:v.id});
-				});
-				//初始化自动补全控件
-				$("#str1").autocomplete({
-					lookup:array,
-					lookupLimit:SHOW_MAX_TOTALS,
-					onSelect:function (suggestion) {
-						$("#str1").val(suggestion.data);
-					},
-					width:SHOW_WIDTH,
-					maxHeight:SHOW_MAXHEIGHT
-				});
-			}
-		});
-		//直接查一次，不查的话第一次进入默认是不查的
-		//search_toolbar_2();
-		//modify -1 张顺 2019-7-28 改为自动补全控件
+		//张顺，2019-10-27，不需要再去调api去查，直接通过静态变量获取缓存数据，填充自动补全
+		initFundInfoAuto($("input[name='str1']"));
 	});
 	function styleRate(val){
 		if (val>0) {
@@ -125,8 +97,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   		</div>
 			   		<div class="searchBar-input">
 			    		<div>
-				    		基金编码：
-				    		<input id=str1 name="str1" autocomplete="off"/>
+				    		基金：
+				    		<input name="str1"/>
 			    		</div>
 			   		</div>
 			   	</form>

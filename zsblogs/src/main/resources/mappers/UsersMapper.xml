@@ -188,6 +188,9 @@
   		<if test="str2!=null"><!-- str2:名字 -->
   			and name like '${str2}%'
   		</if>
+  		<if test="int3!=null"><!-- int3:用户id -->
+  			and id = #{int3}
+  		</if>
   	</where>
   	<if test="sort!=null and order!=null">
   		order by ${sort} ${order}
@@ -208,6 +211,9 @@
   		</if>
   		<if test="str2!=null"><!-- str2:名字 -->
   			and name like '${str2}%'
+  		</if>
+  		<if test="int3!=null"><!-- int3:用户id -->
+  			and id = #{int3}
   		</if>
   	</where>
   </select>

@@ -13,6 +13,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <jsp:include page="/WEB-INF/jsp/part/common.jsp"/>
     <script type="text/javascript">
 	var url;
+	$(function(){
+		//自动补全控件初始化
+		initUsersAuto($("input[name='int3']"));
+	});
 	function addObj(){
 		$("#dlg").dialog("open").dialog("setTitle","新建");	
 		$("#fm").form("clear");
@@ -196,10 +200,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   		</div>
 			   		<div class="searchBar-input">
 			    		<div>
-				    		账号：<input name ="str1" />
-			    		</div>
-			    		<div>
-			    			名字：<input name ="str2" />
+				    		用户：<input name ="int3" />
 			    		</div>
 			   		</div>
 			   	</form>

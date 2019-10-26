@@ -14,34 +14,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript">
 	url="${path}/api/fundTrade";
 	$(function(){
-		//modify 1 张顺 2019-7-28 基金输入框改为自动补全控件
-		pullRequest({
-			urlb:"/api/fundInfo/list",
-			type:"GET",
-			async:false,
-			data:{
-				page:1,
-				rows:MAXTOTAL
-			},
-			superSuccess:function(data){
-				var array=[];
-				$.each(data.rows,function(i,v){
-					array.push({value:"("+v.id+")"+v.name,data:v.id});
-				});
-				//初始化自动补全控件
-				$("#str1").autocomplete({
-					lookup:array,
-					lookupLimit:SHOW_MAX_TOTALS,
-					onSelect:function (suggestion) {
-						$("#str1").val(suggestion.data);
-					},
-					width:SHOW_WIDTH,
-					maxHeight:SHOW_MAXHEIGHT
-				});
-			}
-		});
 		//直接查一次，不查的话第一次进入默认是不查的
 		//search_toolbar_2();
+		//modify 1 张顺 2019-7-28 基金输入框改为自动补全控件
+		initFundInfoAuto($("input[name='str1']"));
+		initUsersAuto($("input[name='int1']"));
 		//modify -1 张顺 2019-7-28 改为自动补全控件
 	});
 	function gotoCharts(){
@@ -125,10 +102,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   		<div class="searchBar-input">
 			    		<div>
 				    		基金编号：
-				    		<input id="str1" name="str1" autocomplete="off"/>
+				    		<input name="str1"/>
 			    		</div>
 			    		<div>
-			    			用户：<input name ="str2" value="${username }"/>
+			    			用户：
+			    			<input name ="int1"/>
 			    		</div>
 			   		</div>
 			   		<div class="searchBar-input">

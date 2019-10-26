@@ -16,6 +16,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	$(function(){
 		//直接查一次，不查的话第一次进入默认是不查的
 		search_toolbar_2();
+		initFundInfoAuto($("input[name='str1']"));
 	});
 	</script>
 	<style type="text/css">
@@ -87,18 +88,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			   		</div>
 			   		<div class="searchBar-input">
 			    		<div>
-				    		基金编号：<input name ="str1" />
-			    		</div>
-			    		<div>
-			    			基金名称：<input name ="str2" />
+				    		基金：<input name="str1" />
 			    		</div>
 			   		</div>
 			   		<div class="searchBar-input">
 			    		<div>
-				    		基金经理：<input name ="str3" />
+				    		基金经理：<input name="str3" />
 			    		</div>
 			    		<div>
-			    			基金公司：<input name ="str4" />
+			    			基金公司：<input name="str4" />
 			    		</div>
 			   		</div>
 			   	</form>

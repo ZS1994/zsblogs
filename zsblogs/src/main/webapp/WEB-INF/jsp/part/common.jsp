@@ -1,3 +1,4 @@
+<%@page import="com.zs.tools.CacheCharts"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -221,8 +222,63 @@ function deleteObj(message){
 }
 //add 张顺 2019-7-28 公共常量
 var MAXTOTAL=99999;//最大条数，尝试获取所有
-var SHOW_MAX_TOTALS=15;//自动补全控件显示的最大条数
-var SHOW_WIDTH=270;
+//自动补全控件显示的最大条数
+//var SHOW_MAX_TOTALS=15;
+var SHOW_MAX_TOTALS=null;
+var SHOW_WIDTH="inherit";
 var SHOW_MAXHEIGHT=300;
+
+//张顺，2019-10-27，自动补全用户数据
+function initUsersAuto(inputDom){
+	var array = [];
+	var data = <%=CacheCharts.getUsersJson()%>;
+	$.each(data,function(i,v){
+		array.push({value:"("+v.usernum+")"+v.name+"("+v.id+")",data:v.id});
+	});
+	//初始化自动补全控件
+	inputDom.autocomplete({
+		lookup:array,
+		lookupLimit:SHOW_MAX_TOTALS,
+		onSelect:function (suggestion) {
+			inputDom.val(suggestion.data);
+		},
+		width:SHOW_WIDTH,
+		maxHeight:SHOW_MAXHEIGHT
+	});
+}
+function initFundInfoAuto(inputDom){
+	var array = [];
+	var data = <%=CacheCharts.getFundInfosJson()%>;
+	$.each(data,function(i,v){
+		array.push({value:"("+v.id+")"+v.name,data:v.id});
+	});
+	//初始化自动补全控件
+	inputDom.autocomplete({
+		lookup:array,
+		lookupLimit:SHOW_MAX_TOTALS,
+		onSelect:function (suggestion) {
+			inputDom.val(suggestion.data);
+		},
+		width:SHOW_WIDTH,
+		maxHeight:SHOW_MAXHEIGHT
+	});
+}
+function initPermissionAuto(inputDom){
+	var array = [];
+	var data = <%=CacheCharts.getPermissionsJson()%>;
+	$.each(data,function(i,v){
+		array.push({value:"("+v.url+")"+v.name+"("+v.id+")",data:v.id});
+	});
+	//初始化自动补全控件
+	inputDom.autocomplete({
+		lookup:array,
+		lookupLimit:SHOW_MAX_TOTALS,
+		onSelect:function (suggestion) {
+			inputDom.val(suggestion.data);
+		},
+		width:SHOW_WIDTH,
+		maxHeight:SHOW_MAXHEIGHT
+	});
+}
 </script>
 <jsp:include page="/WEB-INF/jsp/part/hintModal.jsp"></jsp:include>
