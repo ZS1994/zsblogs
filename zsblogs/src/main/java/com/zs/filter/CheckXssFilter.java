@@ -53,7 +53,7 @@ public class CheckXssFilter implements Filter{
 		xssStrs.add("alert");
 		//初始化白名单
 		whriteList = new ArrayList<>();
-		whriteList.add(new Whrite("/api/blog", "POST", "content"));
+		whriteList.add(new Whrite("/zsblogs/api/blog", "POST", "content"));
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class CheckXssFilter implements Filter{
 			//白名单直接放行
 			boolean isAccess = false;
 			for (Whrite whrite : whriteList) {
-				if (url.contains(whrite.getUrl()) && method.equals(whrite.getMethod()) && parName.equals(whrite.getParName())) {
+				if (url.equals(whrite.getUrl()) && method.equals(whrite.getMethod()) && parName.equals(whrite.getParName())) {
 					isAccess = true;
 					break;
 				}
