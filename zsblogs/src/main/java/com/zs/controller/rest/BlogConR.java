@@ -65,7 +65,21 @@ public class BlogConR extends BaseRestController<Blog, Integer>{
 			try {
 				Users user=Constans.getUserFromReq(req);
 				blogSer.read(user!=null?user.getId():null,id);
-				return new Result<Blog>(SUCCESS, Code.SUCCESS, blogSer.get(id));
+				Blog blog = blogSer.get(id);
+				//你访问的不是隐藏博客，或者这是你的博客，才能访问
+				boolean isableRead = false;
+				if (blog.getIshide().equals("1")){
+					if (user != null && blog.getUser().getId() == user.getId()) {
+						isableRead = true;
+					}
+				}else{
+					isableRead = true;
+				}
+				if (isableRead) {
+					return new Result<Blog>(SUCCESS, Code.SUCCESS, blog);
+				}else {
+					return new Result<Blog>(ERROR, Code.ERROR, null, "该文章不存在，或者你无权查看该文章，抱歉！");
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
