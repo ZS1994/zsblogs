@@ -329,7 +329,14 @@ public class IndexCon{
 		return "/quartz/editjob";
 	}
 	
-	
+	/**
+	 * 跳转到其他菜单
+	 * @author 张顺 2019-10-27
+	 */
+	@RequestMapping(value="/system/otherMenu")
+	public String toOtherMenu(HttpServletRequest request,HttpServletResponse response) throws SchedulerException {
+		return "/system/otherMenu";
+	}
 }
 
 

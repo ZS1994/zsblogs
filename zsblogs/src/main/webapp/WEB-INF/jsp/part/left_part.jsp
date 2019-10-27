@@ -283,6 +283,11 @@ img {
 			quartz实验室
 		</div>
 	</a>
+	<a href="${path }/menu/system/otherMenu">
+		<div class="entry">
+			其他菜单
+		</div>
+	</a>
 	
 	<!-- <div id="showBtn" class="show_btn" onclick="toggleHidden()" style="z-index: 999;background-color: #777474;"></div> -->
 </div>

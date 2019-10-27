@@ -280,5 +280,24 @@ function initPermissionAuto(inputDom){
 		maxHeight:SHOW_MAXHEIGHT
 	});
 }
+function initMenuAuto(inputDom){
+	var array = [];
+	var data = <%=CacheCharts.getPermissionsJson()%>;
+	$.each(data,function(i,v){
+		if (v.type == "menu") {
+			array.push({value:"("+v.url+")"+v.name+"("+v.id+")",data:v.id});
+		}
+	});
+	//初始化自动补全控件
+	inputDom.autocomplete({
+		lookup:array,
+		lookupLimit:SHOW_MAX_TOTALS,
+		onSelect:function (suggestion) {
+			inputDom.val(suggestion.data);
+		},
+		width:SHOW_WIDTH,
+		maxHeight:SHOW_MAXHEIGHT
+	});
+}
 </script>
 <jsp:include page="/WEB-INF/jsp/part/hintModal.jsp"></jsp:include>

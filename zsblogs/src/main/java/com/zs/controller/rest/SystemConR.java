@@ -19,6 +19,7 @@ import com.zs.entity.other.Result;
 import com.zs.service.PerSer;
 import com.zs.service.RoleSer;
 import com.zs.service.UserSer;
+import com.zs.tools.CacheCharts;
 import com.zs.tools.CrawlerNo1;
 import com.zs.tools.HttpClientReq;
 import com.zs.tools.Trans;
@@ -35,7 +36,9 @@ public class SystemConR {
 	private PerSer perSer;
 	@Resource
 	private UserSer userSer;
-
+	@Resource
+	private CacheCharts cacheCharts;
+	
 	
 	
 	@RequestMapping(value="/user/menu",method=RequestMethod.GET)
@@ -90,4 +93,10 @@ public class SystemConR {
 			return new Result<String>(BaseRestController.ERROR, Code.ERROR, Trans.strToHtml(e,req));
 		}
 	}
+	
+	@RequestMapping(value="/cache/refresh",method=RequestMethod.GET)
+	public Result<String> cacheRefresh(HttpServletRequest req, HttpServletResponse resp){
+		String result = cacheCharts.refresh();
+		return new Result<String>(BaseRestController.SUCCESS, Code.SUCCESS, result);
+	} 
 }

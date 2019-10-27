@@ -162,6 +162,12 @@
   		<if test="str2!=null"><!-- str2:url -->
   		and url like '${str2}%'
   		</if>
+  		<if test="str3!=null"><!-- str3:权限类型，是menu还是api -->
+  		and type = #{str3}
+  		</if>
+  		<if test="int1!=null"><!-- int1:id -->
+  		and id = #{int1}
+  		</if>
   	</where>
   	<if test="sort!=null and order!=null">
   		order by ${sort} ${order}
@@ -176,6 +182,12 @@
   		</if>
   		<if test="str2!=null"><!-- str2:url -->
   		and url like '${str2}%'
+  		</if>
+  		<if test="str3!=null"><!-- str3:权限类型，是menu还是api -->
+  		and type = #{str3}
+  		</if>
+  		<if test="int1!=null"><!-- int1:id -->
+  		and id = #{int1}
   		</if>
   	</where>
   </select>

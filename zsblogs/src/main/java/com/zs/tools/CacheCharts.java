@@ -55,6 +55,8 @@ public class CacheCharts implements Runnable{
 		if (!thread.isAlive()) {
 			log.info("CacheCharts缓存表，线程已开启，等待刷新数据。");
 			thread.start();
+		}else {
+			refresh();
 		}
 	}
 	
@@ -80,25 +82,33 @@ public class CacheCharts implements Runnable{
 	}
 	
 	//刷新数据
-	private void refresh(){
+	public String refresh(){
+		String result= "";
 		EasyUIAccept eui = new EasyUIAccept();
 		eui.setStart(0);
 		eui.setRows(Constans.INFINITY);
 		
 		log.info("users数据开始刷新");
+		result += "users数据开始刷新\n";
 		users = userSer.queryFenye(eui).getRows();
 		usersJson = gson.toJson(users, new TypeToken<List<Users>>(){}.getType());
 		log.info("users数据刷新完成，共" + users.size() + "条");
+		result += "users数据刷新完成，共" + users.size() + "条\n";
 		
 		log.info("fund_info数据开始刷新");
+		result += "fund_info数据开始刷新\n";
 		fundInfos = fundInfoSer.queryFenye(eui).getRows();
 		fundInfosJson = gson.toJson(fundInfos, new TypeToken<List<FundInfo>>(){}.getType());;
 		log.info("fund_info数据刷新完成，共" + fundInfos.size() + "条");
+		result += "fund_info数据刷新完成，共" + fundInfos.size() + "条\n";
 		
 		log.info("permission数据开始刷新");
+		result += "permission数据开始刷新\n";
 		permissions = permissionMapper.queryFenye(eui);
 		permissionsJson = gson.toJson(permissions, new TypeToken<List<Permission>>(){}.getType());;
 		log.info("permission数据刷新完成，共" + permissions.size() + "条");
+		result += "permission数据刷新完成，共" + permissions.size() + "条\n";
+		return result;
 	}
 	
 	

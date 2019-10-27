@@ -197,6 +197,11 @@ $(function(){
 					quartz实验室
 				</a>
 			</li>
+			<li>
+				<a href="${path }/menu/system/otherMenu">
+					其他菜单
+				</a>
+			</li>
 		</ul>
 		
 		
