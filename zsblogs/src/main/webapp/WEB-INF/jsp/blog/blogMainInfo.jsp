@@ -89,15 +89,20 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     function addBlogComment(){
     	var con=$("#edit_content").val();
     	if(con && con.trim().length>0){
-    		pullRequest({
-    			urlb:"/api/blogComment",
-    			type:"post",
-    			isNeedToken:false,
-    			data:{content:con,bId:${id}},
-    			success:function(data){
-    				window.location.href="${path}/menu/blogList/blog/one?id="+bid;
-    			}
-    		});
+			//字数不能超过300
+			if (con.length > 500) {
+				alert("评论内容不能超过500字");
+			}else{
+	    		pullRequest({
+	    			urlb:"/api/blogComment",
+	    			type:"post",
+	    			isNeedToken:false,
+	    			data:{content:con,bId:${id}},
+	    			success:function(data){
+	    				window.location.href="${path}/menu/blogList/blog/one?id="+bid;
+	    			}
+	    		});
+			}
     	}else{
     		$('#myModal').modal('show');
     	}
@@ -125,11 +130,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	for(var j=0;j<5;j++){
 			var superMoreClass=$("#btn_super_more").attr("class");
     		if(superMoreClass=="btn btn-warning"){
-    			page++;  	
+    			page++;  
             	pullRequest({
             		urlb:"/api/blogComment/list",
             		type:"get",
             		isNeedToken:false,
+            		async:false,
             		data:{page:page,rows:rows,int1:${id},sort:"createTime",order:"asc"},
             		superSuccess:function(data){
             			//判断是否可以 “显示更多”
@@ -179,7 +185,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div id="blog_content" style="margin-bottom: 100px;"></div>	
 		    
 		    <legend "blog_introduction">最新评论</legend>
-		    <div id="blog_comment" style="margin-bottom: 30px;">
+		    <div id="blog_comment" style="margin-bottom: 30px;white-space: pre-line;">
 		    </div>
 		    <center style="margin-bottom: 100px;">
 		    	<button id="btn_more" type="button" class="btn btn-info" onclick="showMore()">显示更多</button>
