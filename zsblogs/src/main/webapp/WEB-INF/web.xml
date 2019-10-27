@@ -38,8 +38,7 @@
 	<listener>  
 	  <listener-class>com.zs.listener.PathListener</listener-class>  
 	</listener>
-	<!-- 自定义header：token
-	-->
+	<!-- 自定义header：token -->
 	<filter>
 	    <filter-name>httpHeaderFilter</filter-name>
 	    <filter-class>com.zs.tools.MyHiddenHttpMethodFilter</filter-class>
@@ -49,8 +48,7 @@
 	    <servlet-name>SpringMVC</servlet-name>
 	</filter-mapping> 
 
-	<!-- rest请求转换器
-	  -->
+	<!-- rest请求转换器 -->
 	<filter>
 	    <filter-name>httpMethodFilter</filter-name>
 	    <filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
@@ -59,6 +57,17 @@
 	    <filter-name>httpMethodFilter</filter-name>
 	    <servlet-name>SpringMVC</servlet-name>
 	</filter-mapping>
+	
+	<!-- xss感觉以及敏感字符过滤器 -->
+	<filter>
+	    <filter-name>checkXssFilter</filter-name>
+	    <filter-class>com.zs.filter.CheckXssFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>checkXssFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 	
 	<!-- Spring MVC servlet -->
 	<servlet>
