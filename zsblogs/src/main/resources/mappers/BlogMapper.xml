@@ -7,6 +7,7 @@
     <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
     <result column="summary" property="summary" jdbcType="VARCHAR" />
     <result column="ishide" property="ishide" jdbcType="VARCHAR" />
+    <result column="comment_count" property="commentCount" jdbcType="INTEGER" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.zs.entity.Blog" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
@@ -119,7 +120,9 @@
   
   <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
   	select
-  	id,title,create_time,summary,ishide  
+  	id,title,create_time,summary,ishide
+  	,
+  	(select count(*) from blog_comment where b_id = blog.id) as comment_count
   	from blog
   	<where>
   		<if test="int1!=null"><!-- int1：是否隐藏 -->
@@ -176,8 +179,12 @@
   			select b_id from blog_list_rel where bl_id=#{int3}
 		)
   		</if>
-  		<if test="str1!=null"><!-- str1：通过博客标题模糊查询 -->
-  		and title like '%${str1}%'
+  		<if test="str1!=null"><!-- str1：通过博客标题、栏目、摘要、作者名称模糊查询 -->
+  		and (title like '%${str1}%' or 
+  			summary like '%${str1}%' or
+  			id in (select b_id from blog_list_rel where bl_id in (select id from blog_list where name like '%${str1}%')) or 
+  			id in (select b_id from blog_list_rel where bl_id in (select id from blog_list where u_id in (select id from users where name like '%${str1}%'))) 
+		)
   		</if>
   		<if test="str2!=null"><!-- str2：通过博客摘要模糊查询 -->
   		and summary like '%${str2}%'

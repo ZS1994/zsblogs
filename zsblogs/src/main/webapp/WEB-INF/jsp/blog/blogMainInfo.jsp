@@ -1,3 +1,4 @@
+<%@page import="com.zs.tools.Constans"%>
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
@@ -24,7 +25,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		success:function(data){
     			console.log(data);
     			$("#blog_title").html(data.title);
-    			$("#blog_author").html(data.user.name+"&nbsp;&nbsp;&nbsp;&nbsp;"+data.createTime+"&nbsp;&nbsp;&nbsp;&nbsp;<a class='blog_read_a' href='${path}/menu/blogList/blog/read?bId="+bid+"'>"+data.readCount+"次阅读</a>");
+    			var strTmp = data.user.name+"&nbsp;&nbsp;&nbsp;&nbsp;"+data.createTime+"&nbsp;&nbsp;&nbsp;&nbsp;<a class='blog_read_a' href='${path}/menu/blogList/blog/read?bId="+bid+"'>"+data.readCount+"次阅读</a>";
+    			//如果是作者就显示编辑按钮
+    			if (data.user.id == "<%=Constans.getUserFromReq(request).getId()%>") {
+    				strTmp += "&nbsp;&nbsp;&nbsp;&nbsp;<a class='blog_read_a' href='${path}/menu/blogList/blog/user/edit?id="+bid+"'>编辑</a>";
+				}
+    			$("#blog_author").html(strTmp);
     			$("#blog_summary").html("<strong>摘要:</strong>"+data.summary);
     			$("#blog_list").html("<strong>栏目:</strong>"+data.blogListNames);
     			$("#blog_content").html(data.content);

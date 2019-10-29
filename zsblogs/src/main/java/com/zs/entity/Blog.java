@@ -18,6 +18,8 @@ public class Blog {
     
     private String ishide;
     
+    //评论数
+    private Integer commentCount;
     
     //-------------
     private String blIds;
@@ -114,10 +116,13 @@ public class Blog {
         this.content = content == null ? null : content.trim();
     }
 
+
 	@Override
 	public String toString() {
 		return "Blog [id=" + id + ", title=" + title + ", createTime=" + createTime + ", content=" + content
-				+ ", summary=" + summary + ", ishide=" + ishide + ", blIds=" + blIds + "]";
+				+ ", summary=" + summary + ", ishide=" + ishide + ", commentCount=" + commentCount + ", blIds=" + blIds
+				+ ", user=" + user + ", blogListNames=" + blogListNames + ", blogListNamesA=" + blogListNamesA
+				+ ", readCount=" + readCount + "]";
 	}
 
 	public Blog() {
@@ -131,6 +136,13 @@ public class Blog {
 		this.summary = summary;
 		this.blIds = blIds;
 	}
-    
+
+	public Integer getCommentCount() {
+		return commentCount;
+	}
+
+	public void setCommentCount(Integer commentCount) {
+		this.commentCount = commentCount;
+	}
     
 }

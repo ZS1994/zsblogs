@@ -154,7 +154,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<th field="summary" width="500" sortable="true">摘要</th>
 						<th field="createTime" width="200" sortable="true">创建时间</th>
 						<th field="ishide" width="100" sortable="true">是否隐藏</th>
-		             	<th field="blogListNames" width="300" sortable="false" data-options="
+		             	<th field="blogListNames" width="200" sortable="false" data-options="
 						formatter:function(value,row,index){
 		                    if(row.blogListNames){
 								return row.blogListNames;
@@ -162,10 +162,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		                    	return '';
 		                    }
 		             	}">所属栏目</th>
-		             	<th field="readCount" width="300" sortable="false" data-options="
+		             	<th field="readCount" width="100" sortable="false" data-options="
 						formatter:function(value,row,index){
 							return row.readCount+'次阅读';
 		             	}">阅读次数</th>
+		             	<th field="commentCount" width="100" sortable="false">评论数</th>
 					</tr>
 				</thead>
 			</table>
