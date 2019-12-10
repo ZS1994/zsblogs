@@ -52,6 +52,19 @@ function pullRequest(options){
 	    	    },
 	        	success:function(data){
 	        		if(superSuccess){
+	        			//add begin 张顺 at 2019-12-8 这里先判断一下是否是错误信息，如果是错误信息的话，那么先弹窗显示错误信息
+	        			if(data){
+	        				var json;
+		        			if(isJson(data)){
+		        				json=data;
+		        			}else{
+		        				json=JSON.parse(data);
+		        			}
+		        			if(json.result=="error"){
+		        				alert(json.data + "\n" + (json.description?json.description:""));
+		        			}
+	        			}
+	        			//add end 张顺 at 2019-12-8 这里先判断一下是否是错误信息，如果是错误信息的话，那么先弹窗显示错误信息
 	        			superSuccess(data);
 	        		}else{
 	        			if(data){
@@ -215,7 +228,7 @@ img {
 			写博客
 		</div>
 	</a>
-	<a href="${path }/menu/system/users/own">
+	<a href="${path }/menu/system/users/own?id=${userMeId }">
 		<div class="entry">
 			我的信息
 		</div>

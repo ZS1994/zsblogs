@@ -29,7 +29,7 @@ public class Users {
     //--------------------------
     private List<Role> roles;
     private String roleNames; 
-    
+    private List<UsersRela> flowerRela;
     
     public String getRoleNames() {
 		return roleNames;
@@ -139,7 +139,15 @@ public class Users {
 		this.createTime = createTime;
 		this.rids = rids;
 	}
-    
+
+	public List<UsersRela> getFlowerRela() {
+		return flowerRela;
+	}
+
+	public void setFlowerRela(List<UsersRela> flowerRela) {
+		this.flowerRela = flowerRela;
+	}
+
     
     
 }

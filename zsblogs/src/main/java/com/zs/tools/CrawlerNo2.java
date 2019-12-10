@@ -39,7 +39,7 @@ public class CrawlerNo2 implements Runnable{
 	private TimelineMapper timelineMapper;
 	
 	
-	private boolean isBegin=false;//是否开始,默认关闭
+	private boolean isBegin=true;//是否开始,默认关闭
 	private Gson gson=new Gson();
 	private Logger log=Logger.getLogger(getClass());
 	private SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");

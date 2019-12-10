@@ -23,8 +23,15 @@ public class Constans {
 	private static Logger log = Logger.getLogger(Constans.class);
 	
 	public static final String USER="[user]";
+	//用于存session里面登录的用户
+	public static final String USER_ME_ID = "userMeId";
+	//用于存session里面登录的用户的token
+	public static final String TOKEN = "token";
+	
+	
 	public static final String URL="[url]";
 	public static final String METHOD="[method]";
+	
 	public static final Integer CRAWLERNO1=6;//爬虫1号
 	public static final Integer CRAWLERNO2=97;//爬虫二号
 	public static final Integer CRAWLERNO3=241;//爬虫三号

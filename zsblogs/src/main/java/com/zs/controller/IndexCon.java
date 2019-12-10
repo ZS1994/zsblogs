@@ -45,6 +45,8 @@ public class IndexCon{
 	@Resource
 	private Scheduler scheduler;
 	
+	
+	
 	@RequestMapping("/index")
 	public String gotoIndex(){
 		return "/index";
@@ -136,27 +138,8 @@ public class IndexCon{
 	//我的信息
 	@RequestMapping("/system/users/own")
 	public String gotOwnInfo(HttpServletRequest req,Users user){
-		try {
-			user=Constans.getUserFromReq(req);
-			if(user!=null){
-				SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-				if(user.getCreateTime()!=null){
-					String date=sdf.format(user.getCreateTime());
-					req.setAttribute("createTime", date);
-				}
-				if(user.getRoles()!=null){
-					String str="";
-					for (Role r : user.getRoles()) {
-						str=str+r.getName()+",";
-					}
-					str=str.substring(0, str.lastIndexOf(","));
-					user.setRoleNames(str);
-				}
-			}
-			req.setAttribute("user", user);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		//菜单会传一个id过来，其实就是用户ID
+		req.setAttribute("id", req.getParameter("id"));
 		return "/system/own";
 	}
 	

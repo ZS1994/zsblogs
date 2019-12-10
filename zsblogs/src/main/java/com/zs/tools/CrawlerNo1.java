@@ -52,7 +52,7 @@ public class CrawlerNo1 implements Runnable{
 	
 	private List<CrawlerData1> list=new ArrayList<>();
 	
-	private boolean isBegin=false;//是否开始
+	private boolean isBegin=true;//是否开始
 	private Gson gson=new Gson();
 	private Logger log=Logger.getLogger(getClass());
 	// 正则表达式规则

@@ -74,7 +74,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		for(var i=0;i<rows.length;i++){
 			str="<div class='blog_block'><h4><a class='blog_title' onclick='gotoBlogMain("+rows[i].id+")'>"+rows[i].title+"</a></h4>"+
 			"<p>"+rows[i].summary+"</p>"+
-			"<div class='blog_introduction'>"+(rows[i].user?rows[i].user.name:"[无法找到该用户]")+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].createTime+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].blogListNamesA+"&nbsp;&nbsp;&nbsp;&nbsp;<a class='blog_read_a' href='${path}/menu/blogList/blog/read?bId="+rows[i].id+"'>"+rows[i].readCount+"次阅读</a></div>"+
+			//modify begion by 张顺 at 2019-12-10 将用户改为超链接，可以跳转他的详情页面 
+			"<div class='blog_introduction'>"+(rows[i].user?"<a class='blNameA' href='${path }/menu/system/users/own?id="+rows[i].user.id+"'>"+rows[i].user.name+"</a>":"[无法找到该用户]")+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].createTime+"&nbsp;&nbsp;&nbsp;&nbsp;"+rows[i].blogListNamesA+"&nbsp;&nbsp;&nbsp;&nbsp;<a class='blog_read_a' href='${path}/menu/blogList/blog/read?bId="+rows[i].id+"'>"+rows[i].readCount+"次阅读</a></div>"+
+			//modify end by 张顺 at 2019-12-10 将用户改为超链接，可以跳转他的详情页面
 			"</div>";
 			$("#blogs").append(str);
 		}
@@ -96,7 +98,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     }
     function sousuo(){
     	str1=$("#ssTitle").val().trim();
-   		window.location.href="${path}/menu/blogList/blog?page="+page+"&rows="+rows+"&sort=createTime&order=desc&int1=0&str1="+str1+"&int3="+int3+"&str3="+str3;
+   		window.location.href="${path}/menu/blogList/blog?page=1&rows="+rows+"&sort=createTime&order=desc&int1=0&str1="+str1+"&int3="+int3+"&str3="+str3;
     }
     //初始化按栏目搜索的事件监听
     function initBlogListQuery(){

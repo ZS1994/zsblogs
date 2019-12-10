@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.zs.controller.rest.BaseRestController.Code;
 import com.zs.entity.Blog;
 import com.zs.entity.Users;
+import com.zs.entity.UsersRela;
 import com.zs.entity.other.EasyUIAccept;
 import com.zs.entity.other.EasyUIPage;
 import com.zs.entity.other.Result;
@@ -34,6 +35,7 @@ public class UsersConR extends BaseRestController<Users, Integer>{
 	private MailManager mail=MailManager.getInstance();
 	@Resource
 	private UserSer userSer;
+	
 	
 	@RequestMapping(value="/list",method=RequestMethod.GET)
 	@Override

@@ -10,10 +10,12 @@ import org.springframework.stereotype.Service;
 
 import com.zs.dao.RoleMapper;
 import com.zs.dao.UsersMapper;
+import com.zs.dao.UsersRelaMapper;
 import com.zs.entity.Role;
 import com.zs.entity.Users;
 import com.zs.entity.other.EasyUIAccept;
 import com.zs.entity.other.EasyUIPage;
+import com.zs.service.RoleSer;
 import com.zs.service.UserSer;
 
 @Service("userSer")
@@ -22,6 +24,10 @@ public class UserSerImpl implements UserSer{
 	private UsersMapper usersMapper;
 	@Resource
 	private RoleMapper roleMapper;
+	@Resource
+	private UsersRelaMapper usersRelaMapper;
+	@Resource
+	private RoleSer roleSer;
 	
 	
 	private Logger log=Logger.getLogger(getClass());
@@ -65,6 +71,16 @@ public class UserSerImpl implements UserSer{
 
 	public Users get(Integer id) {
 		Users user=usersMapper.selectByPrimaryKey(id);
+		//组装角色名字
+		if (user != null && user.getRids() != null){
+			List<Role> roles=roleSer.getRolesFromRids(user.getRids());
+			String str = "";
+			for (Role r : roles) {
+				str = str+r.getName() + ",";
+			}
+			str = str.substring(0, str.lastIndexOf(","));
+			user.setRoleNames(str);
+		}
 		return user;
 	}
 
@@ -93,7 +109,17 @@ public class UserSerImpl implements UserSer{
 
 	@Override
 	public Users getByNum(String num) {
-		return usersMapper.selectByNum(num);
+		Users user = usersMapper.selectByNum(num);
+		//组装角色名字
+		if(user.getRoles() != null){
+			String str = "";
+			for (Role r : user.getRoles()) {
+				str = str+r.getName() + ",";
+			}
+			str = str.substring(0, str.lastIndexOf(","));
+			user.setRoleNames(str);
+		}
+		return user;
 	}
 
 }

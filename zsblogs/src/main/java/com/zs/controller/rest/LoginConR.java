@@ -14,6 +14,7 @@ import com.zs.entity.Users;
 import com.zs.entity.other.Result;
 import com.zs.service.LicenceSer;
 import com.zs.service.UserSer;
+import com.zs.tools.Constans;
 import com.zs.tools.Trans;
 import com.zs.tools.mail.MailManager;
 import com.zs.tools.mail.MailModel;
@@ -38,7 +39,11 @@ public class LoginConR{
 					String str=userSer.validateUserInfo2(user.getUsernum(),user.getUserpass());
 					if(str.equals("[success]")){
 						Token lcToken=licenceSer.createToken(user);
-						req.getSession().setAttribute("token", lcToken.getToken());
+						//存session中token
+						req.getSession().setAttribute(Constans.TOKEN, lcToken.getToken());
+						user = userSer.getByNum(user.getUsernum());
+						//存session中登录这的id
+						req.getSession().setAttribute(Constans.USER_ME_ID, user.getId());
 						return new Result<String>(BaseRestController.SUCCESS, Code.SUCCESS, lcToken.getToken());
 					}else{
 						return new Result<String>(BaseRestController.ERROR, Code.ERROR, str);

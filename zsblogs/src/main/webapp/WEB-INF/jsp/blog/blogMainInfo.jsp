@@ -25,7 +25,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		success:function(data){
     			console.log(data);
     			$("#blog_title").html(data.title);
-    			var strTmp = data.user.name+"&nbsp;&nbsp;&nbsp;&nbsp;"+data.createTime+"&nbsp;&nbsp;&nbsp;&nbsp;<a class='blog_read_a' href='${path}/menu/blogList/blog/read?bId="+bid+"'>"+data.readCount+"次阅读</a>";
+    			//modify begin by 张顺 at 2019-12-10 将用户名改为连接，可跳转至个人页面
+    			var strTmp = "<a class='blNameA' href='${path }/menu/system/users/own?id="+data.user.id+"'>"+data.user.name+"</a>&nbsp;&nbsp;&nbsp;&nbsp;"+data.createTime+"&nbsp;&nbsp;&nbsp;&nbsp;<a class='blog_read_a' href='${path}/menu/blogList/blog/read?bId="+bid+"'>"+data.readCount+"次阅读</a>";
+    			//modify end by 张顺 at 2019-12-10 将用户名改为连接，可跳转至个人页面
     			//如果是作者就显示编辑按钮
     			if (data.user.id == "<%=Constans.getUserFromReq(request).getId()%>") {
     				strTmp += "&nbsp;&nbsp;&nbsp;&nbsp;<a class='blog_read_a' href='${path}/menu/blogList/blog/user/edit?id="+bid+"'>编辑</a>";
@@ -73,7 +75,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     function appendBlogComment(r){
     	var str="";
 		for(var i=0;i<r.length;i++){
-			var userName=r[i].user!=null?r[i].user.name:"<span class=\"muted\">游客</span>";
+			//modify begin by 张顺 at 2019-12-10 将用户名改为连接，可跳转至个人页面
+			var userName=r[i].user!=null?"<a class='blNameA' href='${path }/menu/system/users/own?id="+r[i].user.id+"'>"+r[i].user.name+"</a>":"<span class=\"muted\">游客</span>";
+			//modify end by 张顺 at 2019-12-10 将用户名改为连接，可跳转至个人页面
 			var autor=r[i].isAutor==1?"（作者）":"";
 			var userImg=r[i].user!=null?r[i].user.img:"";
 			str=str+
@@ -169,6 +173,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     .blog_list{
 	    padding-bottom:30px;
 	    color: gray;
+    }
+    .blNameA{
+    	font-size: 12px;
+    	cursor: pointer;
+    	color: #08c;
+    	text-decoration: none; 
     }
     </style>
   </head>
