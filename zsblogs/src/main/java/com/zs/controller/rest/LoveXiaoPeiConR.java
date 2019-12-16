@@ -1,5 +1,6 @@
 package com.zs.controller.rest;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -7,9 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.zs.controller.rest.BaseRestController.Code;
+import com.zs.entity.Timeline;
+import com.zs.entity.Users;
 import com.zs.entity.other.ListPlus;
 import com.zs.entity.other.LoveXiaoPeiDataBean;
 import com.zs.entity.other.Result;
+import com.zs.service.TimeLineSer;
+import com.zs.tools.Constans;
 
 @RestController
 @RequestMapping("/api/loveXiaoPei")
@@ -22,6 +27,8 @@ public class LoveXiaoPeiConR {
 	
 	private LoveXiaoPeiDataBean bean;
 	
+	@Resource
+	private TimeLineSer timeLineSer;
 	
 	/**
 	 * 初始化数据,剧情的设计就在这里
@@ -183,7 +190,11 @@ public class LoveXiaoPeiConR {
 	//保存结果
 	@RequestMapping(value="/result/save",method=RequestMethod.POST)
 	public Result<String> getNextPoint(String jieju,HttpServletRequest req, HttpServletResponse resp) {
-		return new Result<String>(BaseRestController.SUCCESS, Code.SUCCESS, "保存结局成功");
+		//获取请求中的用户
+		Users user = Constans.getUserFromReq(req);
+		//该请求成了白名单，所以系统不会自动保存日志，手动保存一下
+		String str = timeLineSer.add(new Timeline(user.getId(), Constans.PER_ID_LOVEXIAOPEI_SAVE, jieju));
+		return new Result<String>(BaseRestController.SUCCESS, Code.SUCCESS, str, "保存结局成功");
 	}
 	
 	

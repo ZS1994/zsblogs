@@ -35,13 +35,23 @@ public class Constans {
 	public static final Integer CRAWLERNO1=6;//爬虫1号
 	public static final Integer CRAWLERNO2=97;//爬虫二号
 	public static final Integer CRAWLERNO3=241;//爬虫三号
+	
+	/**
+	 * 小佩礼物的保存结果的权限id
+	 */
+	public static final Integer PER_ID_LOVEXIAOPEI_SAVE = 99;
+	
 	public static final Integer INFINITY=99999;//无穷大，用作全部查询时使用
 	
 	@Deprecated
 	public static final String PATH_ROOT="E:/tomcat_imgs/";//张顺，2019-6-17，已改为spring配置文件配置
 	public static final String PATH_TOMCAT_IMGS="/tomcat_imgs/";
 	
-	
+	/**
+	 * 从权限拦截器中尝试获取当前用户，一定会有一个用户，如果未登录那么取的就是一个游客用户
+	 * @param req
+	 * @return
+	 */
 	public static Users getUserFromReq(HttpServletRequest req){
 		return (Users)req.getAttribute(USER);
 	}

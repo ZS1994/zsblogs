@@ -198,12 +198,17 @@ public class IndexCon{
 		List<FundInfo> fis=fundInfoMapper.selectAllFundByUser(u.getId());
 		String fiId=fis.size()>0?fis.get(0).getId():"110022";//这里传一个基金编号，本想是传该用户持有之一，但是没办法，暂时就传一个固定的
 		Date edate=fundHistoryMapper.getEndDate(fiId);
+		//add begin by 张顺 at 2019-12-16 发现bug，edate有可能为null,如果是空就取当前时间吧
+		if (edate == null) {
+			edate = new Date();
+		}
+		//add end by 张顺 at 2019-12-16 发现bug，edate有可能为null,如果是空就取当前时间吧
 		//这里默认显示最近一个月的数据
-		//张顺，2019-7-14，1,一个月数据不直观，改为默认3个月
+		//张顺，2019-7-14，1,一个月数据不直观，改为默认6个月
 		accept.setStr2(sdf.format(edate));
 		Calendar calendar=Calendar.getInstance();
 		calendar.setTime(edate);
-		calendar.add(Calendar.MONTH, -3);
+		calendar.add(Calendar.MONTH, -6);
 		//张顺，2019-7-14，-1
 		Date bdate=calendar.getTime();
 		accept.setStr1(sdf.format(bdate));

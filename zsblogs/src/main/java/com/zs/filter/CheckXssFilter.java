@@ -54,6 +54,8 @@ public class CheckXssFilter implements Filter{
 		//初始化白名单
 		whriteList = new ArrayList<>();
 		whriteList.add(new Whrite("/zsblogs/api/blog", "POST", "content"));
+		whriteList.add(new Whrite("/zsblogs/api/loveXiaoPei/result/save", "POST", "jieju"));
+		
 	}
 
 	@Override

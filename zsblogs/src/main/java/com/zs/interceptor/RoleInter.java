@@ -146,7 +146,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 				allowThrough("/api/system/apitest", POST) //api测试接口
 				*/
 				allowThrough("/api/loveXiaoPei/init", GET) || //注册
-				allowThrough("/api/loveXiaoPei/result/save", POST) ||
+				allowThrough("/api/loveXiaoPei/result/save", POST) || //保存结果，记住一定要自己保存结果
 				
 				//----quartz实验室----------
 				url.contains("/api/quartz/") ||

@@ -123,7 +123,7 @@ public class FundTradeSerImpl implements FundTradeSer{
 	 */
 	@Override
 	public FundProfit obtainProfit(Integer uid, String fiId, Date begin, Date end) {
-		FundProfit profit=new FundProfit();
+		FundProfit profit = new FundProfit();
 		
 		Users u=usersMapper.selectByPrimaryKey(uid);
 		FundInfo fi=fundInfoMapper.selectByPrimaryKey(fiId);
@@ -137,6 +137,12 @@ public class FundTradeSerImpl implements FundTradeSer{
 		
 		List<TimeValueBean> tv1=fundTradeMapper.obtainHistory(ddd, end, fiId);
 		List<TimeValueBean> tv2=fundTradeMapper.obtainTrade(ddd, end, fiId, uid);
+		
+		//张顺，2019-12-16，1，tv1和tv2有可能为size为0
+		if (tv1.size() == 0 || tv2.size() == 0) {
+			return profit;
+		}
+		//张顺，2019-12-16，-1，tv1和tv2有可能为size为0
 		
 		List<String> tts=new ArrayList<>();
 		List<Double> list1=new ArrayList<>();
