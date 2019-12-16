@@ -48,6 +48,18 @@ public class CrawlerNo3 implements Runnable{
 	private Logger log=Logger.getLogger(getClass());
 	private SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 	
+	//张顺，2019-12-16，局部变量改造，内存优化
+	String url="http://fund.eastmoney.com/js/fundcode_search.js";
+	String str;
+	JSONArray jsonArr;
+	int counts;
+	String temp[];
+	String ss[];
+	FundInfo fundInfo;
+	Timeline tl;
+	
+	
+	
 	/**
 	 * 开始
 	 * @return
@@ -101,22 +113,26 @@ public class CrawlerNo3 implements Runnable{
 	
 	public void loopSaveFundInfo() throws Exception{
 		//找到该基金的当日净值
-		String url="http://fund.eastmoney.com/js/fundcode_search.js";
-		String str=HttpClientReq.httpGet(url, null,null);
-		str=str.replaceFirst("var r = ", "");
-		str=str.substring(0, str.length()-1);
-		JSONArray jsonArr=JSONArray.parseArray(str);
+		str = HttpClientReq.httpGet(url, null, null);
+		str = str.replaceFirst("var r = ", "");
+		str = str.substring(0, str.length()-1);
+		jsonArr = JSONArray.parseArray(str);
 		//先查下数据库基金数量，如果一致那么就认为没有变化
-		int counts=fundInfoMapper.getCount(new EasyUIAccept());
-		if (counts==jsonArr.size()) {//一样，认为没有变化
+		counts = fundInfoMapper.getCount(new EasyUIAccept());
+		if (counts == jsonArr.size()) {//一样，认为没有变化
 			return;
 		}
 		for (int i = 0; i < jsonArr.size(); i++) {
-			String temp[]=new String[5];
-			String ss[]=jsonArr.getJSONArray(i).toArray(temp);
+			//add begin by 张顺 at 2019-12-16 给一个强制终止的可能性，之前是即使关闭了爬虫，他也得把整个list处理完才会关，而list处理完都猴年马月了
+			if (isBegin == false){
+				break;
+			}
+			//add end by 张顺 at 2019-12-16 给一个强制终止的可能性，之前是即使关闭了爬虫，他也得把整个list处理完才会关，而list处理完都猴年马月了
+			temp = new String[5];
+			ss = jsonArr.getJSONArray(i).toArray(temp);
 			//这个ss的内部格式是这样的["000001","HXCZHH","华夏成长混合","混合型","HUAXIACHENGZHANGHUNHE"]
 			//[编号，简写，名称，类型，不知道]
-			FundInfo fundInfo=new FundInfo();
+			fundInfo = new FundInfo();
 			fundInfo.setId(ss[0]);
 			fundInfo.setName(ss[2]);
 			fundInfo.setType(ss[3]);
@@ -128,7 +144,7 @@ public class CrawlerNo3 implements Runnable{
 			try {
 				fundInfoMapper.insertSelective(fundInfo);
 				//存日志
-				Timeline tl=new Timeline(Constans.CRAWLERNO3, 85, gson.toJson(fundInfo));
+				tl = new Timeline(Constans.CRAWLERNO3, 85, gson.toJson(fundInfo));
 				timelineMapper.insert(tl);
 			} catch (Exception e) {
 				//log.info("【不必关注的错误，避免数据重复存储】"+e.toString());

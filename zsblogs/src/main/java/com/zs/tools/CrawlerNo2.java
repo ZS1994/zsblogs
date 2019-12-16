@@ -44,6 +44,28 @@ public class CrawlerNo2 implements Runnable{
 	private Logger log=Logger.getLogger(getClass());
 	private SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
 	
+	//张顺，2019-12-16，局部变量优化内存
+	//张顺，2019-7-14，1，设置一些配置参数，这个网址内容已经改了，它不能一次查出所有，所以只能根据分页循环取值
+	int pageRows = 20;//张顺，2019-7-14，每页多少数据量
+	//张顺，2019-7-14，-1
+	EasyUIAccept accept;
+	List<FundInfo> fis;
+	String url;
+	String str;
+	JSONObject jsonObject;
+	int pageSize;
+	int exits;
+	Document doc;
+	Elements summaryE;
+	Elements summaryD;
+	Elements summaryR;
+	Double nv;
+	Date d;
+	Double rate;
+	FundHistory history;
+	Timeline tl;
+	
+	
 	/**
 	 * 开始
 	 * @return
@@ -75,32 +97,34 @@ public class CrawlerNo2 implements Runnable{
 		while(true){
 			try {
 				if (isBegin) {
-					//张顺，2019-7-14，1，设置一些配置参数，这个网址内容已经改了，它不能一次查出所有，所以只能根据分页循环取值
-					int pageRows=20;//张顺，2019-7-14，每页多少数据量
-					//张顺，2019-7-14，-1
-					EasyUIAccept accept=new EasyUIAccept();
+					accept = new EasyUIAccept();
 					accept.setStart(0);
 					accept.setRows(Constans.INFINITY);
-					List<FundInfo> fis=fundInfoMapper.queryFenye(accept);
+					fis = fundInfoMapper.queryFenye(accept);
 					for (FundInfo fi : fis) {
+						//add begin by 张顺 at 2019-12-16 给一个强制终止的可能性，之前是即使关闭了爬虫，他也得把整个list处理完才会关，而list处理完都猴年马月了
+						if (isBegin == false){
+							break;
+						}
+						//add end by 张顺 at 2019-12-16 给一个强制终止的可能性，之前是即使关闭了爬虫，他也得把整个list处理完才会关，而list处理完都猴年马月了
 						log.info("【基金编号】"+fi.getId());
 						//找到该基金的当日净值
 						//modify begin 1 张顺 2019年8月24日 <不要当获取出错时导致整个后续的都不走了>
-						String url="http://fund.eastmoney.com/f10/F10DataApi.aspx?type=lsjz&code="+fi.getId()+"&page=1&per="+pageRows+"&sdate=&edate=";;
-						String str="";
+						url = "http://fund.eastmoney.com/f10/F10DataApi.aspx?type=lsjz&code="+fi.getId()+"&page=1&per="+pageRows+"&sdate=&edate=";;
+						str = "";
 						try {
-							str=HttpClientReq.httpGet(url, null,null);
+							str = HttpClientReq.httpGet(url, null,null);
 						} catch (Exception e) {
 							//跳过改基金，继续走下一个基金
 							continue;
 						}
 						//modify end -1 张顺 2019年8月24日 <描述>
-						str=str.replaceFirst("var apidata=", "");
-						str=str.substring(0, str.length()-1);
-						JSONObject jsonObject=JSONObject.parseObject(str);
-						int pageSize=jsonObject.getIntValue("pages");
+						str = str.replaceFirst("var apidata=", "");
+						str = str.substring(0, str.length()-1);
+						jsonObject = JSONObject.parseObject(str);
+						pageSize = jsonObject.getIntValue("pages");
 						//张顺，2019-7-14，2，因为不能一次取值，所以必须循环遍历所有页面
-						if (pageSize>1) {
+						if (pageSize > 1) {
 							for (int pageNo = 1; pageNo <= pageSize; pageNo++) {
 								try {
 									//不想浪费资源，这里判断一下如果连续累计找到5个已存在的(返回的是false)，那么久不往下找了，认为下面都是已存在的，即以前已经获取过了
@@ -135,13 +159,12 @@ public class CrawlerNo2 implements Runnable{
 	 * 因为不能一次取值，所以必须循环遍历所有页面，专门写这个方法方便调用
 	 * @throws Exception 
 	 */
-	@SuppressWarnings("unused")
 	private boolean loopSave(int pageNo,int pageRows,String code){
 		//已存在的记录数，超过10次就不找了，返回false
-		int exits=0;
+		exits = 0;
 		//找到该基金的当日净值
-		String url="http://fund.eastmoney.com/f10/F10DataApi.aspx?type=lsjz&code="+code+"&page="+pageNo+"&per="+pageRows+"&sdate=&edate=";
-		String str=null;
+		url = "http://fund.eastmoney.com/f10/F10DataApi.aspx?type=lsjz&code="+code+"&page="+pageNo+"&per="+pageRows+"&sdate=&edate=";
+		str = null;
 		try {
 			str = HttpClientReq.httpGet(url, null,null);
 		} catch (Exception e1) {
@@ -149,35 +172,35 @@ public class CrawlerNo2 implements Runnable{
 			log.error("【网络错误：无法获取访问基金历史网站】"+e1.toString());
 			return false;
 		}
-		str=str.replaceFirst("var apidata=", "");
-		str=str.substring(0, str.length()-1);
-		JSONObject jsonObject=JSONObject.parseObject(str);
-		Document doc=Jsoup.parse(jsonObject.get("content").toString());
+		str = str.replaceFirst("var apidata=", "");
+		str = str.substring(0, str.length()-1);
+		jsonObject = JSONObject.parseObject(str);
+		doc = Jsoup.parse(jsonObject.get("content").toString());
 		
 		for (int i = 0; i < pageRows; i++) {
 			//已存在的记录数，超过5次就不找了，返回false
-			if (exits>=5) {
+			if (exits >= 5) {
 				return false;
 			}
-			Elements summaryE=doc.select("tr:eq("+i+") td:eq(1)");
-			Elements summaryD=doc.select("tr:eq("+i+") td:eq(0)");
-			Elements summaryR=doc.select("tr:eq("+i+") td:eq(3)");
+			summaryE = doc.select("tr:eq("+i+") td:eq(1)");
+			summaryD = doc.select("tr:eq("+i+") td:eq(0)");
+			summaryR = doc.select("tr:eq("+i+") td:eq(3)");
 			
-			Double nv=summaryE.html().trim().equals("")?0.00:Double.valueOf(summaryE.html());
-			Date d=null;
+			nv = summaryE.html().trim().equals("")?0.00:Double.valueOf(summaryE.html());
+			d = null;
 			try {
 				d = summaryD.html().trim().equals("")?sdf.parse("2018-1-2"):sdf.parse(summaryD.html());
 			} catch (ParseException e1) {
 				e1.printStackTrace();
 				//log.error("【日期错误："+summaryD.html()+"】");
 			}
-			Double rate=summaryR.html().trim().equals("")?0.00:Double.valueOf(summaryR.html().replaceAll("%", ""));
+			rate = summaryR.html().trim().equals("")?0.00:Double.valueOf(summaryR.html().replaceAll("%", ""));
 			
 			//尝试插入
-			FundHistory history=new FundHistory().setFiId(code).setNetvalue(nv).setTime(d).setRate(rate);
+			history = new FundHistory().setFiId(code).setNetvalue(nv).setTime(d).setRate(rate);
 			try {
 				fundHistoryMapper.insert(history);
-				Timeline tl=new Timeline();
+				tl = new Timeline();
 				tl.setCreateTime(new Date());
 				tl.setuId(97);//目前就我，后面给它建个账号
 				tl.setpId(79);//操作：基金历史单条添加

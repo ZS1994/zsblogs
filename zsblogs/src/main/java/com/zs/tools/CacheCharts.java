@@ -49,6 +49,11 @@ public class CacheCharts implements Runnable{
 	private static String fundInfosJson = "[]";
 	private static String permissionsJson = "[]";
 	
+	//张顺，2019-12-16，局部变量，内存优化
+	EasyUIAccept eui;
+	String result;
+	
+	
 	@PostConstruct
 	public void beginWorkThread(){
 		Thread thread = Constans.getThread(this, "CacheCharts");
@@ -83,8 +88,8 @@ public class CacheCharts implements Runnable{
 	
 	//刷新数据
 	public String refresh(){
-		String result= "";
-		EasyUIAccept eui = new EasyUIAccept();
+		result = "";
+		eui = new EasyUIAccept();
 		eui.setStart(0);
 		eui.setRows(Constans.INFINITY);
 		
