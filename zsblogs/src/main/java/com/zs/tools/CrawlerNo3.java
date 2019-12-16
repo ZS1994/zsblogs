@@ -43,7 +43,7 @@ public class CrawlerNo3 implements Runnable{
 	private TimelineMapper timelineMapper;
 	
 	
-	private boolean isBegin=true;//是否开始,默认关闭
+	private boolean isBegin=false;//是否开始,默认关闭
 	private Gson gson=new Gson();
 	private Logger log=Logger.getLogger(getClass());
 	private SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -86,7 +86,7 @@ public class CrawlerNo3 implements Runnable{
 					}
 					Thread.sleep(1000*60*60*4);//每4小时重新爬取一次
 				}
-				Thread.sleep(1000*3);//每3s进行一次判断
+				Thread.sleep(1000*60);//每60s进行一次判断
 			} catch (Exception e) {
 				//出错了就休息2小时再尝试
 				e.printStackTrace();

@@ -68,7 +68,7 @@ public class CacheCharts implements Runnable{
 					refresh();
 					Thread.sleep(1000*60*60*4);//每4小时重新爬取一次
 				}
-				Thread.sleep(1000*3);//每3s进行一次判断
+				Thread.sleep(1000*60);//每60s进行一次判断
 			} catch (Exception e) {
 				//出错了就休息2小时再尝试
 				e.printStackTrace();

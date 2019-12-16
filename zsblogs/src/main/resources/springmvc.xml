@@ -22,7 +22,8 @@
 	-->
 	<!-- 张顺，2019-6-17，添加这个下载img的工具交由spring管理，因为1，可以灵活更改文件保存路径。2，bean就是单例的，不用编写单例模式。3，不用获取spring上下文获取bean了，省去很多麻烦，代码看起来也更加规范 -->
 	<bean id="downloadImg" class="com.zs.tools.DownloadImg">
-		<property name="pathRoot" value="D:/software/tomcat_imgs/"></property>
+		<!-- 本地可以D:/software/tomcat_imgs/  服务器上/home/tomcat_imgs/ -->
+		<property name="pathRoot" value="/home/tomcat_imgs/"></property>
 	</bean>
 	<context:component-scan base-package="com.zs" />
 	

@@ -53,5 +53,4 @@
         </property>
         <property name="autoStartup" value="false" />
     </bean>
-
 </beans>

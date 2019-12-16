@@ -133,7 +133,7 @@ $(function(){
 				</a>
 			</li>
 			<li>
-				<a href="<%=path%>/menu/system/users/own">
+				<a href="<%=path%>/menu/system/users/own?id=${userMeId }">
 					我的信息
 				</a>
 			</li>

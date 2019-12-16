@@ -110,15 +110,6 @@ public class UserSerImpl implements UserSer{
 	@Override
 	public Users getByNum(String num) {
 		Users user = usersMapper.selectByNum(num);
-		//组装角色名字
-		if(user.getRoles() != null){
-			String str = "";
-			for (Role r : user.getRoles()) {
-				str = str+r.getName() + ",";
-			}
-			str = str.substring(0, str.lastIndexOf(","));
-			user.setRoleNames(str);
-		}
 		return user;
 	}
 
