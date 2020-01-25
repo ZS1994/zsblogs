@@ -5,22 +5,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import javax.faces.validator.RegexValidator;
-import javax.mail.Flags.Flag;
-
 import org.apache.log4j.Logger;
-import org.bouncycastle.crypto.engines.TnepresEngine;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
-
 import com.google.gson.Gson;
 import com.zs.dao.BlogMapper;
 import com.zs.dao.TimelineMapper;
@@ -37,7 +28,7 @@ import com.zs.service.BlogSer;
  * 爬虫的第一次尝试，爬虫机器人1号
  */
 @Component
-public class CrawlerNo1 implements Runnable{
+public class CrawlerNo1{
 
 	@Resource
 	private BlogSer blogSer;
@@ -52,7 +43,6 @@ public class CrawlerNo1 implements Runnable{
 	
 	private List<CrawlerData1> list = new ArrayList<>();
 	
-	private boolean isBegin=false;//是否开始
 	private Gson gson=new Gson();
 	private Logger log=Logger.getLogger(getClass());
 	// 正则表达式规则
@@ -105,134 +95,78 @@ public class CrawlerNo1 implements Runnable{
 	}
 	
 	
-	
-	
-	@Deprecated
-	public CrawlerNo1 addUrl(String url){
-		return this;
-	}
-
-	/**
-	 * 开始
-	 * @return
-	 */
-	public CrawlerNo1 begin(){
-		isBegin=true;
-		return this;
-	}
-	
-	/**
-	 * 结束
-	 * @return
-	 */
-	public CrawlerNo1 finish(){
-		isBegin=false;
-		return this;
-	}
-	
-	@PostConstruct
-	public void beginWorkThread(){
-		Thread thread = Constans.getThread(this, "CrawlerNo1");
-		if (!thread.isAlive()) {
-			log.info("crawlerNo1爬虫一号初始化完成，线程已开启，等待爬取美团技术团队网。");
-			thread.start();
-		}
-	}
-	
-	
-	private void work() {
-		while(true){
+	public void work(){
+		getAllUrlAndList();
+		for (int i = list.size()-1; i >= 0; i--) {
+			blog = null;
+			content = null;
+			title = "";
+			summary = null;
+			imgs = null;
 			try {
-				if (isBegin) {
-					getAllUrlAndList();
-					for (int i = list.size()-1; i >= 0; i--) {
-						//add begin by 张顺 at 2019-12-16 给一个强制终止的可能性，之前是即使关闭了爬虫，他也得把整个list处理完才会关，而list处理完都猴年马月了
-						if (isBegin == false){
-							break;
-						}
-						//add end by 张顺 at 2019-12-16 给一个强制终止的可能性，之前是即使关闭了爬虫，他也得把整个list处理完才会关，而list处理完都猴年马月了
-						blog = null;
-						content = null;
-						title = "";
-						summary = null;
-						imgs = null;
-						try {
-							url = list.get(i).getUrl();
-							url = url.replaceAll(" ", "%20");
-							root = url.split("//")[0]+"//"+url.split("//")[1].split("/")[0];
-							str = HttpClientReq.httpGet(url, null,null);
-							doc = Jsoup.parse(str);
-							//摘要
-							summaryE = doc.select("meta[property=og:description]");
-							summary = summaryE.size()>0?summaryE.get(0).attr("content"):"[未获取到摘要]";
-							title = doc.select("meta[property=og:title]").attr("content");
-							title = title.equals("")?"[未获取到标题]":title;
-							content = doc.select("div .content");
-							//图片
-							imgs = content.select("img");
-							for (Element img : imgs) {
-								src = img.attr("src");
-								fileName = "";
-								srctmp = "";
-								if (src != null){
-									src = src.indexOf("/")==0?src:"/"+src;
-									ss = src.split("/");					
-									fileName = ss[ss.length-1];
-									//张顺，2019-6-17，因网站改为地址为外部地址，故不可直接拼接，而是应该先判断是否站内
-									if (pattern.matcher(src).find()) {
-										//判断第一个字符是否是/，如果是则去掉
-										src = src.substring(0, 1).equals("/")?src.substring(1, src.length()):src;
-										srctmp = src;
-									}else{
-										for (String s : ss) {
-											s = URLEncoder.encode(s, "utf-8");
-											srctmp = srctmp + s + "/";
-										}
-										srctmp = srctmp.equals("")?srctmp:srctmp.substring(0, srctmp.lastIndexOf("/"));
-										srctmp = root + srctmp;
-									}
-									newImgPath = downloadImg.download(srctmp, fileName);
-									img.attr("src", Constans.PATH_TOMCAT_IMGS + newImgPath);
-								}
+				url = list.get(i).getUrl();
+				url = url.replaceAll(" ", "%20");
+				root = url.split("//")[0]+"//"+url.split("//")[1].split("/")[0];
+				str = HttpClientReq.httpGet(url, null,null);
+				doc = Jsoup.parse(str);
+				//摘要
+				summaryE = doc.select("meta[property=og:description]");
+				summary = summaryE.size()>0?summaryE.get(0).attr("content"):"[未获取到摘要]";
+				title = doc.select("meta[property=og:title]").attr("content");
+				title = title.equals("")?"[未获取到标题]":title;
+				content = doc.select("div .content");
+				//图片
+				imgs = content.select("img");
+				for (Element img : imgs) {
+					src = img.attr("src");
+					fileName = "";
+					srctmp = "";
+					if (src != null){
+						src = src.indexOf("/")==0?src:"/"+src;
+						ss = src.split("/");					
+						fileName = ss[ss.length-1];
+						//张顺，2019-6-17，因网站改为地址为外部地址，故不可直接拼接，而是应该先判断是否站内
+						if (pattern.matcher(src).find()) {
+							//判断第一个字符是否是/，如果是则去掉
+							src = src.substring(0, 1).equals("/")?src.substring(1, src.length()):src;
+							srctmp = src;
+						}else{
+							for (String s : ss) {
+								s = URLEncoder.encode(s, "utf-8");
+								srctmp = srctmp + s + "/";
 							}
-							blog = new Blog(title, content.html(), summary, list.get(i).getUrlBlogList());
-							blogSer.add(blog);
-						} catch (Exception e) {
-							e.printStackTrace();
-							log.error("【错误参数详情】"+gson.toJson(blog));
-							try {
-								//如果出错，这里一般是那个编码问题，而字符过滤又挺耗时，所以仅在出错时使用尝试解决问题
-								blog = new Blog(EmojiFilterUtils.filterEmoji(title), EmojiFilterUtils.filterEmoji(content.html()), EmojiFilterUtils.filterEmoji(summary), list.get(i).getUrlBlogList());
-								blogSer.add(blog);
-							} catch (Exception e2) {
-								e2.getMessage();
-							}
-						}finally {
-							list.remove(i);
-							//2019-6-19，张顺，保存日志
-							tl = new Timeline();
-							tl.setCreateTime(new Date());
-							tl.setuId(Constans.CRAWLERNO1);
-							tl.setpId(13);//操作：博客单条添加
-							blog2 = new Blog(EmojiFilterUtils.filterEmoji(title), null, EmojiFilterUtils.filterEmoji(summary), null);
-							tl.setInfo(gson.toJson(blog2));
-							timelineMapper.insert(tl);
+							srctmp = srctmp.equals("")?srctmp:srctmp.substring(0, srctmp.lastIndexOf("/"));
+							srctmp = root + srctmp;
 						}
+						newImgPath = downloadImg.download(srctmp, fileName);
+						img.attr("src", Constans.PATH_TOMCAT_IMGS + newImgPath);
 					}
-					Thread.sleep(1000*60*60*4);//每4小时重新爬取一次
-				}   
-				Thread.sleep(1000*60);//每60s进行一次判断
-			} catch (Exception e) {
-				//出错了就休息2小时再尝试
-				e.printStackTrace();
-				try {
-					Thread.sleep(1000*60*60*2);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
 				}
+				blog = new Blog(title, content.html(), summary, list.get(i).getUrlBlogList());
+				blogSer.add(blog);
+			} catch (Exception e) {
+				e.printStackTrace();
+				log.error("【错误参数详情】"+gson.toJson(blog));
+				try {
+					//如果出错，这里一般是那个编码问题，而字符过滤又挺耗时，所以仅在出错时使用尝试解决问题
+					blog = new Blog(EmojiFilterUtils.filterEmoji(title), EmojiFilterUtils.filterEmoji(content.html()), EmojiFilterUtils.filterEmoji(summary), list.get(i).getUrlBlogList());
+					blogSer.add(blog);
+				} catch (Exception e2) {
+					e2.getMessage();
+				}
+			}finally {
+				list.remove(i);
+				//2019-6-19，张顺，保存日志
+				tl = new Timeline();
+				tl.setCreateTime(new Date());
+				tl.setuId(Constans.CRAWLERNO1);
+				tl.setpId(13);//操作：博客单条添加
+				blog2 = new Blog(EmojiFilterUtils.filterEmoji(title), null, EmojiFilterUtils.filterEmoji(summary), null);
+				tl.setInfo(gson.toJson(blog2));
+				timelineMapper.insert(tl);
 			}
 		}
-	}
+	}   
 	
 	/**自动获取美团点评网的博客，规则如下：
 	 * 1、如果没有这个博客栏目，则先创建再爬取
@@ -302,24 +236,6 @@ public class CrawlerNo1 implements Runnable{
 		}
 	}
 
-	/**
-	 * 开始爬虫工作
-	 * 每隔10秒钟检测一次是否继续工作
-	 */
-	@Override
-	public void run() {
-		work();
-	}
-
-
-
-	public boolean getIsBegin() {
-		return isBegin;
-	}
-
-	public void setIsBegin(boolean isBegin) {
-		this.isBegin = isBegin;
-	}
 
 	public List<CrawlerData1> getList() {
 		return list;

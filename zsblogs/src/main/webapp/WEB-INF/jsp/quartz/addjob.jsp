@@ -38,24 +38,24 @@
 					<hr/>
 				  	<table id="table_report" class="table table-striped table-bordered table-hover" style="width: 600px;">
 						<tr>
-							<td>cron</td>
+							<td>时间表达式（cron）</td>
 							<td><input type="text" name="cron" value=""/></td>
 						</tr>
 						<tr>
-							<td>clazz</td>
+							<td>任务类名（clazz）</td>
 							<td><input type="text" name="clazz" value=""/></td>
 						</tr>
 						<tr>
-							<td>jobName</td><td><input type="text" name="jobName" value=""/></td>
+							<td>定时任务名称（jobName）</td><td><input type="text" name="jobName" value=""/></td>
 						</tr>
 						<tr>
-							<td>jobGroupName</td><td><input type="text" name="jobGroupName" value=""/></td>
+							<td>任务组名称（jobGroup）</td><td><input type="text" name="jobGroupName" value=""/></td>
 						</tr>
 						<tr>
-					 		<td>triggerName</td><td><input type="text" name="triggerName" value=""/></td>
+					 		<td>触发器名称（triggerName）</td><td><input type="text" name="triggerName" value=""/></td>
 						</tr>
 						<tr>
-					 		<td>triggerGroupName</td><td><input type="text" name="triggerGroupName" value=""/></td>
+					 		<td>触发器组名称（triggerGroupName）</td><td><input type="text" name="triggerGroupName" value=""/></td>
 						</tr>
 						<tr>
 							<td></td>

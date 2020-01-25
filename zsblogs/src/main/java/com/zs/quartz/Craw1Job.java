@@ -1,16 +1,9 @@
 package com.zs.quartz;
 
-import javax.annotation.Resource;
-
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.quartz.Scheduler;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.stereotype.Component;
-
-import com.zs.tools.CacheCharts;
+import com.zs.tools.CrawlerNo1;
 import com.zs.tools.SpringUtil;
 
 
@@ -23,19 +16,19 @@ import com.zs.tools.SpringUtil;
  * 所以，这次使用quartz，因为它十分成熟，有完善的内存管理机制，所以尝试使用它来实现爬虫的定时任务，待日后观察内存使用情况，是否问题解决。
  * 
  */
-public class CrawJob implements Job{
+public class Craw1Job implements Job{
 
-	private CacheCharts cacheCharts;
+	private CrawlerNo1 crawlerNo1;
 	
 	
 	@Override
 	public void execute(JobExecutionContext context) throws JobExecutionException {
 		
-		if (cacheCharts == null) {
-			cacheCharts = (CacheCharts) SpringUtil.getBean("cacheCharts");
+		if (crawlerNo1 == null) {
+			crawlerNo1 = (CrawlerNo1) SpringUtil.getBean("crawlerNo1");
 		}
 		
-		cacheCharts.refresh();
+		crawlerNo1.work();
 		
 		
 	}

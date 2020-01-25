@@ -1,28 +1,13 @@
 package com.zs.tools;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-
 import org.apache.log4j.Logger;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
-
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.zs.dao.FundHistoryMapper;
 import com.zs.dao.FundInfoMapper;
 import com.zs.dao.TimelineMapper;
-import com.zs.entity.FundHistory;
 import com.zs.entity.FundInfo;
 import com.zs.entity.Timeline;
 import com.zs.entity.other.EasyUIAccept;
@@ -33,7 +18,7 @@ import com.zs.entity.other.EasyUIAccept;
  * 爬虫机器人3号，基金信息自动爬取，这样就不用每次还要手动去添加基金信息了
  */
 @Component
-public class CrawlerNo3 implements Runnable{
+public class CrawlerNo3{
 
 	@Resource
 	private FundInfoMapper fundInfoMapper;
@@ -43,7 +28,6 @@ public class CrawlerNo3 implements Runnable{
 	private TimelineMapper timelineMapper;
 	
 	
-	private boolean isBegin=false;//是否开始,默认关闭
 	private Gson gson=new Gson();
 	private Logger log=Logger.getLogger(getClass());
 	private SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -60,54 +44,11 @@ public class CrawlerNo3 implements Runnable{
 	
 	
 	
-	/**
-	 * 开始
-	 * @return
-	 */
-	public CrawlerNo3 begin(){
-		isBegin=true;
-		return this;
-	}
-	
-	/**
-	 * 结束
-	 * @return
-	 */
-	public CrawlerNo3 finish(){
-		isBegin=false;
-		return this;
-	}
-	
-	@PostConstruct
-	public void beginWorkThread(){
-		Thread thread = Constans.getThread(this, "CrawlerNo3");
-		if (!thread.isAlive()) {
-			log.info("crawlerNo3爬虫三号初始化完成，线程已开启，等待爬取基金列表信息。");
-			thread.start();
-		}
-	}
-	
-	private void work() {
-		while(true){
-			try {
-				if (isBegin) {
-					try {
-						loopSaveFundInfo();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					Thread.sleep(1000*60*60*4);//每4小时重新爬取一次
-				}
-				Thread.sleep(1000*60);//每60s进行一次判断
-			} catch (Exception e) {
-				//出错了就休息2小时再尝试
-				e.printStackTrace();
-				try {
-					Thread.sleep(1000*60*60*2);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
-			}
+	public void work() {
+		try {
+			loopSaveFundInfo();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -123,11 +64,6 @@ public class CrawlerNo3 implements Runnable{
 			return;
 		}
 		for (int i = 0; i < jsonArr.size(); i++) {
-			//add begin by 张顺 at 2019-12-16 给一个强制终止的可能性，之前是即使关闭了爬虫，他也得把整个list处理完才会关，而list处理完都猴年马月了
-			if (isBegin == false){
-				break;
-			}
-			//add end by 张顺 at 2019-12-16 给一个强制终止的可能性，之前是即使关闭了爬虫，他也得把整个list处理完才会关，而list处理完都猴年马月了
 			temp = new String[5];
 			ss = jsonArr.getJSONArray(i).toArray(temp);
 			//这个ss的内部格式是这样的["000001","HXCZHH","华夏成长混合","混合型","HUAXIACHENGZHANGHUNHE"]
@@ -159,24 +95,6 @@ public class CrawlerNo3 implements Runnable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	/**
-	 * 开始爬虫工作
-	 * 每隔10秒钟检测一次是否继续工作
-	 */
-	@Override
-	public void run() {
-		work();
-	}
-
-
-	public boolean getIsBegin() {
-		return isBegin;
-	}
-
-	public void setIsBegin(boolean isBegin) {
-		this.isBegin = isBegin;
 	}
 	
 }

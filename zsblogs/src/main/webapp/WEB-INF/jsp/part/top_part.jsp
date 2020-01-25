@@ -162,11 +162,11 @@ $(function(){
 					登出
 				</a>
 			</li>
-			<li>
+			<%-- <li>
 				<a href="${path }/menu/crawler/manager">
 					爬虫管理
 				</a>
-			</li>
+			</li> --%>
 			<li>
 				<a href="${path }/menu/system/timeline">
 					操作日志

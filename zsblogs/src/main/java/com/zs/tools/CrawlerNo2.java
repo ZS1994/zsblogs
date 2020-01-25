@@ -3,16 +3,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-
 import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Component;
-
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.zs.dao.FundHistoryMapper;
@@ -29,7 +25,7 @@ import com.zs.entity.other.EasyUIAccept;
  * 爬虫机器人2号，基金净值更新
  */
 @Component
-public class CrawlerNo2 implements Runnable{
+public class CrawlerNo2{
 
 	@Resource
 	private FundInfoMapper fundInfoMapper;
@@ -38,8 +34,6 @@ public class CrawlerNo2 implements Runnable{
 	@Resource
 	private TimelineMapper timelineMapper;
 	
-	
-	private boolean isBegin=false;//是否开始,默认关闭
 	private Gson gson=new Gson();
 	private Logger log=Logger.getLogger(getClass());
 	private SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
@@ -66,91 +60,43 @@ public class CrawlerNo2 implements Runnable{
 	Timeline tl;
 	
 	
-	/**
-	 * 开始
-	 * @return
-	 */
-	public CrawlerNo2 begin(){
-		isBegin=true;
-		return this;
-	}
-	
-	/**
-	 * 结束
-	 * @return
-	 */
-	public CrawlerNo2 finish(){
-		isBegin=false;
-		return this;
-	}
-	
-	@PostConstruct
-	public void beginWorkThread(){
-		Thread thread = Constans.getThread(this, "CrawlerNo2");
-		if (!thread.isAlive()) {
-			log.info("crawlerNo2爬虫二号初始化完成，线程已开启，等待爬取基金历史信息。");
-			thread.start();
-		}
-	}
-	
-	private void work() {
-		while(true){
+	public void work() {
+		accept = new EasyUIAccept();
+		accept.setStart(0);
+		accept.setRows(Constans.INFINITY);
+		fis = fundInfoMapper.queryFenye(accept);
+		for (FundInfo fi : fis) {
+			log.info("【基金编号】"+fi.getId());
+			//找到该基金的当日净值
+			//modify begin 1 张顺 2019年8月24日 <不要当获取出错时导致整个后续的都不走了>
+			url = "http://fund.eastmoney.com/f10/F10DataApi.aspx?type=lsjz&code="+fi.getId()+"&page=1&per="+pageRows+"&sdate=&edate=";;
+			str = "";
 			try {
-				if (isBegin) {
-					accept = new EasyUIAccept();
-					accept.setStart(0);
-					accept.setRows(Constans.INFINITY);
-					fis = fundInfoMapper.queryFenye(accept);
-					for (FundInfo fi : fis) {
-						//add begin by 张顺 at 2019-12-16 给一个强制终止的可能性，之前是即使关闭了爬虫，他也得把整个list处理完才会关，而list处理完都猴年马月了
-						if (isBegin == false){
+				str = HttpClientReq.httpGet(url, null,null);
+			} catch (Exception e) {
+				//跳过改基金，继续走下一个基金
+				continue;
+			}
+			//modify end -1 张顺 2019年8月24日 <描述>
+			str = str.replaceFirst("var apidata=", "");
+			str = str.substring(0, str.length()-1);
+			jsonObject = JSONObject.parseObject(str);
+			pageSize = jsonObject.getIntValue("pages");
+			//张顺，2019-7-14，2，因为不能一次取值，所以必须循环遍历所有页面
+			if (pageSize > 1) {
+				for (int pageNo = 1; pageNo <= pageSize; pageNo++) {
+					try {
+						//不想浪费资源，这里判断一下如果连续累计找到5个已存在的(返回的是false)，那么久不往下找了，认为下面都是已存在的，即以前已经获取过了
+						if (loopSave(pageNo, pageRows, fi.getId())==false) {
+							log.info("【不往下找基金历史了】"+fi.getName()+"("+fi.getId()+")");
 							break;
 						}
-						//add end by 张顺 at 2019-12-16 给一个强制终止的可能性，之前是即使关闭了爬虫，他也得把整个list处理完才会关，而list处理完都猴年马月了
-						log.info("【基金编号】"+fi.getId());
-						//找到该基金的当日净值
-						//modify begin 1 张顺 2019年8月24日 <不要当获取出错时导致整个后续的都不走了>
-						url = "http://fund.eastmoney.com/f10/F10DataApi.aspx?type=lsjz&code="+fi.getId()+"&page=1&per="+pageRows+"&sdate=&edate=";;
-						str = "";
-						try {
-							str = HttpClientReq.httpGet(url, null,null);
-						} catch (Exception e) {
-							//跳过改基金，继续走下一个基金
-							continue;
-						}
-						//modify end -1 张顺 2019年8月24日 <描述>
-						str = str.replaceFirst("var apidata=", "");
-						str = str.substring(0, str.length()-1);
-						jsonObject = JSONObject.parseObject(str);
-						pageSize = jsonObject.getIntValue("pages");
-						//张顺，2019-7-14，2，因为不能一次取值，所以必须循环遍历所有页面
-						if (pageSize > 1) {
-							for (int pageNo = 1; pageNo <= pageSize; pageNo++) {
-								try {
-									//不想浪费资源，这里判断一下如果连续累计找到5个已存在的(返回的是false)，那么久不往下找了，认为下面都是已存在的，即以前已经获取过了
-									if (loopSave(pageNo, pageRows, fi.getId())==false) {
-										log.info("【不往下找基金历史了】"+fi.getName()+"("+fi.getId()+")");
-										break;
-									}
-								} catch (Exception e) {
-									//log.error(e.toString());
-								}
-							}
-						}
-						//张顺，2019-7-14，-2
+					} catch (Exception e) {
+						//log.error(e.toString());
 					}
-					Thread.sleep(1000*60*60*4);//每4小时重新爬取一次
-				}
-				Thread.sleep(1000*60);//每60s进行一次判断
-			} catch (Exception e) {
-				//出错了就休息2小时再尝试
-				e.printStackTrace();
-				try {
-					Thread.sleep(1000*60*60*2);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
 				}
 			}
+			//张顺，2019-7-14，-2
 		}
 	}
 	
@@ -191,8 +137,9 @@ public class CrawlerNo2 implements Runnable{
 			try {
 				d = summaryD.html().trim().equals("")?sdf.parse("2018-1-2"):sdf.parse(summaryD.html());
 			} catch (ParseException e1) {
-				e1.printStackTrace();
+				//e1.printStackTrace();
 				//log.error("【日期错误："+summaryD.html()+"】");
+				//无需记录，属于日期格式转换错误，因为有可能是“暂无数据”
 			}
 			rate = summaryR.html().trim().equals("")?0.00:Double.valueOf(summaryR.html().replaceAll("%", ""));
 			
@@ -213,28 +160,6 @@ public class CrawlerNo2 implements Runnable{
 		}
 		return true;
 	}
-
-	/**
-	 * 开始爬虫工作
-	 * 每隔10秒钟检测一次是否继续工作
-	 */
-	@Override
-	public void run() {
-		work();
-	}
-
-
-
-	public boolean getIsBegin() {
-		return isBegin;
-	}
-
-
-	public void setIsBegin(boolean isBegin) {
-		this.isBegin = isBegin;
-	}
-
-
 
 	public static void main(String[] args) {
 		/*while(true){

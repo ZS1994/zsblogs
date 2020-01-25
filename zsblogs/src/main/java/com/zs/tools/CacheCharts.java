@@ -26,7 +26,7 @@ import com.zs.service.UserSer;
  * @author 张顺 2019-10-26
  */
 @Component
-public class CacheCharts implements Runnable{
+public class CacheCharts{
 
 	@Resource
 	private UserSer userSer;
@@ -40,7 +40,6 @@ public class CacheCharts implements Runnable{
 	        .create();
 	private Logger log=Logger.getLogger(getClass());
     
-	private boolean isBegin = true;
 	
 	private static List<Object> users = new ArrayList<>();
 	private static List<Object> fundInfos = new ArrayList<>();
@@ -52,39 +51,6 @@ public class CacheCharts implements Runnable{
 	//张顺，2019-12-16，局部变量，内存优化
 	EasyUIAccept eui;
 	String result;
-	
-	
-	@PostConstruct
-	public void beginWorkThread(){
-		Thread thread = Constans.getThread(this, "CacheCharts");
-		if (!thread.isAlive()) {
-			log.info("CacheCharts缓存表，线程已开启，等待刷新数据。");
-			thread.start();
-		}else {
-			refresh();
-		}
-	}
-	
-	
-	private void work(){
-		while(true){
-			try {
-				if (isBegin) {
-					refresh();
-					Thread.sleep(1000*60*60*4);//每4小时重新爬取一次
-				}
-				Thread.sleep(1000*60);//每60s进行一次判断
-			} catch (Exception e) {
-				//出错了就休息2小时再尝试
-				e.printStackTrace();
-				try {
-					Thread.sleep(1000*60*60*2);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
-			}
-		}
-	}
 	
 	//刷新数据
 	public String refresh(){
@@ -117,25 +83,6 @@ public class CacheCharts implements Runnable{
 	}
 	
 	
-	
-	/**
-	 * 开始爬虫工作
-	 * 每隔10秒钟检测一次是否继续工作
-	 */
-	@Override
-	public void run() {
-		work();
-	}
-
-
-	public boolean getIsBegin() {
-		return isBegin;
-	}
-
-	public void setIsBegin(boolean isBegin) {
-		this.isBegin = isBegin;
-	}
-
 	public static List<Object> getUsers() {
 		return users;
 	}

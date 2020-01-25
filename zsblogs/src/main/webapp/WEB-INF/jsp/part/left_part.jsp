@@ -261,11 +261,11 @@ img {
 			登出
 		</div>
 	</a>
-	<a href="${path }/menu/crawler/manager">
+	<%-- <a href="${path }/menu/crawler/manager">
 		<div class="entry">
 			爬虫管理
 		</div>
-	</a>
+	</a> --%>
 	<a href="${path }/menu/system/timeline">
 		<div class="entry">
 			操作日志
