@@ -27,5 +27,9 @@ public interface BlogMapper {
     int getCount(EasyUIAccept accept);
     
     List<Blog> queryByTitle(String title);
-    
+    /**
+     * 未上传微信公众号的博客
+     * @return
+     */
+    Blog queryNoUploadWeBlog();
 }

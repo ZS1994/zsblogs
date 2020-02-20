@@ -43,7 +43,18 @@
 						</tr>
 						<tr>
 							<td>任务类名（clazz）</td>
-							<td><input type="text" name="clazz" value=""/></td>
+							<td>
+								<select name="clazz">
+									<option value="com.zs.quartz.CacheJob">缓存刷新任务</option>
+									<option value="com.zs.quartz.Craw1Job">爬虫1号爬取博客任务</option>
+									<option value="com.zs.quartz.Craw2Job">爬虫2号爬取基金历史净值任务</option>
+									<option value="com.zs.quartz.Craw3Job">爬虫3号爬取基金列表任务</option>
+									<option value="com.zs.quartz.HelloJob">定时器测试任务（周期打印时间）</option>
+									<option value="com.zs.quartz.WeChatTokenJob">获取微信公众号token任务</option>
+									<option value="com.zs.quartz.WeChatAddNewsJob">微信公众号自动上传博客任务</option>
+									<option value="com.zs.quartz.WeChatDelAllNewsJob">微信公众号删除所有素材任务</option>
+								</select>
+							</td>
 						</tr>
 						<tr>
 							<td>定时任务名称（jobName）</td><td><input type="text" name="jobName" value=""/></td>

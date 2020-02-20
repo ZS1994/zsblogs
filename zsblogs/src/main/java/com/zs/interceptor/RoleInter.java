@@ -122,7 +122,7 @@ public class RoleInter extends HandlerInterceptorAdapter{
 		
 //		log.info("url:"+url+"  method:"+method+"  token:"+token+"  isTimeout:"+isTimeout+"  username:"+(user!=null?user.getName():"null"));
 		
-		//例外列表
+		//例外列表，白名单
 		if (
 				allowThrough("/api/login/token", POST) || //登录
 				allowThrough("/api/login/token/clear", DELETE) || //登出
@@ -153,7 +153,10 @@ public class RoleInter extends HandlerInterceptorAdapter{
 				url.contains("/menu/quartz/") ||
 				
 				//----测试----------------
-				url.contains("/api/test/transaction")
+				url.contains("/api/test/transaction") ||
+				
+				//微信接入服务
+				url.contains("/api/weChat/token")
 				
 				) {
 			/*张顺，2017-12-19,如果是游客，那么：

@@ -17,4 +17,6 @@ public interface BlogSer extends BaseService<Blog, Integer>{
 	//通过标题查找博客
 	public List<Blog> queryByTitle(String title);
 		
+	/**张顺，2020-2-19，查出所有未上传至微信公众号好的博客*/
+	public Blog queryNoUploadWeBlog();
 }

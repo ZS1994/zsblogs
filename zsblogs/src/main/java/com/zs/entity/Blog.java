@@ -18,6 +18,9 @@ public class Blog {
     
     private String ishide;
     
+    //2020-2-19，张顺，增加一个属性状态，目的是为了识别是否已上传公众号
+    private String state;
+    
     //评论数
     private Integer commentCount;
     
@@ -144,5 +147,13 @@ public class Blog {
 	public void setCommentCount(Integer commentCount) {
 		this.commentCount = commentCount;
 	}
-    
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+	
 }

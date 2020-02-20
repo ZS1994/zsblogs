@@ -37,7 +37,7 @@ public class CrawlerConR {
 	 */
 	@RequestMapping(value="/control",method=RequestMethod.GET)
 	public Result<String> crawlerControl(Boolean isBegin,String no,HttpServletRequest req, HttpServletResponse resp){
-		if (isBegin!=null && !Trans.StrEmpty(no)) {
+		/*if (isBegin!=null && !Trans.StrEmpty(no)) {
 			try {
 				switch (no) {
 				case "1":
@@ -70,13 +70,13 @@ public class CrawlerConR {
 				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 				return new Result<String>(BaseRestController.ERROR, Code.ERROR, null);
 			}
-		}
+		}*/
 		return new Result<String>(BaseRestController.ERROR, Code.ERROR, null);
 	}
 	
 	@RequestMapping(value="/addurl",method=RequestMethod.POST)
 	public Result<String> addUrl(String url,HttpServletRequest req, HttpServletResponse resp){
-		if (url!=null) {
+		/*if (url!=null) {
 			try {
 				crawlerNo1.addUrl(url);
 				return new Result<String>(BaseRestController.SUCCESS, Code.SUCCESS, "爬虫机器人1号已添加"+url+"到爬取列表");
@@ -85,10 +85,10 @@ public class CrawlerConR {
 				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 				return new Result<String>(BaseRestController.ERROR, Code.ERROR, Trans.strToHtml(e,req));
 			}
-		}
+		}*/
 		return new Result<String>(BaseRestController.ERROR, Code.ERROR, null);
 	}
-	
+	/*
 	@RequestMapping(value="/info/1",method=RequestMethod.GET)
 	public Result<CrawlerNo1> info1(HttpServletRequest req, HttpServletResponse resp){
 		try {
@@ -120,5 +120,5 @@ public class CrawlerConR {
 			mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
 			return new Result<CrawlerNo3>(BaseRestController.ERROR, Code.ERROR, null);
 		}
-	}
+	}*/
 }

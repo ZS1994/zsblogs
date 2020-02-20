@@ -6,7 +6,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
@@ -22,7 +22,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.apache.log4j.Logger;
-
 import com.google.gson.Gson;
 import com.zs.controller.rest.BaseRestController;
 import com.zs.entity.other.Result;
@@ -40,9 +39,16 @@ public class HttpClientReq {
     	String encode = "utf-8";    
     	String content = null;  
         CloseableHttpClient closeableHttpClient = HttpClientBuilder.create().build();     
-        String udata = getUrlParamsByMap(data);
-//        System.out.println(udata);
-        HttpGet httpGet = new HttpGet(url+"?"+udata);
+        HttpGet httpGet = new HttpGet(url);
+        //张顺，2020-1-30，防止url已经带参数了
+        if (data != null) {
+        	String udata = getUrlParamsByMap(data);
+        	if (url.contains("?")) {
+        		httpGet = new HttpGet(url + "&" + udata);
+			}else {
+				httpGet = new HttpGet(url + "?" + udata);
+			}
+		}
         if (!Trans.StrEmpty(token)) {
         	httpGet.setHeader("token", token);
 		}
@@ -85,20 +91,26 @@ public class HttpClientReq {
 		// 创建默认的httpClient实例.    
         CloseableHttpClient httpclient = HttpClients.createDefault();  
         // 创建httppost
-        String udata = getUrlParamsByMap(data);
-//        System.out.println(udata);
-        HttpPost httppost = new HttpPost(url+"?"+udata);  
+        //张顺，2020-1-30，防止url已经带参数了
+        HttpPost httppost = new HttpPost(url);  
         if (!Trans.StrEmpty(token)) {
         	httppost.setHeader("token", token);
 		}
         // 创建参数队列    
-        List<NameValuePair> formparams = new ArrayList<NameValuePair>();  
-        UrlEncodedFormEntity uefEntity;  
-        try {  
+        List<NameValuePair> formparams = new ArrayList<NameValuePair>();
+        //张顺，2020-1-30，post要构造postbody
+        if (data != null) {
+        	Set<String> keys = data.keySet();
+        	for (String key : keys) {
+        		formparams.add(new BasicNameValuePair(key, (String) data.get(key)));
+			}
+		}
+        UrlEncodedFormEntity uefEntity;
+        try {
             uefEntity = new UrlEncodedFormEntity(formparams, encode);  
             httppost.setEntity(uefEntity);  
             CloseableHttpResponse response = httpclient.execute(httppost);  
-            try {  
+            try {
                 HttpEntity entity = response.getEntity();  
                 if (entity != null) { 
                 	content=EntityUtils.toString(entity, encode);
@@ -132,9 +144,16 @@ public class HttpClientReq {
         String content = null;   
         //since 4.3 不再使用 DefaultHttpClient    
         CloseableHttpClient closeableHttpClient = HttpClientBuilder.create().build();     
-        String udata = getUrlParamsByMap(data);
-//        System.out.println(udata);
-        HttpDelete httpdelete = new HttpDelete(url+"?"+udata);   
+        //张顺，2020-1-30，防止url已经带参数了
+        HttpDelete httpdelete = new HttpDelete(url);   
+        if (data != null) {
+        	String udata = getUrlParamsByMap(data);
+        	if (url.contains("?")) {
+        		httpdelete = new HttpDelete(url + "&" + udata);
+			}else {
+				httpdelete = new HttpDelete(url + "?" + udata);
+			}
+		}
         if (!Trans.StrEmpty(token)) {
         	httpdelete.setHeader("token", token);
 		}
@@ -176,11 +195,16 @@ public class HttpClientReq {
 		String content = null; 
 		// 创建默认的httpClient实例.    
         CloseableHttpClient httpclient = HttpClients.createDefault();  
-        // 创建httpput    
-//        String udata = URLEncoder.encode(data,encode);
-        String udata = getUrlParamsByMap(data);
-//        System.out.println(udata);
-        HttpPut httpput = new HttpPut(url+"?"+udata); 
+        //张顺，2020-1-30，防止url已经带参数了
+        HttpPut httpput = new HttpPut(url); 
+        if (data != null) {
+        	String udata = getUrlParamsByMap(data);
+        	if (url.contains("?")) {
+        		httpput = new HttpPut(url + "&" + udata);
+			}else {
+				httpput = new HttpPut(url + "?" + udata);
+			}
+		}
         if (!Trans.StrEmpty(token)) {
         	httpput.setHeader("token", token);
 		}

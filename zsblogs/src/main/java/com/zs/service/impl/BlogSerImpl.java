@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.google.gson.Gson;
 import com.zs.dao.BlogCommentMapper;
@@ -84,10 +85,14 @@ public class BlogSerImpl implements BlogSer{
 	}
 
 	public String update(Blog obj) {
-		String blIds[]=gson.fromJson(obj.getBlIds(), String[].class);
-		blogListRelMapper.deleteByBlidOrBid(null, obj.getId());
-		for (String s : blIds) {
-			blogListRelMapper.insertSelective(new BlogListRel(Integer.valueOf(s), obj.getId()));
+		if (obj!=null && !StringUtils.isEmpty(obj.getBlIds())) {
+			String blIds[] = obj.getBlIds().split(",");
+			blogListRelMapper.deleteByBlidOrBid(null, obj.getId());
+			for (String s : blIds) {
+				if (!StringUtils.isEmpty(s)) {
+					blogListRelMapper.insertSelective(new BlogListRel(Integer.valueOf(s), obj.getId()));
+				}
+			}
 		}
 		return String.valueOf(blogMapper.updateByPrimaryKeySelective(obj));
 	}
@@ -168,6 +173,11 @@ public class BlogSerImpl implements BlogSer{
 	@Override
 	public List<Blog> queryByTitle(String title) {
 		return blogMapper.queryByTitle(title);
+	}
+
+	@Override
+	public Blog queryNoUploadWeBlog() {
+		return blogMapper.queryNoUploadWeBlog();
 	}
 
 	

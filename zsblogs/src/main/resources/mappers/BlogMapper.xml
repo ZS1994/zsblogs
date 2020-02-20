@@ -8,12 +8,13 @@
     <result column="summary" property="summary" jdbcType="VARCHAR" />
     <result column="ishide" property="ishide" jdbcType="VARCHAR" />
     <result column="comment_count" property="commentCount" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="com.zs.entity.Blog" extends="BaseResultMap" >
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, title, create_time ,summary, ishide
+    id, title, create_time ,summary, ishide, state
   </sql>
   <sql id="Blob_Column_List" >
     content
@@ -97,6 +98,9 @@
       <if test="ishide != null" >
         ishide = #{ishide,jdbcType=VARCHAR},
       </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -106,6 +110,7 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       summary = #{summary,jdbcType=VARCHAR},
       ishide = #{ishide,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -114,6 +119,7 @@
     set title = #{title,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       summary = #{summary,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
       ishide = #{ishide,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -205,4 +211,16 @@
     where title = #{0} 
     order by create_time desc
   </select>
+  
+  <!-- 张顺，2020-2-19，查出所有未上传至微信公众号好的博客 -->
+  <select id="queryNoUploadWeBlog" resultMap="BaseResultMap" >
+    select 
+    min(id) as id
+    from blog
+    where 
+		state = '' 
+		or state is null
+		and ishide = 0
+  </select>
+  
 </mapper>
