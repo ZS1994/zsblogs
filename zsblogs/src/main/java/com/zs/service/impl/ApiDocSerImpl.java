@@ -3,6 +3,11 @@ package com.zs.service.impl;
 import java.util.List;
 import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
+
 import com.zs.dao.ApiDocMapper;
 import com.zs.dao.ApiDocParameterMapper;
 import com.zs.dao.UsersMapper;
@@ -45,7 +50,13 @@ public class ApiDocSerImpl implements ApiDocSer{
 
 	@Override
 	public String add(ApiDoc obj) {
-		return String.valueOf(apiDocMapper.insertSelective(obj));
+		String res = String.valueOf(apiDocMapper.insertSelective(obj));
+		//TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+		int f = 1/0;
+		obj.setName("测试");
+		apiDocMapper.insertSelective(obj);
+		
+		return res;
 	}
 
 	@Override

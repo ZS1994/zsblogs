@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zs.dao.TransactionDetailMapper">
+  <resultMap id="BaseResultMap" type="com.zs.entity.TransactionDetail">
+    <result column="tra_id" jdbcType="INTEGER" property="traId" />
+    <result column="g_id" jdbcType="INTEGER" property="gId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+    <result column="other_info" jdbcType="VARCHAR" property="otherInfo" />
+    <result column="quantity_unit" jdbcType="VARCHAR" property="quantityUnit" />
+    <result column="unit_price" jdbcType="DOUBLE" property="unitPrice" />
+    <result column="quantity" jdbcType="DOUBLE" property="quantity" />
+  </resultMap>
+  <insert id="insert" parameterType="com.zs.entity.TransactionDetail">
+    insert into transaction_detail (tra_id, g_id, name, 
+      img, other_info, quantity_unit, 
+      unit_price, quantity)
+    values (#{traId,jdbcType=INTEGER}, #{gId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{img,jdbcType=VARCHAR}, #{otherInfo,jdbcType=VARCHAR}, #{quantityUnit,jdbcType=VARCHAR}, 
+      #{unitPrice,jdbcType=DOUBLE}, #{quantity,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zs.entity.TransactionDetail">
+    insert into transaction_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="traId != null">
+        tra_id,
+      </if>
+      <if test="gId != null">
+        g_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="img != null">
+        img,
+      </if>
+      <if test="otherInfo != null">
+        other_info,
+      </if>
+      <if test="quantityUnit != null">
+        quantity_unit,
+      </if>
+      <if test="unitPrice != null">
+        unit_price,
+      </if>
+      <if test="quantity != null">
+        quantity,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="traId != null">
+        #{traId,jdbcType=INTEGER},
+      </if>
+      <if test="gId != null">
+        #{gId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null">
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="otherInfo != null">
+        #{otherInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="quantityUnit != null">
+        #{quantityUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="unitPrice != null">
+        #{unitPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="quantity != null">
+        #{quantity,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  
+  <select id="queryAllDetByTra" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+  	select 
+  		tra_id, g_id, name, 
+      	img, other_info, quantity_unit, 
+      	unit_price, quantity
+  	from transaction_detail
+  	where tra_id = #{traId}
+ 	order by name
+  </select>
+  
+  <delete id="deleteByTra" parameterType="java.lang.Integer" >
+    delete from transaction_detail
+    where tra_id = #{traId}
+  </delete>
+  
+</mapper>

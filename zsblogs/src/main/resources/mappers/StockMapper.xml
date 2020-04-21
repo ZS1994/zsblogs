@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zs.dao.StockMapper">
+  <resultMap id="BaseResultMap" type="com.zs.entity.Stock">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="g_id" jdbcType="INTEGER" property="gId" />
+    <result column="quantity" jdbcType="DOUBLE" property="quantity" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="purchase_price" jdbcType="DOUBLE" property="purchasePrice" />
+    <result column="tra_id" jdbcType="INTEGER" property="traId" />
+    <result column="people" jdbcType="VARCHAR" property="people" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, g_id, quantity, state, time, purchase_price, tra_id, people
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from stock
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from stock
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zs.entity.Stock">
+    insert into stock (id, g_id, quantity, 
+      state, time, purchase_price, 
+      tra_id, people)
+    values (#{id,jdbcType=INTEGER}, #{gId,jdbcType=INTEGER}, #{quantity,jdbcType=DOUBLE}, 
+      #{state,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{purchasePrice,jdbcType=DOUBLE}, 
+      #{traId,jdbcType=INTEGER}, #{people,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id"  parameterType="com.zs.entity.Stock">
+    insert into stock
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="gId != null">
+        g_id,
+      </if>
+      <if test="quantity != null">
+        quantity,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="purchasePrice != null">
+        purchase_price,
+      </if>
+      <if test="traId != null">
+        tra_id,
+      </if>
+      <if test="people != null">
+        people,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="gId != null">
+        #{gId,jdbcType=INTEGER},
+      </if>
+      <if test="quantity != null">
+        #{quantity,jdbcType=DOUBLE},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchasePrice != null">
+        #{purchasePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="traId != null">
+        #{traId,jdbcType=INTEGER},
+      </if>
+      <if test="people != null">
+        #{people,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zs.entity.Stock">
+    update stock
+    <set>
+      <if test="gId != null">
+        g_id = #{gId,jdbcType=INTEGER},
+      </if>
+      <if test="quantity != null">
+        quantity = #{quantity,jdbcType=DOUBLE},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="purchasePrice != null">
+        purchase_price = #{purchasePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="traId != null">
+        tra_id = #{traId,jdbcType=INTEGER},
+      </if>
+      <if test="people != null">
+        people = #{people,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zs.entity.Stock">
+    update stock
+    set g_id = #{gId,jdbcType=INTEGER},
+      quantity = #{quantity,jdbcType=DOUBLE},
+      state = #{state,jdbcType=VARCHAR},
+      time = #{time,jdbcType=TIMESTAMP},
+      purchase_price = #{purchasePrice,jdbcType=DOUBLE},
+      tra_id = #{traId,jdbcType=INTEGER},
+      people = #{people,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from stock
+  	<where>
+  		<if test="int1 != null"><!-- int1:交易单id -->
+  		and tra_id = #{int1}
+  		</if>
+  		<if test="str1 != null"><!-- str1:货品名称 -->
+  		and g_id in (select id from goods where name like '%${str1}%')
+  		</if>
+  		<if test="date1!=null"><!-- date1:创建时间开始 -->
+	  		and time >= #{date1}
+  		</if>
+  		<if test="date2!=null"><!-- date1:创建时间结束 -->
+  			and time &lt;= #{date2}
+  		</if>
+  		<if test="str2 != null"><!-- str2:相关人员 -->
+  		and people like '%${str2}%'
+  		</if>
+  		<if test="str3 != null"><!-- str3:状态 -->
+  		and state = #{str3}
+  		</if>
+  	</where>
+  	<if test="sort!=null and order!=null">
+  		order by ${sort} ${order}
+  	</if>
+  	<if test="sort==null and order==null">
+  		order by time desc
+  	</if>
+  	limit ${start},${rows}
+  </select>
+  <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
+  	select count(0) from stock
+  	<where>
+  		<if test="int1 != null"><!-- int1:交易单id -->
+  		and tra_id = #{int1}
+  		</if>
+  		<if test="str1 != null"><!-- str1:货品名称 -->
+  		and g_id in (select id from goods where name like '%${str1}%')
+  		</if>
+  		<if test="date1!=null"><!-- date1:创建时间开始 -->
+	  		and time >= #{date1}
+  		</if>
+  		<if test="date2!=null"><!-- date1:创建时间结束 -->
+  			and time &lt;= #{date2}
+  		</if>
+  		<if test="str2 != null"><!-- str2:相关人员 -->
+  		and people like '%${str2}%'
+  		</if>
+  		<if test="str3 != null"><!-- str3:状态 -->
+  		and state = #{str3}
+  		</if>
+  	</where>
+  </select>
+  
+</mapper>

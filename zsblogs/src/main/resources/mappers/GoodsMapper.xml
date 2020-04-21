@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zs.dao.GoodsMapper">
+  <resultMap id="BaseResultMap" type="com.zs.entity.Goods">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+    <result column="other_info" jdbcType="VARCHAR" property="otherInfo" />
+    <result column="quantity" jdbcType="DOUBLE" property="quantity" />
+    <result column="quantity_unit" jdbcType="VARCHAR" property="quantityUnit" />
+    <result column="purchase_price" jdbcType="DOUBLE" property="purchasePrice" />
+    <result column="unit_price" jdbcType="DOUBLE" property="unitPrice" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, img, other_info, quantity, quantity_unit, purchase_price, unit_price
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from goods
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zs.entity.Goods">
+    insert into goods (id, name, img, 
+      other_info, quantity, quantity_unit, 
+      purchase_price, unit_price)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR}, 
+      #{otherInfo,jdbcType=VARCHAR}, #{quantity,jdbcType=DOUBLE}, #{quantityUnit,jdbcType=VARCHAR}, 
+      #{purchasePrice,jdbcType=DOUBLE}, #{unitPrice,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zs.entity.Goods">
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="img != null">
+        img,
+      </if>
+      <if test="otherInfo != null">
+        other_info,
+      </if>
+      <if test="quantity != null">
+        quantity,
+      </if>
+      <if test="quantityUnit != null">
+        quantity_unit,
+      </if>
+      <if test="purchasePrice != null">
+        purchase_price,
+      </if>
+      <if test="unitPrice != null">
+        unit_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null">
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="otherInfo != null">
+        #{otherInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null">
+        #{quantity,jdbcType=DOUBLE},
+      </if>
+      <if test="quantityUnit != null">
+        #{quantityUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="purchasePrice != null">
+        #{purchasePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="unitPrice != null">
+        #{unitPrice,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zs.entity.Goods">
+    update goods
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null">
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="otherInfo != null">
+        other_info = #{otherInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="quantity != null">
+        quantity = #{quantity,jdbcType=DOUBLE},
+      </if>
+      <if test="quantityUnit != null">
+        quantity_unit = #{quantityUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="purchasePrice != null">
+        purchase_price = #{purchasePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="unitPrice != null">
+        unit_price = #{unitPrice,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zs.entity.Goods">
+    update goods
+    set name = #{name,jdbcType=VARCHAR},
+      img = #{img,jdbcType=VARCHAR},
+      other_info = #{otherInfo,jdbcType=VARCHAR},
+      quantity = #{quantity,jdbcType=DOUBLE},
+      quantity_unit = #{quantityUnit,jdbcType=VARCHAR},
+      purchase_price = #{purchasePrice,jdbcType=DOUBLE},
+      unit_price = #{unitPrice,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from goods
+  	<where>
+  		<if test="str1 != null"><!-- str1:货品名称 -->
+  			and name like '%${str1}%'
+  		</if>
+  	</where>
+  	<if test="sort!=null and order!=null">
+  		order by ${sort} ${order}
+  	</if>
+  	<if test="sort==null and order==null">
+  		order by id desc
+  	</if>
+  	limit ${start},${rows}
+  </select>
+  
+  <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
+  	select count(id) from goods
+  	<where>
+  		<if test="str1 != null"><!-- str1:货品名称 -->
+  			and name like '%${str1}%'
+  		</if>
+  	</where>
+  </select>
+  
+  
+</mapper>

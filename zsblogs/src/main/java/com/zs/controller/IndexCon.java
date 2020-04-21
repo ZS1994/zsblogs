@@ -325,6 +325,31 @@ public class IndexCon{
 	public String toOtherMenu(HttpServletRequest request,HttpServletResponse response) throws SchedulerException {
 		return "/system/otherMenu";
 	}
+	
+	
+	//--------------------家里的兽医店相关的-----------------------
+	@RequestMapping(value="/familyshop/goods")
+	public String toFamilyshopGoods(HttpServletRequest request,HttpServletResponse response) throws SchedulerException {
+		return "/familyshop/goodsList";
+	}
+	@RequestMapping(value="/familyshop/transaction")
+	public String toFamilyshopTra(HttpServletRequest request,HttpServletResponse response) throws SchedulerException {
+		return "/familyshop/transactionList";
+	}
+	@RequestMapping(value="/familyshop/credit")
+	public String toFamilyshopCredit(HttpServletRequest request,HttpServletResponse response) throws SchedulerException {
+		return "/familyshop/creditList";
+	}
+	@RequestMapping(value="/familyshop/bill")
+	public String toFamilyshopBill(HttpServletRequest request,HttpServletResponse response) throws SchedulerException {
+		return "/familyshop/billList";
+	}	
+	@RequestMapping(value="/familyshop/stock")
+	public String toFamilyshopStock(HttpServletRequest request,HttpServletResponse response) throws SchedulerException {
+		return "/familyshop/stockList";
+	}
+	
+	
 }
 
 

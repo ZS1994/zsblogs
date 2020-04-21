@@ -35,30 +35,28 @@ public class CacheCharts{
 	@Resource
 	private PermissionMapper permissionMapper;
 	
-	private Gson gson = new GsonBuilder()
+	private static Gson gson = new GsonBuilder()
 	        .setDateFormat("yyyy-MM-dd HH:mm:ss")
 	        .create();
 	private Logger log=Logger.getLogger(getClass());
     
 	
-	private static List<Object> users = new ArrayList<>();
-	private static List<Object> fundInfos = new ArrayList<>();
-	private static List<Permission> permissions = new ArrayList<>();
 	private static String usersJson = "[]";
 	private static String fundInfosJson = "[]";
 	private static String permissionsJson = "[]";
 	
-	//张顺，2019-12-16，局部变量，内存优化
-	EasyUIAccept eui;
-	String result;
 	
 	//刷新数据
 	public String refresh(){
+		String result = "2020-3-1，张顺，服务器不堪重负，不能使用这么大的静态变量，所以无奈，只能暂时去掉缓存，为了不影响功能，所以使用查询的数据库的方式获取数据";
 		result = "";
-		eui = new EasyUIAccept();
+		List<Object> users;
+		List<Object> fundInfos;
+		List<Permission> permissions;
+		
+		EasyUIAccept eui = new EasyUIAccept();
 		eui.setStart(0);
 		eui.setRows(Constans.INFINITY);
-		
 		log.info("users数据开始刷新");
 		result += "users数据开始刷新\n";
 		users = userSer.queryFenye(eui).getRows();
@@ -81,20 +79,6 @@ public class CacheCharts{
 		result += "permission数据刷新完成，共" + permissions.size() + "条\n";
 		return result;
 	}
-	
-	
-	public static List<Object> getUsers() {
-		return users;
-	}
-	
-	public static List<Object> getFundInfos() {
-		return fundInfos;
-	}
-	
-	public static List<Permission> getPermissions() {
-		return permissions;
-	}
-	
 	
 	public static String getUsersJson() {
 		return usersJson;

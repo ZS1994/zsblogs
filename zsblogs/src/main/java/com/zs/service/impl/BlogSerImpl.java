@@ -86,7 +86,7 @@ public class BlogSerImpl implements BlogSer{
 
 	public String update(Blog obj) {
 		if (obj!=null && !StringUtils.isEmpty(obj.getBlIds())) {
-			String blIds[] = obj.getBlIds().split(",");
+			String blIds[] = gson.fromJson(obj.getBlIds(), String[].class);
 			blogListRelMapper.deleteByBlidOrBid(null, obj.getId());
 			for (String s : blIds) {
 				if (!StringUtils.isEmpty(s)) {
