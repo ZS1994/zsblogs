@@ -51,11 +51,6 @@ public class ApiDocSerImpl implements ApiDocSer{
 	@Override
 	public String add(ApiDoc obj) {
 		String res = String.valueOf(apiDocMapper.insertSelective(obj));
-		//TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
-		int f = 1/0;
-		obj.setName("测试");
-		apiDocMapper.insertSelective(obj);
-		
 		return res;
 	}
 
