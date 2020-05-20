@@ -10,6 +10,7 @@
     <result column="quantity_unit" jdbcType="VARCHAR" property="quantityUnit" />
     <result column="unit_price" jdbcType="DOUBLE" property="unitPrice" />
     <result column="quantity" jdbcType="DOUBLE" property="quantity" />
+    <result column="addMoney" jdbcType="DOUBLE" property="addMoney" />
   </resultMap>
   <insert id="insert" parameterType="com.zs.entity.TransactionDetail">
     insert into transaction_detail (tra_id, g_id, name, 
@@ -79,7 +80,7 @@
   	select 
   		tra_id, g_id, name, 
       	img, other_info, quantity_unit, 
-      	unit_price, quantity
+      	unit_price, quantity,round((quantity * unit_price),2) as addMoney
   	from transaction_detail
   	where tra_id = #{traId}
  	order by name

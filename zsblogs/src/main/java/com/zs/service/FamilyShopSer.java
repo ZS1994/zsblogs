@@ -48,15 +48,21 @@ public interface FamilyShopSer {
 	 * @param transaction
 	 * @return
 	 */
-	public int addTra(Transaction transaction);
+	public int addTra(Transaction transaction)throws Exception;
 	
 	/**
 	 * 不仅更新交易单的信息，还要循环更新所有的明细信息
 	 * @param transaction
 	 */
 	public int updateTra(Transaction transaction);
-	
-	
+
+	/**
+	 * 删除交易单
+	 * @param traId
+	 * @return
+	 */
+	public int deleteTea(Integer traId);
+
 	//----------------账单相关-----账单只允许查询-----------------------
 	public EasyUIPage queryFenyeBill(EasyUIAccept accept);
 	

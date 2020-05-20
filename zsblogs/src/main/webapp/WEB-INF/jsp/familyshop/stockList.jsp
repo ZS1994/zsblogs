@@ -57,8 +57,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div id="toolbar">
 				<div class="btn-separator-none">
 					<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addObj()">新增入库单</a>
-					<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateObj()">编辑库存单信息</a>
-					<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteObj()">删除库存单信息</a>
+					<%--<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="updateObj()">编辑库存单信息</a>
+					<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteObj()">删除库存单信息</a>--%>
 					<a class="easyui-linkbutton" iconCls="icon-help" plain="true" disabled="true">帮助</a>
 				</div>
 				<div class="clear"></div>
@@ -97,7 +97,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="pull-away"></div>
 			</div>
 			
-			<div id="dlg" class="easyui-dialog" style="padding: 20px;"
+			<div id="dlg" class="easyui-dialog" 
 					closed="true" buttons="#dlg-buttons" modal="true">
 				<div class="dlg_widthAndHeight">
 					<div class="ftitle">交易单</div>

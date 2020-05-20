@@ -19,7 +19,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	});
 	function addObj(){
 		$("#dlg").dialog("open").dialog("setTitle","新建");	
-		$("#fm").form("clear");
+		$("#fm").form("reset");
 		$("#fm input[name='_method']").val("post");
 		$("#fm input[name='_token']").val("${token}");
 		url="${path}/api/users";
@@ -212,7 +212,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="pull-away"></div>
 			</div>
 			
-			<div id="dlg" class="easyui-dialog" style="padding: 20px;"
+			<div id="dlg" class="easyui-dialog" 
 					closed="true" buttons="#dlg-buttons" modal="true">
 				<div class="dlg_widthAndHeight">
 					<div class="ftitle">用户</div>

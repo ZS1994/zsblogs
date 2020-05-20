@@ -150,7 +150,12 @@ $(function(){
 var url;
 function addObj(){
 	$("#dlg").dialog("open").dialog("setTitle","新建");	
-	$("#fm").form("clear");
+	//$("#fm").form("clear");
+	//张顺，2020-5-20，clear会把下拉变成空，而reset不会，只会选择默认值
+	//$("#fm").form('reset');
+    //张顺，2020-5-20，reset会导致不清楚隐藏值，所以先clear，再reset
+    $("#fm").form("clear");
+    $("#fm").form('reset');
 	$("#fm input[name='_method']").val("post");
 	$("#fm input[name='_token']").val("${token}");
 }

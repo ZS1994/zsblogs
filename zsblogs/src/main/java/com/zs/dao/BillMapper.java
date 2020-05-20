@@ -19,4 +19,7 @@ public interface BillMapper {
     
     List<Bill> queryFenye(EasyUIAccept accept);
     int getCount(EasyUIAccept accept);
+
+    //根据交易单删除账单
+    int deleteByTraId(Integer traId);
 }

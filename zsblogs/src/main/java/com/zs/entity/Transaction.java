@@ -1,5 +1,7 @@
 package com.zs.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +18,45 @@ public class Transaction implements EntityUtils{
 
     private List<TransactionDetail> traDets;
     
-    
+    //方便计算引入的
+    private Double amountMoney;//应付
+    private Double payMoney;//实付
+    private Double creditMoney;//剩余赊账金额
+
+    private Double newPayMoney;//本次还款金额
+
+    public Double getNewPayMoney() {
+        return newPayMoney;
+    }
+
+    public void setNewPayMoney(Double newPayMoney) {
+        this.newPayMoney = newPayMoney;
+    }
+
+    public Double getAmountMoney() {
+        return amountMoney;
+    }
+
+    public void setAmountMoney(Double amountMoney) {
+        this.amountMoney = amountMoney;
+    }
+
+    public Double getPayMoney() {
+        return payMoney;
+    }
+
+    public void setPayMoney(Double payMoney) {
+        this.payMoney = payMoney;
+    }
+
+    public Double getCreditMoney() {
+        return creditMoney;
+    }
+
+    public void setCreditMoney(Double creditMoney) {
+        this.creditMoney = creditMoney;
+    }
+
     public List<TransactionDetail> getTraDets() {
 		return traDets;
 	}
@@ -32,7 +72,7 @@ public class Transaction implements EntityUtils{
     public void setId(Integer id) {
         this.id = id;
     }
-
+    @JsonFormat(pattern="yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
     public Date getTime() {
         return time;
     }

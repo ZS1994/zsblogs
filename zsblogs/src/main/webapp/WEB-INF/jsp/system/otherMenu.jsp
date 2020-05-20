@@ -11,7 +11,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<jsp:include page="/WEB-INF/jsp/part/include_bootstrap.jsp"/>
   	<jsp:include page="/WEB-INF/jsp/part/common.jsp"/>
     <base href="<%=basePath%>">
-    <title>博客阅读信息</title>
+    <title>其他菜单</title>
     <script type="text/javascript">
     $(function(){
     	initMenuAuto($("#menu"));

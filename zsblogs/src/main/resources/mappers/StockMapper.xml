@@ -181,5 +181,9 @@
   		</if>
   	</where>
   </select>
-  
+    
+    <delete id="deleteByTraId">
+        DELETE FROM stock
+        WHERE state = '出库' and tra_id = #{traId}
+    </delete>
 </mapper>

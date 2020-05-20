@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 /**
  * @author 张顺
  * @see 2017-9-12，封装访问接口方法，做一些预处理动作，具体页面中只需写自己的业务逻辑相关代码，而不必关心其他东西
- * @param urlb： url后面的部分，不包含项目名。前面补全的是${path},所以后面不要开头要加/
+ * @param urlb： url后面的部分，不包含项目名。前面补全的是${path},所以后面要开头要加/
  * @param type： 请求类型，比如：get、post、put、delete，默认get
  * @param async： 是否异步 true、false，默认true
  * @param data： json对象，需要传的参数，默认空json对象
@@ -16,9 +16,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  * @param superSuccess 成功时调用的函数,不为空将覆盖sucess，该函数不会做任何预处理
  * @param error 失败时执行的函数，注意并不是网络问题导致的失败，是成功接收，只是result=='error'，其函数参数为error(code,data)
  * @param isNeedToken: 是否需要判断token是否存在，true判断，false不判断，默认true
+ * @param contentType: 默认是
  * */
 function pullRequest(options){
-	var urlb,type,async,data,success,error,isNeedToken,superSuccess;
+	var urlb,type,async,data,success,error,isNeedToken,superSuccess,contentType;
 	if(options){
 		urlb=options.urlb?options.urlb:"";
 		type=options.type?options.type:"get";
@@ -28,6 +29,7 @@ function pullRequest(options){
 		superSuccess=options.superSuccess?options.superSuccess:null;
 		error=options.error?options.error:null;
 		isNeedToken=typeof(options.isNeedToken)!="undefined"?options.isNeedToken:true;
+        contentType=options.contentType?options.contentType:"application/html";
 		var url = "${path}"+urlb;
 	    var token=getToken();
 	    var isNext=false;//是否继续的标志
@@ -46,7 +48,8 @@ function pullRequest(options){
 	        	type:type,
 	        	async:async,
 	        	data:data,
-	        	dataType: "json",  
+	        	contentType: contentType,
+	        	dataType: "json",
 	        	beforeSend: function (request) {
 	    	        request.setRequestHeader("token", token);
 	    	    },

@@ -1,9 +1,13 @@
 package com.zs.service.impl;
 
+import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import javax.annotation.Resource;
+
+import com.sun.xml.internal.ws.policy.privateutil.RuntimePolicyUtilsException;
 import org.springframework.stereotype.Service;
 import com.zs.dao.BillMapper;
 import com.zs.dao.CreditMapper;
@@ -126,6 +130,12 @@ public class FamilyShopSerImpl implements FamilyShopSer{
 			}
 			List list = transactionMapper.queryFenye(accept);
 			int rows = transactionMapper.getCount(accept);
+			//填充详情信息
+			Double creditMoney = 0.0;//剩余赊账金额
+			for(int i = 0; i < list.size(); i++){
+				List<TransactionDetail> traDet = transactionDetailMapper.queryAllDetByTra(((Transaction)list.get(i)).getId());
+				((Transaction)list.get(i)).setTraDets(traDet);
+			}
 			return new EasyUIPage(rows, list);
 		}
 		return null;
@@ -143,19 +153,27 @@ public class FamilyShopSerImpl implements FamilyShopSer{
 		return tra;
 	}
 	@Override
-	public int addTra(Transaction transaction) {
+	public int addTra(Transaction transaction)throws Exception {
 		//合法性校验
 		if (transaction == null) {
 			return EntityUtils.CODE_NULL_OBJECT;
 		}
+		//基础信息填充
+		transaction.setTime(new Date());
+		
 		int val = transaction.validity();
 		if (val != 1) {
 			return val;
 		}
+		//需要对商品明细中的数量进行处理
+		for (int i = 0; i < transaction.getTraDets().size(); i++) {
+			transaction.getTraDets().get(i).setQuantity(transaction.getTraDets().get(i).getPurchaseQuantity());
+		}
+		
 		//先添加交易单
 		int res = transactionMapper.insertSelective(transaction);
 		//再添加交易单明细
-		for (int i = 0; i < transaction.getTraDets().size(); i++) {
+        for (int i = 0; i < transaction.getTraDets().size(); i++) {
 			TransactionDetail traDet = transaction.getTraDets().get(i);
 			//这里只判断gid，因为其他信息都是通过gid去填充上去的
 			if (traDet.getgId() == null) {
@@ -169,13 +187,57 @@ public class FamilyShopSerImpl implements FamilyShopSer{
 			traDet.setImg(goods.getImg());
 			traDet.setName(goods.getName());
 			traDet.setOtherInfo(goods.getOtherInfo());
-			traDet.setQuantity(goods.getQuantity());
 			traDet.setQuantityUnit(goods.getQuantityUnit());
 			traDet.setTraId(transaction.getId());
 			transactionDetailMapper.insertSelective(traDet);
+
+            //更新货品的库存数量
+            Double sum = goods.getQuantity() - traDet.getPurchaseQuantity();
+            //数字不能为负
+            if(sum < 0.0){
+                throw new RuntimeException("购买货品数量超过该货品库存");
+            }
+            goods.setQuantity(sum);
+            goodsMapper.updateByPrimaryKeySelective(goods);
+
+            //生成出库单
+            Stock stock = new Stock();
+            stock.setgId(goods.getId());
+            stock.setQuantity(traDet.getPurchaseQuantity());
+            stock.setState("出库");
+            stock.setTime(new Date());
+            stock.setPurchasePrice(goods.getPurchasePrice());
+            stock.setTraId(traDet.getTraId());
+            stock.setPeople(transaction.getCustomer());
+            stockMapper.insertSelective(stock);
 		}
+		//生成账单
+		Bill bill = new Bill();
+		bill.setTime(new Date());
+		bill.setPeople(transaction.getCustomer());
+		//计算总金额
+		Double sumMoney = 0.0;
+		for (TransactionDetail teaDet:transaction.getTraDets()) {
+			sumMoney += teaDet.getPurchaseQuantity() * teaDet.getUnitPrice();
+		}
+		if ("full payment".equals(transaction.getState())) {//全款付清
+			bill.setMoney(sumMoney);
+			bill.setType("交易");
+		}else if("credit ".equals(transaction.getState())){//赊账
+			bill.setMoney(0.0);
+			bill.setType("交易");
+		}
+		bill.setRelId(transaction.getId());
+		billMapper.insertSelective(bill);
+
 		return res;
 	}
+
+    /**
+     * 还款功能
+     * @param transaction
+     * @return
+     */
 	@Override
 	public int updateTra(Transaction transaction) {
 		//合法性校验
@@ -185,42 +247,45 @@ public class FamilyShopSerImpl implements FamilyShopSer{
 		if (transaction.getId() == null) {
 			return EntityUtils.CODE_NULL_ID;
 		}
-		int val = transaction.validity();
-		if (transaction.validity() != 1) {
-			return val;
-		}
 		//先更新交易单
 		int res = transactionMapper.updateByPrimaryKeySelective(transaction);
-		//再更新交易单明细
-		for (int i = 0; i < transaction.getTraDets().size(); i++) {
-			TransactionDetail traDet = transaction.getTraDets().get(i);
-			val = traDet.validity();
-			if (val != 1) {
-				return val;
-			}
-			//这里采用先删后加的方法，因为明细表是没有主键的
-			transactionDetailMapper.deleteByTra(transaction.getId());
-			//这里只判断gid，因为其他信息都是通过gid去填充上去的
-			if (traDet.getgId() == null) {
-				return EntityUtils.CODE_NULL_ID;
-			}
-			Goods goods = goodsMapper.selectByPrimaryKey(traDet.getgId());
-			if (goods == null) {
-				return EntityUtils.CODE_NULL_OBJECT;
-			}
-			//然后填充所有的其他信息
-			traDet.setImg(goods.getImg());
-			traDet.setName(goods.getName());
-			traDet.setOtherInfo(goods.getOtherInfo());
-			traDet.setQuantity(goods.getQuantity());
-			traDet.setQuantityUnit(goods.getQuantityUnit());
-			traDet.setTraId(transaction.getId());
-			transactionDetailMapper.insertSelective(traDet);
-		}
+		//生成还款的账单
+        Bill bill = new Bill();
+        bill.setTime(new Date());
+        bill.setPeople(transaction.getCustomer());
+        bill.setMoney(transaction.getNewPayMoney());
+        bill.setType("还款");
+        bill.setRelId(transaction.getId());
+        billMapper.insertSelective(bill);
 		return res;
 	}
-	
-	//--------------------------账单相关------------------------------------------------
+
+    @Override
+    public int deleteTea(Integer traId) {
+	    if (traId == null){
+	        return 0;
+        }
+        int result = 0;
+        //归还库存数量
+        List<TransactionDetail> dets = transactionDetailMapper.queryAllDetByTra(traId);
+        for (TransactionDetail det:dets) {
+            Goods good = goodsMapper.selectByPrimaryKey(det.getgId());
+            good.setQuantity(good.getQuantity() + det.getQuantity());
+            goodsMapper.updateByPrimaryKeySelective(good);
+        }
+        //删除关联的库存单
+        result += stockMapper.deleteByTraId(traId);
+        //删关联的账单
+        result += billMapper.deleteByTraId(traId);
+        //删关联的交易单明细
+        result += transactionDetailMapper.deleteByTra(traId);
+        //删交易单
+        result += transactionMapper.deleteByPrimaryKey(traId);
+
+        return result;
+    }
+
+    //--------------------------账单相关------------------------------------------------
 	@Override
 	public EasyUIPage queryFenyeBill(EasyUIAccept accept) {
 		if (accept != null) {
@@ -340,6 +405,14 @@ public class FamilyShopSerImpl implements FamilyShopSer{
 		if (val != 1) {
 			return val;
 		}
+		//初始值填充
+		stock.setTime(new Date());
+		Goods good = goodsMapper.selectByPrimaryKey(stock.getgId());
+		if (good == null){
+			return EntityUtils.CODE_NULL_OBJECT;
+		}
+		stock.setPurchasePrice(good.getPurchasePrice());
+
 		int res = stockMapper.insertSelective(stock);
 		//如果是入库，那么还要生成账单，然后再更新库存数量
 		switch (stock.getState()) {

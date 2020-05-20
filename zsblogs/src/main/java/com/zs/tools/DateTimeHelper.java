@@ -3,7 +3,6 @@ package com.zs.tools;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.junit.Test;
 
 import com.zs.entity.other.MyDate;
 
@@ -173,9 +172,4 @@ public class DateTimeHelper {
 		return calendar.getTime();
 	}
 	
-	@Test
-	public void test(){
-		int i = 1;
-		System.out.println();
-	}
 }

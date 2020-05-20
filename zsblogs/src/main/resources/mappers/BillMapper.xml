@@ -146,4 +146,10 @@
   	</where>
   </select>
   
+    <delete id="deleteByTraId">
+        delete from bill
+        where
+          (type = '交易' or type = '还款')
+          and rel_id = #{traId}
+    </delete>
 </mapper>

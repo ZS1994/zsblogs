@@ -9,7 +9,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
   	
     <base href="<%=basePath%>">
-    <title>api接口文档管理</title>
+    <title>赊账管理管理</title>
     <jsp:include page="/WEB-INF/jsp/part/common.jsp"/>
     <script type="text/javascript">
 	url="${path}/api/apidoc";
@@ -117,7 +117,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="pull-away"></div>
 			</div>
 			
-			<div id="dlg" class="easyui-dialog" style="padding: 20px;"
+			<div id="dlg" class="easyui-dialog" 
 					closed="true" buttons="#dlg-buttons" modal="true">
 				<div class="dlg_widthAndHeight">
 					<div class="ftitle">api接口文档</div>

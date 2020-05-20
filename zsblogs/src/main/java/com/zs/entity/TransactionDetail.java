@@ -17,6 +17,19 @@ public class TransactionDetail implements EntityUtils{
 
     private Double quantity;
 
+    //购买数量，这个是前端传过的数据，因为quantity已经有库存的含义，所以无法共用，待在ser中进行转换
+    private Double purchaseQuantity;
+    //合计金额
+    private Double addMoney;
+
+    public Double getAddMoney() {
+        return addMoney;
+    }
+
+    public void setAddMoney(Double addMoney) {
+        this.addMoney = addMoney;
+    }
+
     public Integer getTraId() {
         return traId;
     }
@@ -80,6 +93,14 @@ public class TransactionDetail implements EntityUtils{
     public void setQuantity(Double quantity) {
         this.quantity = quantity;
     }
+
+	public Double getPurchaseQuantity() {
+		return purchaseQuantity;
+	}
+
+	public void setPurchaseQuantity(Double purchaseQuantity) {
+		this.purchaseQuantity = purchaseQuantity;
+	}
 
 	@Override
 	public int validity() {

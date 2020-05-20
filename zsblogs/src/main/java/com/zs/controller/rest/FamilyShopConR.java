@@ -3,6 +3,8 @@ package com.zs.controller.rest;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -129,7 +131,7 @@ public class FamilyShopConR{
 	}
 
 	@RequestMapping(value="/transaction",method=RequestMethod.POST)
-	public Result<String> doAddTra(Transaction obj, HttpServletRequest req, HttpServletResponse resp) {
+	public Result<String> doAddTra(@RequestBody Transaction obj, HttpServletRequest req, HttpServletResponse resp) {
 		if(obj != null){
 			try {
 				return new Result<String>(BaseRestController.SUCCESS, Code.SUCCESS, familyShopSer.addTra(obj) + "");
@@ -142,7 +144,7 @@ public class FamilyShopConR{
 	}
 
 	@RequestMapping(value="/transaction",method=RequestMethod.PUT)
-	public Result<String> doUpdateTra(Transaction obj, HttpServletRequest req, HttpServletResponse resp) {
+	public Result<String> doUpdateTra(@RequestBody Transaction obj, HttpServletRequest req, HttpServletResponse resp) {
 		if(obj != null && obj.getId() != null){
 			try {
 				return new Result<String>(BaseRestController.SUCCESS, Code.SUCCESS, familyShopSer.updateTra(obj) + "");
@@ -152,6 +154,19 @@ public class FamilyShopConR{
 			}
 		}
 		return new Result<String>(BaseRestController.ERROR, Code.ERROR, null);
+	}
+
+	@RequestMapping(value="/transaction/one",method=RequestMethod.DELETE)
+	public Result<Integer> doDeleteTra(Integer id, HttpServletRequest req, HttpServletResponse resp) {
+		if(id!=null){
+			try {
+				return new Result<Integer>(BaseRestController.SUCCESS, Code.SUCCESS, familyShopSer.deleteTea(id));
+			} catch (Exception e) {
+				e.printStackTrace();
+				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));
+			}
+		}
+		return new Result<Integer>(BaseRestController.ERROR, Code.ERROR, null);
 	}
 
 	//---------------------账单相关---------------------------------------------
@@ -245,7 +260,12 @@ public class FamilyShopConR{
 	public Result<String> doAddStock(Stock obj, HttpServletRequest req, HttpServletResponse resp) {
 		if(obj != null){
 			try {
-				return new Result<String>(BaseRestController.SUCCESS, Code.SUCCESS, familyShopSer.addStock(obj) + "");
+				int result = familyShopSer.addStock(obj);
+				if (result == 1){
+					return new Result<String>(BaseRestController.SUCCESS, Code.SUCCESS,  result+ "");
+				}else{
+					return new Result<String>(BaseRestController.ERROR, Code.ERROR,  result+"");
+				}
 			} catch (Exception e) {
 				e.printStackTrace();
 				mail.addMail(new MailModel(Trans.strToHtml(e,req), MailManager.TITLE));

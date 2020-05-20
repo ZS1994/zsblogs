@@ -104,7 +104,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<div class="pull-away"></div>
 			</div>
 			
-			<div id="dlg" class="easyui-dialog" style="padding: 20px;"
+			<div id="dlg" class="easyui-dialog" 
 					closed="true" buttons="#dlg-buttons" modal="true">
 				<div class="dlg_widthAndHeight">
 					<div class="ftitle">api接口文档</div>

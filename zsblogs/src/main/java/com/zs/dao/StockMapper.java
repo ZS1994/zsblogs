@@ -20,4 +20,6 @@ public interface StockMapper {
     
     List<Stock> queryFenye(EasyUIAccept accept);
     int getCount(EasyUIAccept accept);
+
+    int deleteByTraId(Integer traId);
 }

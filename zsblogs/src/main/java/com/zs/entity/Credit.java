@@ -1,5 +1,7 @@
 package com.zs.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Credit implements EntityUtils{
@@ -36,7 +38,7 @@ public class Credit implements EntityUtils{
     public void setCustomer(String customer) {
         this.customer = customer == null ? null : customer.trim();
     }
-
+    @JsonFormat(pattern="yyyy/MM/dd HH:mm:ss",timezone = "GMT+8")
     public Date getTime() {
         return time;
     }

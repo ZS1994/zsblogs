@@ -7,6 +7,9 @@
     <result column="customer" jdbcType="VARCHAR" property="customer" />
     <result column="state" jdbcType="VARCHAR" property="state" />
     <result column="note" jdbcType="VARCHAR" property="note" />
+      <result column="amountMoney" jdbcType="DOUBLE" property="amountMoney" />
+      <result column="payMoney" jdbcType="DOUBLE" property="payMoney" />
+      <result column="creditMoney" jdbcType="DOUBLE" property="creditMoney" />
   </resultMap>
   <sql id="Base_Column_List">
     id, time, customer, state, note
@@ -90,25 +93,31 @@
       note = #{note,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  
+
   <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
-  	select 
-  	<include refid="Base_Column_List" />
-  	from transaction
-  	<where>
-  		<if test="date1 != null"><!-- date1:交易时间开始 -->
-	  		and time >= #{date1}
-  		</if>
-  		<if test="date2 != null"><!-- date2:交易时间结束 -->
-  			and time &lt;= #{date2}
-  		</if>
-  		<if test="str1 != null"><!-- str1:顾客 -->
-  			and customer like '%${str1}%'
-  		</if>
-  		<if test="str2 != null"><!-- str2:状态 -->
-  			and state = #{str2}
-  		</if>
-  	</where>
+    select
+      tt.*,
+      (tt.amountMoney - tt.payMoney) as creditMoney
+      from (select
+      id, time, customer, state, note,
+      IFNULL((select sum(money) from bill where rel_id = transaction.id and (type = '交易' or type = '还款')),0) as payMoney,
+      (select sum(unit_price * quantity) from transaction_detail where tra_id = transaction.id) as amountMoney
+      from transaction
+      <where>
+            <if test="date1 != null"><!-- date1:交易时间开始 -->      and time >= #{date1}
+            </if>
+            <if test=
+                        "date2 != null"><!-- date2:交易时间结束 -->
+                and time &lt;= #{date2}
+            </if>
+            <if test="str1 != null"><!-- str1:顾客 -->
+                and customer like '%${str1}%'
+            </if>
+            <if test="str2 != null"><!-- str2:状态 -->
+                and state = #{str2}
+            </if>
+        </where>
+      ) tt
   	<if test="sort!=null and order!=null">
   		order by ${sort} ${order}
   	</if>

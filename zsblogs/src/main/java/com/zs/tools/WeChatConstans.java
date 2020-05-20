@@ -139,7 +139,7 @@ public class WeChatConstans {
 	public String addMaterial(String type, String imgPath){
 		String urlStr = "https://api.weixin.qq.com/cgi-bin/material/add_material?access_token="+getToken()+"&type="+type; 
 		//设置请求体，注意是LinkedMultiValueMap
-        MultiValueMap<String, Object> data = new LinkedMultiValueMap<>();
+        MultiValueMap<String, Object> data = new LinkedMultiValueMap();
 
         //设置上传文件
         FileSystemResource fileSystemResource = new FileSystemResource(imgPath);
@@ -167,8 +167,8 @@ public class WeChatConstans {
 	/**微信增加永久资源
 	 * @throws Exception */
 	public String addNews(WeChatAddNews news) throws Exception{
-		Map<String, List> mtmp = new HashMap<>();
-		List<WeChatAddNews> arrtmp = new ArrayList<>(); 
+		Map<String, List> mtmp = new HashMap();
+		List<WeChatAddNews> arrtmp = new ArrayList();
 		arrtmp.add(news);
 		mtmp.put("articles", arrtmp);
 		String res = restTemplate.postForObject(
