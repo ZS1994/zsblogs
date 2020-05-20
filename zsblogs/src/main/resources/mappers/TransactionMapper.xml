@@ -118,6 +118,9 @@
             <if test="str3 != null"><!-- str3:交易单编号 -->
                 and id = #{str3}
             </if>
+            <if test="int1 == 1"><!-- int1:只查未付清 -->
+              and IFNULL((select sum(money) from bill where rel_id = transaction.id and (type = '交易' or type = '还款')),0) != (select sum(unit_price * quantity) from transaction_detail where tra_id = transaction.id)
+            </if>
         </where>
       ) tt
   	<if test="sort!=null and order!=null">
@@ -145,6 +148,9 @@
   		</if>
         <if test="str3 != null"><!-- str3:交易单编号 -->
             and id = #{str3}
+        </if>
+        <if test="int1 == 1"><!-- int1:只查未付清 -->
+          and IFNULL((select sum(money) from bill where rel_id = transaction.id and (type = '交易' or type = '还款')),0) != (select sum(unit_price * quantity) from transaction_detail where tra_id = transaction.id)
         </if>
   	</where>
   </select>

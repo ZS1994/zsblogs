@@ -2,6 +2,14 @@
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+String str4 = request.getParameter("str4");
+if (str4 == null){
+	str4 = "";
+}
+String int1 = request.getParameter("int1");
+if (int1 == null){
+	int1 = "";
+}
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
@@ -197,12 +205,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							账单编号：<input name ="str3" />
 						</div>
 						<div>
-							关联单编号：<input name ="str4" value="<%=request.getParameter("str4")%>"/>
+							关联单编号：<input name ="str4" value="<%=str4%>"/>
 						</div>
 					</div>
 					<div class="searchBar-input">
 						<div>
-							只查交易单相关：<input name="int1" value="<%=request.getParameter("int1")%>">
+							只查交易单相关：<input name="int1" value="<%=int1%>">
 						</div>
 						<div>
 						</div>

@@ -283,6 +283,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							交易单编号：<input name ="str3" />
 						</div>
 						<div>
+							只查未付清：<input name ="int1" />
 						</div>
 					</div>
 			   	</form>
