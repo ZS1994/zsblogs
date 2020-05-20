@@ -119,6 +119,15 @@
   		<if test="str2 != null"><!-- str2:类型 -->
   			and type = #{str2}
   		</if>
+        <if test="str3 != null"><!-- str3:账单编号 -->
+            and id = #{str3}
+        </if>
+        <if test="str4 != null"><!-- str4:关联单编号 -->
+            and rel_id = #{str4}
+        </if>
+        <if test="int1 == 1"><!-- int1:只查交易单产生的，即type=交易、还款 -->
+            and (type = '交易' or type='还款')
+        </if>
   	</where>
   	<if test="sort!=null and order!=null">
   		order by ${sort} ${order}
@@ -143,6 +152,15 @@
   		<if test="str2 != null"><!-- str2:类型 -->
   			and type = #{str2}
   		</if>
+        <if test="str3 != null"><!-- str3:账单编号 -->
+            and id = #{str3}
+        </if>
+        <if test="str4 != null"><!-- str4:关联单编号 -->
+            and rel_id = #{str4}
+        </if>
+        <if test="int1 == 1"><!-- int1:只查交易单产生的，即type=交易、还款 -->
+            and (type = '交易' or type='还款')
+        </if>
   	</where>
   </select>
   

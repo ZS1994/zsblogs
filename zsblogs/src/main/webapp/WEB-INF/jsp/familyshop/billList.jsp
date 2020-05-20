@@ -192,6 +192,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    			类型：<input name ="str2" />
 			    		</div>
 			   		</div>
+					<div class="searchBar-input">
+						<div>
+							账单编号：<input name ="str3" />
+						</div>
+						<div>
+							关联单编号：<input name ="str4" value="<%=request.getParameter("str4")%>"/>
+						</div>
+					</div>
+					<div class="searchBar-input">
+						<div>
+							只查交易单相关：<input name="int1" value="<%=request.getParameter("int1")%>">
+						</div>
+						<div>
+						</div>
+					</div>
 			   	</form>
 			   	<div class="clear"></div>
 			   	<hr class="hr-geay">

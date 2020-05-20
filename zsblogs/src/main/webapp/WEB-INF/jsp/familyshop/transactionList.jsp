@@ -184,6 +184,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			}
 		});
 	}
+	function gotoBill(){
+        rows = $("#dg").datagrid("getSelections");
+        if(!rows || rows.length != 1){
+            $.messager.alert("警告", "请先选中一个交易单", "warning", function () {
+            });
+			return;
+		}
+        var traId = rows[0].id;
+        window.open("${path}/menu/familyshop/bill?int1=1&str4=" + traId);
+	}
 	</script>
 	<style type="text/css">
 	</style>
@@ -246,7 +256,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addObj()">添加交易单</a>
 					<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="repayment()">还款</a>
 					<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteObj()">删除交易单</a>
-					<a class="easyui-linkbutton" iconCls="icon-zs-forward" plain="true" onclick="">查看该交易单的账单</a>
+					<a class="easyui-linkbutton" iconCls="icon-zs-forward" plain="true" onclick="gotoBill()">查看该交易单的账单</a>
 					<a class="easyui-linkbutton" iconCls="icon-help" plain="true" disabled="true">帮助</a>
 				</div>
 				<div class="clear"></div>
@@ -268,6 +278,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    			购买商品：<input name ="str2" />
 			    		</div>
 			   		</div>
+					<div class="searchBar-input">
+						<div>
+							交易单编号：<input name ="str3" />
+						</div>
+						<div>
+						</div>
+					</div>
 			   	</form>
 			   	<div class="clear"></div>
 			   	<hr class="hr-geay">
