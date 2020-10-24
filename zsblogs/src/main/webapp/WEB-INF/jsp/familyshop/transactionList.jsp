@@ -360,7 +360,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   			
   			
   			<!-- 选择商品的窗口 -->
-			<div id="dlgGoods" title="货品信息" class="easyui-dialog" style="width:90%;height:50%;" closed="true" resizable="true" buttons="#dlgGoods-buttons" modal="true">
+			<div id="dlgGoods" title="货品信息" class="easyui-dialog" style="width:1000px;height:400px;" closed="true" resizable="true" buttons="#dlgGoods-buttons" modal="true">
 				<table id="dgGoods" border="false" class="easyui-datagrid"
 					   url="<%=path %>/api/familyshop/goods/list"
 					   method="get" toolbar="#dgGoods-toolbar"

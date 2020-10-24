@@ -29,7 +29,7 @@ function pullRequest(options){
 		superSuccess=options.superSuccess?options.superSuccess:null;
 		error=options.error?options.error:null;
 		isNeedToken=typeof(options.isNeedToken)!="undefined"?options.isNeedToken:true;
-        contentType=options.contentType?options.contentType:"application/html";
+        contentType=options.contentType?options.contentType:"application/x-www-form-urlencoded";
 		var url = "${path}"+urlb;
 	    var token=getToken();
 	    var isNext=false;//是否继续的标志
@@ -297,6 +297,11 @@ img {
 	<a href="${path }/menu/quartz/listJob">
 		<div class="entry">
 			quartz实验室
+		</div>
+	</a>
+	<a href="${path }/menu/familyshop/credit">
+		<div class="entry">
+			兽医店账本
 		</div>
 	</a>
 	<a href="${path }/menu/system/otherMenu">

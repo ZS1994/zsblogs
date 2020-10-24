@@ -104,7 +104,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</div>
 						<div class="fitem">
 							<label>单价:</label>
-							<input name="unitPrice" class="easyui-validatebox" required="true">
+							<input type="number" name="unitPrice" class="easyui-validatebox" required="true">
 						</div>
 					</form>
 				</div>

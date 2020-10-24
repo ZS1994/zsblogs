@@ -198,6 +198,11 @@ $(function(){
 				</a>
 			</li>
 			<li>
+				<a href="${path }/menu/familyshop/credit">
+					兽医店账本
+				</a>
+			</li>
+			<li>
 				<a href="${path }/menu/system/otherMenu">
 					其他菜单
 				</a>
