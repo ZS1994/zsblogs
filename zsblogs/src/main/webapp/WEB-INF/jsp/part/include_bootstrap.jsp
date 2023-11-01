@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<link rel="shortcut icon" href="<%=path %>/framework/image/favicon2.ico" type="image/x-icon" />
+<link rel="shortcut icon" href="<%=path %>/framework/image/favicon2.png" type="image/x-icon" />
 <link href="<%=path %>/framework/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="<%=path %>/framework/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="<%=path%>/framework/css/mainPagePart.css">
