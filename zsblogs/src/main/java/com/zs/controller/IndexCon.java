@@ -1,18 +1,12 @@
 package com.zs.controller;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.zs.dao.FundHistoryMapper;
+import com.zs.dao.FundInfoMapper;
+import com.zs.entity.FundInfo;
+import com.zs.entity.Users;
+import com.zs.entity.other.EasyUIAccept;
+import com.zs.entity.other.JobEntity;
+import com.zs.tools.Constans;
 import org.quartz.CronTrigger;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
@@ -24,15 +18,18 @@ import org.quartz.TriggerKey;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.zs.dao.FundHistoryMapper;
-import com.zs.dao.FundInfoMapper;
-import com.zs.entity.FundInfo;
-import com.zs.entity.Role;
-import com.zs.entity.Users;
-import com.zs.entity.other.EasyUIAccept;
-import com.zs.entity.other.JobEntity;
-import com.zs.service.QuartzSer;
-import com.zs.tools.Constans;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/menu")
