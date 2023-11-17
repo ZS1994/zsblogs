@@ -1,226 +1,244 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zs.dao.BlogMapper" >
-  <resultMap id="BaseResultMap" type="com.zs.entity.Blog" >
-    <id column="id" property="id" jdbcType="INTEGER" />
-    <result column="title" property="title" jdbcType="VARCHAR" />
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <result column="summary" property="summary" jdbcType="VARCHAR" />
-    <result column="ishide" property="ishide" jdbcType="VARCHAR" />
-    <result column="comment_count" property="commentCount" jdbcType="INTEGER" />
-    <result column="state" property="state" jdbcType="VARCHAR" />
-  </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.zs.entity.Blog" extends="BaseResultMap" >
-    <result column="content" property="content" jdbcType="LONGVARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, title, create_time ,summary, ishide, state
-  </sql>
-  <sql id="Blob_Column_List" >
-    content
-  </sql>
-  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from blog
-    where id = #{id,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from blog
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.zs.entity.Blog" useGeneratedKeys="true" keyProperty="id">
-    insert into blog (id, title, create_time, content ,summary,ishide)
-    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{content,jdbcType=LONGVARCHAR}) ,#{summary,jdbcType=VARCHAR},
-      #{ishide,jdbcType=VARCHAR}
-  </insert>
-  <insert id="insertSelective" parameterType="com.zs.entity.Blog" useGeneratedKeys="true" keyProperty="id">
-    insert into blog
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
-      <if test="title != null" >
-        title,
-      </if>
-      <if test="createTime != null" >
-        create_time,
-      </if>
-      <if test="content != null" >
-        content,
-      </if>
-      <if test="summary != null" >
-        summary,
-      </if>
-      <if test="ishide != null" >
-        ishide,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="title != null" >
-        #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="content != null" >
-        #{content,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="summary != null" >
-        #{summary,jdbcType=VARCHAR},
-      </if>
-      <if test="ishide != null" >
-        #{ishide,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zs.entity.Blog" >
-    update blog
-    <set >
-      <if test="title != null" >
-        title = #{title,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null" >
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="content != null" >
-        content = #{content,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="summary != null" >
-        summary = #{summary,jdbcType=VARCHAR},
-      </if>
-      <if test="ishide != null" >
-        ishide = #{ishide,jdbcType=VARCHAR},
-      </if>
-      <if test="state != null" >
-        state = #{state,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zs.entity.Blog" >
-    update blog
-    set title = #{title,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      summary = #{summary,jdbcType=VARCHAR},
-      ishide = #{ishide,jdbcType=VARCHAR},
-      state = #{state,jdbcType=VARCHAR},
-      content = #{content,jdbcType=LONGVARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKey" parameterType="com.zs.entity.Blog" >
-    update blog
-    set title = #{title,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      summary = #{summary,jdbcType=VARCHAR},
-      state = #{state,jdbcType=VARCHAR},
-      ishide = #{ishide,jdbcType=VARCHAR}
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  
-  <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
-  	select
-  	id,title,create_time,summary,ishide
-  	,
-  	(select count(*) from blog_comment where b_id = blog.id) as comment_count
-  	from blog
-  	<where>
-  		<if test="int1!=null"><!-- int1：是否隐藏 -->
-  		and ishide=#{int1}
-  		</if>
-  		<if test="int2!=null"><!-- int2：查看某个用户的 -->
-  		and id in ( 
-  			select b_id from blog_list_rel where bl_id in (select id from blog_list where u_id=#{int2}) 
-		)
-		</if>
-		<if test="int3!=null"><!-- int3：查看某个栏目的 -->
-  		and id in ( 
-  			select b_id from blog_list_rel where bl_id=#{int3}
-		)
-  		</if>
-  		<if test="str1!=null"><!-- str1：通过博客标题、栏目、摘要、作者名称模糊查询 -->
-  		and (title like '%${str1}%' or 
-  			summary like '%${str1}%' or
-  			id in (select b_id from blog_list_rel where bl_id in (select id from blog_list where name like '%${str1}%')) or 
-  			id in (select b_id from blog_list_rel where bl_id in (select id from blog_list where u_id in (select id from users where name like '%${str1}%'))) 
-		)
-  		</if>
-  		<if test="str2!=null"><!-- str2：通过博客摘要模糊查询 -->
-  		and summary like '%${str2}%'
-  		</if>
-  		<if test="date1!=null"><!-- date1：时间范围开始时间 -->
-  		and create_time >= #{date1}
-  		</if>
-  		<if test="date2!=null"><!-- date2：时间范围结束时间 -->
-  		and create_time &lt;= #{date2}
-  		</if>
-  	</where>
-  	<if test="sort!=null and order!=null">
-  		order by ${sort} ${order}
-  	</if>
-  	<if test="sort==null and order==null">
-  		order by create_time desc
-  	</if>
-  	limit ${start},${rows}
-  </select>
-  <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
-  	select count(id) from blog
-  	<where>
-  		<if test="int1!=null"><!-- int1：是否隐藏 -->
-  		and ishide=#{int1}
-  		</if>
-  		<if test="int2!=null"><!-- int2：查看某个用户的 -->
-  		and id in ( 
-  			select b_id from blog_list_rel where bl_id in (select id from blog_list where u_id=#{int2}) 
-		)
-		</if>
-		<if test="int3!=null"><!-- int3：查看某个栏目的 -->
-  		and id in ( 
-  			select b_id from blog_list_rel where bl_id=#{int3}
-		)
-  		</if>
-  		<if test="str1!=null"><!-- str1：通过博客标题、栏目、摘要、作者名称模糊查询 -->
-  		and (title like '%${str1}%' or 
-  			summary like '%${str1}%' or
-  			id in (select b_id from blog_list_rel where bl_id in (select id from blog_list where name like '%${str1}%')) or 
-  			id in (select b_id from blog_list_rel where bl_id in (select id from blog_list where u_id in (select id from users where name like '%${str1}%'))) 
-		)
-  		</if>
-  		<if test="str2!=null"><!-- str2：通过博客摘要模糊查询 -->
-  		and summary like '%${str2}%'
-  		</if>
-  		<if test="date1!=null"><!-- date1：时间范围开始时间 -->
-  		and create_time >= #{date1}
-  		</if>
-  		<if test="date2!=null"><!-- date2：时间范围结束时间 -->
-  		and create_time &lt;= #{date2}
-  		</if>
-  	</where>
-  </select>
-  
-  <select id="queryByTitle" resultMap="BaseResultMap" >
-    select 
-    <include refid="Base_Column_List" />
-    from blog
-    where title = #{0} 
-    order by create_time desc
-  </select>
-  
-  <!-- 张顺，2020-2-19，查出所有未上传至微信公众号好的博客 -->
-  <select id="queryNoUploadWeBlog" resultMap="BaseResultMap" >
-    select 
-    min(id) as id
-    from blog
-    where 
-		state = '' 
-		or state is null
-		and ishide = 0
-  </select>
-  
+<mapper namespace="com.zs.dao.BlogMapper">
+    <resultMap id="BaseResultMap" type="com.zs.entity.Blog">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="title" property="title" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="summary" property="summary" jdbcType="VARCHAR"/>
+        <result column="ishide" property="ishide" jdbcType="VARCHAR"/>
+        <result column="comment_count" property="commentCount" jdbcType="INTEGER"/>
+        <result column="state" property="state" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.zs.entity.Blog" extends="BaseResultMap">
+        <result column="content" property="content" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , title, create_time ,summary, ishide, state
+    </sql>
+    <sql id="Blob_Column_List">
+        content
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from blog
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete
+        from blog
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="insert" parameterType="com.zs.entity.Blog" useGeneratedKeys="true" keyProperty="id">
+        insert into blog (id, title, create_time, content, summary, ishide)
+        values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+                #{content,jdbcType=LONGVARCHAR}), #{summary,jdbcType=VARCHAR},
+            #{ishide,jdbcType=VARCHAR}
+    </insert>
+    <insert id="insertSelective" parameterType="com.zs.entity.Blog" useGeneratedKeys="true" keyProperty="id">
+        insert into blog
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="summary != null">
+                summary,
+            </if>
+            <if test="ishide != null">
+                ishide,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="summary != null">
+                #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="ishide != null">
+                #{ishide,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.zs.entity.Blog">
+        update blog
+        <set>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="summary != null">
+                summary = #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="ishide != null">
+                ishide = #{ishide,jdbcType=VARCHAR},
+            </if>
+            <if test="state != null">
+                state = #{state,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zs.entity.Blog">
+        update blog
+        set title       = #{title,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            summary     = #{summary,jdbcType=VARCHAR},
+            ishide      = #{ishide,jdbcType=VARCHAR},
+            state       = #{state,jdbcType=VARCHAR},
+            content     = #{content,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.zs.entity.Blog">
+        update blog
+        set title       = #{title,jdbcType=VARCHAR},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            summary     = #{summary,jdbcType=VARCHAR},
+            state       = #{state,jdbcType=VARCHAR},
+            ishide      = #{ishide,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="queryFenye" resultMap="BaseResultMap" parameterType="com.zs.entity.other.EasyUIAccept">
+        select
+        id,title,create_time,summary,ishide
+        ,
+        (select count(*) from blog_comment where b_id = blog.id) as comment_count
+        from blog
+        <where>
+            <if test="int1!=null"><!-- int1：是否隐藏 -->
+                and ishide=#{int1}
+            </if>
+            <if test="int2!=null"><!-- int2：查看某个用户的 -->
+                and id in (
+                select b_id from blog_list_rel where bl_id in (select id from blog_list where u_id=#{int2})
+                )
+            </if>
+            <if test="int3!=null"><!-- int3：查看某个栏目的 -->
+                and id in (
+                select b_id from blog_list_rel where bl_id=#{int3}
+                )
+            </if>
+            <if test="intList3!=null"><!-- intList3：查看某些栏目的 -->
+                <foreach collection="intList3" item="intList3Item" open="" close="" separator="">
+                    and exists (
+                    select 1 from blog_list_rel where bl_id = #{intList3Item} and b_id= blog.id
+                    )
+                </foreach>
+            </if>
+            <if test="str1!=null"><!-- str1：通过博客标题、栏目、摘要、作者名称模糊查询 -->
+                and (title like '%${str1}%' or
+                summary like '%${str1}%' or
+                id in (select b_id from blog_list_rel where bl_id in (select id from blog_list where name like
+                '%${str1}%')) or
+                id in (select b_id from blog_list_rel where bl_id in (select id from blog_list where u_id in (select id
+                from users where name like '%${str1}%')))
+                )
+            </if>
+            <if test="str2!=null"><!-- str2：通过博客摘要模糊查询 -->
+                and summary like '%${str2}%'
+            </if>
+            <if test="date1!=null"><!-- date1：时间范围开始时间 -->
+                and create_time >= #{date1}
+            </if>
+            <if test="date2!=null"><!-- date2：时间范围结束时间 -->
+                and create_time &lt;= #{date2}
+            </if>
+        </where>
+        <if test="sort!=null and order!=null">
+            order by ${sort} ${order}
+        </if>
+        <if test="sort==null and order==null">
+            order by create_time desc
+        </if>
+        limit ${start},${rows}
+    </select>
+    <select id="getCount" resultType="int" parameterType="com.zs.entity.other.EasyUIAccept">
+        select count(id) from blog
+        <where>
+            <if test="int1!=null"><!-- int1：是否隐藏 -->
+                and ishide=#{int1}
+            </if>
+            <if test="int2!=null"><!-- int2：查看某个用户的 -->
+                and id in (
+                select b_id from blog_list_rel where bl_id in (select id from blog_list where u_id=#{int2})
+                )
+            </if>
+            <if test="int3!=null"><!-- int3：查看某个栏目的 -->
+                and id in (
+                select b_id from blog_list_rel where bl_id=#{int3}
+                )
+            </if>
+            <if test="str1!=null"><!-- str1：通过博客标题、栏目、摘要、作者名称模糊查询 -->
+                and (title like '%${str1}%' or
+                summary like '%${str1}%' or
+                id in (select b_id from blog_list_rel where bl_id in (select id from blog_list where name like
+                '%${str1}%')) or
+                id in (select b_id from blog_list_rel where bl_id in (select id from blog_list where u_id in (select id
+                from users where name like '%${str1}%')))
+                )
+            </if>
+            <if test="str2!=null"><!-- str2：通过博客摘要模糊查询 -->
+                and summary like '%${str2}%'
+            </if>
+            <if test="date1!=null"><!-- date1：时间范围开始时间 -->
+                and create_time >= #{date1}
+            </if>
+            <if test="date2!=null"><!-- date2：时间范围结束时间 -->
+                and create_time &lt;= #{date2}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryByTitle" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from blog
+        where title = #{0}
+        order by create_time desc
+    </select>
+
+    <!-- 张顺，2020-2-19，查出所有未上传至微信公众号好的博客 -->
+    <select id="queryNoUploadWeBlog" resultMap="BaseResultMap">
+        select min(id) as id
+        from blog
+        where state = ''
+           or state is null
+            and ishide = 0
+    </select>
+
+    <select id="selectGroupByYear" resultType="java.lang.String">
+        select DATE_FORMAT(create_time, '%Y') as ct_year
+        FROM blog
+        GROUP BY DATE_FORMAT(create_time, '%Y')
+        ORDER BY DATE_FORMAT(create_time, '%Y') desc limit #{top,jdbcType=INTEGER}
+    </select>
+
 </mapper>
